@@ -1,6 +1,6 @@
 # Exportações dos wireframes
 
-Exportações locais da etapa anterior de organização do protótipo. O Figma é a referência editável atual.
+Imagens exportadas antes da reorganização do protótipo. A versão editável está no Figma.
 
 - [01-inicio-primeiro-acesso](01-inicio-primeiro-acesso.png)
 - [02-inicio-denuncia-ativa](02-inicio-denuncia-ativa.png)

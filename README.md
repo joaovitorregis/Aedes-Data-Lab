@@ -8,7 +8,7 @@ Aedes Data Lab é a nova proposta do Repecol, voltada à prevenção da dengue e
 
 [Abrir wireframes no Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y?node-id=2010-2).
 
-O arquivo ainda usa o nome Repecol. A identidade Aedes Data Lab corresponde à nova proposta informada pelo autor.
+O arquivo do Figma utiliza o nome **Repecol**, projeto que originou a proposta **Aedes Data Lab**.
 
 ![Páginas do protótipo no Figma](imagens/organizacao-figma.jpg)
 
@@ -24,11 +24,7 @@ As telas foram organizadas no Figma em 16 páginas por área. [Veja as exportaç
 
 ## Estágio atual
 
-Este repositório documenta o protótipo visual. As telas representam fluxos planejados; não comprovam implementação, integração com banco de dados ou disponibilidade de um serviço. A navegação entre as páginas do Figma ainda precisa de revisão.
-
-## Próximas etapas
-
-Revisar jornadas com usuários, definir o escopo da primeira versão e consolidar requisitos antes do desenvolvimento.
+Este repositório contém wireframes e imagens do protótipo visual. Os fluxos estão em fase de concepção; este repositório não contém uma aplicação implementada ou um backend.
 
 ## Autoria
 

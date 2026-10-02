@@ -22,10 +22,6 @@ O arquivo do Figma utiliza o nome Repecol, projeto que originou a proposta Aedes
 
 As telas foram organizadas no Figma em 16 páginas por área. [Veja as exportações locais dos wireframes](wireframes/README.md).
 
-## Estágio atual
-
-Este repositório reúne wireframes e imagens do protótipo. A aplicação e o backend ainda não estão implementados neste repositório.
-
 ## Autoria
 
 João Vitor Regis · Aedes Data Lab / nova proposta do Repecol.

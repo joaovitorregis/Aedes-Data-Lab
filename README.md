@@ -25,3 +25,9 @@ As telas foram organizadas no Figma em 16 páginas por área. [Veja as exportaç
 ## Autoria
 
 João Vitor Regis · Aedes Data Lab / nova proposta do Repecol.
+
+## Licença
+
+A documentação, os wireframes e os designs de autoria de João Vitor Regis estão sob [CC BY 4.0](LICENSE), incluindo o protótipo identificado neste README. Ao reutilizar, credite o autor, informe as alterações e inclua um link para a licença.
+
+Elementos de terceiros conservam seus próprios direitos e licenças. A licença não concede direitos sobre marcas, imagem ou dados pessoais.

@@ -2,15 +2,17 @@
 
 Wireframes de uma plataforma web com foco no uso em celular.
 
-Aedes Data Lab é uma proposta para prevenção da dengue. O trabalho está na fase de organização dos fluxos e desenho das telas no Figma.
+Aedes Data Lab é a evolução do projeto Repecol para uma plataforma voltada à prevenção da dengue. O Repecol passa a ser uma referência histórica desta evolução. O trabalho apresentado aqui está na fase de organização dos fluxos e desenho das telas no Figma; não é uma aplicação implementada.
 
-## Conheça o protótipo
+## Arquivo editável dos wireframes
 
 [Abrir wireframes no Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y?node-id=2010-2).
 
-![Páginas do protótipo no Figma](imagens/organizacao-figma.jpg)
+![Captura histórica da organização do arquivo Figma, ainda com o nome Repecol](imagens/organizacao-figma.jpg)
 
-## Jornadas representadas
+A captura acima e as exportações locais são registros históricos. O índice das exportações informa que elas são anteriores à reorganização dos wireframes. Conservam nomes e conteúdos do Repecol, incluindo referências à Equipe Ecoimpactos e a Mogeiro. Esses elementos documentam a origem do material; não descrevem automaticamente a identidade, a equipe ou as entregas atuais do Aedes Data Lab.
+
+## Jornadas representadas nas exportações históricas
 
 - Início, orientações e Guia Aedes.
 - Denúncia de foco, localização no mapa e acompanhamento.
@@ -18,7 +20,9 @@ Aedes Data Lab é uma proposta para prevenção da dengue. O trabalho está na f
 - Acesso, perfil e privacidade.
 - Áreas de agentes, produção, distribuição e gestão.
 
-As telas foram organizadas no Figma em 16 páginas por área. [Veja as exportações locais dos wireframes](wireframes/README.md).
+[Veja as 52 exportações históricas dos wireframes](wireframes/README.md). Elas representam telas e estados de exemplo, não uma contagem de páginas do Figma. Não comprovam o estado atual do arquivo editável, navegação clicável, permissões, envio ou armazenamento de dados.
+
+O link do Figma abre o arquivo de design. A navegação do protótipo e a organização atual de suas páginas não foram verificadas nesta revisão documental.
 
 ## Autoria
 

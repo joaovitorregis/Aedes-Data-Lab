@@ -14,11 +14,13 @@ O PRD é a base aprovada para a construção da V1. Ele não indica aplicação 
 
 ## Design
 
-[Abrir as telas no Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y?node-id=2010-2). As telas finais do Figma são a referência visual para o HTML e o CSS.
+[Abrir as telas no Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13). As telas finais estão na página **Fluxo de telas · Jornada do Usuário** e são a referência visual para o HTML e o CSS.
 
-![Captura histórica da organização do arquivo Figma, ainda com o nome Repecol](imagens/organizacao-figma.jpg)
+A pasta `wireframes/` tem as [47 telas finais exportadas](wireframes/README.md), organizadas por jornada e ligadas aos requisitos do PRD.
 
-A captura acima e as [52 exportações da pasta `wireframes/`](wireframes/README.md) são anteriores à versão final das telas. Elas ainda trazem nomes e conteúdos do Repecol, como a Equipe Ecoimpactos, o território de Mogeiro e áreas de chat, produção e distribuição que ficaram fora do escopo. Servem como registro da origem do projeto.
+![Visão geral das telas finais do Aedes Data Lab](wireframes/montage.png)
+
+As exportações anteriores, ainda com conteúdo do Repecol (chat, produção, distribuição e o território de Mogeiro), ficam no histórico do Git. A [captura da organização original do arquivo](imagens/organizacao-figma.jpg) registra a origem do projeto.
 
 ## Autoria
 

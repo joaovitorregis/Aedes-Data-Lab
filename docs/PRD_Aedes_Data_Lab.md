@@ -53,7 +53,7 @@ A experiência é pensada primeiro para o celular e precisa funcionar bem no com
 
 **Estado do repositório em 05/11/2026 (commit `f403ef5`):** a pasta `site/` tem 12 páginas de estudo, sete da área pública e cinco da área dos agentes, com um CSS compartilhado e um JavaScript por tela, todos com conteúdo inicial. Ainda não há envio, banco, autenticação nem publicação no mapa. As branches das integrantes não têm alterações de código em relação ao `main`. Meu trabalho, Mapa técnico e Dashboard já existem como páginas reservadas, fora do aceite da V1 (seção 6.1).
 
-**Design:** as telas do Figma estão concluídas e são a referência visual da implementação. As exportações da pasta `wireframes/` são anteriores a essa versão final e ainda mostram telas herdadas do Repecol, como chat, cadastro de cidadão e produção, que ficaram fora deste escopo. Se uma tela do Figma divergir deste PRD sobre comportamento, vale o PRD.
+**Design:** as telas do Figma estão concluídas e são a referência visual da implementação. As telas finais ficam na página "Fluxo de telas · Jornada do Usuário" e estão exportadas na pasta `wireframes/`, com o requisito correspondente a cada uma. Se uma tela do Figma divergir deste PRD sobre comportamento, vale o PRD.
 
 ## 5. Decisões de produto
 

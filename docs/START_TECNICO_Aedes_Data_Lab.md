@@ -12,7 +12,7 @@ Este documento organiza a arquitetura e a ordem de implementação da V1. O comp
 
 **Repositório em 05/11/2026 (commit `f403ef5`):** a pasta `site/` tem 12 páginas de estudo, sete da área pública e cinco da área dos agentes, com um CSS compartilhado e um JavaScript por tela, todos com conteúdo inicial. Ainda não há envio, banco, autenticação, publicação no mapa nem dashboard com dados. As branches das integrantes não têm alterações de código em relação ao `main`.
 
-**Design:** as telas do Figma estão concluídas e são a referência visual para o HTML e o CSS. As exportações da pasta `wireframes/` são anteriores à versão final e servem apenas como registro histórico. Os cartões ADL-86 a ADL-89 do Jira cobrem o HTML das quatro primeiras telas.
+**Design:** as telas do Figma estão concluídas e são a referência visual para o HTML e o CSS. As 47 telas finais estão exportadas na pasta `wireframes/`, com o requisito do PRD correspondente a cada uma. Os cartões ADL-86 a ADL-89 do Jira cobrem o HTML das quatro primeiras telas.
 
 A V1 precisa entregar o percurso **formulário → confirmação e gravação → versão pública → mapa → Ocorrências do agente → atualização da etapa, ocultação e correção**. Dashboard e gráficos ficam para depois.
 

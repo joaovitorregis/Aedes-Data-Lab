@@ -1,7 +1,7 @@
 # Start técnico — Aedes Data Lab
 
-**Estado:** plano técnico proposto, alinhado ao PRD 1.1; serviços ainda não implementados
-**Versão:** 1.1 — 05/11/2026
+**Estado:** plano técnico proposto, alinhado ao PRD 1.2; serviços ainda não implementados
+**Versão:** 1.2 — 05/11/2026
 **Produto:** [PRD do Aedes](./PRD_Aedes_Data_Lab.md)
 
 ## 1. O que existe hoje
@@ -21,7 +21,7 @@ Manter HTML, CSS único compartilhado e JavaScript modular. Firebase é a direç
 | Serviços cliente | Chamar operações de envio, listagem e atendimento |
 | Backend/regras | Validar, autorizar, persistir, separar dados e produzir projeção pública |
 
-Evitar consultas diretas espalhadas entre telas. Contratos iniciais: `confirmarEmail`, `salvarDenuncia`, `listarDenunciasPublicas`, `listarOcorrencias`, `iniciarAnalise`, `registrarObservacao`, `concluirOcorrencia`, `ocultarPublicacao`, `republicarOcorrencia` e `corrigirCamposDenuncia`. O último exige permissão exclusiva de João; as operações de agente não concedem essa permissão.
+Evitar consultas diretas espalhadas entre telas. Contratos iniciais: `confirmarEmail`, `salvarDenuncia`, `listarDenunciasPublicas`, `listarOcorrencias`, `iniciarAnalise`, `registrarObservacao`, `concluirOcorrencia`, `ocultarPublicacao`, `republicarOcorrencia` e `corrigirCamposDenuncia`. O último permite administrador autorizado ou cidadão com vínculo verificado com aquela denúncia. Possuir somente papel de agente não concede permissão de correção dos campos enviados.
 
 ## 3. Modelo inicial de dados
 
@@ -55,7 +55,7 @@ Consultar somente a projeção pública. Mostrar foto, descrição, categoria, d
 
 ### Ocorrências do agente
 
-João autoriza, revoga e apoia recuperação das contas. Todos os agentes autorizados podem consultar todas as ocorrências de Itambé e os campos privados, inclusive CPF completo. Visitantes continuam sem esse acesso. Abrir detalhe não altera etapa. “Iniciar análise” e “Atendida” são operações explícitas com autor/data; conclusão exige visita e análise do local, data, ação e observações. Se não resolver, manter Em análise e permitir novas observações internas com autor/data.
+O administrador autoriza, revoga e apoia recuperação das contas. Todos os agentes autorizados podem consultar todas as ocorrências de Itambé e os campos privados, inclusive CPF completo. Visitantes continuam sem esse acesso. Abrir detalhe não altera etapa. “Iniciar análise” e “Atendida” são operações explícitas com autor/data; conclusão exige visita e análise do local, data, ação e observações. Se não resolver, manter Em análise e permitir novas observações internas com autor/data.
 
 O autor de uma mudança não se torna responsável exclusivo pela ocorrência. Relatos distintos no mesmo local permanecem separados; mapa operacional preciso ajuda a reconhecê-los, sem fusão ou alteração automática em lote. Conferir etapa/versão atual ao salvar para não sobrescrever outra ação concorrente. Negar operações ao visitante e ao agente desabilitado no backend/regras.
 
@@ -63,9 +63,11 @@ Ocultar publicação exige motivo e não apaga o registro interno nem muda a eta
 
 Manter estados separados para envio, atendimento e publicação. Recebida/Em análise/Atendida descrevem atendimento; pendente/publicada/oculta descrevem visibilidade. Ocorrências não reabrem, mesmo em conclusão por engano ou reincidência: será necessário novo relato.
 
-Agente pode republicar após revisão e eventual correção por João. Registrar a versão da decisão de publicação para que tarefa antiga não substitua ocultação/republicação mais recente. Republicar nunca altera etapa de atendimento.
+Agente pode republicar após revisão e eventual correção pelo administrador ou cidadão responsável pelo envio. Registrar a versão da decisão de publicação para que tarefa antiga não substitua ocultação/republicação mais recente. Republicar nunca altera etapa de atendimento.
 
-Somente João corrige os campos enviados. Preservar original, motivo e autor/data em histórico privado. Correção de registro oculto não o republica; correção de registro publicado atualiza apenas a projeção permitida. Trocar e-mail não herda a confirmação do endereço anterior. Diferenciar essa operação das observações e mudanças de atendimento permitidas aos agentes.
+Administrador e cidadão responsável pelo envio podem corrigir os campos enviados. Para o cidadão, verificar acesso ao e-mail confirmado associado à denúncia e emitir autorização de edição restrita ao registro, com expiração e proteção contra reutilização indevida, sem exigir conta permanente. Protocolo, CPF ou e-mail digitado isoladamente não autorizam acesso. Limitar leitura/edição aos campos da própria denúncia, sem liberar notas e histórico operacional.
+
+Preservar original, motivo e autor/data em histórico privado. Correção de registro oculto não o republica; correção de registro publicado atualiza apenas a projeção permitida. Trocar e-mail não herda a confirmação do endereço anterior: preservar autoria e confirmar o novo endereço antes de utilizá-lo em autorizações futuras. Diferenciar essa operação das observações e mudanças de atendimento permitidas aos agentes. O mecanismo de acesso à correção é proposta técnica e ainda não está implementado.
 
 ## 5. Sequência de trabalho
 
@@ -74,7 +76,7 @@ Somente João corrige os campos enviados. Preservar original, motivo e autor/dat
 3. **Formulário e mapa locais:** ponto manual/GPS, fotos, revisão, estados de erro; mapa centralizado em Itambé sem exigir GPS.
 4. **Emuladores Firebase:** criar ambiente separado do Repecol, modelar público/privado, autenticação do agente e testes de acesso negado.
 5. **Envio real:** confirmação de e-mail, upload, persistência, protocolo, projeção pública, falhas parciais e reenvio.
-6. **Ocorrências:** login, lista, detalhe/consulta espacial, análise, observações, conclusão após visita, histórico, ocultação e republicação; correção administrativa exclusiva de João.
+6. **Ocorrências:** login, lista, detalhe/consulta espacial, análise, observações, conclusão após visita, histórico, ocultação e republicação; correção pelo administrador e pelo cidadão com vínculo verificado com o próprio envio.
 7. **Validação V1:** percorrer critérios de aceite do PRD; inspecionar respostas de rede e testar retirada rápida de conteúdo.
 8. **Fase posterior:** dashboard e gráficos da mesma base. Mapa técnico dedicado, visitas e outros complementos dependem de decisão própria e não são compromissos automáticos da fase seguinte.
 
@@ -87,12 +89,12 @@ Usar os cenários AC-01 a AC-14 do PRD como roteiro de aceite; os requisitos RF 
 - Fonte de limites de Itambé e regra de aproximação pública escolhidas e testadas.
 - Identidade/contato/CPF ausentes da resposta pública, inclusive URLs e metadados de foto.
 - Conta de agente revogável, operações protegidas e trilha de mudanças.
-- Ocultação/republicação testadas e pessoa responsável com rotina diária designada; João ainda não definiu quem fará a conferência e substituição. Criar e-mail para reclamações/correção/retirada.
-- João e a instituição assumem o serviço; identificar instituição e formalizar o vínculo. Registrar preferência de retenção indefinida, fechando política por tipo de dado e solicitações sobre dados sem prometer guarda eterna gratuita.
+- Ocultação/republicação testadas e pessoa responsável com rotina diária designada; o administrador ainda não definiu quem fará a conferência e substituição. Criar e-mail para reclamações/correção/retirada.
+- A administração e a instituição assumem o serviço; identificar instituição e formalizar o vínculo. Registrar preferência de retenção indefinida, fechando política por tipo de dado e solicitações sobre dados sem prometer guarda eterna gratuita.
 - Provedor de mapas, estimativa de volume/custo, limites e monitoramento acertados. Baixo custo, idealmente zero, é objetivo; teto financeiro e reação ao atingir cotas continuam pendentes.
 - Mensagem pública clara: canal ainda não oficial sem autorização; denúncia não garante vistoria nem prazo.
 
-O usuário quer abrir para moradores reais, sem grupo fechado. João aprova a abertura e assume manutenção. Ausência de agentes por vários dias não suspende novos envios por si só; não informar atendimento ou prazo garantido. Esses itens são preparação para essa abertura, não requisitos já implementados.
+O usuário quer abrir para moradores reais, sem grupo fechado. O administrador aprova a abertura e assume manutenção. Ausência de agentes por vários dias não suspende novos envios por si só; não informar atendimento ou prazo garantido. Esses itens são preparação para essa abertura, não requisitos já implementados.
 
 Ainda precisam de definição de produto: quem os dados representam no envio em nome de terceiros; desfecho de denúncia inválida sem visita; obrigatoriedade do endereço textual. Detecção de imagens indevidas permanece ideia futura, sem implementação na V1.
 

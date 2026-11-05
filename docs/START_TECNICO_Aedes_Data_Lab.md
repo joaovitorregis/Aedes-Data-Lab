@@ -1,7 +1,7 @@
 # Start técnico — Aedes Data Lab
 
-**Estado:** plano técnico proposto, alinhado ao PRD 1.0; serviços ainda não implementados
-**Versão:** 1.0 — 05/11/2026
+**Estado:** plano técnico proposto, alinhado ao PRD 1.1; serviços ainda não implementados
+**Versão:** 1.1 — 05/11/2026
 **Produto:** [PRD do Aedes](./PRD_Aedes_Data_Lab.md)
 
 ## 1. O que existe hoje
@@ -21,7 +21,7 @@ Manter HTML, CSS único compartilhado e JavaScript modular. Firebase é a direç
 | Serviços cliente | Chamar operações de envio, listagem e atendimento |
 | Backend/regras | Validar, autorizar, persistir, separar dados e produzir projeção pública |
 
-Evitar consultas diretas espalhadas entre telas. Contratos iniciais: `confirmarEmail`, `salvarDenuncia`, `listarDenunciasPublicas`, `listarOcorrencias`, `iniciarAnalise`, `concluirOcorrencia` e `ocultarPublicacao`.
+Evitar consultas diretas espalhadas entre telas. Contratos iniciais: `confirmarEmail`, `salvarDenuncia`, `listarDenunciasPublicas`, `listarOcorrencias`, `iniciarAnalise`, `registrarObservacao`, `concluirOcorrencia`, `ocultarPublicacao`, `republicarOcorrencia` e `corrigirCamposDenuncia`. O último exige permissão exclusiva de João; as operações de agente não concedem essa permissão.
 
 ## 3. Modelo inicial de dados
 
@@ -30,7 +30,7 @@ Evitar consultas diretas espalhadas entre telas. Contratos iniciais: `confirmarE
 | `reports/{id}` | Relato operacional, ponto exato, bairro, categoria, etapa e datas | Agentes autorizados |
 | `report_private/{id}` | Nome, CPF declarado, e-mail confirmado e telefone opcional | Agentes autorizados conforme necessidade |
 | `public_reports/{id}` | Área aproximada, categoria, data, etapa, foto e descrição publicáveis | Leitura pública |
-| `report_events/{id}` | Início de análise, atendimento, ocultação, motivo, autor e data | Agentes autorizados |
+| `report_events/{id}` | Início de análise, observações, atendimento, ocultação, republicação e correções com autor/data | Histórico privado conforme necessidade; nunca público |
 | `users/{uid}` | Habilitação e papel técnico | Acesso mínimo |
 | Storage | Originais restritos e versões públicas de fotos | Regras distintas |
 
@@ -55,11 +55,17 @@ Consultar somente a projeção pública. Mostrar foto, descrição, categoria, d
 
 ### Ocorrências do agente
 
-Authentication identifica a conta; autorização verifica papel concedido por administrador designado. Abrir detalhe não altera etapa. “Iniciar análise” e “Atendida” são operações explícitas com autor/data; conclusão exige ação e observações. O autor de uma mudança não se torna responsável exclusivo pela ocorrência. Conferir etapa/versão atual ao salvar para não sobrescrever outra ação concorrente. Negar operações ao visitante e ao agente desabilitado no backend/regras.
+João autoriza, revoga e apoia recuperação das contas. Todos os agentes autorizados podem consultar todas as ocorrências de Itambé e os campos privados, inclusive CPF completo. Visitantes continuam sem esse acesso. Abrir detalhe não altera etapa. “Iniciar análise” e “Atendida” são operações explícitas com autor/data; conclusão exige visita e análise do local, data, ação e observações. Se não resolver, manter Em análise e permitir novas observações internas com autor/data.
+
+O autor de uma mudança não se torna responsável exclusivo pela ocorrência. Relatos distintos no mesmo local permanecem separados; mapa operacional preciso ajuda a reconhecê-los, sem fusão ou alteração automática em lote. Conferir etapa/versão atual ao salvar para não sobrescrever outra ação concorrente. Negar operações ao visitante e ao agente desabilitado no backend/regras.
 
 Ocultar publicação exige motivo e não apaga o registro interno nem muda a etapa de atendimento. A proposta mínima da V1 oculta a publicação inteira, incluindo o acesso público às mídias. Uma tarefa de publicação antiga não pode desfazer ocultação. Retirar somente o marcador é insuficiente se a imagem continuar acessível pela URL antiga. Cópias já baixadas por terceiros não podem ser recuperadas pelo sistema.
 
-Manter estados separados para envio, atendimento e publicação. Recebida/Em análise/Atendida descrevem atendimento; pendente/publicada/oculta descrevem visibilidade. Reabertura, republicação manual e correção excepcional não devem surgir como botões sem regra de produto.
+Manter estados separados para envio, atendimento e publicação. Recebida/Em análise/Atendida descrevem atendimento; pendente/publicada/oculta descrevem visibilidade. Ocorrências não reabrem, mesmo em conclusão por engano ou reincidência: será necessário novo relato.
+
+Agente pode republicar após revisão e eventual correção por João. Registrar a versão da decisão de publicação para que tarefa antiga não substitua ocultação/republicação mais recente. Republicar nunca altera etapa de atendimento.
+
+Somente João corrige os campos enviados. Preservar original, motivo e autor/data em histórico privado. Correção de registro oculto não o republica; correção de registro publicado atualiza apenas a projeção permitida. Trocar e-mail não herda a confirmação do endereço anterior. Diferenciar essa operação das observações e mudanças de atendimento permitidas aos agentes.
 
 ## 5. Sequência de trabalho
 
@@ -68,7 +74,7 @@ Manter estados separados para envio, atendimento e publicação. Recebida/Em an�
 3. **Formulário e mapa locais:** ponto manual/GPS, fotos, revisão, estados de erro; mapa centralizado em Itambé sem exigir GPS.
 4. **Emuladores Firebase:** criar ambiente separado do Repecol, modelar público/privado, autenticação do agente e testes de acesso negado.
 5. **Envio real:** confirmação de e-mail, upload, persistência, protocolo, projeção pública, falhas parciais e reenvio.
-6. **Ocorrências:** login, lista, detalhe, análise, conclusão, histórico e ocultação.
+6. **Ocorrências:** login, lista, detalhe/consulta espacial, análise, observações, conclusão após visita, histórico, ocultação e republicação; correção administrativa exclusiva de João.
 7. **Validação V1:** percorrer critérios de aceite do PRD; inspecionar respostas de rede e testar retirada rápida de conteúdo.
 8. **Fase posterior:** dashboard e gráficos da mesma base. Mapa técnico dedicado, visitas e outros complementos dependem de decisão própria e não são compromissos automáticos da fase seguinte.
 
@@ -76,17 +82,19 @@ Cada entrega deve ser pequena, revisada por outra integrante e demonstrável. As
 
 ## 6. Verificações indispensáveis antes da abertura pública
 
-Usar os cenários AC-01 a AC-12 do PRD como roteiro de aceite; os requisitos RF e RNF permitem rastrear o resultado de cada teste. As dependências DEP-01 a DEP-09 identificam decisões/configurações de implantação, sem tratá-las como implementação concluída.
+Usar os cenários AC-01 a AC-14 do PRD como roteiro de aceite; os requisitos RF e RNF permitem rastrear o resultado de cada teste. As dependências DEP-01 a DEP-11 identificam decisões/configurações de implantação, sem tratá-las como implementação concluída.
 
 - Fonte de limites de Itambé e regra de aproximação pública escolhidas e testadas.
 - Identidade/contato/CPF ausentes da resposta pública, inclusive URLs e metadados de foto.
 - Conta de agente revogável, operações protegidas e trilha de mudanças.
-- Ocultação testada e pessoa responsável com rotina diária designada; cobertura fora do horário ainda precisa de decisão.
-- Política de uso do CPF, retenção, solicitações sobre dados e organização responsável definida.
-- Provedor de mapas, orçamento de Firebase/Storage/Functions, limites e monitoramento acertados.
+- Ocultação/republicação testadas e pessoa responsável com rotina diária designada; João ainda não definiu quem fará a conferência e substituição. Criar e-mail para reclamações/correção/retirada.
+- João e a instituição assumem o serviço; identificar instituição e formalizar o vínculo. Registrar preferência de retenção indefinida, fechando política por tipo de dado e solicitações sobre dados sem prometer guarda eterna gratuita.
+- Provedor de mapas, estimativa de volume/custo, limites e monitoramento acertados. Baixo custo, idealmente zero, é objetivo; teto financeiro e reação ao atingir cotas continuam pendentes.
 - Mensagem pública clara: canal ainda não oficial sem autorização; denúncia não garante vistoria nem prazo.
 
-O usuário quer abrir para moradores reais, sem grupo fechado. Esses itens são preparação para essa abertura, não requisitos já implementados.
+O usuário quer abrir para moradores reais, sem grupo fechado. João aprova a abertura e assume manutenção. Ausência de agentes por vários dias não suspende novos envios por si só; não informar atendimento ou prazo garantido. Esses itens são preparação para essa abertura, não requisitos já implementados.
+
+Ainda precisam de definição de produto: quem os dados representam no envio em nome de terceiros; desfecho de denúncia inválida sem visita; obrigatoriedade do endereço textual. Detecção de imagens indevidas permanece ideia futura, sem implementação na V1.
 
 ## 7. Referências e limites
 

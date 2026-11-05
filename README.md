@@ -1,35 +1,26 @@
 # Aedes Data Lab
 
-Wireframes de uma plataforma web com foco no uso em celular.
+Plataforma web, pensada primeiro para o celular, em que moradores de Itambé/PE registram possíveis focos do mosquito da dengue e agentes autorizados acompanham o atendimento.
 
-Aedes Data Lab é a evolução do projeto Repecol para uma plataforma voltada à prevenção da dengue. O Repecol passa a ser uma referência histórica desta evolução. O trabalho apresentado aqui está na fase de organização dos fluxos e desenho das telas no Figma; não é uma aplicação implementada.
+O Aedes Data Lab é a evolução do projeto Repecol, que agora fica como referência histórica. As telas do produto estão concluídas no Figma e a implementação do site começou: a pasta `site/` tem a estrutura inicial das páginas, ainda sem envio, banco ou autenticação.
 
 ## Documentação do produto
 
-- [PRD — Aedes Data Lab](docs/PRD_Aedes_Data_Lab.md): escopo da primeira entrega, requisitos, permissões e critérios de aceite.
-- [Start Técnico](docs/START_TECNICO_Aedes_Data_Lab.md): proposta de arquitetura e sequência de implementação alinhada ao PRD.
+- [PRD 2.0](docs/PRD_Aedes_Data_Lab.md): escopo da V1, decisões de produto, requisitos, permissões e critérios de aceite.
+- [Start Técnico 2.0](docs/START_TECNICO_Aedes_Data_Lab.md): arquitetura, modelo de dados e ordem de implementação.
+- [Guia do site](site/LEIA-ME.md): onde fica cada página e como o trabalho está dividido.
 
-O PRD consolida as decisões atuais do Aedes. Sua publicação não representa aplicação funcional ou aprovação institucional. As exportações históricas abaixo não definem o escopo atual.
+O PRD é a base aprovada para a construção da V1. Ele não indica aplicação em funcionamento nem aprovação institucional. Em caso de conflito com telas antigas, valem as decisões do PRD.
 
-## Arquivo editável dos wireframes
+## Design
 
-[Abrir wireframes no Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y?node-id=2010-2).
+[Abrir as telas no Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13). As telas finais estão na página **Fluxo de telas · Jornada do Usuário** e são a referência visual para o HTML e o CSS.
 
-![Captura histórica da organização do arquivo Figma, ainda com o nome Repecol](imagens/organizacao-figma.jpg)
+A pasta `wireframes/` tem as [47 telas finais exportadas](wireframes/README.md), organizadas por jornada e ligadas aos requisitos do PRD.
 
-A captura acima e as exportações locais são registros históricos. O índice das exportações informa que elas são anteriores à reorganização dos wireframes. Conservam nomes e conteúdos do Repecol, incluindo referências à Equipe Ecoimpactos e a Mogeiro. Esses elementos documentam a origem do material; não descrevem automaticamente a identidade, a equipe ou as entregas atuais do Aedes Data Lab.
+![Visão geral das telas finais do Aedes Data Lab](wireframes/montage.png)
 
-## Jornadas representadas nas exportações históricas
-
-- Início, orientações e Guia Aedes.
-- Denúncia de foco, localização no mapa e acompanhamento.
-- Histórico, conversa com atendimento e notificações.
-- Acesso, perfil e privacidade.
-- Áreas de agentes, produção, distribuição e gestão.
-
-[Veja as 52 exportações históricas dos wireframes](wireframes/README.md). Elas representam telas e estados de exemplo, não uma contagem de páginas do Figma. Não comprovam o estado atual do arquivo editável, navegação clicável, permissões, envio ou armazenamento de dados.
-
-O link do Figma abre o arquivo de design. A navegação do protótipo e a organização atual de suas páginas não foram verificadas nesta revisão documental.
+As exportações anteriores, ainda com conteúdo do Repecol (chat, produção, distribuição e o território de Mogeiro), ficam no histórico do Git. A [captura da organização original do arquivo](imagens/organizacao-figma.jpg) registra a origem do projeto.
 
 ## Autoria
 
@@ -37,6 +28,6 @@ João Vitor Regis · Aedes Data Lab.
 
 ## Licença
 
-A documentação, os wireframes e os designs de autoria de João Vitor Regis estão sob [CC BY 4.0](LICENSE), incluindo o protótipo identificado neste README. Ao reutilizar, credite o autor, informe as alterações e inclua um link para a licença.
+A documentação, os wireframes e os designs de autoria de João Vitor Regis estão sob [CC BY 4.0](LICENSE), incluindo o protótipo citado neste README. Ao reutilizar, credite o autor, informe as alterações e inclua um link para a licença.
 
-Elementos de terceiros conservam seus próprios direitos e licenças. A licença não concede direitos sobre marcas, imagem ou dados pessoais.
+Elementos de terceiros mantêm seus próprios direitos e licenças. A licença não concede direitos sobre marcas, imagem ou dados pessoais.

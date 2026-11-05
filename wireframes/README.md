@@ -1,57 +1,65 @@
-# Exportações dos wireframes
+# Telas finais do Aedes Data Lab
 
-Imagens exportadas antes da reorganização do protótipo. A versão editável está no Figma.
+Exportação das 47 telas da página **Fluxo de telas · Jornada do Usuário** do [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13), feita em 05/11/2026 em PNG com escala 2x. A tela 45 foi capturada direto do canvas e tem resolução menor. O arquivo do Figma continua sendo a fonte editável. Quando uma tela divergir do [PRD](../docs/PRD_Aedes_Data_Lab.md) sobre comportamento, vale o PRD.
 
-- [01-inicio-primeiro-acesso](01-inicio-primeiro-acesso.png)
-- [02-inicio-denuncia-ativa](02-inicio-denuncia-ativa.png)
-- [03-inicio-pos-atendimento-missao-pendente](03-inicio-pos-atendimento-missao-pendente.png)
-- [04-inicio-missao-concluida](04-inicio-missao-concluida.png)
-- [05-menu-cidadao](05-menu-cidadao.png)
-- [06-entrar](06-entrar.png)
-- [07-cadastro-cidadao](07-cadastro-cidadao.png)
-- [08-portal-tecnico](08-portal-tecnico.png)
-- [09-consentimento-privacidade](09-consentimento-privacidade.png)
-- [10-configuracao-pos-login](10-configuracao-pos-login.png)
-- [11-mapa-cidadao](11-mapa-cidadao.png)
-- [12-mapa-cidadao-popup](12-mapa-cidadao-popup.png)
-- [13-mapa-tecnico](13-mapa-tecnico.png)
-- [14-historico-lista](14-historico-lista.png)
-- [15-historico-expandido](15-historico-expandido.png)
-- [16-historico-foco](16-historico-foco.png)
-- [17-historico-vazio](17-historico-vazio.png)
-- [18-registrar-localizacao](18-registrar-localizacao.png)
-- [19-registrar-evidencias](19-registrar-evidencias.png)
-- [20-registrar-situacao](20-registrar-situacao.png)
-- [21-registrar-revisao](21-registrar-revisao.png)
-- [22-chat-cidadao-lista-vazia](22-chat-cidadao-lista-vazia.png)
-- [23-chat-cidadao-lista-preenchida](23-chat-cidadao-lista-preenchida.png)
-- [24-chat-cidadao-conversa](24-chat-cidadao-conversa.png)
-- [25-chat-cidadao-detalhes](25-chat-cidadao-detalhes.png)
-- [26-chat-conversa-finalizada](26-chat-conversa-finalizada.png)
-- [27-chat-envio-falhou](27-chat-envio-falhou.png)
-- [28-guia-aedes](28-guia-aedes.png)
-- [29-guia-quiz-respondido](29-guia-quiz-respondido.png)
-- [30-guia-conteudo-aberto](30-guia-conteudo-aberto.png)
-- [31-quem-somos](31-quem-somos.png)
-- [32-repelente](32-repelente.png)
-- [33-perfil](33-perfil.png)
-- [34-notificacoes-drawer](34-notificacoes-drawer.png)
-- [35-notificacoes-vazio](35-notificacoes-vazio.png)
-- [36-menu-agente](36-menu-agente.png)
-- [37-painel-agente](37-painel-agente.png)
-- [38-ocorrencias-agente](38-ocorrencias-agente.png)
-- [39-ocorrencia-detalhe-agente](39-ocorrencia-detalhe-agente.png)
-- [40-chat-agente-lista](40-chat-agente-lista.png)
-- [41-chat-agente-novo-atendimento](41-chat-agente-novo-atendimento.png)
-- [42-chat-agente-conversa](42-chat-agente-conversa.png)
-- [43-chat-agente-detalhes](43-chat-agente-detalhes.png)
-- [44-menu-producao](44-menu-producao.png)
-- [45-painel-producao](45-painel-producao.png)
-- [46-ocorrencias-producao](46-ocorrencias-producao.png)
-- [47-producao-lotes-distribuicao](47-producao-lotes-distribuicao.png)
-- [48-menu-gestor](48-menu-gestor.png)
-- [49-painel-gestor](49-painel-gestor.png)
-- [50-agentes-gestor](50-agentes-gestor.png)
-- [51-distribuicao-gestor](51-distribuicao-gestor.png)
-- [52-comunicados-tecnicos](52-comunicados-tecnicos.png)
-- [montage](montage.png)
+[Visão geral de todas as telas](montage.png)
+
+## Jornada do usuário
+
+### Entradas e conteúdo
+
+| Tela | Arquivo | Escopo no PRD |
+|---|---|---|
+| Início | [01-inicio](01-inicio.png) | V1 |
+| Menu de navegação | [02-navegacao](02-navegacao.png) | V1 |
+| Guia Aedes | [03-guia-aedes](03-guia-aedes.png) | Complementar |
+| Entrada do jogo | [04-entrada-do-jogo](04-entrada-do-jogo.png) | Complementar |
+| Quem somos | [05-quem-somos](05-quem-somos.png) | Complementar |
+| Repelentes | [06-repelente](06-repelente.png) | Complementar |
+
+### Denúncia
+
+| Tela | Arquivo | Requisitos |
+|---|---|---|
+| Passo 1 · Localização | [07-denuncia-1-localizacao](07-denuncia-1-localizacao.png) | RF-DEN-01, RF-DEN-02 |
+| Passo 2 · Identificação do foco | [08-denuncia-2-identificacao-e-fotos](08-denuncia-2-identificacao-e-fotos.png) | RF-DEN-01, RF-DEN-03 |
+| Passo 2 · Foto adicionada | [14-denuncia-2-foto-adicionada](14-denuncia-2-foto-adicionada.png) | RF-DEN-03 |
+| Passo 3 · Tipo e contato | [09-denuncia-3-tipo-e-contato](09-denuncia-3-tipo-e-contato.png) | RF-DEN-01 |
+| Passo 4 · Revisão | [10-denuncia-4-revisao](10-denuncia-4-revisao.png) | RF-DEN-01 |
+| Passo 4 · Revisão confirmada | [11-denuncia-4-revisao-confirmada](11-denuncia-4-revisao-confirmada.png) | RF-DEN-01 |
+| Passo 5 · Enviada e protocolo | [12-denuncia-5-enviada-e-protocolo](12-denuncia-5-enviada-e-protocolo.png) | RF-DEN-04, RF-DEN-05 |
+| Campos obrigatórios | [13-denuncia-campos-obrigatorios](13-denuncia-campos-obrigatorios.png) | RF-DEN-01 |
+| Falha no envio | [15-denuncia-falha-no-envio](15-denuncia-falha-no-envio.png) | RF-DEN-04 |
+| GPS · Solicitar permissão | [35-gps-solicitar-permissao](35-gps-solicitar-permissao.png) | RF-DEN-02 |
+| GPS · Localização obtida | [36-gps-localizacao-obtida](36-gps-localizacao-obtida.png) | RF-DEN-02 |
+| GPS · Sem permissão ou sinal | [37-gps-sem-permissao-ou-sinal](37-gps-sem-permissao-ou-sinal.png) | RF-DEN-02 |
+
+### Mapa público
+
+| Tela | Arquivo | Requisitos |
+|---|---|---|
+| Mapa | [16-mapa](16-mapa.png) | RF-MAP-01 |
+| Mapa com marcadores | [17-mapa-marcadores](17-mapa-marcadores.png) | RF-MAP-01 |
+| Lista de ocorrências | [18-mapa-lista-de-ocorrencias](18-mapa-lista-de-ocorrencias.png) | RF-MAP-01 |
+| Detalhe da ocorrência (4 variações) | [19](19-mapa-detalhe-da-ocorrencia.png), [20](20-mapa-detalhe-da-ocorrencia-2.png), [21](21-mapa-detalhe-da-ocorrencia-3.png), [22](22-mapa-detalhe-da-ocorrencia-4.png) | RF-MAP-01 |
+| Menu de filtros | [23-mapa-menu-de-filtros](23-mapa-menu-de-filtros.png) | RF-MAP-02 |
+| Filtro por período | [24-mapa-filtro-por-periodo](24-mapa-filtro-por-periodo.png), [39-filtro-de-periodos](39-filtro-de-periodos.png) | RF-MAP-02 |
+| Filtro por status | [25-mapa-filtro-por-status](25-mapa-filtro-por-status.png) | RF-MAP-02 |
+| Filtro por origem | [26-mapa-filtro-por-origem](26-mapa-filtro-por-origem.png) | Fora do PRD |
+| Filtro por localidade e bairros | [27](27-mapa-filtro-por-localidade.png), [28](28-mapa-bairros.png), [40](40-filtro-de-localidades.png), [41](41-mapa-bairros-variante.png) | RF-MAP-02 |
+| Seleção de distrito, rua e área | [29](29-filtro-distritos.png), [30](30-filtro-ruas.png), [31](31-filtro-areas.png) | Fora do aceite da V1 |
+| Mapa com distrito, rua ou área selecionado | [32](32-mapa-distritos-selecionado.png), [33](33-mapa-ruas-selecionado.png), [34](34-mapa-areas-selecionado.png) | Fora do aceite da V1 |
+| Mapa · variante | [38-mapa-variante](38-mapa-variante.png) | RF-MAP-01 |
+
+## Jornada do agente
+
+| Tela | Arquivo | Escopo no PRD |
+|---|---|---|
+| Portal técnico (login) | [45-portal-tecnico](45-portal-tecnico.png) | V1 · RF-AUT-02 |
+| Ocorrências | [47-agente-ocorrencias](47-agente-ocorrencias.png) | V1 · RF-AGE-01 |
+| Detalhe da ocorrência | [46-agente-detalhe-da-ocorrencia](46-agente-detalhe-da-ocorrencia.png) | V1 · RF-AGE-01 a RF-AGE-06 |
+| Mapa do agente | [42-agente-mapa](42-agente-mapa.png) | Consulta espacial (RF-AGE-01) |
+| Dashboard · desktop | [43-dashboard-proposta-desktop-refinado](43-dashboard-proposta-desktop-refinado.png) | Fase seguinte |
+| Dashboard · celular | [44-dashboard-proposta-celular-refinado](44-dashboard-proposta-celular-refinado.png) | Fase seguinte |
+
+As exportações anteriores, com telas herdadas do Repecol, continuam disponíveis no histórico do Git.

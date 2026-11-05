@@ -4,6 +4,13 @@ Wireframes de uma plataforma web com foco no uso em celular.
 
 Aedes Data Lab é a evolução do projeto Repecol para uma plataforma voltada à prevenção da dengue. O Repecol passa a ser uma referência histórica desta evolução. O trabalho apresentado aqui está na fase de organização dos fluxos e desenho das telas no Figma; não é uma aplicação implementada.
 
+## Documentação do produto
+
+- [PRD — Aedes Data Lab](docs/PRD_Aedes_Data_Lab.md): escopo da primeira entrega, requisitos, permissões e critérios de aceite.
+- [Start Técnico](docs/START_TECNICO_Aedes_Data_Lab.md): proposta de arquitetura e sequência de implementação alinhada ao PRD.
+
+O PRD consolida as decisões atuais do Aedes. Sua publicação não representa aplicação funcional ou aprovação institucional. As exportações históricas abaixo não definem o escopo atual.
+
 ## Arquivo editável dos wireframes
 
 [Abrir wireframes no Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y?node-id=2010-2).

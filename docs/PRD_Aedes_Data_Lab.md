@@ -1,444 +1,465 @@
-# PRD — Aedes Data Lab
+# Aedes Data Lab: Documento de Requisitos de Produto (PRD)
 
-| Documento | Informação |
+| Campo | Valor |
 |---|---|
-| Versão | 1.2 — 05/11/2026 |
-| Estado | Consolidado para revisão da equipe no PR; não representa software entregue ou aprovação institucional |
+| Versão | 2.0 · 05/11/2026 |
+| Estado | Aprovado como base de construção da V1 |
 | Território | Itambé, Pernambuco |
+| Responsável pelo documento | Administrador do produto |
 | Público | Produto, design, desenvolvimento, testes e agentes participantes |
-| Complemento | [Start Técnico](./START_TECNICO_Aedes_Data_Lab.md) |
+| Documento técnico | [Start Técnico](./START_TECNICO_Aedes_Data_Lab.md) |
 
 ## 1. Resumo executivo
 
-O Aedes Data Lab é uma plataforma web para moradores relatarem possíveis focos do mosquito da dengue em Itambé/PE. Cada denúncia reúne localização, evidências e identificação privada do denunciante. Após confirmação do recebimento, o sistema disponibiliza a ocorrência aos agentes e publica automaticamente a versão pública no mapa, com localização aproximada.
+O Aedes Data Lab é uma plataforma web em que moradores de Itambé/PE registram possíveis focos do mosquito da dengue. Cada denúncia traz o ponto do foco, fotos, uma descrição e a identificação de quem enviou, que fica restrita à equipe. Assim que o recebimento é confirmado, a denúncia entra na fila dos agentes e uma versão pública, com localização aproximada, aparece no mapa.
 
-Agentes autorizados usam login individual para consultar ocorrências, iniciar análise explicitamente, registrar observações, concluir após visita ao local e ocultar ou republicar conteúdo. O administrador gerencia os acessos. O administrador e o cidadão responsável pelo envio podem corrigir os campos da denúncia; o cidadão pode corrigir somente a própria denúncia, após confirmação de seu vínculo com o envio. O produto ajuda a equipe a observar onde há relatos.
+Os agentes usam login individual. Na área de Ocorrências eles iniciam a análise, registram observações, concluem o atendimento depois de ir ao local e podem ocultar ou republicar o conteúdo público. O administrador cuida dos acessos e pode corrigir os dados de qualquer denúncia. O cidadão que enviou também pode corrigir a sua, enquanto ela ainda não entrou em análise.
 
-A primeira entrega exige o caminho completo **envio → persistência → mapa público → Ocorrências dos agentes → atualização do atendimento**. Dashboard e gráficos são da fase seguinte. O lançamento pretendido recebe relatos de moradores reais, sem lista de convidados; mesmo na ausência de agente disponível por vários dias, o recebimento continua. O administrador aprova a abertura e assume a manutenção, com responsabilidade pelo serviço compartilhada com uma instituição ainda não identificada neste documento. O compromisso dos agentes e a forma do vínculo institucional ainda precisam de confirmação documentada.
+O produto mostra à equipe e à população onde há relatos. **Denúncias não equivalem a casos confirmados de dengue nem comprovam risco epidemiológico.**
 
-## 2. Como usar este PRD
+A V1 precisa entregar o caminho inteiro: **envio → gravação → mapa público → Ocorrências dos agentes → atualização do atendimento**. Dashboard e gráficos ficam para a fase seguinte. O lançamento será aberto a qualquer morador, sem lista de convidados, e o recebimento continua mesmo quando nenhum agente estiver disponível por alguns dias. O administrador aprova a abertura e responde pela manutenção, em conjunto com uma instituição parceira que ainda será formalizada (DEP-04).
 
-O PRD define comportamento e aceite do produto; o Start Técnico organiza sua implementação. O PRD do Repecol serviu de referência de estrutura e profundidade, sem transferir automaticamente seus requisitos.
+## 2. Como ler este documento
 
-Há três tipos de informação:
+Este PRD descreve o comportamento esperado do produto e como cada parte será aceita. O Start Técnico trata da arquitetura e da ordem de implementação. Se os dois divergirem sobre comportamento, vale o PRD.
 
-- **Decisão do usuário:** diretriz confirmada na conversa e consolidada na seção 4.
-- **Especificação proposta:** detalhamento feito nesta versão para tornar as decisões implementáveis, sem atribuí-lo ao usuário. Identificado nas seções correspondentes.
-- **Dependência de implantação:** configuração, responsável ou política que precisa ser resolvida antes de determinada entrega; registrada na seção 17.
+O texto usa três tipos de item:
 
-Uma dependência de lançamento não torna o documento uma aplicação pronta nem exige interromper o desenvolvimento com dados fictícios. Alterações de escopo devem atualizar este PRD e seus critérios de aceite no mesmo PR.
+- **Decisões de produto (D):** escolhas do responsável pelo produto, reunidas na seção 5.
+- **Requisitos (RF e RNF):** o que o sistema precisa fazer, cada um com critério de aceite.
+- **Dependências (DEP):** configurações, responsáveis ou políticas que precisam estar resolvidas antes de uma entrega específica (seção 18).
 
-## 3. Contexto, problema e visão
+O desenvolvimento pode avançar com dados fictícios enquanto houver dependências de lançamento abertas. Toda mudança de escopo atualiza este PRD e os critérios de aceite no mesmo PR.
 
-O problema de produto é reunir relatos com informação suficiente para consulta pelos agentes e apresentar uma visão pública do que foi relatado. Não houve nesta documentação uma pesquisa que comprove a rotina atual da prefeitura ou que o Aedes já tenha adesão institucional.
+## 3. Glossário
 
-A experiência começa no celular e deve funcionar também em computador. As quatro integrantes desenvolvem HTML, CSS e JavaScript de suas telas; banco e integrações serão aprendidos em conjunto com a coordenação do projeto. A sequência de aprendizagem não altera os critérios de funcionamento do produto.
-
-**Estado do repositório:** na base `main` inspecionada em 05/11/2026, commit `70bf8c2`, há estrutura inicial de páginas, CSS compartilhado e scripts orientadores. O fluxo real de envio e operação não está implementado nessa base. Essa constatação não é auditoria de todos os trabalhos das branches das integrantes nem de um ambiente publicado. O Figma e a prévia externa do dashboard são referências de design, não prova de implementação no site.
-
-## 4. Decisões consolidadas
-
-| ID | Decisão válida para esta versão |
+| Termo | Significado |
 |---|---|
-| D01 | A V1 inclui denúncia persistida, mapa público, lista/detalhe de Ocorrências e atualização pelos agentes. |
-| D02 | O lançamento pretendido é aberto a moradores reais. Grupo fechado de convidados não é requisito. |
-| D03 | Foto e descrição são publicadas automaticamente, sem aprovação prévia de agente na V1. |
-| D04 | Agente ou operador autorizado pode ocultar publicação com motivo, preservando o registro interno. Haverá responsável e rotina diária de conferência antes da abertura pública. |
-| D05 | Botão público de sinalização de conteúdo e análise automática de fotos ficam fora da V1. |
-| D06 | Nome, CPF e e-mail confirmado são obrigatórios; telefone é opcional. Nenhum desses campos aparece no mapa, nem parcialmente. |
-| D07 | CPF é mantido por decisão do usuário. A intenção declarada foi verificar a existência da pessoa, mas digitar/validar CPF não comprova titularidade; o produto não promete identidade verificada. |
-| D08 | O cidadão confirma acesso ao e-mail por denúncia, sem conta persistente ou histórico pessoal na V1. |
-| D09 | O público vê localização aproximada; agentes autorizados veem o ponto exato. |
-| D10 | O território de envio é Itambé/PE. Navegar no mapa fora do município não significa poder enviar fora dele. |
-| D11 | Cada agente tem login individual autorizado pelo administrador. Todos os agentes autorizados podem consultar todas as ocorrências de Itambé e os dados privados, inclusive CPF completo; visitantes não podem. |
-| D12 | Etapas: Recebida → Em análise → Atendida. Abrir detalhe não muda a etapa; iniciar análise exige ação explícita. |
-| D13 | Atendida exige que o agente tenha ido ao local e analisado a situação, registrando data, ação realizada e observações. Responder significa atualizar a ocorrência, sem mensagem individual ao cidadão. |
-| D14 | Se a persistência funcionar e a publicação falhar, o cidadão recebe protocolo e informação de publicação pendente. |
-| D15 | Dashboard e gráficos ficam após a primeira entrega. Contagens representam relatos e não classificam automaticamente risco. |
-| D16 | Repelentes é conteúdo educativo. Chat, comércio, pedidos e produção não integram a V1. |
-| D17 | Quando não consegue resolver, o agente mantém Em análise e registra observações internas. |
-| D18 | Ocorrências não reabrem. Conclusão por engano ou reaparecimento do problema exige nova ocorrência. |
-| D19 | Agente pode republicar ocorrência ocultada após revisão/correção. Ocultação não apaga o registro. |
-| D20 | O administrador e o cidadão responsável pelo envio podem corrigir os campos da denúncia. O cidadão só altera a própria denúncia, com vínculo verificado. Agentes continuam autorizados às ações operacionais próprias. |
-| D21 | Envio em nome de outra pessoa é permitido em princípio; quais pessoas os dados de identificação representam ainda precisa ser definido. |
-| D22 | O administrador autoriza, revoga e recupera contas de agentes, aprova a abertura pública e assume a manutenção. Responsabilidade pelo serviço é compartilhada com a instituição a identificar. |
-| D23 | Ausência de agentes disponíveis por vários dias não suspende o recebimento. Será criado e-mail para reclamações, correções e retirada; endereço e responsável por acompanhá-lo ainda não definidos. |
-| D24 | Preferência do usuário: preservar as informações por prazo indefinido, sem perda de histórico. A política por tipo de dado, inclusive dados pessoais e visibilidade pública, ainda será formalizada. |
-| D25 | Prioridade de custo: aplicação de baixo custo, idealmente sem custo. Não há teto financeiro numérico ou garantia de gratuidade definidos. |
+| Denúncia | Envio feito pelo morador no fluxo Registrar foco |
+| Ocorrência | A mesma denúncia, tratada na área dos agentes |
+| Publicação | Versão pública da denúncia no mapa, apenas com os campos permitidos |
+| Protocolo | Código gerado pelo serviço depois que a denúncia foi gravada; comprova o recebimento |
+| Etapa de atendimento | Recebida, Em análise ou Atendida |
+| Estado de publicação | Pendente, Publicada ou Oculta |
+| Agente autorizado | Pessoa com login individual liberado pelo administrador para a área de Ocorrências |
+| Administrador | Papel que gerencia acessos, corrige denúncias e aprova a abertura pública |
+| Cidadão responsável pelo envio | Quem enviou a denúncia e comprova acesso ao e-mail confirmado nela |
 
-## 5. Objetivos e limite da primeira entrega
+## 4. Contexto e estado atual
 
-O núcleo deve permitir que uma denúncia recebida chegue aos agentes e seja consultada publicamente sem divulgar os campos privados. Cada resultado abaixo precisa de evidência:
+O Aedes Data Lab precisa reunir relatos com informação suficiente para o trabalho dos agentes e dar à população uma visão pública do que foi relatado. A documentação ainda não inclui levantamento da rotina atual da prefeitura, e a adesão institucional ainda não foi formalizada.
+
+A experiência é pensada primeiro para o celular e precisa funcionar bem no computador. Quatro integrantes constroem HTML, CSS e JavaScript das telas. Banco de dados e integrações serão aprendidos em conjunto com a coordenação do projeto, e essa ordem de aprendizagem não altera os critérios de aceite.
+
+**Estado do repositório em 05/11/2026 (commit `f403ef5`):** a pasta `site/` tem 12 páginas de estudo, sete da área pública e cinco da área dos agentes, com um CSS compartilhado e um JavaScript por tela, todos com conteúdo inicial. Ainda não há envio, banco, autenticação nem publicação no mapa. As branches das integrantes não têm alterações de código em relação ao `main`. Meu trabalho, Mapa técnico e Dashboard já existem como páginas reservadas, fora do aceite da V1 (seção 6.1).
+
+**Design:** as telas do Figma estão concluídas e são a referência visual da implementação. As exportações da pasta `wireframes/` são anteriores a essa versão final e ainda mostram telas herdadas do Repecol, como chat, cadastro de cidadão e produção, que ficaram fora deste escopo. Se uma tela do Figma divergir deste PRD sobre comportamento, vale o PRD.
+
+## 5. Decisões de produto
+
+| ID | Decisão |
+|---|---|
+| D01 | A V1 inclui denúncia gravada, mapa público, lista e detalhe de Ocorrências e atualização do atendimento pelos agentes. |
+| D02 | O lançamento é aberto a moradores reais, sem grupo fechado de convidados. |
+| D03 | Foto e descrição são publicadas automaticamente, sem aprovação prévia de agente. |
+| D04 | Agente autorizado pode ocultar uma publicação, com motivo, preservando o registro interno. Antes da abertura pública haverá um responsável e uma rotina diária de conferência. |
+| D05 | Botão público para sinalizar conteúdo e análise automática de fotos ficam fora da V1. |
+| D06 | Nome, CPF e e-mail confirmado são obrigatórios; telefone é opcional. Nenhum desses campos aparece no mapa, nem de forma parcial. |
+| D07 | O CPF é obrigatório. A intenção é confirmar que a pessoa existe; como digitar ou validar o formato não comprova titularidade, o produto não anuncia identidade verificada. |
+| D08 | O cidadão confirma o e-mail a cada denúncia. A V1 não tem conta permanente nem histórico pessoal. |
+| D09 | O público vê a localização aproximada; agentes autorizados veem o ponto exato. |
+| D10 | Só são aceitas denúncias dentro de Itambé/PE. O mapa pode ser navegado fora do município, o envio não. |
+| D11 | Cada agente tem login individual liberado pelo administrador. Todos os agentes autorizados consultam todas as ocorrências de Itambé e os dados privados, inclusive o CPF completo. |
+| D12 | Etapas de atendimento: Recebida → Em análise → Atendida. Abrir o detalhe não muda a etapa; iniciar a análise é uma ação explícita. |
+| D13 | Para marcar como Atendida, o agente precisa ter ido ao local e analisado a situação, registrando data, ação realizada e observações. A resposta ao cidadão é a atualização da ocorrência, sem mensagem individual. |
+| D14 | Se a gravação funcionar e a publicação falhar, o cidadão recebe o protocolo e o aviso de publicação pendente. |
+| D15 | Dashboard e gráficos vêm depois da V1. Contagens representam relatos e não classificam risco automaticamente. |
+| D16 | Repelentes é conteúdo educativo. Chat, comércio, pedidos e produção ficam fora da V1. |
+| D17 | Quando não consegue resolver, o agente mantém a ocorrência Em análise e registra observações internas. |
+| D18 | Ocorrências não são reabertas. Conclusão por engano ou reaparecimento do problema exige nova denúncia. |
+| D19 | O agente pode republicar uma ocorrência oculta depois de revisá-la. Ocultar não apaga o registro. |
+| D20 | O administrador corrige os campos de qualquer denúncia. O cidadão responsável pelo envio corrige apenas a própria, dentro do prazo definido em D26. Agentes ficam com as ações operacionais. |
+| D21 | Envio em nome de outra pessoa é aceito em princípio. A quem pertencem nome, CPF e e-mail nesse caso ainda será definido (DEP-10). |
+| D22 | O administrador libera, revoga e recupera contas de agentes, aprova a abertura pública e assume a manutenção. A responsabilidade pelo serviço é compartilhada com uma instituição parceira a formalizar (DEP-04). |
+| D23 | A falta de agentes por vários dias não suspende o recebimento. Haverá um e-mail de contato para reclamações, pedidos de correção e retirada de conteúdo (DEP-05). |
+| D24 | As informações devem ser preservadas por prazo indefinido, sem perda de histórico. A política por tipo de dado será formalizada em DEP-06. |
+| D25 | O custo de operação deve ser baixo, idealmente zero. Ainda não há teto financeiro definido (DEP-07). |
+| D26 | O cidadão corrige a própria denúncia somente enquanto ela estiver Recebida. Depois que entra Em análise, ele pede a correção pelo e-mail de contato (D23) e o administrador decide se aplica. |
+
+## 6. Objetivos e escopo da V1
+
+A V1 precisa levar uma denúncia até os agentes e ao mapa público sem expor os campos privados. Cada resultado abaixo tem uma evidência de entrega:
 
 | Resultado | Evidência de entrega |
 |---|---|
-| Recebimento confiável | Protocolo recuperável na confirmação e registro persistente após recarga |
-| Visibilidade pública | Mesmo relato no mapa com área aproximada e campos permitidos |
-| Operação do agente | Conta autorizada acessa detalhe, inicia análise e registra atendimento |
-| Proteção de acesso | Visitante não lê dados privados nem executa ações técnicas |
-| Retirada de publicação | Ocultação justificada retira conteúdo público e preserva histórico interno |
+| Recebimento confiável | Protocolo exibido na confirmação e registro presente após recarregar |
+| Visibilidade pública | A mesma denúncia no mapa, com área aproximada e só os campos permitidos |
+| Operação do agente | Conta autorizada abre o detalhe, inicia a análise e registra o atendimento |
+| Proteção de acesso | Visitante não lê dados privados nem executa ações dos agentes |
+| Retirada de publicação | Ocultação com motivo tira o conteúdo do ar e mantém o histórico interno |
 | Recuperação de falhas | GPS negado, falha de upload, resposta perdida e reenvio têm comportamento verificável |
 
-Não há prazo de vistoria, quantidade de usuários, redução de dengue ou volume de denúncias prometidos. Metas de adoção precisam ser definidas com a operação.
+Este PRD não fixa prazo de vistoria, número de usuários, volume de denúncias ou meta de redução da dengue. As metas de adoção serão combinadas com a operação (DEP-09).
 
-### 5.1 Matriz de escopo
+### 6.1 Matriz de escopo
 
-| Capacidade | Primeira entrega | Evolução |
+| Capacidade | V1 | Depois da V1 |
 |---|---|---|
-| Entrada pública para registrar/consultar | Necessária ao fluxo | Refinamento da página Início |
-| Confirmação de e-mail por denúncia | Incluída | Sem conta permanente prevista na V1 |
-| Formulário, fotos, localização, protocolo | Incluídos | Melhorias a partir do uso |
-| Mapa público e filtros | Incluídos | Mais formas de leitura territorial |
+| Página Início com acesso a registrar e consultar | Incluída | Refinamentos de conteúdo |
+| Confirmação de e-mail por denúncia | Incluída | Sem conta permanente prevista |
+| Formulário, fotos, localização e protocolo | Incluídos | Melhorias a partir do uso |
+| Mapa público com filtros | Incluído | Novas formas de leitura do território |
 | Login, lista, detalhe e ações do agente | Incluídos | Outras ferramentas operacionais |
-| Ponto exato no detalhe autorizado | Incluído | Mapa técnico dedicado pode ser desenvolvido separadamente |
-| Dashboard, gráficos e comparação | Não exigidos no aceite V1 | Fase seguinte |
-| Guia Aedes, Repelentes, Quem Somos e entrada do jogo | Complementares; podem ser desenvolvidos em paralelo | Conteúdo conforme fontes e design |
-| Agenda de visitas, Meu trabalho e rotas | Não exigidos no aceite mínimo | Dependem de decisão própria; não são compromissos deste roadmap |
-| Chat, resposta individual, push e central de notificações | Fora da V1 | Sem compromisso de implementação |
-| Conta/histórico pessoal do cidadão | Fora da V1 | Sem compromisso de implementação |
-| Comércio e produção de repelente | Fora do produto aqui especificado | Não importar do Repecol |
+| Ponto exato no detalhe da ocorrência | Incluído | Mapa técnico dedicado, em decisão própria |
+| Dashboard, gráficos e comparações | Fora do aceite | Fase seguinte |
+| Guia Aedes, Repelentes, Quem somos e entrada do jogo | Complementares, em paralelo | Conteúdo conforme fontes e design |
+| Agenda de visitas, Meu trabalho e rotas | Fora do aceite | Sem compromisso neste roadmap |
+| Chat, resposta individual, push e central de notificações | Fora da V1 | Sem compromisso |
+| Conta e histórico pessoal do cidadão | Fora da V1 | Sem compromisso |
+| Comércio e produção de repelente | Fora do produto | Não importar do Repecol |
 
-O e-mail de confirmação necessário ao envio é parte da V1; a exclusão de notificações não o elimina. A ausência de um dashboard não impede o registro dos dados necessários às análises futuras.
+O e-mail de confirmação faz parte da V1 mesmo com notificações fora do escopo. A ausência do dashboard também não dispensa a gravação dos dados que as análises futuras vão usar.
 
-## 6. Perfis e permissões
+## 7. Perfis e permissões
 
-| Operação | Público/morador | Agente autorizado | Administração de acesso |
-|---|---|---|---|
-| Ler mapa publicado | Sim | Sim | Sim |
-| Enviar denúncia | Após confirmação do e-mail e validações | Pelo fluxo público, se necessário | Pelo fluxo público, se necessário |
-| Ler campos privados para consulta/correção | Visitante: não. Cidadão com vínculo verificado: somente os campos enviados na própria denúncia | Sim, para a operação | Sim, no exercício da correção autorizada |
-| Iniciar análise e concluir | Não | Sim | Somente se também tiver autorização operacional |
-| Ocultar publicação com motivo | Não | Sim | Somente se também tiver autorização operacional |
-| Republicar após revisão | Não | Sim | Somente se também tiver autorização operacional |
-| Registrar observação e atendimento | Não | Sim | Somente se também tiver autorização operacional |
-| Corrigir campos enviados da denúncia | Cidadão com vínculo verificado: somente a própria denúncia | Não por possuir apenas papel de agente | Sim |
-| Conceder/revogar acesso e apoiar recuperação de conta | Não | Não por possuir apenas papel de agente | Administrador |
-| Apagar histórico pelo navegador | Não | Não | Não previsto na interface V1 |
+| Operação | Visitante | Cidadão responsável pelo envio | Agente autorizado | Administrador |
+|---|---|---|---|---|
+| Ver o mapa público | Sim | Sim | Sim | Sim |
+| Enviar denúncia | Sim, após confirmar o e-mail | Sim, uma nova denúncia | Pelo fluxo público | Pelo fluxo público |
+| Ler campos privados | Não | Só os que enviou na própria denúncia | Todas as ocorrências de Itambé, inclusive CPF completo | Sim, para corrigir |
+| Corrigir campos enviados | Não | Própria denúncia, enquanto Recebida | Não | Qualquer denúncia, em qualquer etapa |
+| Iniciar análise, registrar observação e concluir | Não | Não | Sim | Somente se também tiver papel de agente |
+| Ocultar e republicar | Não | Não | Sim | Somente se também tiver papel de agente |
+| Ver observações e histórico interno | Não | Não | Sim | No que for necessário à correção |
+| Liberar, revogar e recuperar contas de agentes | Não | Não | Não | Sim |
+| Apagar histórico pela interface | Não | Não | Não | Não |
 
-O administrador gerencia os acessos e pode corrigir os campos enviados. O cidadão responsável pelo envio também pode corrigi-los na própria denúncia, após verificação do vínculo. Essa permissão é distinta das ações de análise, observação, atendimento e publicação dos agentes. Todos os agentes autorizados consultam ocorrências de todo o município, sem restrição por equipe ou subterritório. Visitantes não recebem dados privados. A correção pelo cidadão não exige conta permanente nem cria acesso a histórico interno, notas dos agentes ou denúncias de terceiros.
+Os agentes autorizados enxergam o município inteiro, sem divisão por equipe ou região. A permissão de correção do cidadão funciona sem conta permanente e não dá acesso às notas dos agentes, ao histórico interno ou a denúncias de outras pessoas. Corrigir dados é uma permissão separada das ações de análise, atendimento e publicação.
 
-## 7. Informações da denúncia
+## 8. Dados da denúncia
 
-| Informação | Obrigatória | Destino e regra |
+| Campo | Obrigatório | Destino e regra |
 |---|---|---|
-| Nome | Sim | Privado; não publicar iniciais ou apelido derivado |
-| CPF | Sim | Privado; dado declarado, sem prova de titularidade |
-| E-mail | Sim, confirmado por denúncia | Privado; a confirmação não valida CPF ou identidade civil |
-| Telefone | Não | Privado; não implica envio de WhatsApp ou SMS |
-| Ponto do foco | Sim | Exato na área técnica; representação aproximada no público |
-| Bairro/localidade | Sim | Público; catálogo e relação com território serão configurados |
-| Categoria | Sim | Pública; catálogo versionado para não quebrar registros antigos |
-| Descrição | Sim | Pública automaticamente após recebimento |
-| Fotos | De uma a três | Públicas após processamento técnico; sem aprovação humana prévia |
-| Endereço digitado | Preenchimento previsto; obrigatoriedade ainda não fechada | Privado na proposta de detalhamento; não substitui o ponto exato marcado |
-| Referência do local | Opcional, conforme direção anterior | Privada na proposta de detalhamento, para não contrariar a aproximação pública |
-| Protocolo, data e etapa | Gerados pelo serviço | A data e a etapa são públicas; protocolo é comprovante de recebimento |
-| Ação realizada, observações e autor da ação | Na conclusão pelo agente | Internos; não publicar automaticamente as observações |
+| Nome | Sim | Privado. Iniciais e apelidos derivados também não são publicados |
+| CPF | Sim | Privado. Dado declarado, sem prova de titularidade |
+| E-mail | Sim, confirmado a cada denúncia | Privado. A confirmação não valida CPF nem identidade civil |
+| Telefone | Não | Privado. Não implica envio de WhatsApp ou SMS |
+| Ponto do foco | Sim | Exato na área dos agentes; aproximado no mapa público |
+| Bairro ou localidade | Sim | Público, a partir de catálogo configurado (DEP-01) |
+| Categoria | Sim | Pública, a partir de catálogo versionado para preservar registros antigos |
+| Descrição | Sim | Publicada automaticamente após o recebimento |
+| Fotos | De uma a três | Publicadas após tratamento técnico, sem aprovação humana prévia |
+| Endereço digitado | Previsto; obrigatoriedade em DEP-12 | Privado. Não substitui o ponto marcado no mapa |
+| Referência do local | Não | Privada, para não anular a aproximação pública |
+| Protocolo, data e etapa | Gerados pelo serviço | Data e etapa são públicas; o protocolo é o comprovante de recebimento |
+| Ação realizada, observações e autor | Na conclusão pelo agente | Internos; as observações nunca vão para o mapa |
 
-A quantidade de uma a três fotos vem da direção anterior do Aedes. O usuário quer digitação de endereço e marcação precisa do foco; o ponto marcado no mapa é a referência espacial exata. Na proposta de detalhamento, endereço/referência ficam privados para preservar a decisão de localização pública aproximada. Categorias, formatos/tamanhos de arquivo e precisão da área pública são configurações a fechar na implementação, sem copiar silenciosamente os valores do Repecol.
+O ponto marcado no mapa é a referência espacial exata da denúncia. Endereço e referência ficam privados porque revelariam o local que a área aproximada protege. Categorias, formatos e tamanhos de arquivo e a precisão da área pública serão configurados na implementação, sem reaproveitar automaticamente os valores do Repecol.
 
-O envio em nome de terceiros foi aceito em princípio. Não assumir que nome, CPF e e-mail pertencem todos ao titular representado ou todos a quem preenche: essa definição ainda está pendente, inclusive para envio assistido e menores. A implementação dessa modalidade depende de fechar essa regra.
+O CPF passa por conferência de formato e dígitos verificadores, para pegar erro de digitação. Não há consulta externa nem validação de titularidade. O mesmo CPF ou e-mail pode aparecer em denúncias diferentes, e o sistema não limita o número de denúncias por pessoa. Controle de abuso (RNF-08) atua sobre repetição e volume, sem bloquear relatos legítimos.
 
-**Especificação proposta:** conferir formato/dígitos do CPF para detectar erro de digitação, sem consulta externa ou validação de titularidade. O mesmo CPF/e-mail pode estar associado a relatos distintos; o sistema não impõe limite de uma denúncia por pessoa. Controle de abuso é diferente de bloquear relatos legítimos.
+Antes do envio, o formulário avisa que foto e descrição serão públicas e orienta a evitar rostos, placas e dados pessoais. Como a V1 publica sem revisão prévia, uma foto ou um texto ainda pode identificar alguém. A separação dos campos protege os dados estruturados; para conteúdo indevido encontrado depois, o caminho é a ocultação.
 
-O aviso de publicação deve citar foto e descrição e orientar a evitar rostos, placas e dados pessoais. Como não há revisão prévia ou detecção automática de conteúdo na V1, o sistema não pode garantir que uma foto ou texto nunca identifique alguém. A separação de campos privados protege os dados estruturados; a ocultação trata conteúdo indevido encontrado depois.
+## 9. Requisitos funcionais
 
-## 8. Requisitos funcionais e aceite por função
+### RF-AUT-01 · Confirmar o e-mail a cada denúncia
 
-### RF-AUT-01 — Confirmar e-mail por denúncia
+O envio final depende da prova de acesso ao e-mail, vinculada àquela tentativa de denúncia. A pessoa pode corrigir o endereço e pedir nova confirmação se o código falhar ou expirar. A confirmação acontece antes do formulário longo, para que ninguém perca o preenchimento por um e-mail errado. Essa etapa não vira cadastro com senha.
 
-O envio final depende de prova de acesso ao e-mail vinculada à tentativa de denúncia. Permitir corrigir endereço e solicitar nova confirmação em caso de falha ou expiração. Não transformar essa etapa em cadastro com senha e histórico pessoal.
+**Aceite:** e-mail sem confirmação ou com confirmação inválida não finaliza a denúncia; a confirmação de uma tentativa não vale para outra; uma resposta perdida depois do envio não obriga a pessoa a refazer a denúncia.
 
-**Aceite:** e-mail não confirmado ou confirmação inválida não finaliza relato; confirmação de uma tentativa não autoriza outra; resposta perdida após envio não exige nova denúncia.
+### RF-AUT-02 · Proteger a sessão do agente
 
-**Especificação proposta:** confirmar no início, antes do preenchimento longo. A ordem exata dos passos é escolha de implementação; a obrigação confirmada pelo usuário é verificar antes de aceitar o envio.
+Login individual, com autorização concedida pelo administrador fora do cadastro público, e opção de sair. A revogação bloqueia novas leituras e operações protegidas. Ao sair, a interface limpa as informações privadas da tela.
 
-### RF-AUT-02 — Proteger a sessão do agente
+**Aceite:** visitante e conta sem papel de agente não leem o detalhe privado nem mudam a etapa; conta revogada para de operar; conhecer o endereço de uma página técnica não concede acesso.
 
-Login individual, autorização atribuída fora do cadastro público e saída de sessão. A revogação deve impedir novas leituras e operações protegidas; limpar informações privadas da interface ao sair.
+### RF-DEN-01 · Preencher e revisar
 
-**Aceite:** visitante e conta sem papel não leem detalhe privado nem mudam etapa; conta revogada não continua operando; exibir um link de página não concede permissão.
+O formulário apresenta localização, evidências, identificação e revisão em passos claros. Antes do envio a pessoa pode corrigir qualquer campo e remover ou trocar fotos. Voltar um passo não apaga o que foi preenchido.
 
-### RF-DEN-01 — Preencher e revisar
+**Aceite:** campo obrigatório vazio impede o envio e a mensagem de erro indica o campo; a revisão separa visualmente o que será público do que é privado; os valores são preservados entre os passos. A V1 não recupera o preenchimento depois que o navegador é fechado.
 
-Apresentar localização, evidências/informações, identificação privada e revisão de forma compreensível. Permitir corrigir campos e remover/trocar fotos antes do envio. Não perder valores ao voltar uma etapa.
+### RF-DEN-02 · Escolher o local e validar o território
 
-**Aceite:** não finalizar com campo obrigatório ausente; erro aponta o campo; revisão distingue informação pública de privada. Preservação entre etapas é obrigatória. Recuperação após fechar navegador não é promessa da V1.
+A pessoa marca e ajusta o ponto manualmente. O GPS é opcional e só é acionado por ela; a posição do aparelho não é tratada como posição do foco. A validação do território acontece no serviço.
 
-### RF-DEN-02 — Escolher o local e validar território
+**Aceite:** GPS negado não impede a marcação manual; ponto fora de Itambé é recusado; trocar o bairro digitado não contorna a validação do ponto; a localização do aparelho não é coletada de forma contínua.
 
-Permitir selecionar e corrigir ponto manualmente. GPS é opcional e depende de ação do usuário; posição do dispositivo não é assumida como posição do foco. Validar a área atendida no serviço.
+### RF-DEN-03 · Receber fotos
 
-**Aceite:** GPS negado não impede seleção manual; ponto fora da área não é aceito; alterar bairro escrito não contorna a validação do ponto; não coletar localização contínua.
+Aceita de uma a três fotos, com prévia, remoção e mensagens de progresso. O serviço verifica cada arquivo e gera a versão pública sem metadados pessoais, como as coordenadas da câmera.
 
-### RF-DEN-03 — Receber fotos
+**Aceite:** arquivo inválido ou acima do limite é recusado com explicação; envio sem foto não gera sucesso; falha de upload mantém o formulário preenchido para nova tentativa. O tratamento técnico da imagem não é apresentado como revisão de conteúdo.
 
-Aceitar de uma a três fotos com prévia, remoção e mensagens de upload. Verificar arquivos no serviço; gerar imagem destinada ao público sem metadados pessoais como coordenadas da câmera.
+### RF-DEN-04 · Gravar e confirmar
 
-**Aceite:** arquivo inválido ou acima do limite configurado é recusado com explicação; foto faltante não gera sucesso; falha de upload mantém o preenchimento para nova tentativa. Não chamar processamento técnico de revisão do conteúdo da foto.
+O protocolo só é gerado depois que a gravação da denúncia completa é confirmada. A interface bloqueia cliques repetidos e o serviço também trata a repetição.
 
-### RF-DEN-04 — Persistir e confirmar
+**Aceite:** duas solicitações da mesma tentativa geram uma única denúncia e um único protocolo; queda de conexão depois da gravação permite recuperar o resultado; uma nova denúncia intencional abre nova tentativa.
 
-Finalizar relato completo e gerar protocolo apenas depois de confirmar persistência. Bloquear acionamentos repetidos na interface e tratar a repetição também no serviço.
+### RF-DEN-05 · Informar o estado da publicação
 
-**Aceite:** duas solicitações da mesma tentativa produzem um único relato/protocolo; queda após gravação permite recuperar o resultado; um novo relato intencional tem nova tentativa.
+Recebimento e publicação são resultados distintos. A denúncia gravada fica disponível aos agentes mesmo quando a publicação no mapa está pendente.
 
-### RF-DEN-05 — Mostrar o estado da publicação
+**Aceite:** serviço indisponível antes da gravação não gera confirmação; denúncia gravada com publicação falha exibe o protocolo e o aviso de publicação pendente; a nova tentativa de publicação usa o mesmo registro.
 
-Recebimento e publicação são resultados distintos. Registro completo recebido fica disponível aos agentes mesmo se o mapa estiver pendente.
+### RF-MAP-01 · Consultar denúncias públicas
 
-**Aceite:** serviço indisponível antes de gravar não gera confirmação; registro gravado com publicação falha mostra protocolo e publicação pendente; recuperação usa o mesmo registro.
+Mapa sem login, com posição aproximada, bairro ou localidade, categoria, data de recebimento, etapa atual, foto e descrição. Denúncias atendidas continuam no mapa, a menos que estejam ocultas.
 
-### RF-MAP-01 — Consultar relatos públicos
+**Aceite:** o visitante encontra a denúncia publicada e abre seu detalhe; nenhuma resposta de rede, URL de mídia ou metadado entrega campo privado, referência do local ou ponto exato. O limite sobre conteúdo incidental em texto e foto segue a seção 8.
 
-Mapa sem login, com posição aproximada, bairro/localidade, categoria, data de recebimento, etapa atual, foto e descrição. Relatos atendidos permanecem visíveis salvo ocultação.
+### RF-MAP-02 · Filtrar e tratar falhas
 
-**Aceite:** visitante encontra o relato publicado e seu detalhe; não recebe campos privados, referência precisa ou ponto exato em resposta de rede, URL de mídia ou metadados. A limitação de conteúdo incidental em texto/foto permanece conforme seção 7.
+Filtros por localidade, período de recebimento e etapa. Os filtros continuam aplicados quando a pessoa abre uma denúncia e volta ao mapa. A tela diferencia três situações: não há denúncias, não há resultado para os filtros escolhidos, ou houve erro de carregamento.
 
-### RF-MAP-02 — Filtrar e lidar com falhas
+**Aceite:** os marcadores correspondem ao recorte indicado nos filtros; erro nunca aparece como contagem zero; falha da camada do mapa oferece nova tentativa sem apagar formulário aberto. Agrupamento de pontos, busca por rua e imagem de satélite não fazem parte do aceite.
 
-Filtrar por localidade, período de recebimento e etapa. Preservar os filtros ao consultar um relato e retornar ao mapa. Distinguir “sem relatos”, “sem resultado para estes filtros” e erro de carregamento.
+### RF-AGE-01 · Consultar a fila e o detalhe
 
-**Aceite:** os marcadores correspondem ao mesmo recorte indicado nos filtros; erro não aparece como contagem zero; falha da camada visual oferece nova tentativa sem apagar o formulário aberto. Agrupamento de pontos, busca por rua e satélite não são dependências do aceite V1.
+A lista mostra protocolo, data, localidade, categoria e etapa, com filtros por protocolo, localidade, período e etapa e ordenação por mais antigas ou mais recentes. O detalhe traz fotos, descrição, ponto exato, identificação privada e histórico. A consulta espacial dos agentes usa os pontos exatos, para que se reconheçam denúncias no mesmo local; o desenho define se ela fica em tela própria ou dentro de Ocorrências.
 
-### RF-AGE-01 — Consultar fila e detalhe
+Denúncias diferentes sobre o mesmo local continuam sendo ocorrências separadas. O agente percebe a coincidência no mapa e trata cada uma, sem fusão automática nem descarte por proximidade. Vários relatos no mesmo ponto não significam vários focos. Ações em lote não estão previstas.
 
-Listar protocolos, datas, localidades, categorias e etapas. Detalhe inclui fotos, descrição, ponto exato, identificação privada e histórico. Filtros: protocolo, localidade, período e etapa; ordenação por mais antigas/mais recentes.
+**Aceite:** o filtro de protocolo leva à ocorrência certa; o detalhe corresponde a ela; abrir e fechar não altera a etapa; lista vazia e falha de carregamento têm mensagens próprias.
 
-**Aceite:** filtro de protocolo leva à ocorrência correta; detalhe mostra a mesma ocorrência; abrir e fechar não altera sua etapa; lista vazia ou falha têm mensagem própria. A consulta espacial do agente usa pontos exatos para reconhecer relatos no mesmo local. A organização dessa consulta em uma tela dedicada ou componente da área de Ocorrências será definida no desenho.
+### RF-AGE-02 · Iniciar a análise
 
-Relatos distintos do mesmo local permanecem ocorrências separadas. O agente pode identificar a coincidência no mapa e iniciar análise de cada uma; não há fusão automática ou descarte por proximidade. A existência de vários relatos não comprova vários focos distintos. Ação em lote não é requisito confirmado.
+Ação explícita que leva a ocorrência de Recebida para Em análise e registra o agente e o momento.
 
-### RF-AGE-02 — Iniciar análise
+**Aceite:** a leitura não muda a etapa; clique repetido não duplica o evento; o agente que iniciou fica registrado como autor, e isso não dá a ele exclusividade nem impede outros agentes de agir.
 
-Disponibilizar ação explícita para passar de Recebida a Em análise, registrando agente e momento.
+### RF-AGE-03 · Registrar o atendimento
 
-**Aceite:** leitura não muda etapa; clique repetido não duplica evento; o agente que iniciou fica registrado como autor, sem criar atribuição exclusiva ou impedir outros agentes autorizados.
+O agente conclui a ocorrência **depois de ir ao local e analisar a situação**, informando data do atendimento, ação realizada e observações. Atendida indica que houve visita; não quer dizer que o foco foi confirmado ou eliminado. Se o problema não foi resolvido, a ocorrência fica Em análise e o impedimento vai para as observações.
 
-### RF-AGE-03 — Registrar atendimento
+**Aceite:** a conclusão exige o registro da visita e os campos obrigatórios; etapa e histórico são gravados juntos; o mapa passa a exibir Atendida quando a ocorrência está publicada; o texto interno da ação não substitui a descrição pública. O registro da visita é uma declaração do agente; não há rastreamento por GPS nem foto obrigatória após a visita.
 
-Somente agente autorizado conclui **depois de comparecer ao local e analisar a situação**, preenchendo data do atendimento, ação realizada e observações. “Atendida” não significa automaticamente foco confirmado ou eliminado. Se não conseguiu resolver, mantém Em análise e registra o impedimento em observações.
+### RF-AGE-04 · Ocultar a publicação
 
-**Aceite:** conclusão exige registro da visita/análise local e os campos obrigatórios; gravação confirma etapa e histórico juntos; mapa exibe Atendida quando a ocorrência estiver pública. Não publicar o texto interno da ação como descrição pública. Registro da visita é declaração do agente; o PRD não exige rastreamento GPS ou foto pós-visita como prova automática.
+O agente autorizado retira o conteúdo público informando o motivo. O registro e o histórico privados continuam disponíveis. A V1 oculta a publicação inteira, incluindo as fotos; ocultar apenas uma foto não está previsto.
 
-### RF-AGE-04 — Ocultar publicação
+**Aceite:** depois da ocultação, novas consultas públicas à denúncia e às suas mídias não retornam conteúdo; o agente continua vendo o registro e o motivo; tentativas antigas de publicação não reexibem a denúncia oculta. Cópias que terceiros já tenham baixado estão fora do alcance do sistema.
 
-Agente ou operador com permissão retira conteúdo público com justificativa, mantendo o registro e histórico privados.
+### RF-AGE-05 · Registrar observações durante a análise
 
-**Especificação proposta:** ocultar a publicação inteira, inclusive suas mídias, permanece a operação mínima; ocultação seletiva por foto não foi especificada. A republicação agora é permitida por decisão do usuário, conforme RF-AGE-06.
+O agente acrescenta observações internas sobre a visita, impedimentos, a situação encontrada ou providências pendentes. As observações não alteram o texto enviado pelo morador.
 
-**Aceite:** após confirmação da retirada, nova consulta pública ao relato e às mídias não disponibiliza conteúdo; o agente ainda vê registro e motivo. Retentativas antigas de publicação não podem republicar um relato ocultado. Cópias já baixadas por terceiros não são recuperáveis.
+**Aceite:** cada observação guarda autor e data; aparece para os agentes e fica fora da consulta pública; salvar uma observação não conclui a ocorrência nem sobrescreve as anteriores.
 
-### RF-AGE-05 — Registrar observações durante a análise
+### RF-AGE-06 · Republicar após revisão
 
-Agente autorizado acrescenta observações internas sobre visita, impedimento, situação encontrada ou providência ainda necessária. Se não consegue resolver, mantém a ocorrência Em análise. Observações não alteram o texto enviado pelo morador.
+O agente pode republicar uma ocorrência oculta depois de revisar o conteúdo e, se for o caso, obter a correção pelo administrador ou pelo cidadão (RF-COR-01). Autor e data da decisão ficam registrados. Republicar muda apenas a visibilidade; a etapa de atendimento continua a mesma.
 
-**Aceite:** cada observação mantém autor e data; é visível aos agentes e ausente da consulta pública; salvá-la não conclui a ocorrência nem sobrescreve notas anteriores.
+**Aceite:** a publicação só volta por ação explícita de agente autorizado; usa a versão atual do conteúdo e das mídias; uma tarefa antiga de publicação não desfaz a ocultação; uma ocultação posterior prevalece sobre tarefas antigas de republicação; o histórico guarda as duas decisões.
 
-### RF-AGE-06 — Republicar após revisão
+### RF-COR-01 · Corrigir campos enviados
 
-Agente autorizado pode republicar uma ocorrência ocultada depois de revisar o conteúdo e, quando necessária, obter correção pelo administrador ou pelo cidadão responsável pelo envio. Registrar autor e data da decisão. Republicar afeta apenas a visibilidade, sem reabrir ou mudar a etapa de atendimento.
+O administrador corrige os campos de qualquer denúncia, em qualquer etapa. O cidadão responsável pelo envio corrige a própria denúncia enquanto ela estiver Recebida. Quando a ocorrência já está Em análise ou Atendida, o cidadão pede a correção pelo e-mail de contato e o administrador decide se aplica (D26).
 
-**Aceite:** a publicação retorna somente após ação explícita autorizada; usa a versão atual do conteúdo e mídias; uma tarefa antiga de publicação continua impedida de desfazer ocultação; nova ocultação posterior prevalece sobre tarefas antigas de republicação. O histórico mantém ambas as decisões.
+Podem ser corrigidos o ponto do foco, bairro, categoria, descrição e os dados de identificação e contato. Um ponto corrigido passa de novo pela validação de território. A correção é diferente de uma observação de agente e nunca reabre uma ocorrência concluída.
 
-### RF-COR-01 — Corrigir campos enviados
+O vínculo do cidadão é comprovado pelo acesso ao e-mail confirmado na denúncia. Esse acesso gera uma autorização de edição restrita àquela denúncia, com prazo de validade e proteção contra reutilização. Protocolo, CPF ou o endereço de e-mail digitado, isoladamente, não liberam acesso. Se o cidadão trocar o e-mail de contato, a autoria é mantida e o novo endereço precisa ser confirmado antes de servir para novas autorizações.
 
-O administrador, autenticado com a permissão correspondente, e o cidadão responsável pelo envio, com vínculo verificado com a denúncia, podem corrigir local, bairro, categoria, descrição e dados de identificação/contato enviados. O cidadão só corrige a própria denúncia. Correção não se confunde com observação do agente e não permite reabrir uma ocorrência concluída.
+Toda correção guarda o valor original, o novo valor, o motivo, o autor e o instante em histórico privado. Se a denúncia estiver publicada, a versão pública é atualizada sem expor dados privados. Se estiver oculta, continua oculta até uma republicação explícita.
 
-**Especificação proposta:** verificar o vínculo do cidadão pelo e-mail confirmado associado ao envio, com autorização de edição restrita àquela denúncia. Protocolo, CPF ou conhecimento do endereço de e-mail, isoladamente, não concedem acesso. O mecanismo de recuperação/edição será definido no Start Técnico sem exigir conta permanente. Troca do e-mail de contato deve preservar a vinculação de autoria e confirmar o novo endereço antes de usá-lo para futuras autorizações.
+**Aceite:** o administrador corrige qualquer denúncia; o cidadão com vínculo comprovado corrige apenas a própria e somente na etapa Recebida; a etapa é conferida no momento de salvar, e uma correção do cidadão enviada depois do início da análise é recusada com orientação para usar o e-mail de contato; visitantes, cidadãos de outras denúncias e agentes sem papel de administrador são impedidos, inclusive em chamadas diretas ao serviço; a correção preserva o valor original, mantém o protocolo e não muda sozinha etapa ou visibilidade; o histórico de correção não aparece no mapa nem é liberado ao cidadão.
 
-**Especificação proposta:** preservar o valor original e registrar alteração, motivo, autor e instante em histórico privado. Se o registro estiver publicado, atualizar sua projeção sem expor dados privados; se estiver oculto, manter oculto até republicação explícita. Alterar e-mail não transfere a confirmação anterior ao novo endereço.
+## 10. Etapas de atendimento e visibilidade
 
-**Aceite:** administrador consegue corrigir; cidadão com vínculo verificado consegue corrigir apenas a própria denúncia. Visitante, cidadão de outra denúncia e agente sem autorização de administrador ou de autor do envio são impedidos de alterar os campos, inclusive ao chamar o serviço diretamente. Correção não apaga a informação original, não redefine protocolo e não muda sozinha a etapa/visibilidade. O histórico interno de correção não é enviado ao público nem concedido ao cidadão por essa permissão.
+Etapa de atendimento e estado de publicação são campos independentes. Ocultar uma denúncia não significa atendê-la, rejeitá-la ou excluí-la.
 
-## 9. Etapas de atendimento e visibilidade
-
-Etapa de atendimento e visibilidade pública são campos independentes. Ocultar não significa atender, rejeitar ou excluir.
-
-### 9.1 Transições de atendimento
+### 10.1 Transições de atendimento
 
 | Origem | Ação | Destino | Exigência |
 |---|---|---|---|
-| Novo relato completo | Confirmar recebimento | Recebida | Protocolo e data gerados pelo serviço |
-| Recebida | Iniciar análise | Em análise | Agente autorizado, ação explícita, agente/data registrados |
+| Denúncia completa | Confirmar recebimento | Recebida | Protocolo e data gerados pelo serviço |
+| Recebida | Cidadão corrige campos | Recebida | Vínculo comprovado; histórico da correção |
+| Recebida | Iniciar análise | Em análise | Agente autorizado, ação explícita, autor e data |
 | Em análise | Concluir após visita e análise local | Atendida | Visita registrada, data, ação realizada e observações |
-| Em análise | Registrar impedimento/observação | Em análise | Autor e data; sem confirmação falsa de resolução |
-| Qualquer etapa | Abrir/consultar | Mesma etapa | Sem evento de mudança de etapa |
-| Qualquer etapa | Ocultar publicação | Mesma etapa | Motivo e autorização operacional |
+| Em análise | Registrar impedimento ou observação | Em análise | Autor e data |
+| Qualquer etapa | Administrador corrige campos | Mesma etapa | Motivo e histórico da correção |
+| Qualquer etapa | Abrir ou consultar | Mesma etapa | Nenhum evento de mudança |
+| Qualquer etapa | Ocultar publicação | Mesma etapa | Motivo e papel de agente |
 | Qualquer etapa | Republicar após revisão | Mesma etapa | Decisão explícita de agente autorizado |
 
-**Decisão do usuário:** ocorrência concluída não é reaberta. Em conclusão por engano ou reaparecimento do problema, registrar nova ocorrência. Administrador e cidadão responsável pelo envio podem corrigir os campos permitidos com histórico, mas essa permissão não autoriza retorno de Atendida para Em análise. Não há exclusão de histórico pelo navegador.
+Ocorrência Atendida não volta para Em análise, nem por correção. Conclusão por engano ou reaparecimento do problema pedem nova denúncia. Ninguém apaga histórico pela interface.
 
-Em ações concorrentes, verificar a versão/etapa atual antes de salvar. Uma tela antiga não pode sobrescrever silenciosamente ação de outro agente.
+Quando duas pessoas agem ao mesmo tempo, o serviço confere a versão e a etapa atuais antes de salvar. Uma tela desatualizada não sobrescreve a ação de outro agente.
 
-### 9.2 Estados de publicação
+### 10.2 Estados de publicação
 
-| Estado | Público | Agente |
+| Estado | O que o público vê | O que o agente vê |
 |---|---|---|
-| Publicação pendente | Não consta como publicada | Registro recebido visível; etapa de atendimento preservada |
-| Publicada | Campos permitidos e mídia pública | Registro completo |
-| Oculta | Registro e mídias deixam de ser servidos publicamente | Registro, etapa e motivo preservados |
+| Pendente | A denúncia ainda não aparece no mapa | Registro completo, com a etapa de atendimento preservada |
+| Publicada | Campos permitidos e fotos tratadas | Registro completo |
+| Oculta | Registro e fotos deixam de ser servidos | Registro, etapa e motivo da ocultação |
 
-Falha temporária de publicação pode ser recuperada automaticamente. Ocultação é uma decisão operacional e prevalece sobre qualquer tarefa antiga. A transição Oculta → Publicada exige nova decisão explícita do agente após revisão; tarefas anteriores não substituem essa decisão. A implementação deve distinguir a decisão mais recente das retentativas de decisões anteriores.
+Uma falha temporária de publicação pode ser recuperada automaticamente. A ocultação é uma decisão operacional e prevalece sobre qualquer tarefa antiga. Para passar de Oculta para Publicada, um agente precisa decidir de novo depois de revisar; a implementação distingue a decisão mais recente das retentativas de decisões anteriores.
 
-### 9.3 Denúncias improcedentes e conteúdo inadequado
+### 10.3 Denúncias improcedentes e conteúdo inadequado
 
-Denúncia falsa, improcedente ou fora do assunto será analisada pelo agente, que pode registrar observações e ocultar a publicação. O usuário cogitou detecção automática de imagens se o problema se tornar frequente; isso é uma ideia futura, sem implementação ou compromisso de prazo.
+Denúncias falsas, improcedentes ou fora do assunto são analisadas pelo agente, que registra observações e pode ocultar a publicação. Detecção automática de imagens fica como ideia para o futuro, caso o problema se torne frequente.
 
-O desfecho administrativo de uma denúncia inválida que não exige visita ainda está pendente: não foi aprovado status adicional, motivo padronizado de encerramento ou exceção à visita exigida para Atendida. Não classificar silenciosamente esses relatos como atendimentos realizados.
+O encerramento de uma denúncia inválida que não exige visita ainda está em definição (DEP-11). Até lá, o agente oculta a publicação quando for o caso, registra o motivo nas observações e mantém a ocorrência Em análise. Esses casos não são marcados como Atendida.
 
-## 10. Jornadas e mensagens essenciais
+## 11. Jornadas e mensagens
 
-**Morador:** acessa Registrar foco → confirma e-mail por denúncia → marca local → preenche informações e fotos → informa nome/CPF/telefone opcional → revisa campos públicos/privados → envia → recebe protocolo e estado da publicação.
+**Morador:** abre Registrar foco → confirma o e-mail → marca o local → preenche descrição, categoria e fotos → informa nome, CPF e, se quiser, telefone → revisa o que será público e o que é privado → envia → recebe o protocolo e o estado da publicação.
 
-**Visitante:** abre mapa → filtra → consulta descrição/fotos e etapa de uma denúncia publicada. Não vê identidade ou contato, nem precisa de conta.
+**Visitante:** abre o mapa → aplica filtros → consulta descrição, fotos e etapa de uma denúncia publicada. Não precisa de conta e não vê identidade nem contato.
 
-**Agente:** entra com conta autorizada → filtra Ocorrências → consulta detalhe/mapa → inicia análise → visita e analisa o local → registra atendimento e conclui, ou mantém Em análise com observações se não resolveu. Pode ocultar publicação inadequada em qualquer etapa e republicar após revisão.
+**Agente:** entra com a conta autorizada → filtra as Ocorrências → consulta detalhe e mapa → inicia a análise → visita o local → conclui com o registro do atendimento ou mantém Em análise com observações. Em qualquer etapa pode ocultar conteúdo inadequado e, depois de revisar, republicar.
 
-**Correção e republicação:** administrador ou cidadão responsável pelo envio acessa a correção com autorização verificada → corrige os campos, com histórico interno preservado → agente revisa e republica se a ocorrência estiver oculta. Corrigir conteúdo não reabre atendimento concluído nem republica automaticamente conteúdo ocultado.
+**Correção pelo cidadão:** enquanto a denúncia está Recebida, ele comprova acesso ao e-mail confirmado → corrige os campos → o histórico interno registra a alteração. Depois do início da análise, ele escreve para o e-mail de contato e o administrador avalia o pedido.
 
-Mensagens devem distinguir: “Não foi possível enviar”, “Denúncia recebida; publicação pendente” e “Denúncia recebida e publicada”. Não informar que um agente foi pessoalmente avisado, que vistoriará o local ou que existe prazo garantido. O protocolo comprova recebimento; consulta privada por protocolo e envio de resposta individual não são requisitos do núcleo definido.
+**Correção pelo administrador:** abre a denúncia → corrige com motivo → se ela estiver oculta, um agente revisa e decide sobre a republicação.
 
-## 11. Dados e acesso
+O sistema usa três mensagens distintas no envio: "Não foi possível enviar", "Denúncia recebida; publicação pendente" e "Denúncia recebida e publicada". Nenhuma mensagem afirma que um agente foi avisado pessoalmente, que haverá vistoria ou que existe prazo. O protocolo comprova o recebimento. Consulta privada por protocolo e resposta individual ao cidadão estão fora do escopo.
 
-| Grupo de dados | Consulta pública | Consulta operacional |
+## 12. Dados e acesso
+
+| Grupo de dados | Consulta pública | Área dos agentes |
 |---|---|---|
 | Categoria, bairro, data de recebimento e etapa | Sim, quando publicada | Sim |
-| Descrição e fotos públicas | Sim, sem revisão humana prévia | Sim |
-| Representação aproximada | Sim | Sim, se útil |
-| Coordenada exata e referência do local | Não | Sim |
-| Nome, CPF, e-mail e telefone | Não, nem mascarados | Agentes autorizados conforme finalidade |
-| Histórico, agente autor, ação e observações | Não | Sim |
-| Motivo de ocultação | Não | Sim |
+| Descrição e fotos tratadas | Sim, sem revisão humana prévia | Sim |
+| Área aproximada | Sim | Sim, quando útil |
+| Ponto exato e referência do local | Não | Sim |
+| Nome, CPF, e-mail e telefone | Não, nem mascarados | Sim |
+| Histórico, autor das ações e observações | Não | Sim |
+| Motivo da ocultação | Não | Sim |
 
-O cidadão com vínculo verificado pode acessar os campos enviados na própria denúncia para corrigi-los. Isso não os torna públicos e não libera histórico operacional, observações internas ou dados de outros denunciantes.
+O cidadão com vínculo comprovado acessa os campos que enviou na própria denúncia para corrigi-los, dentro do prazo de D26. Esse acesso não torna os dados públicos e não libera histórico, observações ou dados de outras pessoas.
 
-A separação deve existir nos dados devolvidos pelo serviço, não apenas na interface. Os nomes de coleções e contratos ficam no Start Técnico. E-mail confirmado não autentica CPF. Sem integração de verificação de identidade escolhida, a finalidade de comprovar titularidade continua não atendida pela V1.
+A separação entre público e privado acontece nos dados que o serviço devolve; esconder campos só na tela não basta. Nomes de coleções e contratos estão no Start Técnico. O e-mail confirmado não autentica o CPF, e a V1 não tem integração de verificação de identidade.
 
-Não introduzir perfil público de denunciante, rastreamento de localização atual ou armazenamento de credenciais administrativas no cliente. O usuário quer preservar informações por prazo indefinido, idealmente para sempre. Registrar essa preferência não equivale a uma política concluída para todos os campos, mídias e dados pessoais: ainda é necessário especificar retenção por tipo de dado, correção, retirada, exclusão aplicável e histórico de alterações. Não implementar expiração automática arbitrária nem prometer armazenamento eterno gratuito.
+O produto não terá perfil público de denunciante, rastreamento de localização atual nem credenciais administrativas guardadas no navegador. A preferência por guardar as informações por prazo indefinido está registrada em D24. Antes da coleta de dados reais, DEP-06 precisa definir retenção por tipo de dado, correção, retirada e exclusão aplicáveis. Não haverá expiração automática arbitrária, e o produto não promete armazenamento eterno gratuito.
 
-## 12. Requisitos não funcionais
+## 13. Requisitos não funcionais
 
-As condições de verificação abaixo são especificação proposta para a implementação, não testes já realizados.
-
-| ID | Requisito | Verificação esperada |
+| ID | Requisito | Como verificar |
 |---|---|---|
-| RNF-01 | Usabilidade em celular e computador | Fluxo sem perda de ações/conteúdo e sem rolagem horizontal indevida em 320, 390, 768 e 1440 px |
-| RNF-02 | Acessibilidade do núcleo | Rótulos, erro associado ao campo, foco visível, uso por teclado e etapa não indicada só por cor |
-| RNF-03 | Autorização no serviço | Tentativas sem papel e com conta revogada são negadas mesmo fora da interface |
-| RNF-04 | Integridade do envio | Repetição da tentativa, falha parcial de foto e resposta perdida não criam sucesso falso/duplicação |
-| RNF-05 | Publicação controlada | Testes verificam ausência de dados estruturados privados, metadados e ponto exato na API pública |
-| RNF-06 | Controle de publicação | Consulta e mídia pública deixam de servir relato ocultado; tarefas antigas não desfazem decisão posterior; republicação exige ação explícita autorizada |
-| RNF-07 | Uso limitado de recursos | Fotos/consultas têm limites configurados, lista técnica é paginada e assinaturas são encerradas ao sair |
-| RNF-08 | Proteção contra abuso | Confirmador de e-mail e envio possuem limites de repetição no serviço; não basta bloquear botão |
-| RNF-09 | Histórico confiável | Autor e instante vêm da sessão/serviço; mudanças concorrentes não apagam evidência |
-| RNF-10 | Dados pessoais em logs | Logs e métricas não registram CPF, contato, texto livre ou foto sem necessidade operacional explícita |
+| RNF-01 | Uso em celular e computador | Fluxo completo sem perda de conteúdo e sem rolagem horizontal em 320, 390, 768 e 1440 px |
+| RNF-02 | Acessibilidade do fluxo principal | Rótulos, erro associado ao campo, foco visível, uso por teclado e etapa indicada por texto além da cor |
+| RNF-03 | Autorização no serviço | Tentativas sem papel ou com conta revogada são negadas também fora da interface |
+| RNF-04 | Integridade do envio | Repetição, falha parcial de foto e resposta perdida não geram sucesso falso nem duplicidade |
+| RNF-05 | Publicação sem dados privados | Testes confirmam que a API pública não devolve dados privados, metadados de foto ou ponto exato |
+| RNF-06 | Controle de publicação | Denúncia oculta sai da consulta e das mídias públicas; tarefas antigas não desfazem decisões posteriores; republicar exige ação explícita |
+| RNF-07 | Uso limitado de recursos | Fotos e consultas têm limites configurados, a lista dos agentes é paginada e as assinaturas são encerradas ao sair |
+| RNF-08 | Proteção contra abuso | Confirmação de e-mail e envio têm limite de repetição no serviço, além do bloqueio do botão |
+| RNF-09 | Histórico confiável | Autor e instante vêm da sessão e do serviço; ações simultâneas não apagam registros |
+| RNF-10 | Dados pessoais em logs | Logs e métricas não registram CPF, contato, texto livre ou foto sem necessidade operacional definida |
 
-Metas numéricas de latência, volume e disponibilidade não foram acordadas. Escolher cotas e condições de teste antes de fazer promessas de escala. A precisão/forma do mapa público deve ser conferida também em áreas pouco densas; aproximar não equivale a garantir anonimato.
+Metas numéricas de latência, volume e disponibilidade serão definidas junto com as cotas do provedor (DEP-07). A forma e a precisão do mapa público precisam ser testadas também em áreas pouco povoadas, onde aproximar o ponto protege menos.
 
-## 13. Indicadores e fase seguinte
+## 14. Indicadores
 
-O lançamento pode coletar medidas operacionais para avaliar falhas e adoção sem construir um dashboard.
+O lançamento já coleta medidas operacionais para acompanhar falhas e adesão, mesmo sem dashboard.
 
 | Medida | Definição |
 |---|---|
-| Denúncias recebidas | Registros finalizados no intervalo de recebimento |
-| Distribuição por etapa | Etapa atual dos mesmos registros do intervalo |
-| Tempo até primeira análise | Diferença entre recebimento e primeiro evento de início; não confundir com tempo de vistoria |
-| Falhas e repetição | Tentativas que falharam e recuperações, sem contar a mesma tentativa como novo relato |
-| Publicações ocultadas | Retiradas com justificativa, mantidas no histórico |
-| Relatos por localidade | Quantidade de relatos; não casos confirmados nem prioridades automáticas |
+| Denúncias recebidas | Denúncias gravadas no período |
+| Distribuição por etapa | Etapa atual das denúncias do mesmo período |
+| Tempo até a primeira análise | Intervalo entre o recebimento e o início da análise; não equivale ao tempo de vistoria |
+| Falhas e repetições | Tentativas com falha e recuperações, sem contar a mesma tentativa duas vezes |
+| Publicações ocultas | Retiradas com motivo, mantidas no histórico |
+| Denúncias por localidade | Número de relatos por bairro; não representa casos confirmados nem prioridade |
 
-Dashboard e gráficos futuros usam a mesma base. As decisões anteriores sobre períodos e comparação devem ser retomadas na especificação dessa fase; não condicionam o aceite V1. Não criar prioridade automática, mapa de casos confirmados, metas epidemiológicas ou promessas de redução de doença com essas contagens.
+O dashboard da fase seguinte usa a mesma base. Períodos e comparações serão especificados nessa fase. As contagens não geram prioridade automática, mapa de casos, metas epidemiológicas ou promessa de redução da doença.
 
-## 14. Plano de validação e rastreabilidade
+## 15. Plano de validação e rastreabilidade
 
 | Cenário | Critério verificável | Requisitos |
 |---|---|---|
-| AC-01 · Envio válido | Confirma e-mail, envia campos/fotos/ponto válidos, recebe protocolo e encontra registro persistido | RF-AUT-01, RF-DEN-01 a RF-DEN-04 |
-| AC-02 · Entrada inválida | E-mail sem confirmação, campos ausentes, foto inválida e ponto fora do território não finalizam | RF-AUT-01, RF-DEN-01 a RF-DEN-03 |
-| AC-03 · GPS negado | Pessoa seleciona ponto manual e continua sem perder dados | RF-DEN-02 |
-| AC-04 · Rede e reenvio | Falha antes/depois da gravação e envio repetido resultam em no máximo um registro por tentativa; limites de repetição de confirmação/envio são aplicados no serviço | RF-DEN-03 a RF-DEN-05, RNF-04, RNF-08 |
-| AC-05 · Publicação pendente | Persistência confirmada com mapa pendente mantém protocolo e acesso do agente | RF-DEN-05 |
-| AC-06 · Mapa e filtros | Visitante vê campos permitidos, filtros coerentes e atendidas; erro não vira zero; consultas respeitam limites e lista técnica pagina resultados | RF-MAP-01, RF-MAP-02, RF-AGE-01, RNF-07 |
-| AC-07 · Privacidade | API/URLs/metadados públicos não retornam dados estruturados privados ou ponto exato; logs e métricas não recebem esses dados sem necessidade definida | RF-MAP-01, RNF-05, RNF-10 |
-| AC-08 · Permissões | Visitante e conta revogada não consultam privado nem alteram ocorrência | RF-AUT-02, RNF-03 |
-| AC-09 · Atendimento | Leitura não muda etapa; conclusão exige visita/análise local e campos necessários; impedimento mantém Em análise com observações; Atendida não reabre | RF-AGE-01 a RF-AGE-03, RF-AGE-05 |
-| AC-10 · Concorrência | Ação antiga/repetida não sobrescreve transição posterior nem duplica evento | RF-AGE-02, RF-AGE-03, RNF-09 |
-| AC-11 · Ocultação | Retirada interrompe consulta/mídia pública, mantém interno e resiste a republicação por retentativa | RF-AGE-04, RNF-06 |
-| AC-12 · Interfaces | Jornada executável nos tamanhos escolhidos e por teclado, com estados de erro/vazio | RNF-01, RNF-02 |
-| AC-13 · Republicação | Agente revisa e republica explicitamente; histórico preservado; republicação não muda atendimento e tarefa antiga não desfaz ocultação posterior | RF-AGE-06, RNF-06 |
-| AC-14 · Correção autorizada | Administrador e cidadão com vínculo verificado corrigem; cidadão só acessa a própria denúncia; acesso indevido negado; valores originais e motivo preservados; etapa/visibilidade não mudam automaticamente | RF-COR-01, RNF-03, RNF-05, RNF-09 |
+| AC-01 · Envio válido | Confirma o e-mail, envia campos, fotos e ponto válidos, recebe o protocolo e encontra o registro gravado | RF-AUT-01, RF-DEN-01 a RF-DEN-04 |
+| AC-02 · Entrada inválida | E-mail sem confirmação, campo ausente, foto inválida e ponto fora do território não finalizam o envio | RF-AUT-01, RF-DEN-01 a RF-DEN-03 |
+| AC-03 · GPS negado | A pessoa marca o ponto manualmente e segue sem perder dados | RF-DEN-02 |
+| AC-04 · Rede e reenvio | Falha antes ou depois da gravação e envio repetido resultam em no máximo um registro por tentativa; limites de repetição aplicados no serviço | RF-DEN-03 a RF-DEN-05, RNF-04, RNF-08 |
+| AC-05 · Publicação pendente | Gravação confirmada com mapa pendente mantém o protocolo e o acesso do agente | RF-DEN-05 |
+| AC-06 · Mapa e filtros | Visitante vê os campos permitidos, filtros coerentes e denúncias atendidas; erro não vira zero; limites de consulta e paginação respeitados | RF-MAP-01, RF-MAP-02, RF-AGE-01, RNF-07 |
+| AC-07 · Privacidade | API, URLs e metadados públicos não trazem dados privados nem ponto exato; logs e métricas também não | RF-MAP-01, RNF-05, RNF-10 |
+| AC-08 · Permissões | Visitante e conta revogada não leem dados privados nem alteram ocorrências | RF-AUT-02, RNF-03 |
+| AC-09 · Atendimento | Leitura não muda a etapa; conclusão exige visita e campos obrigatórios; impedimento mantém Em análise com observações; Atendida não reabre | RF-AGE-01 a RF-AGE-03, RF-AGE-05 |
+| AC-10 · Concorrência | Ação antiga ou repetida não sobrescreve transição posterior nem duplica evento | RF-AGE-02, RF-AGE-03, RNF-09 |
+| AC-11 · Ocultação | Retirada interrompe consulta e mídia públicas, mantém o registro interno e resiste a retentativas de publicação | RF-AGE-04, RNF-06 |
+| AC-12 · Interfaces | Jornadas executáveis nos tamanhos definidos e por teclado, com estados de erro e vazio | RNF-01, RNF-02 |
+| AC-13 · Republicação | Agente revisa e republica explicitamente; histórico preservado; etapa inalterada; tarefa antiga não desfaz ocultação posterior | RF-AGE-06, RNF-06 |
+| AC-14 · Correção autorizada | Administrador corrige em qualquer etapa; cidadão corrige só a própria denúncia e só enquanto Recebida; tentativa do cidadão após o início da análise é recusada; acesso indevido negado; original e motivo preservados; etapa e visibilidade inalteradas | RF-COR-01, RNF-03, RNF-05, RNF-09 |
 
-Executar primeiro com dados fictícios e serviços de teste. Guardar evidência da versão testada, resultado e limitações. Não substituir esses cenários por capturas do Figma. A etapa com moradores reais exige resolver as dependências de lançamento abaixo.
+Os testes começam com dados fictícios e serviços de teste. Cada execução registra a versão testada, o resultado e as limitações encontradas. Capturas do Figma não substituem esses cenários. A etapa com moradores reais só começa depois que as dependências de lançamento estiverem resolvidas.
 
-## 15. Entregas e aprendizagem
+## 16. Entregas
 
 | Entrega | Resultado demonstrável |
 |---|---|
-| E1 · Estrutura e navegação | HTML/CSS/JS das telas, entrada do formulário, mapa e área técnica |
-| E2 · Dados fictícios compartilhados | Formulário, mapa e Ocorrências usam o mesmo contrato |
-| E3 · Envio integrado | Confirmação de e-mail, fotos, persistência, protocolo e recuperação |
-| E4 · Público e agente | Projeção aproximada, autorização, atendimento e ocultação |
-| E5 · Aceite V1 | Evidências AC-01 a AC-14 e preparação de operação |
-| E6 · Evolução | Dashboard/gráficos e melhorias priorizadas pelo uso |
+| E1 · Estrutura e navegação | HTML, CSS e JavaScript das telas, com entrada do formulário, mapa e área dos agentes |
+| E2 · Dados fictícios compartilhados | Formulário, mapa e Ocorrências usando o mesmo contrato de dados |
+| E3 · Envio integrado | Confirmação de e-mail, fotos, gravação, protocolo e recuperação de falhas |
+| E4 · Público e agente | Área aproximada, autorização, atendimento, ocultação e correção |
+| E5 · Aceite da V1 | Evidências de AC-01 a AC-14 e preparação da operação |
+| E6 · Evolução | Dashboard, gráficos e melhorias priorizadas pelo uso |
 
-As primeiras atividades de HTML já acordadas são Início, Registrar Foco/Denúncia, Jogo e Guia Aedes. Sua ordem didática não significa que jogo e guia sejam bloqueadores do núcleo operacional. Datas e atribuições de novas tarefas não são inventadas neste documento.
+As primeiras atividades de HTML já combinadas são Início, Registrar foco, Jogo e Guia Aedes. Jogo e Guia entram nessa ordem por motivo didático e não bloqueiam o fluxo operacional. Datas e responsáveis por tarefa são acompanhados fora deste PRD.
 
-## 16. Riscos e limites assumidos
+## 17. Riscos assumidos
 
-- **Publicação automática:** fotos e descrição podem identificar pessoas incidentalmente. Aviso, retirada posterior e rotina diária reduzem exposição, mas não garantem prevenção. Revisão prévia foi adiada explicitamente.
-- **CPF obrigatório:** aumenta o conjunto de dados privados armazenados e não atinge, sozinho, a comprovação de identidade pretendida. O requisito permanece conforme decisão do usuário.
-- **Uso operacional:** logins não comprovam disponibilidade dos agentes ou vínculo oficial. Não há compromisso de prazo de atendimento documentado.
-- **Representação territorial:** aproximar o ponto reduz precisão, mas imagem, texto e contexto podem revelar o local. Fonte territorial e método precisam de teste.
-- **Abuso e custo:** piloto aberto pode receber envios indevidos e volume acima do esperado; limites devem existir no serviço.
-- **Dependência do mapa/e-mail:** falhas externas precisam de mensagens e recuperação, sem confirmação falsa.
-- **Ausência de agentes:** o recebimento continua por decisão do usuário, mesmo que agentes fiquem indisponíveis por dias. Isso pode aumentar fila e demora de retirada; o e-mail de contato e a conferência diária precisam de responsável.
-- **Retenção e custo:** preservar relatos e imagens por tempo indefinido e manter custo mínimo são objetivos que precisam de planejamento de volume, armazenamento e financiamento. Nenhum plano gratuito permanente foi garantido.
+| Risco | Efeito | Tratamento na V1 |
+|---|---|---|
+| Publicação automática | Foto ou descrição pode identificar alguém por acidente | Aviso no formulário, ocultação e conferência diária; a revisão prévia foi adiada de propósito |
+| CPF obrigatório | Aumenta o volume de dados pessoais guardados sem comprovar identidade | Mantido por decisão de produto (D07); finalidade e proteção definidas em DEP-06 |
+| Adesão dos agentes | Contas ativas não comprovam disponibilidade nem vínculo oficial | Sem promessa de prazo; vínculo formalizado em DEP-04 |
+| Representação do território | Imagem, texto e contexto podem revelar o local apesar da aproximação | Método testado em áreas pouco povoadas (DEP-02) |
+| Abuso e volume | Lançamento aberto pode receber envios indevidos ou acima do esperado | Limites no serviço (RNF-07, RNF-08) |
+| Serviços externos de mapa e e-mail | Falhas fora do controle da equipe | Mensagens de erro e recuperação sem confirmação falsa |
+| Ausência de agentes | Fila cresce e a retirada de conteúdo demora | Recebimento mantido (D23); responsável pela conferência e pelo e-mail em DEP-05 |
+| Retenção e custo | Guardar fotos por tempo indefinido pressiona armazenamento e orçamento | Estimativa de volume e teto de custo em DEP-07 |
 
-Esses riscos são parte do produto escolhido, não autorização para adicionar silenciosamente moderação prévia, remover CPF ou restringir o piloto a convidados.
+Esses riscos fazem parte do produto escolhido. Mudanças como moderação prévia, retirada do CPF ou restrição a convidados exigem nova decisão registrada neste PRD.
 
-## 17. Dependências de implementação e lançamento
+## 18. Dependências de implementação e lançamento
 
-| ID | Entrega necessária | Resolver até | Responsabilidade a assumir |
+| ID | O que precisa ser resolvido | Prazo | Responsável |
 |---|---|---|---|
-| DEP-01 | Catálogo de categorias/localidades e limite territorial de Itambé com fonte e versão | Integração da validação territorial | Produto com agentes e desenvolvimento |
-| DEP-02 | Forma/precisão da representação aproximada, incluindo fronteiras e áreas pouco densas | Publicação de pontos reais | Produto e desenvolvimento |
-| DEP-03 | Mecanismo de e-mail, expiração, limites e tratamento de arquivos | Integração real do envio | Desenvolvimento |
-| DEP-04 | Identificar a instituição corresponsável, esclarecer vínculo do piloto e confirmar uso com agentes | Lançamento com moradores | Administração e instituição ainda não nomeada; o administrador gerencia acessos, aprova abertura e assume manutenção |
-| DEP-05 | Designar conferência diária/substituto e criar e acompanhar e-mail de reclamação/correção/retirada | Publicação de conteúdo real | Administração e operação; responsável pela conferência ainda não definido |
-| DEP-06 | Finalidade documentada da coleta de CPF, aviso de privacidade e política por tipo de dado, considerando intenção de retenção indefinida | Coleta de dados pessoais reais | Administração, instituição corresponsável e operação |
-| DEP-07 | Provedor de mapa, estimativa de volume/custo, teto financeiro e comportamento ao atingir cotas; prioridade é baixo custo, idealmente zero | Ambiente público | Administração e instituição com desenvolvimento; teto ainda não definido |
-| DEP-08 | Correção pelo administrador e cidadão, verificação de vínculo por denúncia, trilha de alterações e recuperação segura de acesso | Integração da correção | Administração com desenvolvimento |
-| DEP-09 | Período e critérios de avaliação do piloto, sem prometer metas ainda não definidas | Avaliação de resultados | Produto e agentes participantes |
-| DEP-10 | Definir titularidade dos campos no envio em nome de terceiros e envio assistido/por menores | Implementação dessa modalidade | Administração e instituição com operação |
-| DEP-11 | Definir desfecho operacional de denúncias falsas/improcedentes sem visita, sem rotulá-las falsamente como Atendida | Tratamento dessas ocorrências no piloto | Administração e agentes |
+| DEP-01 | Catálogo de categorias e localidades e limite territorial de Itambé, com fonte e versão | Antes da validação de território | Produto, agentes e desenvolvimento |
+| DEP-02 | Forma e precisão da área aproximada, incluindo divisas e áreas pouco povoadas | Antes de publicar pontos reais | Produto e desenvolvimento |
+| DEP-03 | Serviço de e-mail, expiração dos códigos, limites e tratamento de arquivos | Antes da integração real do envio | Desenvolvimento |
+| DEP-04 | Nome da instituição parceira, formato do vínculo e confirmação do uso pelos agentes | Antes do lançamento | Administrador e instituição parceira |
+| DEP-05 | Responsável e substituto pela conferência diária; criação e acompanhamento do e-mail de contato | Antes de publicar conteúdo real | Administrador e operação |
+| DEP-06 | Adequação à LGPD (Lei nº 13.709/2018): finalidade do CPF, base legal, controlador e encarregado, aviso de privacidade, atendimento aos direitos do titular e política de retenção por tipo de dado | Antes de coletar dados reais | Administrador, instituição parceira e operação |
+| DEP-07 | Provedor de mapa, estimativa de volume e custo, teto financeiro e comportamento ao atingir cotas | Antes do ambiente público | Administrador, instituição parceira e desenvolvimento |
+| DEP-08 | Mecanismo de correção pelo administrador e pelo cidadão, verificação do vínculo, trilha de alterações e recuperação segura de acesso | Antes da integração da correção | Administrador e desenvolvimento |
+| DEP-09 | Período e critérios de avaliação do piloto | Antes da avaliação de resultados | Produto e agentes participantes |
+| DEP-10 | A quem pertencem os dados no envio em nome de terceiros, no envio assistido e no envio por menores de idade | Antes de implementar essa modalidade | Administrador, instituição parceira e operação |
+| DEP-11 | Encerramento de denúncias falsas ou improcedentes que não exigem visita | Antes de tratar esses casos no piloto | Administrador e agentes |
+| DEP-12 | Obrigatoriedade do endereço digitado | Antes de fechar o formulário (E3) | Produto |
 
-O administrador assumiu explicitamente as responsabilidades descritas. A instituição ainda não foi nomeada, e o vínculo formal não está confirmado; não presumir compromisso de uma instituição específica. DEP-06 mantém CPF obrigatório e registra o limite da verificação. Não constitui pedido de reabrir a decisão de campo nesta versão.
+DEP-10, DEP-11 e DEP-12 são decisões de produto em aberto. As demais são preparação técnica ou operacional. Nenhuma delas impede o trabalho com dados fictícios.
 
-## 18. Definição de pronto
+## 19. Definição de pronto
 
-**Documento consolidado:** decisões confirmadas, requisitos com aceite, dados e permissões registrados, rastreabilidade e dependências identificadas. A versão 1.2 inclui correção pelo administrador e pelo cidadão responsável pelo envio; envio em nome de terceiros e encerramento de denúncia inválida continuam explicitamente pendentes.
+**Documento:** decisões registradas, requisitos com critério de aceite, dados e permissões definidos, rastreabilidade completa e dependências identificadas. A versão 2.0 atende a esse critério, com DEP-10, DEP-11 e DEP-12 em aberto.
 
-**Núcleo técnico entregue:** cenários AC-01 a AC-14 demonstrados na versão candidata. Dashboard e recursos complementares não condicionam esse aceite.
+**V1 técnica:** cenários AC-01 a AC-14 demonstrados na versão candidata. Dashboard e recursos complementares não entram nesse aceite.
 
-**Abertura para moradores:** dependências de lançamento resolvidas, contas autorizadas operantes, ocultação testada, custos observáveis e comunicação honesta sobre o papel do serviço. Não equivale a integração deste PR, aval jurídico, aprovação municipal ou validação de impacto sanitário.
+**Abertura para moradores:** dependências de lançamento resolvidas, contas de agentes funcionando, ocultação testada, custos acompanhados e comunicação clara sobre o papel do serviço. Esse marco não substitui parecer jurídico, aprovação municipal ou avaliação de impacto sanitário.
 
-## 19. Referências e precedência
+## 20. Referências e precedência
 
-1. Decisões explícitas do usuário nesta conversa em 04–05/11/2026, inclusive publicação automática, dados privados, CPF mantido e dashboard posterior.
-2. Notas do segundo cérebro: `02 Projects/Aedes Data Lab/Contexto.md` e `Roteiro de aprendizagem e desenvolvimento.md`. Fontes locais externas ao repositório.
-3. [Figma do Aedes](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y) e [Jira ADL](https://aedesdatalab.atlassian.net/browse/ADL-65), como referências de design e trabalho; não auditados ao vivo para esta finalização.
-4. PRD do Repecol, `docs/PRD_REPELCONTROL.md`, consultado no projeto separado: referência de organização, requisitos por função, jornadas, acesso e aceite. Contas de cidadão, chat, produção, comércio, território de Mogeiro, prioridade automática e SLA não foram herdados.
+1. Decisões de produto registradas pelo responsável em 04 e 05/11/2026, incluindo publicação automática, dados privados, CPF obrigatório, dashboard posterior e prazo de correção pelo cidadão.
+2. Notas internas de contexto e o roteiro de aprendizagem do projeto, mantidos fora do repositório.
+3. [Figma do Aedes](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y), com as telas finais, e [Jira ADL](https://aedesdatalab.atlassian.net/browse/ADL-65), para o planejamento das tarefas.
+4. PRD do Repecol (`docs/PRD_REPELCONTROL.md`, em repositório separado), usado como modelo de estrutura. Contas de cidadão, chat, produção, comércio, o território de Mogeiro, prioridade automática e SLA não foram herdados.
 
-Em conflito com telas históricas ou recomendações antigas, prevalecem as decisões atuais registradas neste PRD. Mudanças futuras devem manter o histórico do motivo da alteração.
+Em conflito com telas antigas ou recomendações anteriores, valem as decisões deste PRD. Mudanças futuras registram o motivo no histórico abaixo.
 
-## 20. Histórico documental
+## 21. Histórico do documento
 
 | Versão | Data | Alteração |
 |---|---|---|
-| 0.1 | 04/11/2026 | Primeiro rascunho do Aedes e Start Técnico no PR #2 |
-| 0.2 | 04/11/2026 | Adaptação estrutural do Repecol e decisões da entrevista |
-| 1.0 | 05/11/2026 | Critérios por requisito, campos/acesso, estados de atendimento/publicação, rastreabilidade, limites de afirmação e dependências de lançamento |
-| 1.1 | 05/11/2026 | Visita para Atendida, observações em análise, sem reabertura, republicação pelo agente, correção inicialmente exclusiva da administração, responsabilidades e preferências de retenção/custo |
-| 1.2 | 05/11/2026 | Correção permitida ao administrador e ao cidadão responsável pelo envio, com autorização restrita à própria denúncia; responsabilidades descritas por papel, sem nome pessoal |
+| 0.1 | 04/11/2026 | Primeiro rascunho do PRD e do Start Técnico (PR #2) |
+| 0.2 | 04/11/2026 | Estrutura adaptada do Repecol e decisões da entrevista de produto |
+| 1.0 | 05/11/2026 | Critérios por requisito, campos e acessos, etapas de atendimento e publicação, rastreabilidade e dependências de lançamento |
+| 1.1 | 05/11/2026 | Visita obrigatória para Atendida, observações durante a análise, sem reabertura, republicação pelo agente, responsabilidades e preferências de retenção e custo |
+| 1.2 | 05/11/2026 | Correção liberada ao administrador e ao cidadão responsável pelo envio; responsabilidades descritas por papel |
+| 2.0 | 05/11/2026 | Aprovado como base de construção. Texto revisado em tom corporativo; glossário; aviso epidemiológico restaurado no resumo; D26 limita a correção do cidadão à etapa Recebida; especificações propostas incorporadas aos requisitos; papel "operador" substituído por agente autorizado; permissões separadas por perfil; riscos em tabela; LGPD explícita em DEP-06; DEP-12 para o endereço digitado; estado do repositório atualizado para `f403ef5`; telas do Figma registradas como concluídas |

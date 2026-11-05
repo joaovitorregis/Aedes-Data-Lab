@@ -1,6 +1,6 @@
 # Exportações dos wireframes
 
-Imagens exportadas antes da reorganização do protótipo. A versão editável está no Figma.
+Imagens exportadas antes da versão final das telas. Elas ainda trazem conteúdo herdado do Repecol, como chat, produção e distribuição, que está fora do escopo do [PRD](../docs/PRD_Aedes_Data_Lab.md). As telas finais estão no [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y?node-id=2010-2).
 
 - [01-inicio-primeiro-acesso](01-inicio-primeiro-acesso.png)
 - [02-inicio-denuncia-ativa](02-inicio-denuncia-ativa.png)

@@ -1,12 +1,12 @@
 # Start técnico — Aedes Data Lab
 
-**Estado:** plano técnico proposto; serviços ainda não implementados
-**Versão:** 0.2 — 04/11/2026
+**Estado:** plano técnico proposto, alinhado ao PRD 1.0; serviços ainda não implementados
+**Versão:** 1.0 — 05/11/2026
 **Produto:** [PRD do Aedes](./PRD_Aedes_Data_Lab.md)
 
 ## 1. O que existe hoje
 
-O repositório tem 12 páginas HTML iniciais em `site/`, um CSS compartilhado e JavaScript por tela. Não há envio funcional, banco integrado, autenticação, publicação no mapa ou dashboard alimentado por dados. A `main` exige pull request e uma aprovação. ADL-86 a ADL-89 tratam o HTML das primeiras quatro telas; esses cartões não comprovam implementação.
+A base `main` inspecionada em 05/11/2026, commit `70bf8c2`, contém páginas HTML iniciais em `site/`, um CSS compartilhado e JavaScript por tela. Nessa base não há envio funcional, banco integrado, autenticação, publicação no mapa ou dashboard alimentado por dados. Isso não é auditoria das branches das integrantes ou de um ambiente publicado. O PR #2 exige revisão antes de integração. ADL-86 a ADL-89 tratam o HTML das primeiras quatro telas; esses cartões não comprovam implementação.
 
 O objetivo técnico da V1 é o percurso **formulário → confirmação e persistência → projeção pública → mapa → Ocorrências do agente → atualização de etapa e ocultação**. Dashboard e gráficos ficam para depois.
 
@@ -40,7 +40,7 @@ Esse modelo não é esquema final. O CPF é obrigatório por decisão do usuári
 
 ### Envio
 
-1. Confirmar acesso ao e-mail para a denúncia, sem criar conta permanente de cidadão.
+1. Confirmar acesso ao e-mail para a denúncia, sem criar conta permanente de cidadão. Vincular a confirmação à tentativa; confirmar no início é proposta de interface, e o requisito obrigatório é confirmar antes de aceitar o envio. Expiração, reenvio e limites de tentativas precisam ser configurados.
 2. Coletar local exato, bairro, categoria, descrição, uma a três fotos, nome, CPF e telefone opcional.
 3. Validar território, tipos/tamanho de arquivo e dados no servidor. A validação no cliente apenas orienta.
 4. Usar ID estável da tentativa. Reservar estado pendente, receber fotos em área restrita, finalizar registro e gerar protocolo.
@@ -55,7 +55,11 @@ Consultar somente a projeção pública. Mostrar foto, descrição, categoria, d
 
 ### Ocorrências do agente
 
-Authentication identifica a conta; autorização verifica papel concedido por administrador designado. Abrir detalhe não altera etapa. “Iniciar análise” e “Atendida” são operações explícitas com autor/data; conclusão exige ação e observações. Ocultar publicação exige motivo e não apaga o registro interno. Negar operações ao visitante e ao agente desabilitado no backend/regras.
+Authentication identifica a conta; autorização verifica papel concedido por administrador designado. Abrir detalhe não altera etapa. “Iniciar análise” e “Atendida” são operações explícitas com autor/data; conclusão exige ação e observações. O autor de uma mudança não se torna responsável exclusivo pela ocorrência. Conferir etapa/versão atual ao salvar para não sobrescrever outra ação concorrente. Negar operações ao visitante e ao agente desabilitado no backend/regras.
+
+Ocultar publicação exige motivo e não apaga o registro interno nem muda a etapa de atendimento. A proposta mínima da V1 oculta a publicação inteira, incluindo o acesso público às mídias. Uma tarefa de publicação antiga não pode desfazer ocultação. Retirar somente o marcador é insuficiente se a imagem continuar acessível pela URL antiga. Cópias já baixadas por terceiros não podem ser recuperadas pelo sistema.
+
+Manter estados separados para envio, atendimento e publicação. Recebida/Em análise/Atendida descrevem atendimento; pendente/publicada/oculta descrevem visibilidade. Reabertura, republicação manual e correção excepcional não devem surgir como botões sem regra de produto.
 
 ## 5. Sequência de trabalho
 
@@ -66,11 +70,13 @@ Authentication identifica a conta; autorização verifica papel concedido por ad
 5. **Envio real:** confirmação de e-mail, upload, persistência, protocolo, projeção pública, falhas parciais e reenvio.
 6. **Ocorrências:** login, lista, detalhe, análise, conclusão, histórico e ocultação.
 7. **Validação V1:** percorrer critérios de aceite do PRD; inspecionar respostas de rede e testar retirada rápida de conteúdo.
-8. **Fase posterior:** dashboard e gráficos da mesma base; então mapa técnico, visitas e complementos aprovados.
+8. **Fase posterior:** dashboard e gráficos da mesma base. Mapa técnico dedicado, visitas e outros complementos dependem de decisão própria e não são compromissos automáticos da fase seguinte.
 
 Cada entrega deve ser pequena, revisada por outra integrante e demonstrável. As quatro alunas programam HTML/CSS/JS das respectivas telas; banco e integrações são trabalho de aprendizagem conjunta. Cartões Jira existentes não devem ser confundidos com módulos concluídos.
 
 ## 6. Verificações indispensáveis antes da abertura pública
+
+Usar os cenários AC-01 a AC-12 do PRD como roteiro de aceite; os requisitos RF e RNF permitem rastrear o resultado de cada teste. As dependências DEP-01 a DEP-09 identificam decisões/configurações de implantação, sem tratá-las como implementação concluída.
 
 - Fonte de limites de Itambé e regra de aproximação pública escolhidas e testadas.
 - Identidade/contato/CPF ausentes da resposta pública, inclusive URLs e metadados de foto.

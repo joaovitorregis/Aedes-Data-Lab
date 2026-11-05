@@ -1,109 +1,141 @@
-# Start técnico — Aedes Data Lab
+# Aedes Data Lab: Start Técnico
 
-**Estado:** plano técnico proposto, alinhado ao PRD 1.2; serviços ainda não implementados
-**Versão:** 1.2 — 05/11/2026
-**Produto:** [PRD do Aedes](./PRD_Aedes_Data_Lab.md)
+| Campo | Valor |
+|---|---|
+| Versão | 2.0 · 05/11/2026 |
+| Estado | Plano técnico aprovado como base de construção; serviços ainda não implementados |
+| Documento de produto | [PRD 2.0](./PRD_Aedes_Data_Lab.md) |
 
-## 1. O que existe hoje
+Este documento organiza a arquitetura e a ordem de implementação da V1. O comportamento do produto, as permissões e os critérios de aceite estão no PRD; se os dois divergirem, vale o PRD.
 
-A base `main` inspecionada em 05/11/2026, commit `70bf8c2`, contém páginas HTML iniciais em `site/`, um CSS compartilhado e JavaScript por tela. Nessa base não há envio funcional, banco integrado, autenticação, publicação no mapa ou dashboard alimentado por dados. Isso não é auditoria das branches das integrantes ou de um ambiente publicado. O PR #2 exige revisão antes de integração. ADL-86 a ADL-89 tratam o HTML das primeiras quatro telas; esses cartões não comprovam implementação.
+## 1. Ponto de partida
 
-O objetivo técnico da V1 é o percurso **formulário → confirmação e persistência → projeção pública → mapa → Ocorrências do agente → atualização de etapa e ocultação**. Dashboard e gráficos ficam para depois.
+**Repositório em 05/11/2026 (commit `f403ef5`):** a pasta `site/` tem 12 páginas de estudo, sete da área pública e cinco da área dos agentes, com um CSS compartilhado e um JavaScript por tela, todos com conteúdo inicial. Ainda não há envio, banco, autenticação, publicação no mapa nem dashboard com dados. As branches das integrantes não têm alterações de código em relação ao `main`.
 
-## 2. Direção arquitetural
+**Design:** as telas do Figma estão concluídas e são a referência visual para o HTML e o CSS. As exportações da pasta `wireframes/` são anteriores à versão final e servem apenas como registro histórico. Os cartões ADL-86 a ADL-89 do Jira cobrem o HTML das quatro primeiras telas.
 
-Manter HTML, CSS único compartilhado e JavaScript modular. Firebase é a direção escolhida. Firestore, Authentication, Storage, Functions e Emulator Suite são proposta de composição, dependente de modelagem, custo e regras. Vite pode ser introduzido para desenvolvimento local quando for útil; não exige reescrever as páginas. Leaflet pode renderizar mapas, mas o provedor da camada visual ainda precisa ser escolhido. Chart.js só entra com o dashboard posterior.
+A V1 precisa entregar o percurso **formulário → confirmação e gravação → versão pública → mapa → Ocorrências do agente → atualização da etapa, ocultação e correção**. Dashboard e gráficos ficam para depois.
+
+## 2. Arquitetura
+
+O site continua em HTML, um CSS compartilhado e JavaScript modular por tela. O backend será Firebase, combinando Firestore, Authentication, Storage, Functions e Emulator Suite; a composição final depende da modelagem, do custo (DEP-07) e das regras de acesso. Vite pode entrar para o desenvolvimento local quando ajudar, sem reescrever as páginas. Leaflet pode renderizar os mapas, e o provedor da camada visual ainda será escolhido. Chart.js só entra com o dashboard.
 
 | Camada | Responsabilidade |
 |---|---|
-| Páginas | Formulário, mensagens, mapa e operações do agente |
+| Páginas | Formulário, mensagens, mapa e telas dos agentes |
 | Domínio | Validação, etapas, datas, território, aproximação pública e regras de publicação |
-| Serviços cliente | Chamar operações de envio, listagem e atendimento |
-| Backend/regras | Validar, autorizar, persistir, separar dados e produzir projeção pública |
+| Serviços do cliente | Chamadas de envio, listagem, atendimento e correção |
+| Backend e regras | Validar, autorizar, gravar, separar dados e gerar a versão pública |
 
-Evitar consultas diretas espalhadas entre telas. Contratos iniciais: `confirmarEmail`, `salvarDenuncia`, `listarDenunciasPublicas`, `listarOcorrencias`, `iniciarAnalise`, `registrarObservacao`, `concluirOcorrencia`, `ocultarPublicacao`, `republicarOcorrencia` e `corrigirCamposDenuncia`. O último permite administrador autorizado ou cidadão com vínculo verificado com aquela denúncia. Possuir somente papel de agente não concede permissão de correção dos campos enviados.
+As telas não fazem consultas diretas ao banco; tudo passa pela camada de serviços em `site/js/servicos/`. Contratos iniciais:
+
+| Contrato | Quem pode chamar |
+|---|---|
+| `confirmarEmail` | Qualquer pessoa, com limite de repetição (RNF-08) |
+| `salvarDenuncia` | Pessoa com e-mail confirmado para aquela tentativa |
+| `listarDenunciasPublicas` | Qualquer pessoa; lê só a versão pública |
+| `listarOcorrencias` | Agente autorizado |
+| `iniciarAnalise`, `registrarObservacao`, `concluirOcorrencia` | Agente autorizado |
+| `ocultarPublicacao`, `republicarOcorrencia` | Agente autorizado |
+| `corrigirCamposDenuncia` | Administrador, em qualquer etapa; cidadão com vínculo comprovado, só na própria denúncia e só enquanto Recebida (D26) |
+
+Ter apenas o papel de agente não dá permissão para corrigir os campos enviados.
 
 ## 3. Modelo inicial de dados
 
-| Recurso proposto | Conteúdo | Acesso |
+| Recurso | Conteúdo | Acesso |
 |---|---|---|
-| `reports/{id}` | Relato operacional, ponto exato, bairro, categoria, etapa e datas | Agentes autorizados |
-| `report_private/{id}` | Nome, CPF declarado, e-mail confirmado e telefone opcional | Agentes autorizados conforme necessidade |
-| `public_reports/{id}` | Área aproximada, categoria, data, etapa, foto e descrição publicáveis | Leitura pública |
-| `report_events/{id}` | Início de análise, observações, atendimento, ocultação, republicação e correções com autor/data | Histórico privado conforme necessidade; nunca público |
-| `users/{uid}` | Habilitação e papel técnico | Acesso mínimo |
-| Storage | Originais restritos e versões públicas de fotos | Regras distintas |
+| `reports/{id}` | Dados operacionais: ponto exato, bairro, categoria, etapa, datas e versão | Agentes autorizados e administrador |
+| `report_private/{id}` | Nome, CPF declarado, e-mail confirmado e telefone opcional | Todos os agentes autorizados (D11) e administrador; o cidadão lê e corrige só a própria denúncia, enquanto Recebida |
+| `public_reports/{id}` | Área aproximada, bairro, categoria, data, etapa, foto tratada e descrição | Leitura pública |
+| `report_events/{id}` | Início de análise, observações, atendimento, ocultação, republicação e correções, com autor e data | Agentes autorizados e administrador; nunca público nem liberado ao cidadão |
+| `users/{uid}` | Habilitação e papel (agente, administrador) | Acesso mínimo; gerido pelo administrador |
+| Storage | Fotos originais em área restrita e versões públicas tratadas | Regras separadas para cada área |
 
-Esse modelo não é esquema final. O CPF é obrigatório por decisão do usuário, mas **não autentica identidade**. Não devolver nenhum caractere de CPF, e-mail ou nome em `public_reports`. Foto pública deve ser produzida sem metadados pessoais. Descrição livre pode conter identificação incidental; a V1 publica automaticamente, portanto a ocultação precisa funcionar.
+O modelo será refinado durante a implementação. O CPF é obrigatório (D06), mas não autentica identidade. Nenhum caractere de nome, CPF ou e-mail vai para `public_reports`. A foto pública é gerada sem metadados pessoais. Como a descrição livre pode conter identificação incidental e a publicação é automática, a ocultação precisa funcionar desde o primeiro dia.
 
-## 4. Fluxos técnicos V1
+## 4. Fluxos técnicos da V1
 
-### Envio
+### 4.1 Envio
 
-1. Confirmar acesso ao e-mail para a denúncia, sem criar conta permanente de cidadão. Vincular a confirmação à tentativa; confirmar no início é proposta de interface, e o requisito obrigatório é confirmar antes de aceitar o envio. Expiração, reenvio e limites de tentativas precisam ser configurados.
-2. Coletar local exato, bairro, categoria, descrição, uma a três fotos, nome, CPF e telefone opcional.
-3. Validar território, tipos/tamanho de arquivo e dados no servidor. A validação no cliente apenas orienta.
-4. Usar ID estável da tentativa. Reservar estado pendente, receber fotos em área restrita, finalizar registro e gerar protocolo.
-5. Criar versão pública com **posição aproximada** e fotos tratadas. O agente tem acesso ao registro recebido imediatamente.
-6. Se a publicação falhar, manter protocolo e informar “publicação pendente”, com recuperação segura. Não criar outra denúncia ao repetir a tentativa.
+1. Confirmar o acesso ao e-mail para aquela denúncia, sem criar conta permanente. A confirmação fica vinculada à tentativa e acontece antes do formulário longo. Expiração, reenvio e limite de tentativas são configurados em DEP-03.
+2. Coletar ponto exato, bairro, categoria, descrição, de uma a três fotos, nome, CPF e telefone opcional. O endereço digitado aguarda DEP-12.
+3. Validar no servidor o território, os tipos e tamanhos de arquivo e os dados. A validação no navegador só orienta o preenchimento.
+4. Usar um ID estável por tentativa: reservar o registro como pendente, receber as fotos na área restrita, finalizar e só então gerar o protocolo.
+5. Gerar a versão pública com posição aproximada e fotos tratadas. O agente vê o registro recebido imediatamente.
+6. Se a publicação falhar, manter o protocolo, informar "publicação pendente" e recuperar com segurança. Repetir a tentativa não cria outra denúncia.
 
-Firestore e Storage não compartilham transação única. Estados técnicos pendente/finalizado/publicação pendente não substituem Recebida/Em análise/Atendida. Reenvio e retentativas do backend precisam ser idempotentes.
+Firestore e Storage não compartilham transação, por isso reenvios e retentativas do backend precisam ser idempotentes. Os estados técnicos do envio (pendente, finalizado, publicação pendente) são independentes das etapas Recebida, Em análise e Atendida.
 
-### Mapa público
+### 4.2 Mapa público
 
-Consultar somente a projeção pública. Mostrar foto, descrição, categoria, data, etapa e área aproximada. Incluir atendidas, exceto conteúdo ocultado. A aproximação deve evitar revelar o ponto exato e não deslocar o marcador para localidade incorreta. Método e precisão ainda pendentes. Não expor o documento privado ao navegador para depois esconder campos na tela.
+O mapa lê somente `public_reports`: foto, descrição, bairro, categoria, data, etapa e área aproximada. Denúncias atendidas continuam visíveis; as ocultas saem. A aproximação não pode revelar o ponto exato nem deslocar o marcador para outra localidade; método e precisão serão definidos em DEP-02. O documento privado nunca chega ao navegador do visitante.
 
-### Ocorrências do agente
+### 4.3 Ocorrências do agente
 
-O administrador autoriza, revoga e apoia recuperação das contas. Todos os agentes autorizados podem consultar todas as ocorrências de Itambé e os campos privados, inclusive CPF completo. Visitantes continuam sem esse acesso. Abrir detalhe não altera etapa. “Iniciar análise” e “Atendida” são operações explícitas com autor/data; conclusão exige visita e análise do local, data, ação e observações. Se não resolver, manter Em análise e permitir novas observações internas com autor/data.
+O administrador libera, revoga e recupera as contas. Todos os agentes autorizados consultam as ocorrências de Itambé inteira e os campos privados, inclusive o CPF completo. Abrir o detalhe não altera a etapa. "Iniciar análise" e "Concluir" são operações explícitas com autor e data, e a conclusão exige visita ao local, data, ação realizada e observações. Sem solução, a ocorrência fica Em análise e recebe novas observações.
 
-O autor de uma mudança não se torna responsável exclusivo pela ocorrência. Relatos distintos no mesmo local permanecem separados; mapa operacional preciso ajuda a reconhecê-los, sem fusão ou alteração automática em lote. Conferir etapa/versão atual ao salvar para não sobrescrever outra ação concorrente. Negar operações ao visitante e ao agente desabilitado no backend/regras.
+Quem inicia a análise fica registrado como autor, sem exclusividade sobre a ocorrência. Denúncias diferentes no mesmo local continuam separadas; o mapa com pontos exatos ajuda o agente a reconhecê-las, sem fusão nem alteração em lote. Antes de salvar, o serviço confere a etapa e a versão atuais para que uma ação concorrente não seja sobrescrita. As regras do backend negam operações ao visitante e à conta revogada.
 
-Ocultar publicação exige motivo e não apaga o registro interno nem muda a etapa de atendimento. A proposta mínima da V1 oculta a publicação inteira, incluindo o acesso público às mídias. Uma tarefa de publicação antiga não pode desfazer ocultação. Retirar somente o marcador é insuficiente se a imagem continuar acessível pela URL antiga. Cópias já baixadas por terceiros não podem ser recuperadas pelo sistema.
+Denúncias falsas ou fora do assunto seguem a regra provisória do PRD (seção 10.3) até a definição de DEP-11: o agente oculta a publicação quando for o caso, registra o motivo nas observações e mantém a ocorrência Em análise.
 
-Manter estados separados para envio, atendimento e publicação. Recebida/Em análise/Atendida descrevem atendimento; pendente/publicada/oculta descrevem visibilidade. Ocorrências não reabrem, mesmo em conclusão por engano ou reincidência: será necessário novo relato.
+### 4.4 Ocultação e republicação
 
-Agente pode republicar após revisão e eventual correção pelo administrador ou cidadão responsável pelo envio. Registrar a versão da decisão de publicação para que tarefa antiga não substitua ocultação/republicação mais recente. Republicar nunca altera etapa de atendimento.
+Ocultar exige motivo, preserva o registro interno e mantém a etapa. A V1 oculta a publicação inteira, incluindo o acesso público às fotos. Remover só o marcador não basta se a imagem continuar acessível pela URL antiga. Cópias baixadas por terceiros estão fora do alcance do sistema.
 
-Administrador e cidadão responsável pelo envio podem corrigir os campos enviados. Para o cidadão, verificar acesso ao e-mail confirmado associado à denúncia e emitir autorização de edição restrita ao registro, com expiração e proteção contra reutilização indevida, sem exigir conta permanente. Protocolo, CPF ou e-mail digitado isoladamente não autorizam acesso. Limitar leitura/edição aos campos da própria denúncia, sem liberar notas e histórico operacional.
+Cada decisão de publicação recebe uma versão, para que uma tarefa antiga não substitua uma ocultação ou republicação mais recente. Republicar exige ação explícita de agente autorizado e nunca altera a etapa de atendimento. Ocorrências não são reabertas; conclusão por engano ou reincidência pedem nova denúncia.
 
-Preservar original, motivo e autor/data em histórico privado. Correção de registro oculto não o republica; correção de registro publicado atualiza apenas a projeção permitida. Trocar e-mail não herda a confirmação do endereço anterior: preservar autoria e confirmar o novo endereço antes de utilizá-lo em autorizações futuras. Diferenciar essa operação das observações e mudanças de atendimento permitidas aos agentes. O mecanismo de acesso à correção é proposta técnica e ainda não está implementado.
+### 4.5 Correção de campos
+
+O administrador corrige qualquer denúncia em qualquer etapa. O cidadão comprova acesso ao e-mail confirmado na denúncia e recebe uma autorização de edição restrita àquele registro, com prazo de validade e proteção contra reutilização, sem conta permanente. Protocolo, CPF ou e-mail digitado, sozinhos, não autorizam nada.
+
+O serviço confere a etapa no momento de salvar. Se a ocorrência já estiver Em análise, a correção do cidadão é recusada com orientação para usar o e-mail de contato (D26), e o administrador decide se aplica a mudança. Um ponto corrigido passa de novo pela validação de território.
+
+Cada correção grava valor original, novo valor, motivo, autor e data em `report_events`. Se a denúncia estiver publicada, apenas a versão pública permitida é atualizada; se estiver oculta, continua oculta até uma republicação explícita. A troca de e-mail mantém a autoria, e o novo endereço precisa ser confirmado antes de servir para novas autorizações. O mecanismo detalhado é fechado em DEP-08.
 
 ## 5. Sequência de trabalho
 
-1. **HTML e navegação:** concluir páginas iniciais e menu compartilhado; cada integrante demonstra e explica sua tela.
-2. **Contrato com dados fictícios:** definir formato de denúncia e fazer formulário, lista e mapa consumirem uma fonte única.
-3. **Formulário e mapa locais:** ponto manual/GPS, fotos, revisão, estados de erro; mapa centralizado em Itambé sem exigir GPS.
-4. **Emuladores Firebase:** criar ambiente separado do Repecol, modelar público/privado, autenticação do agente e testes de acesso negado.
-5. **Envio real:** confirmação de e-mail, upload, persistência, protocolo, projeção pública, falhas parciais e reenvio.
-6. **Ocorrências:** login, lista, detalhe/consulta espacial, análise, observações, conclusão após visita, histórico, ocultação e republicação; correção pelo administrador e pelo cidadão com vínculo verificado com o próprio envio.
-7. **Validação V1:** percorrer critérios de aceite do PRD; inspecionar respostas de rede e testar retirada rápida de conteúdo.
-8. **Fase posterior:** dashboard e gráficos da mesma base. Mapa técnico dedicado, visitas e outros complementos dependem de decisão própria e não são compromissos automáticos da fase seguinte.
+1. **HTML e navegação:** montar as páginas a partir das telas finais do Figma e o menu compartilhado. Cada integrante apresenta e explica a própria tela.
+2. **Contrato com dados fictícios:** definir o formato da denúncia e fazer formulário, lista e mapa lerem da mesma fonte.
+3. **Formulário e mapa locais:** ponto manual e GPS, fotos, revisão e estados de erro; mapa centrado em Itambé sem exigir GPS.
+4. **Emuladores Firebase:** ambiente separado do Repecol, separação entre público e privado, autenticação do agente e testes de acesso negado.
+5. **Envio real:** confirmação de e-mail, upload, gravação, protocolo, versão pública, falhas parciais e reenvio.
+6. **Ocorrências:** login, lista, detalhe e consulta espacial, análise, observações, conclusão após visita, histórico, ocultação, republicação e correção (administrador em qualquer etapa; cidadão só enquanto Recebida).
+7. **Validação da V1:** percorrer os cenários AC-01 a AC-14 do PRD, inspecionar as respostas de rede e testar a retirada rápida de conteúdo.
+8. **Fase seguinte:** dashboard e gráficos sobre a mesma base. Mapa técnico dedicado, Meu trabalho e agenda de visitas dependem de decisão própria.
 
-Cada entrega deve ser pequena, revisada por outra integrante e demonstrável. As quatro alunas programam HTML/CSS/JS das respectivas telas; banco e integrações são trabalho de aprendizagem conjunta. Cartões Jira existentes não devem ser confundidos com módulos concluídos.
+Cada entrega deve ser pequena, revisada por outra integrante e demonstrável. As quatro integrantes programam HTML, CSS e JavaScript das próprias telas; banco e integrações são aprendidos em conjunto. Um cartão no Jira não indica módulo concluído.
 
-## 6. Verificações indispensáveis antes da abertura pública
+## 6. Verificações antes da abertura pública
 
-Usar os cenários AC-01 a AC-14 do PRD como roteiro de aceite; os requisitos RF e RNF permitem rastrear o resultado de cada teste. As dependências DEP-01 a DEP-11 identificam decisões/configurações de implantação, sem tratá-las como implementação concluída.
+Os cenários AC-01 a AC-14 do PRD são o roteiro de aceite, e os requisitos RF e RNF permitem rastrear cada resultado. As dependências DEP-01 a DEP-12 precisam estar resolvidas nos prazos indicados no PRD (seção 18).
 
-- Fonte de limites de Itambé e regra de aproximação pública escolhidas e testadas.
-- Identidade/contato/CPF ausentes da resposta pública, inclusive URLs e metadados de foto.
-- Conta de agente revogável, operações protegidas e trilha de mudanças.
-- Ocultação/republicação testadas e pessoa responsável com rotina diária designada; o administrador ainda não definiu quem fará a conferência e substituição. Criar e-mail para reclamações/correção/retirada.
-- A administração e a instituição assumem o serviço; identificar instituição e formalizar o vínculo. Registrar preferência de retenção indefinida, fechando política por tipo de dado e solicitações sobre dados sem prometer guarda eterna gratuita.
-- Provedor de mapas, estimativa de volume/custo, limites e monitoramento acertados. Baixo custo, idealmente zero, é objetivo; teto financeiro e reação ao atingir cotas continuam pendentes.
-- Mensagem pública clara: canal ainda não oficial sem autorização; denúncia não garante vistoria nem prazo.
+- Limite territorial de Itambé e regra de aproximação pública escolhidos e testados (DEP-01, DEP-02).
+- Nome, CPF e contato ausentes de toda resposta pública, inclusive URLs e metadados de foto.
+- Contas de agente revogáveis, operações protegidas no backend e trilha de mudanças completa.
+- Ocultação e republicação testadas; responsável e substituto pela conferência diária designados; e-mail de contato criado e acompanhado (DEP-05).
+- Instituição parceira identificada e vínculo formalizado (DEP-04).
+- Adequação à LGPD concluída antes da coleta de dados reais: finalidade do CPF, base legal, controlador e encarregado, aviso de privacidade e retenção por tipo de dado (DEP-06).
+- Provedor de mapa, estimativa de volume e custo, teto financeiro, limites e monitoramento definidos (DEP-07).
+- Mensagem pública clara: enquanto não houver autorização, o serviço não se apresenta como canal oficial, e uma denúncia não garante vistoria nem prazo.
 
-O usuário quer abrir para moradores reais, sem grupo fechado. O administrador aprova a abertura e assume manutenção. Ausência de agentes por vários dias não suspende novos envios por si só; não informar atendimento ou prazo garantido. Esses itens são preparação para essa abertura, não requisitos já implementados.
+O lançamento é aberto a moradores reais, sem grupo fechado. O administrador aprova a abertura e responde pela manutenção. A falta de agentes por alguns dias não suspende o recebimento.
 
-Ainda precisam de definição de produto: quem os dados representam no envio em nome de terceiros; desfecho de denúncia inválida sem visita; obrigatoriedade do endereço textual. Detecção de imagens indevidas permanece ideia futura, sem implementação na V1.
+Decisões de produto ainda em aberto: dados no envio em nome de terceiros (DEP-10), encerramento de denúncias inválidas sem visita (DEP-11) e obrigatoriedade do endereço digitado (DEP-12). Detecção automática de imagens fica como ideia futura.
 
-## 7. Referências e limites
+## 7. Referências
 
-- [PRD deste repositório](./PRD_Aedes_Data_Lab.md).
-- [Jira ADL-85](https://aedesdatalab.atlassian.net/browse/ADL-85) e cartões de design/HTML.
-- [Figma do Aedes](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y), protótipo.
-- Roteiro de aprendizagem no segundo cérebro do usuário, atualizado em 24/10/2026.
-- PRD do Repecol consultado apenas como modelo de estrutura; território, perfis extras, chat, comércio e dados daquele projeto não são requisitos do Aedes.
+- [PRD do Aedes Data Lab](./PRD_Aedes_Data_Lab.md).
+- [Figma do Aedes](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y), com as telas finais.
+- [Jira ADL-85](https://aedesdatalab.atlassian.net/browse/ADL-85) e cartões de design e HTML.
+- Roteiro de aprendizagem do projeto, mantido fora do repositório.
+- PRD do Repecol, usado só como modelo de estrutura. Território, perfis extras, chat, comércio e dados daquele projeto não fazem parte do Aedes.
 
-Nenhum serviço foi configurado nem testado por este documento. A direção HTML/CSS/JS + Firebase é decisão do projeto; bibliotecas, coleções e operações acima são proposta para revisão.
+Nenhum serviço foi configurado ou testado até esta versão. HTML, CSS e JavaScript com Firebase é a direção do projeto; bibliotecas, coleções e contratos acima podem ser ajustados na implementação, desde que o PRD seja respeitado.
+
+## 8. Histórico
+
+| Versão | Data | Alteração |
+|---|---|---|
+| 1.2 | 05/11/2026 | Plano técnico alinhado ao PRD 1.2 |
+| 2.0 | 05/11/2026 | Alinhado ao PRD 2.0: D26 (correção do cidadão só enquanto Recebida), acesso dos agentes ao CPF conforme D11, revalidação de território na correção, regra provisória de DEP-11, LGPD em DEP-06, DEP-12, contratos com permissão por chamada, telas do Figma concluídas e estado do repositório em `f403ef5` |

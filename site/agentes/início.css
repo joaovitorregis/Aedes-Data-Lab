@@ -5,7 +5,7 @@ body {
   font-family: "Segoe UI", Roboto, sans-serif;
   margin: 0;
   background: #f4f7fb;
-  color: #253238;
+  color:#2F4F3A;
 }
 header {
   background: linear-gradient(120deg, #04AA6D, #058457);
@@ -25,8 +25,3 @@ section {
   margin-bottom: 24px;
   box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
 }
-section h2 {
-  margin-top: 0;
-  color: #04AA6D;
-}
-

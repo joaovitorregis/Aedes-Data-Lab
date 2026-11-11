@@ -1,6 +1,6 @@
 # Telas finais do Aedes Data Lab
 
-Exportação das 47 telas da página **Fluxo de telas · Jornada do Usuário** do [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13), feita em 05/11/2026 em PNG com escala 2x. A tela 45 foi capturada direto do canvas e tem resolução menor. O arquivo do Figma continua sendo a fonte editável. Quando uma tela divergir do [PRD](../docs/PRD_Aedes_Data_Lab.md) sobre comportamento, vale o PRD.
+Exportação das 47 telas da página **Fluxo de telas · Jornada do Usuário** do [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13), feita em 05/11/2026 em PNG com escala 2x. A tela 45 foi capturada direto do canvas e tem resolução menor. O arquivo do Figma continua sendo a fonte editável. Quando uma tela divergir do [PRD](../docs/PRD.md) sobre comportamento, vale o PRD.
 
 [Visão geral de todas as telas](montage.png)
 

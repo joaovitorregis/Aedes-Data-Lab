@@ -2,12 +2,25 @@
 
 | Campo | Valor |
 |---|---|
-| Versão | 2.0 · 05/11/2026 |
+| Versão | 2.1 · 11/11/2026 |
 | Estado | Aprovado como base de construção da V1 |
 | Território | Itambé, Pernambuco |
 | Responsável pelo documento | Administrador do produto |
 | Público | Produto, design, desenvolvimento, testes e agentes participantes |
-| Documento técnico | [Start Técnico](./START_TECNICO_Aedes_Data_Lab.md) |
+| Documentos relacionados | [Arquitetura](./ARCHITECTURE.md) · [Design](./DESIGN.md) · [Regras](./RULES.md) · [Tarefas](../TASKS.md) · [Plano de testes](./TEST_PLAN.md) · [Segurança](./SECURITY.md) |
+
+## Visão do produto
+
+| Item | Definição |
+|---|---|
+| Produto | Aedes Data Lab |
+| Problema | Moradores de Itambé/PE não têm um canal simples para relatar focos do mosquito da dengue, e os agentes não recebem esses relatos com localização, fotos e histórico organizados |
+| Usuários | Moradores que registram denúncias; visitantes que consultam o mapa; agentes de endemias autorizados; administrador do produto |
+| Objetivo | Levar cada denúncia do celular do morador até a fila dos agentes e ao mapa público, protegendo os dados pessoais |
+| Funcionalidades principais | Registro de denúncia com confirmação de e-mail; mapa público com filtros; área de Ocorrências dos agentes; ocultação e correção de denúncias |
+| MVP (V1) | Envio com fotos e ponto no mapa, protocolo, mapa com área aproximada, login de agente, análise, conclusão após visita, ocultação, republicação e correção (seções 6 e 9) |
+| Fora do escopo | Dashboard e gráficos, chat, notificações, conta do cidadão, agenda de visitas, comércio e produção de repelente (seção 6.1) |
+| Critérios de sucesso | Cenários AC-01 a AC-14 demonstrados na versão candidata (seção 15 e [TEST_PLAN.md](./TEST_PLAN.md)) |
 
 ## 1. Resumo executivo
 
@@ -21,7 +34,7 @@ A V1 precisa entregar o caminho inteiro: **envio → gravação → mapa públic
 
 ## 2. Como ler este documento
 
-Este PRD descreve o comportamento esperado do produto e como cada parte será aceita. O Start Técnico trata da arquitetura e da ordem de implementação. Se os dois divergirem sobre comportamento, vale o PRD.
+Este PRD responde o que será construído e por quê, e como cada parte será aceita. A forma de construir está em [ARCHITECTURE.md](./ARCHITECTURE.md), a aparência em [DESIGN.md](./DESIGN.md) e a ordem de trabalho em [TASKS.md](../TASKS.md). Se algum desses documentos divergir do PRD sobre comportamento, vale o PRD.
 
 O texto usa três tipos de item:
 
@@ -51,7 +64,7 @@ O Aedes Data Lab precisa reunir relatos com informação suficiente para o traba
 
 A experiência é pensada primeiro para o celular e precisa funcionar bem no computador. Quatro integrantes constroem HTML, CSS e JavaScript das telas. Banco de dados e integrações serão aprendidos em conjunto com a coordenação do projeto, e essa ordem de aprendizagem não altera os critérios de aceite.
 
-**Estado do repositório em 05/11/2026 (commit `f403ef5`):** a pasta `site/` tem 12 páginas de estudo, sete da área pública e cinco da área dos agentes, com um CSS compartilhado e um JavaScript por tela, todos com conteúdo inicial. Ainda não há envio, banco, autenticação nem publicação no mapa. As branches das integrantes não têm alterações de código em relação ao `main`. Meu trabalho, Mapa técnico e Dashboard já existem como páginas reservadas, fora do aceite da V1 (seção 6.1).
+O andamento da implementação é registrado em [MEMORY.md](./MEMORY.md), que é atualizado a cada entrega. As páginas Meu trabalho, Mapa técnico e Dashboard já existem no repositório como espaço reservado, fora do aceite da V1 (seção 6.1).
 
 **Design:** as telas do Figma estão concluídas e são a referência visual da implementação. As telas finais ficam na página "Fluxo de telas · Jornada do Usuário" e estão exportadas na pasta `wireframes/`, com o requisito correspondente a cada uma. Se uma tela do Figma divergir deste PRD sobre comportamento, vale o PRD.
 
@@ -332,7 +345,7 @@ O sistema usa três mensagens distintas no envio: "Não foi possível enviar", "
 
 O cidadão com vínculo comprovado acessa os campos que enviou na própria denúncia para corrigi-los, dentro do prazo de D26. Esse acesso não torna os dados públicos e não libera histórico, observações ou dados de outras pessoas.
 
-A separação entre público e privado acontece nos dados que o serviço devolve; esconder campos só na tela não basta. Nomes de coleções e contratos estão no Start Técnico. O e-mail confirmado não autentica o CPF, e a V1 não tem integração de verificação de identidade.
+A separação entre público e privado acontece nos dados que o serviço devolve; esconder campos só na tela não basta. Nomes de coleções e contratos estão em [ARCHITECTURE.md](./ARCHITECTURE.md), e as regras de proteção em [SECURITY.md](./SECURITY.md). O e-mail confirmado não autentica o CPF, e a V1 não tem integração de verificação de identidade.
 
 O produto não terá perfil público de denunciante, rastreamento de localização atual nem credenciais administrativas guardadas no navegador. A preferência por guardar as informações por prazo indefinido está registrada em D24. Antes da coleta de dados reais, DEP-06 precisa definir retenção por tipo de dado, correção, retirada e exclusão aplicáveis. Não haverá expiração automática arbitrária, e o produto não promete armazenamento eterno gratuito.
 
@@ -387,7 +400,7 @@ O dashboard da fase seguinte usa a mesma base. Períodos e comparações serão 
 | AC-13 · Republicação | Agente revisa e republica explicitamente; histórico preservado; etapa inalterada; tarefa antiga não desfaz ocultação posterior | RF-AGE-06, RNF-06 |
 | AC-14 · Correção autorizada | Administrador corrige em qualquer etapa; cidadão corrige só a própria denúncia e só enquanto Recebida; tentativa do cidadão após o início da análise é recusada; acesso indevido negado; original e motivo preservados; etapa e visibilidade inalteradas | RF-COR-01, RNF-03, RNF-05, RNF-09 |
 
-Os testes começam com dados fictícios e serviços de teste. Cada execução registra a versão testada, o resultado e as limitações encontradas. Capturas do Figma não substituem esses cenários. A etapa com moradores reais só começa depois que as dependências de lançamento estiverem resolvidas.
+Os testes começam com dados fictícios e serviços de teste. Cada execução registra a versão testada, o resultado e as limitações encontradas. Capturas do Figma não substituem esses cenários. O passo a passo de cada cenário está em [TEST_PLAN.md](./TEST_PLAN.md). A etapa com moradores reais só começa depois que as dependências de lançamento estiverem resolvidas.
 
 ## 16. Entregas
 
@@ -400,7 +413,7 @@ Os testes começam com dados fictícios e serviços de teste. Cada execução re
 | E5 · Aceite da V1 | Evidências de AC-01 a AC-14 e preparação da operação |
 | E6 · Evolução | Dashboard, gráficos e melhorias priorizadas pelo uso |
 
-As primeiras atividades de HTML já combinadas são Início, Registrar foco, Jogo e Guia Aedes. Jogo e Guia entram nessa ordem por motivo didático e não bloqueiam o fluxo operacional. Datas e responsáveis por tarefa são acompanhados fora deste PRD.
+As primeiras atividades de HTML já combinadas são Início, Registrar foco, Jogo e Guia Aedes. Jogo e Guia entram nessa ordem por motivo didático e não bloqueiam o fluxo operacional. A divisão dessas entregas em tarefas numeradas está em [TASKS.md](../TASKS.md).
 
 ## 17. Riscos assumidos
 
@@ -463,3 +476,4 @@ Em conflito com telas antigas ou recomendações anteriores, valem as decisões 
 | 1.1 | 05/11/2026 | Visita obrigatória para Atendida, observações durante a análise, sem reabertura, republicação pelo agente, responsabilidades e preferências de retenção e custo |
 | 1.2 | 05/11/2026 | Correção liberada ao administrador e ao cidadão responsável pelo envio; responsabilidades descritas por papel |
 | 2.0 | 05/11/2026 | Aprovado como base de construção. Texto revisado em tom corporativo; glossário; aviso epidemiológico restaurado no resumo; D26 limita a correção do cidadão à etapa Recebida; especificações propostas incorporadas aos requisitos; papel "operador" substituído por agente autorizado; permissões separadas por perfil; riscos em tabela; LGPD explícita em DEP-06; DEP-12 para o endereço digitado; estado do repositório atualizado para `f403ef5`; telas do Figma registradas como concluídas |
+| 2.1 | 11/11/2026 | Arquivo renomeado para `PRD.md` na nova estrutura de documentação; seção Visão do produto; estado da implementação movido para MEMORY.md; referências a ARCHITECTURE, DESIGN, TASKS, TEST_PLAN e SECURITY |

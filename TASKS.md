@@ -36,7 +36,7 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 
 - [ ] TASK-020 Declarar os tokens e os componentes base em `site/css/estilos.css` (DESIGN, seção 8)
 - [ ] TASK-021 Menu compartilhado da área pública (tela 02; `js/compartilhado/menu.js`)
-- [ ] TASK-022 Página Início (tela 01) · em andamento na branch `Maria-Beatriz`, ver MEMORY.md
+- [ ] TASK-022 Página Início (tela 01) · primeira versão em `site/index.html`; falta alinhar à tela, ver MEMORY.md
 - [ ] TASK-023 HTML da denúncia: passos 1 a 4, enviada, campos obrigatórios e falha (telas 07 a 15)
 - [ ] TASK-024 HTML do mapa público: mapa, lista, detalhe e menu de filtros (telas 16 a 24, 27, 28)
 - [ ] TASK-025 HTML do Portal técnico (tela 45; `agentes/Login.html`)

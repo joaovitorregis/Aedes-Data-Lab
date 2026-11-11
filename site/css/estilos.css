@@ -1,6 +1,37 @@
 /* Aedes Data Lab — estilos compartilhados pelas 12 páginas. */
 
-/* Base: cores, fontes e espaçamentos */
+/* Base: cores, fontes e espaçamentos (valores em docs/DESIGN.md) */
+:root {
+  --cor-fundo: #F6F0E2;
+  --cor-superficie: #FBF9F4;
+  --cor-campo: #FFFFFF;
+  --cor-primaria: #2F4F3A;
+  --cor-primaria-escura: #20352B;
+  --cor-acento: #487959;
+  --cor-verde-claro: #A8B89A;
+  --cor-borda: #D9CBB0;
+  --cor-texto: #2A2E32;
+  --cor-texto-suave: #666D74;
+  --cor-marcador: #FF0000;
+  --cor-erro: #9B2C23;
+  --cor-destaque-amarelo: #FFEA83;
+  --raio-pequeno: 8px;
+  --raio-medio: 12px;
+  --raio-etiqueta: 16px;
+  --altura-controle: 44px;
+  --fonte: "Inter", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fonte);
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+}
 
 /* Componentes: botões e campos */
 
@@ -8,6 +39,54 @@
 
 /* Cidadão: início, denúncia, mapa, guia, repelentes, equipe e jogo */
 /* Delimitar estilos específicos com classes como .pagina-denuncia. */
+
+/* Página Início (tela 01) */
+.pagina-inicio header {
+  background: var(--cor-superficie);
+  padding: 16px;
+  text-align: center;
+}
+
+.pagina-inicio main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.pagina-inicio section {
+  background: var(--cor-superficie);
+  border-radius: var(--raio-medio);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.pagina-inicio h1 {
+  margin: 0;
+  font-size: 36px;
+  color: var(--cor-primaria);
+}
+
+.pagina-inicio h2 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  color: var(--cor-primaria);
+}
+
+.pagina-inicio p {
+  margin: 0 0 16px;
+  font-size: 20px;
+  color: var(--cor-acento);
+}
+
+.pagina-inicio .botao {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: var(--raio-medio);
+  background: var(--cor-acento);
+  color: var(--cor-fundo);
+  font-size: 20px;
+  text-decoration: none;
+}
 
 /* Agentes: acesso, meu trabalho, ocorrências, mapa e dashboard */
 

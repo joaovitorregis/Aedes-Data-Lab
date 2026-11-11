@@ -5,7 +5,7 @@ Este plano define o que significa "funcionando" para cada parte da V1. Os cenár
 ## 1. Como testar
 
 - Teste sempre com dados fictícios: nomes inventados e CPFs gerados para teste, nunca dados de pessoas reais.
-- Até a Fase 6 de [TASKS.md](../TASKS.md), os testes usam o serviço fictício; depois, o Firebase Emulator Suite e o projeto de teste.
+- Até a Fase 6 de [TASKS.md](../TASKS.md), os testes usam o serviço fictício; depois, o Supabase local (Supabase CLI) e o projeto de teste.
 - Cada execução registra a data, a versão testada (commit ou PR), o resultado e o que ficou de fora, no próprio PR.
 - Telas do Figma não substituem teste. O teste é feito no site.
 
@@ -111,7 +111,7 @@ Abrir o site → Registrar foco → confirmar e-mail → enviar denúncia → an
 → ocultar → confirmar que saiu do mapa → republicar → sair
 ```
 
-Quando o projeto tiver `package.json`, esse roteiro pode ser automatizado com Playwright, e as regras do Firestore testadas no Emulator Suite. Até lá, ele é executado à mão.
+Quando o projeto tiver `package.json`, esse roteiro pode ser automatizado com Playwright, e as políticas de RLS testadas no Supabase local. Até lá, ele é executado à mão.
 
 ## 5. Antes do lançamento
 

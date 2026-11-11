@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versão | 3.0 · 11/11/2026 |
+| Versão | 3.1 · 11/11/2026 |
 | Estado | Aprovada como base de construção; serviços ainda não implementados |
 | Documentos relacionados | [PRD](./PRD.md) · [Decisões](./DECISIONS.md) · [Segurança](./SECURITY.md) · [Tarefas](../TASKS.md) |
 
@@ -14,11 +14,12 @@ Este documento descreve **como** o Aedes Data Lab será construído. O que o pro
 |---|---|---|
 | Interface | HTML, um CSS compartilhado e JavaScript em módulos ES, sem framework | Decidida (ADR-001, ADR-002) |
 | Mapas | Leaflet, com provedor de camada visual a escolher | Proposta (ADR-005, DEP-07) |
-| Backend | Firebase: Cloud Functions para as operações que validam e autorizam | Decidida a plataforma (ADR-003); composição em ajuste |
-| Banco de dados | Cloud Firestore, com coleções separadas para dados públicos e privados | Proposta (ADR-004) |
-| Arquivos | Cloud Storage, com área restrita para originais e área pública para fotos tratadas | Proposta |
-| Autenticação | Firebase Authentication para agentes e administrador; confirmação de e-mail por denúncia para o cidadão | Proposta (ADR-006) |
-| Ambiente local | Firebase Emulator Suite; Vite opcional, quando ajudar | Proposta |
+| Backend | Supabase: Edge Functions para as operações que validam e autorizam | Proposta (ADR-012, substitui a ADR-003) |
+| Banco de dados | Postgres do Supabase, com tabelas separadas para dados públicos e privados e políticas de acesso por linha (RLS) | Proposta (ADR-004) |
+| Arquivos | Supabase Storage, com um bucket privado para os originais e um bucket público para as fotos tratadas | Proposta |
+| Autenticação | Supabase Auth para agentes e administrador; confirmação de e-mail por denúncia para o cidadão | Proposta (ADR-006) |
+| Cliente | Biblioteca `supabase-js` importada como módulo ES, usada só em `js/servicos/` | Proposta |
+| Ambiente local | Supabase CLI, que sobe banco, Auth, Storage e funções na própria máquina (exige Docker); Vite opcional, quando ajudar | Proposta |
 | Hospedagem | A definir junto com o custo (DEP-07) | Em aberto |
 | Versionamento | Git e GitHub, com PR revisado antes de entrar no `main` | Em uso |
 | Gráficos | Chart.js, só na fase do dashboard | Fase seguinte |
@@ -34,14 +35,14 @@ Módulo da tela (site/js/cidadao ou site/js/agentes)
       ↓
 Camada de serviços (site/js/servicos)
       ↓
-Cloud Functions: validar, autorizar, gravar
+Edge Functions: validar, autorizar, gravar
       ↓
-Firestore e Storage
+Postgres (com RLS) e Storage
       ↓
 Versão pública (public_reports) → Mapa
 ```
 
-As telas nunca falam direto com o banco. Toda leitura e escrita passa pela camada de serviços, e toda operação que muda dados passa por uma função no servidor que confere permissão, etapa e território.
+As telas nunca falam direto com o banco. Toda leitura e escrita passa pela camada de serviços. As leituras usam a chave pública do Supabase e só alcançam o que as políticas de RLS liberam; toda operação que muda dados passa por uma Edge Function que confere permissão, etapa e território.
 
 ## 3. Estrutura de pastas
 
@@ -58,9 +59,12 @@ Aedes-Data-Lab/
 │   │   ├── agentes/       Um módulo por página dos agentes
 │   │   ├── compartilhado/ Menu e utilidades de interface
 │   │   ├── dominio/       Regras: validação, etapas, território, aproximação
-│   │   └── servicos/      Chamadas ao Firebase e dados fictícios
+│   │   └── servicos/      Chamadas ao Supabase e dados fictícios
 │   └── assets/imagens/
-├── functions/             Cloud Functions (criada na tarefa de backend)
+├── supabase/              Criada na Fase 6 pela Supabase CLI
+│   ├── migrations/        Tabelas, políticas de RLS e buckets, em SQL versionado
+│   ├── functions/         Edge Functions
+│   └── seed.sql           Dados fictícios para o ambiente local
 ├── tests/                 Testes (criada junto com a primeira lógica)
 ├── wireframes/            Telas finais exportadas do Figma
 ├── TASKS.md
@@ -68,15 +72,16 @@ Aedes-Data-Lab/
 └── README.md
 ```
 
-As pastas `js/dominio/`, `functions/` e `tests/` ainda não existem; elas são criadas pelas tarefas indicadas em [TASKS.md](../TASKS.md).
+As pastas `js/dominio/`, `supabase/` e `tests/` ainda não existem; elas são criadas pelas tarefas indicadas em [TASKS.md](../TASKS.md).
 
 ## 4. Regras de arquitetura
 
 - A página HTML contém estrutura; o comportamento fica no módulo JavaScript da própria tela.
-- Nenhum módulo de tela acessa o Firestore ou o Storage. Isso é papel de `js/servicos/`.
+- Nenhum módulo de tela importa o `supabase-js` nem acessa o banco ou o Storage. Isso é papel de `js/servicos/`.
+- Toda mudança no banco é feita por migração em `supabase/migrations/`, revisada no PR. Ninguém altera tabelas ou políticas pelo painel do Supabase.
 - Regras de negócio (etapas, validação de CPF, território, aproximação) ficam em `js/dominio/` e são repetidas no servidor. A validação do navegador só orienta.
 - Permissão, etapa e território são conferidos no servidor em toda operação que altera dados.
-- O navegador do visitante só recebe a coleção pública. Esconder campos na tela não conta como proteção.
+- O navegador do visitante só recebe a tabela pública. Esconder campos na tela não conta como proteção.
 - Componentes visuais repetidos (botão, cartão, etiqueta de etapa) usam as classes de [DESIGN.md](./DESIGN.md), nunca estilos soltos por página.
 
 ## 5. Contratos da camada de serviços
@@ -91,20 +96,20 @@ As pastas `js/dominio/`, `functions/` e `tests/` ainda não existem; elas são c
 | `ocultarPublicacao`, `republicarOcorrencia` | Agente autorizado |
 | `corrigirCamposDenuncia` | Administrador, em qualquer etapa; cidadão com vínculo comprovado, só na própria denúncia e só enquanto Recebida (D26) |
 
-Ter apenas o papel de agente não dá permissão para corrigir os campos enviados. Enquanto o backend não existe, os mesmos contratos são atendidos por dados fictícios em `js/servicos/`, para que as telas não mudem quando o Firebase entrar.
+Ter apenas o papel de agente não dá permissão para corrigir os campos enviados. Enquanto o backend não existe, os mesmos contratos são atendidos por dados fictícios em `js/servicos/`, para que as telas não mudem quando o Supabase entrar.
 
 ## 6. Modelo de dados
 
-| Recurso | Conteúdo | Acesso |
+| Tabela ou recurso | Conteúdo | Acesso |
 |---|---|---|
-| `reports/{id}` | Dados operacionais: ponto exato, bairro, categoria, etapa, datas e versão | Agentes autorizados e administrador |
-| `report_private/{id}` | Nome, CPF declarado, e-mail confirmado e telefone opcional | Todos os agentes autorizados (D11) e administrador; o cidadão lê e corrige só a própria denúncia, enquanto Recebida |
-| `public_reports/{id}` | Área aproximada, bairro, categoria, data, etapa, foto tratada e descrição | Leitura pública |
-| `report_events/{id}` | Início de análise, observações, atendimento, ocultação, republicação e correções, com autor e data | Agentes autorizados e administrador; nunca público nem liberado ao cidadão |
-| `users/{uid}` | Habilitação e papel (agente, administrador) | Acesso mínimo; gerido pelo administrador |
-| Storage | Fotos originais em área restrita e versões públicas tratadas | Regras separadas para cada área |
+| `reports` | Dados operacionais: ponto exato, bairro, categoria, etapa, datas e versão | Agentes autorizados e administrador |
+| `report_private` | Nome, CPF declarado, e-mail confirmado e telefone opcional | Todos os agentes autorizados (D11) e administrador; o cidadão lê e corrige só a própria denúncia, enquanto Recebida |
+| `public_reports` | Área aproximada, bairro, categoria, data, etapa, foto tratada e descrição | Leitura pública |
+| `report_events` | Início de análise, observações, atendimento, ocultação, republicação e correções, com autor e data | Agentes autorizados e administrador; nunca público nem liberado ao cidadão |
+| `profiles` | Habilitação e papel (agente, administrador), ligados ao usuário do Supabase Auth | Acesso mínimo; gerido pelo administrador |
+| Storage | Bucket `fotos-originais` (privado) e bucket `fotos-publicas` (versões tratadas) | Políticas separadas para cada bucket |
 
-O modelo será refinado durante a implementação. Nenhum caractere de nome, CPF ou e-mail vai para `public_reports`, e a foto pública é gerada sem metadados pessoais. As regras de proteção de cada recurso estão em [SECURITY.md](./SECURITY.md).
+Cada tabela tem RLS ativado e nega tudo por padrão; as políticas liberam só o que a coluna Acesso descreve. O modelo será refinado durante a implementação. Nenhum caractere de nome, CPF ou e-mail vai para `public_reports`, e a foto pública é gerada sem metadados pessoais. As regras de proteção de cada recurso estão em [SECURITY.md](./SECURITY.md).
 
 ## 7. Fluxos técnicos da V1
 
@@ -117,7 +122,7 @@ O modelo será refinado durante a implementação. Nenhum caractere de nome, CPF
 5. Gerar a versão pública com posição aproximada e fotos tratadas. O agente vê o registro recebido imediatamente.
 6. Se a publicação falhar, manter o protocolo, informar "publicação pendente" e recuperar com segurança. Repetir a tentativa não cria outra denúncia.
 
-Firestore e Storage não compartilham transação, por isso reenvios e retentativas precisam ser idempotentes (ADR-007). Os estados técnicos do envio (pendente, finalizado, publicação pendente) são independentes das etapas Recebida, Em análise e Atendida.
+O banco e o Storage não compartilham transação, por isso reenvios e retentativas precisam ser idempotentes (ADR-007). Os estados técnicos do envio (pendente, finalizado, publicação pendente) são independentes das etapas Recebida, Em análise e Atendida.
 
 ### 7.2 Mapa público
 
@@ -145,11 +150,11 @@ Cada correção grava valor original, novo valor, motivo, autor e data em `repor
 
 | Ambiente | Uso | Dados |
 |---|---|---|
-| Local | Desenvolvimento com servidor local (Live Server) e Firebase Emulator Suite | Fictícios |
-| Prévia | Projeto Firebase de teste, separado do Repecol, para revisar cada entrega | Fictícios |
-| Produção | Projeto Firebase próprio, aberto aos moradores após as dependências de lançamento | Reais |
+| Local | Desenvolvimento com servidor local (Live Server) e Supabase CLI | Fictícios, carregados por `seed.sql` |
+| Prévia | Projeto Supabase de teste, separado do Repecol, para revisar cada entrega | Fictícios |
+| Produção | Projeto Supabase próprio, aberto aos moradores após as dependências de lançamento | Reais |
 
-As configurações de cada ambiente seguem [.env.example](../.env.example). Nenhum valor real entra no repositório.
+As migrações são aplicadas primeiro no ambiente local, depois na prévia e só então na produção. As configurações de cada ambiente seguem [.env.example](../.env.example). Nenhum valor real entra no repositório.
 
 ## 9. Histórico
 
@@ -158,3 +163,4 @@ As configurações de cada ambiente seguem [.env.example](../.env.example). Nenh
 | 1.2 | 05/11/2026 | Start Técnico alinhado ao PRD 1.2 |
 | 2.0 | 05/11/2026 | Start Técnico alinhado ao PRD 2.0 |
 | 3.0 | 11/11/2026 | Start Técnico vira `ARCHITECTURE.md`: stack, fluxo de dados, estrutura de pastas, regras de arquitetura e ambientes. Sequência de trabalho movida para TASKS.md, verificações para TEST_PLAN.md e SECURITY.md, motivos das escolhas para DECISIONS.md |
+| 3.1 | 11/11/2026 | Backend proposto passa de Firebase para Supabase (ADR-012): Postgres com RLS, Storage, Auth, Edge Functions e Supabase CLI no ambiente local |

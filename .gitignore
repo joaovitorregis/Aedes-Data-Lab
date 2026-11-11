@@ -8,4 +8,5 @@ Thumbs.db
 
 # Ferramentas de desenvolvimento
 node_modules/
-.firebase/
+supabase/.temp/
+supabase/.branches/

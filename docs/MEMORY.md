@@ -30,7 +30,8 @@ As branches `Laura-Galdino`, `Rhillary` e `sky` ainda não têm alterações de 
 ## Problemas conhecidos
 
 - As telas do Figma têm divergências com o PRD (nomes de etapa, confirmação de e-mail ausente, filtros extras, agenda de visitas, notificações). Estão listadas na Fase 1 de [TASKS.md](../TASKS.md). Até a correção, vale o PRD.
-- O Figma não tem estilos nem variáveis cadastrados; os tokens do DESIGN.md foram medidos nas telas.
+- O Figma não tem estilos nem variáveis cadastrados; os tokens do DESIGN.md foram lidos nas telas, sem cores inventadas.
+- A etiqueta Em análise tem dois estilos no Figma (bege no mapa público, amarela na área dos agentes), e as etiquetas Recebida e Oculta não foram desenhadas (TASK-012).
 - A tela 45 (Portal técnico) foi exportada por captura, porque as camadas estão fora do frame no Figma.
 - A página de login dos agentes se chama `agentes/Login.html`, com inicial maiúscula, fora do padrão de nomes do RULES.md. Renomear junto com a TASK-025.
 
@@ -39,3 +40,4 @@ As branches `Laura-Galdino`, `Rhillary` e `sky` ainda não têm alterações de 
 - DEP-10, DEP-11 e DEP-12: decisões de produto em aberto (PRD, seção 18).
 - DEP-04 e DEP-05: nome da instituição parceira, e-mail de contato e responsável pela conferência diária.
 - Filtros por origem, tipo, distrito, rua e área, que aparecem nas telas e não estão no PRD.
+- Backend: Supabase está proposto no lugar do Firebase (ADR-012). Confirmar antes da Fase 6.

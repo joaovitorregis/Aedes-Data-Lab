@@ -40,7 +40,7 @@ Se for usar uma ferramenta de IA, comece pela mensagem de contexto da seção 9 
 
 ## Como rodar
 
-Na fase de HTML e CSS, basta abrir `site/index.html` no navegador. Quando entrarem os módulos JavaScript, use um servidor local, como o Live Server do VS Code, apontando para a pasta `site/`. A configuração do Firebase entra na Fase 6 de [TASKS.md](TASKS.md), a partir do [.env.example](.env.example).
+Na fase de HTML e CSS, basta abrir `site/index.html` no navegador. Quando entrarem os módulos JavaScript, use um servidor local, como o Live Server do VS Code, apontando para a pasta `site/`. A configuração do Supabase entra na Fase 6 de [TASKS.md](TASKS.md), a partir do [.env.example](.env.example).
 
 ## Design
 

@@ -1,12 +1,24 @@
 # Aedes Data Lab
 
-Wireframes de uma plataforma web com foco no uso em celular.
+Plataforma web, pensada primeiro para o celular, em que moradores de Itambé/PE registram possíveis focos do mosquito da dengue e agentes autorizados acompanham o atendimento.
 
-Aedes Data Lab é a evolução do projeto Repecol para uma plataforma voltada à prevenção da dengue. O Repecol passa a ser uma referência histórica desta evolução. O trabalho apresentado aqui está na fase de organização dos fluxos e desenho das telas no Figma; não é uma aplicação implementada.
+Aedes Data Lab é uma plataforma voltada à prevenção da dengue.
 
 ## Arquivo editável dos wireframes
 
-[Abrir wireframes no Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y?node-id=2010-2).
+| Arquivo | Responde | Etapa |
+|---|---|---|
+| [docs/PRD.md](docs/PRD.md) | O que estamos construindo e por quê? | Planejamento |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Como vamos construir? | Planejamento |
+| [docs/DESIGN.md](docs/DESIGN.md) | Como deve parecer? | Planejamento |
+| [docs/RULES.md](docs/RULES.md) | Como a equipe e a IA devem programar? | Planejamento |
+| [TASKS.md](TASKS.md) | O que construir agora? | Desenvolvimento |
+| [docs/DECISIONS.md](docs/DECISIONS.md) | Por que fizemos esta escolha técnica? | Desenvolvimento |
+| [docs/MEMORY.md](docs/MEMORY.md) | Em que ponto o projeto está? | Desenvolvimento |
+| [docs/SECURITY.md](docs/SECURITY.md) | Como protegemos os dados? | Desenvolvimento |
+| [docs/TEST_PLAN.md](docs/TEST_PLAN.md) | Como sabemos que funciona? | Testes |
+| [.env.example](.env.example) | Que configurações são necessárias? | Preparação |
+| [site/LEIA-ME.md](site/LEIA-ME.md) | Onde fica cada página? | Desenvolvimento |
 
 ![Captura histórica da organização do arquivo Figma, ainda com o nome Repecol](imagens/organizacao-figma.jpg)
 
@@ -14,11 +26,9 @@ A captura acima e as exportações locais são registros históricos. O índice 
 
 ## Jornadas representadas nas exportações históricas
 
-- Início, orientações e Guia Aedes.
-- Denúncia de foco, localização no mapa e acompanhamento.
-- Histórico, conversa com atendimento e notificações.
-- Acesso, perfil e privacidade.
-- Áreas de agentes, produção, distribuição e gestão.
+```
+Ler → Entender → Planejar → Implementar → Testar → Revisar → Corrigir → Commit → Atualizar documentação
+```
 
 [Veja as 52 exportações históricas dos wireframes](wireframes/README.md). Elas representam telas e estados de exemplo, não uma contagem de páginas do Figma. Não comprovam o estado atual do arquivo editável, navegação clicável, permissões, envio ou armazenamento de dados.
 
@@ -30,6 +40,6 @@ João Vitor Regis · Aedes Data Lab.
 
 ## Licença
 
-A documentação, os wireframes e os designs de autoria de João Vitor Regis estão sob [CC BY 4.0](LICENSE), incluindo o protótipo identificado neste README. Ao reutilizar, credite o autor, informe as alterações e inclua um link para a licença.
+A documentação, os wireframes e os designs de autoria de João Vitor Regis estão sob [CC BY 4.0](LICENSE), incluindo o protótipo citado neste README. Ao reutilizar, credite o autor, informe as alterações e inclua um link para a licença.
 
-Elementos de terceiros conservam seus próprios direitos e licenças. A licença não concede direitos sobre marcas, imagem ou dados pessoais.
+Elementos de terceiros mantêm seus próprios direitos e licenças. A licença não concede direitos sobre marcas, imagem ou dados pessoais.

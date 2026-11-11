@@ -19,9 +19,9 @@ Documentação e design concluídos. A implementação está no começo: o `main
 
 | Tarefa | Onde | Observação |
 |---|---|---|
-| TASK-022 Página Início | branch `Maria-Beatriz` | Primeira versão do HTML da Início com os cartões Denuncie, Guia Aedes, Mapa de focos e Jogo. Antes do PR precisa: mover para `site/index.html` (hoje está em `site/agentes/início.html`, que é a área dos agentes), tirar o acento do nome do arquivo e passar os estilos dos arquivos `início.css` para `site/css/estilos.css` usando os tokens do DESIGN.md |
+| TASK-022 Página Início | `site/index.html` (PR #4, ajustada depois do merge) | Primeira versão com os blocos Denuncie, Guia Aedes, Mapa de focos e Jogo, já no CSS único e nos tokens. Falta alinhar à tela 01: botão principal Denuncie aqui, cartões com borda, ilustrações, logotipo e menu (TASK-021) |
 
-As branches `Laura-Galdino`, `Rhillary` e `sky` ainda não têm alterações de código em relação ao `main`.
+As branches `Laura-Galdino`, `Rhillary` e `sky` estão atrás do `main`. Antes de abrir PR, rodar `git merge origin/main` e, se houver conflito em README.md ou site/LEIA-ME.md, manter a versão do `main`.
 
 ## Próxima tarefa
 
@@ -30,6 +30,7 @@ As branches `Laura-Galdino`, `Rhillary` e `sky` ainda não têm alterações de 
 ## Problemas conhecidos
 
 - As telas do Figma têm divergências com o PRD (nomes de etapa, confirmação de e-mail ausente, filtros extras, agenda de visitas, notificações). Estão listadas na Fase 1 de [TASKS.md](../TASKS.md). Até a correção, vale o PRD.
+- O CSS compartilhado já declara os tokens (`:root` em `site/css/estilos.css`), mas os componentes base ainda faltam (TASK-020).
 - O Figma não tem estilos nem variáveis cadastrados; os tokens do DESIGN.md foram lidos nas telas, sem cores inventadas.
 - A etiqueta Em análise tem dois estilos no Figma (bege no mapa público, amarela na área dos agentes), e as etiquetas Recebida e Oculta não foram desenhadas (TASK-012).
 - A tela 45 (Portal técnico) foi exportada por captura, porque as camadas estão fora do frame no Figma.

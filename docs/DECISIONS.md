@@ -20,17 +20,17 @@ Registro das decisões de arquitetura (ADR) e do motivo de cada uma. Elas só mu
 
 ## ADR-003 · Firebase como backend
 
-- **Situação:** Aceita · 04/11/2026
+- **Situação:** Substituída pela ADR-012 · 11/11/2026 (aceita em 04/11/2026)
 - **Decisão:** usar Firebase para banco, arquivos, autenticação e funções de servidor.
 - **Motivo:** oferece banco, armazenamento, login e funções sem manter servidor próprio, tem ambiente local de testes (Emulator Suite) e cotas gratuitas compatíveis com a prioridade de custo baixo (D25).
 - **Consequência:** a composição exata (Firestore, Storage, Authentication, Functions) é ajustada com a modelagem e o custo (DEP-07). Cloud Functions exige o plano Blaze, pago por uso e com cota gratuita, o que exige conta de faturamento e alerta de orçamento antes do ambiente público.
 
-## ADR-004 · Dados públicos e privados em coleções separadas
+## ADR-004 · Dados públicos e privados em tabelas separadas
 
 - **Situação:** Proposta · 05/11/2026
 - **Decisão:** guardar a versão pública da denúncia (`public_reports`) separada dos dados operacionais (`reports`) e pessoais (`report_private`).
-- **Motivo:** as regras de acesso do Firestore valem por documento, não por campo. Separar é a forma segura de garantir que o visitante nunca receba nome, CPF, e-mail ou ponto exato.
-- **Consequência:** toda gravação atualiza a versão pública por uma função de servidor, e as duas precisam ficar coerentes.
+- **Motivo:** as políticas de RLS do Postgres valem por linha, não por coluna. Restringir colunas na mesma tabela é possível, mas fácil de errar numa consulta futura; separar as tabelas é a forma segura de garantir que o visitante nunca receba nome, CPF, e-mail ou ponto exato.
+- **Consequência:** toda gravação atualiza a versão pública por uma função de servidor, e as duas precisam ficar coerentes. `public_reports` é a única tabela com política de leitura para visitantes.
 
 ## ADR-005 · Leaflet para os mapas
 
@@ -50,20 +50,20 @@ Registro das decisões de arquitetura (ADR) e do motivo de cada uma. Elas só mu
 
 - **Situação:** Aceita · 05/11/2026
 - **Decisão:** cada tentativa de envio tem um ID estável, usado em todas as retentativas.
-- **Motivo:** Firestore e Storage não compartilham transação. Sem um ID estável, uma queda de conexão ou um clique repetido criaria denúncias duplicadas (RF-DEN-04).
+- **Motivo:** o banco e o Storage não compartilham transação. Sem um ID estável, uma queda de conexão ou um clique repetido criaria denúncias duplicadas (RF-DEN-04).
 - **Consequência:** o servidor reconhece a mesma tentativa e devolve o mesmo protocolo.
 
 ## ADR-008 · Toda mudança de dados passa por função de servidor
 
 - **Situação:** Proposta · 11/11/2026
-- **Decisão:** o navegador só lê dados diretamente; envio, mudança de etapa, ocultação e correção passam por Cloud Functions.
+- **Decisão:** o navegador só lê dados diretamente; envio, mudança de etapa, ocultação e correção passam por Edge Functions do Supabase.
 - **Motivo:** permissão, etapa, território e versão precisam ser conferidos num lugar que o usuário não controla.
-- **Consequência:** as regras do Firestore negam escrita direta do navegador nas coleções de denúncia.
+- **Consequência:** as políticas de RLS não liberam inserção, alteração nem exclusão pelo navegador nas tabelas de denúncia. As funções usam a chave secreta do projeto, que fica só no servidor.
 
-## ADR-009 · Projeto Firebase próprio, separado do Repecol
+## ADR-009 · Projeto de backend próprio, separado do Repecol
 
 - **Situação:** Aceita · 05/11/2026
-- **Decisão:** criar projetos Firebase próprios do Aedes, um de teste e um de produção.
+- **Decisão:** criar projetos próprios do Aedes no backend escolhido (hoje, Supabase, pela ADR-012), um de teste e um de produção.
 - **Motivo:** o Repecol tem outro território, outros perfis e outros dados; misturar os dois arriscaria vazamento e confusão de regras.
 
 ## ADR-010 · O PRD prevalece
@@ -78,6 +78,14 @@ Registro das decisões de arquitetura (ADR) e do motivo de cada uma. Elas só mu
 - **Decisão:** usar Inter em todo o site.
 - **Motivo:** é a fonte de quase todas as telas finais do Figma; algumas ainda usam Segoe UI, que não existe em celulares Android e iPhone.
 - **Consequência:** as telas com Segoe UI são ajustadas no Figma (TASK-011).
+
+## ADR-012 · Supabase como backend
+
+- **Situação:** Proposta · 11/11/2026
+- **Decisão:** usar Supabase para banco (Postgres), arquivos (Storage), login dos agentes (Auth) e funções de servidor (Edge Functions).
+- **Motivo:** o modelo de dados do Aedes é relacional (denúncia, dados privados, versão pública e histórico de eventos), e o Postgres oferece transações no banco, chaves estrangeiras e regras de acesso por linha escritas em SQL e versionadas no Git. O Supabase tem ambiente local completo pela Supabase CLI e plano gratuito compatível com a fase de desenvolvimento (D25).
+- **Consequência:** a pasta `supabase/` guarda migrações, políticas e funções. As regras de acesso viram políticas de RLS, testadas com acesso negado para cada perfil. O plano gratuito limita o número de projetos e pausa projetos sem uso; o plano da produção e o alerta de orçamento entram na decisão de custo (DEP-07).
+- **Substitui:** ADR-003.
 
 ## Modelo para uma nova decisão
 

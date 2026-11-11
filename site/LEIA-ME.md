@@ -15,14 +15,14 @@ Esta pasta tem a estrutura inicial de estudo do site. Ainda não há formulário
 | Agentes | `agentes/mapa.html`, `agentes/meu-trabalho.html` | Reservadas; fora do aceite da V1 |
 | Agentes | `agentes/dashboard.html` | Fase seguinte |
 
-A área pública não tem link para a área dos agentes. As duas vão se ligar pelos dados no Firebase. As páginas dos agentes ainda não têm dados privados, e separar pastas não protege nada: autenticação e autorização serão construídas antes de qualquer dado real.
+A área pública não tem link para a área dos agentes. As duas vão se ligar pelos dados no Supabase. As páginas dos agentes ainda não têm dados privados, e separar pastas não protege nada: autenticação e autorização serão construídas antes de qualquer dado real.
 
 ## Ordem das atividades
 
 1. **HTML:** cada aluna constrói o conteúdo e os elementos das telas combinadas, seguindo as telas finais do Figma. É a etapa de aprender títulos, seções, links, imagens, labels e formulários.
 2. **CSS:** todas as páginas usam somente `css/estilos.css`. Os padrões são construídos em conjunto, e os estilos específicos ficam em seções delimitadas por classes da página.
 3. **JavaScript:** o comportamento de cada tela fica no arquivo correspondente em `js/cidadao/` ou `js/agentes/`.
-4. **Recursos compartilhados:** menu construído em conjunto e dados fictícios conectados; depois, Firebase e integração dos serviços em `js/servicos/`.
+4. **Recursos compartilhados:** menu construído em conjunto e dados fictícios conectados; depois, Supabase e integração dos serviços em `js/servicos/`.
 
 Cada HTML usa o mesmo CSS e tem o próprio JavaScript. Não é preciso juntar as telas em um único arquivo.
 
@@ -44,4 +44,4 @@ Na fase de HTML, crie links entre páginas da mesma área e confira os caminhos 
 
 ## Primeira entrega
 
-Cada aluna escolhe uma tela, monta o HTML com o título, as seções e os elementos da tela no Figma, abre no navegador e explica a estrutura a uma colega. Firebase ainda não entra nesta etapa, e o botão Enviar ainda não registra denúncias.
+Cada aluna escolhe uma tela, monta o HTML com o título, as seções e os elementos da tela no Figma, abre no navegador e explica a estrutura a uma colega. O Supabase ainda não entra nesta etapa, e o botão Enviar ainda não registra denúncias.

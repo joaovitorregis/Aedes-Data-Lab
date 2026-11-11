@@ -1,47 +1,39 @@
 # Começar a programação do Aedes
 
-Esta pasta tem a estrutura inicial de estudo do site. Ainda não há formulário funcional, autenticação, banco, API, menu pronto nem envio de denúncias; os arquivos CSS e JavaScript trazem apenas indicações de trabalho. O comportamento esperado de cada tela está no [PRD](../docs/PRD.md), o visual no [DESIGN.md](../docs/DESIGN.md) e as regras de código no [RULES.md](../docs/RULES.md). As tarefas, com a tela e o requisito de cada uma, estão em [TASKS.md](../TASKS.md).
+Esta pasta contém somente a estrutura inicial de estudo. Não há formulário funcional, autenticação, banco, API, menu pronto ou envio de denúncias. Os arquivos CSS e JavaScript contêm apenas indicações de trabalho.
 
-## Páginas
+## Onde cada área começa
 
-| Área | Arquivo | Escopo no PRD |
-|---|---|---|
-| Pública | `index.html` (Início) | V1 |
-| Pública | `paginas/registrar-foco.html` | V1 |
-| Pública | `paginas/mapa.html` | V1 |
-| Pública | `paginas/guia-aedes.html`, `paginas/repelentes.html`, `paginas/quem-somos.html`, `paginas/jogo.html` | Complementares, em paralelo |
-| Agentes | `agentes/Login.html` (Acesso dos agentes) | V1 |
-| Agentes | `agentes/ocorrencias.html` | V1 |
-| Agentes | `agentes/mapa.html`, `agentes/meu-trabalho.html` | Reservadas; fora do aceite da V1 |
-| Agentes | `agentes/dashboard.html` | Fase seguinte |
-
-A área pública não tem link para a área dos agentes. As duas vão se ligar pelos dados no Supabase. As páginas dos agentes ainda não têm dados privados, e separar pastas não protege nada: autenticação e autorização serão construídas antes de qualquer dado real.
+- Cidadão: `index.html` e arquivos em `paginas/`.
+- Agentes: `agentes/index.html`, com telas próprias dentro de `agentes/`.
+- A área pública não tem link para os agentes. A ligação futura será pelos dados no Firebase.
+- As páginas técnicas ainda são arquivos de estudo sem dados privados. Separar pastas não implementa segurança: autenticação e autorização serão construídas antes de usar dados reais.
 
 ## Ordem das atividades
 
-1. **HTML:** cada aluna constrói o conteúdo e os elementos das telas combinadas, seguindo as telas finais do Figma. É a etapa de aprender títulos, seções, links, imagens, labels e formulários.
-2. **CSS:** todas as páginas usam somente `css/estilos.css`. Os padrões são construídos em conjunto, e os estilos específicos ficam em seções delimitadas por classes da página.
-3. **JavaScript:** o comportamento de cada tela fica no arquivo correspondente em `js/cidadao/` ou `js/agentes/`.
-4. **Recursos compartilhados:** menu construído em conjunto e dados fictícios conectados; depois, Supabase e integração dos serviços em `js/servicos/`.
+1. HTML: cada aluna constrói o conteúdo e os elementos das telas combinadas, usando o Figma atual. Aprender títulos, seções, links, imagens, labels e formulários.
+2. CSS: todas as páginas usam somente `css/estilos.css`. Construir juntas os padrões e organizar estilos específicos em seções, delimitados por classes da página.
+3. JavaScript: construir comportamento da tela no arquivo correspondente em `js/cidadao/` ou `js/agentes/`.
+4. Recursos compartilhados: construir menu em conjunto e conectar dados fictícios; depois aprender Firebase e integrar os serviços.
 
-Cada HTML usa o mesmo CSS e tem o próprio JavaScript. Não é preciso juntar as telas em um único arquivo.
+Cada HTML referencia o mesmo CSS e mantém seu JavaScript específico. Não é necessário colocar todas as telas em um único arquivo.
 
 ## Exemplo de arquivos da mesma tela
 
 - `paginas/registrar-foco.html`: estrutura.
-- `css/estilos.css`: estilos compartilhados e a seção específica da tela.
+- `css/estilos.css`: estilos compartilhados e seções específicas das telas.
 - `js/cidadao/registrar-foco.js`: comportamento.
 
-Combine com a equipe antes de editar arquivos comuns, como o CSS e o menu. A divisão de responsáveis é acordada com a equipe e acompanhada no Jira.
+HTML e JavaScript permanecem separados por tela; o CSS é único. Não editar arquivos comuns ao mesmo tempo sem combinar. A divisão de responsáveis será acordada com a equipe; esta estrutura não altera os cartões do Jira.
 
 ## Como visualizar
 
-Na fase de HTML e CSS, basta abrir `index.html` no navegador. Para usar módulos JavaScript, rode um servidor local (por exemplo, o Live Server do editor) em vez de abrir por `file://`. Vite e npm ainda não foram configurados nesta pasta.
+Durante HTML/CSS, abrir `index.html` no navegador já permite observar a estrutura. Para trabalhar com módulos JavaScript, usar servidor local (por exemplo, Live Server do editor); não depender de abrir por `file://`. Vite/npm ainda não foram configurados nesta pasta.
 
 ## Navegação durante o aprendizado
 
-Na fase de HTML, crie links entre páginas da mesma área e confira os caminhos relativos: páginas em `paginas/` voltam ao início com `../index.html`, e as páginas dos agentes navegam dentro de `agentes/`, a partir de `agentes/Login.html`. Na etapa de JavaScript, o menu passa a ser compartilhado para evitar cópias diferentes.
+Na fase HTML, criar links entre páginas da mesma área. Conferir caminhos relativos: páginas em `paginas/` voltam ao início com `../index.html`; páginas técnicas navegam dentro de `agentes/`. Na etapa JavaScript, consolidar o menu compartilhado para evitar cópias divergentes.
 
 ## Primeira entrega
 
-Cada aluna escolhe uma tela, monta o HTML com o título, as seções e os elementos da tela no Figma, abre no navegador e explica a estrutura a uma colega. O Supabase ainda não entra nesta etapa, e o botão Enviar ainda não registra denúncias.
+Escolher uma tela por aluna. Montar o HTML com título, seções e elementos previstos no Figma; abrir no navegador e explicar a estrutura a outra colega. Ainda não implementar Firebase nem afirmar que o botão Enviar registra uma denúncia.

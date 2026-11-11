@@ -4,7 +4,7 @@ O Aedes Data Lab guarda nome, CPF, e-mail e telefone de moradores, além de foto
 
 ## 1. Autenticação
 
-- Agentes e administrador entram com login individual (Firebase Authentication). Não existem contas compartilhadas.
+- Agentes e administrador entram com login individual (Supabase Auth). Não existem contas compartilhadas.
 - Contas de agente são criadas e liberadas pelo administrador, fora do cadastro público.
 - O cidadão não tem conta. Ele prova acesso ao e-mail a cada denúncia, e a confirmação de uma tentativa não vale para outra.
 - Ao sair, a interface apaga os dados privados que estavam na tela.
@@ -25,17 +25,18 @@ O Aedes Data Lab guarda nome, CPF, e-mail e telefone de moradores, além de foto
 ## 3. Dados pessoais
 
 - Nome, CPF, e-mail, telefone, endereço digitado, referência e ponto exato nunca aparecem na versão pública, nem mascarados.
-- A separação acontece nas coleções do banco (ADR-004). O navegador do visitante nunca recebe o documento privado.
+- A separação acontece nas tabelas do banco (ADR-004). O navegador do visitante nunca recebe a linha privada.
 - CPF é conferido só no formato e nos dígitos. O sistema não consulta bases externas nem afirma que a identidade foi verificada.
 - Testes e demonstrações usam somente dados fictícios.
 - Adequação à LGPD (Lei nº 13.709/2018) concluída antes de coletar dados reais: finalidade do CPF, base legal, controlador e encarregado, aviso de privacidade, direitos do titular e retenção por tipo de dado (DEP-06).
 
 ## 4. Banco de dados e arquivos
 
-- As regras do Firestore negam por padrão e liberam só o que cada perfil precisa.
-- O navegador não escreve diretamente nas coleções de denúncia; toda mudança passa por função de servidor (ADR-008).
-- `public_reports` é a única coleção com leitura pública.
-- No Storage, as fotos originais ficam em área restrita aos agentes; a área pública recebe só a versão tratada.
+- Toda tabela tem RLS ativado e nega por padrão; as políticas liberam só o que cada perfil precisa. Tabela nova sem política é tratada como erro no PR.
+- O navegador não escreve diretamente nas tabelas de denúncia; toda mudança passa por Edge Function (ADR-008).
+- `public_reports` é a única tabela com leitura pública.
+- O papel do usuário (agente ou administrador) é lido da tabela `profiles` no servidor, nunca de um dado que o próprio usuário consiga editar.
+- No Storage, as fotos originais ficam no bucket privado, lido só por agentes autorizados; o bucket público recebe só a versão tratada.
 - Ocultar uma denúncia retira também o acesso público às fotos dela.
 
 ## 5. Envio de arquivos
@@ -64,8 +65,9 @@ Cada foto é conferida no servidor:
 ## 8. Chaves e configurações
 
 - Nenhuma chave, senha ou token entra no Git. O repositório tem apenas o [.env.example](../.env.example).
-- Chaves de servidor ficam só no ambiente das funções, nunca no código do site.
-- Teste, prévia e produção usam projetos Firebase diferentes.
+- O site usa só a URL do projeto e a chave pública (publishable, antiga anon). Ela pode aparecer no navegador porque o acesso é limitado pelas políticas de RLS.
+- A chave secreta (secret, antiga service_role) ignora o RLS. Ela fica só nos segredos das Edge Functions, nunca no código do site, num arquivo do repositório ou num print.
+- Teste, prévia e produção usam projetos Supabase diferentes.
 
 ## 9. Registros
 
@@ -75,7 +77,8 @@ Cada foto é conferida no servidor:
 ## 10. Lista de verificação antes do lançamento
 
 - [ ] Nenhuma chave ou dado real no histórico do Git
-- [ ] Regras do Firestore e do Storage testadas com acesso negado para cada perfil
+- [ ] Políticas de RLS e do Storage testadas com acesso negado para cada perfil
+- [ ] Nenhuma tabela com RLS desativado e chave secreta ausente do código do site
 - [ ] Respostas públicas inspecionadas sem dados privados (AC-07)
 - [ ] Conta revogada sem acesso (AC-08)
 - [ ] Upload recusando arquivo inválido e removendo metadados

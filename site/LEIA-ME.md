@@ -1,6 +1,6 @@
 # Começar a programação do Aedes
 
-Esta pasta tem a estrutura inicial de estudo do site. Ainda não há formulário funcional, autenticação, banco, API, menu pronto nem envio de denúncias; os arquivos CSS e JavaScript trazem apenas indicações de trabalho. O comportamento esperado de cada tela está no [PRD](../docs/PRD_Aedes_Data_Lab.md), e o visual segue as telas finais do Figma.
+Esta pasta tem a estrutura inicial de estudo do site. Ainda não há formulário funcional, autenticação, banco, API, menu pronto nem envio de denúncias; os arquivos CSS e JavaScript trazem apenas indicações de trabalho. O comportamento esperado de cada tela está no [PRD](../docs/PRD.md), o visual no [DESIGN.md](../docs/DESIGN.md) e as regras de código no [RULES.md](../docs/RULES.md). As tarefas, com a tela e o requisito de cada uma, estão em [TASKS.md](../TASKS.md).
 
 ## Páginas
 

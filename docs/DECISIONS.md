@@ -20,7 +20,7 @@ Registro das decisões de arquitetura (ADR) e do motivo de cada uma. Elas só mu
 
 ## ADR-003 · Firebase como backend
 
-- **Situação:** Substituída pela ADR-012 · 11/11/2026 (aceita em 04/11/2026)
+- **Situação:** Aceita · 04/11/2026. A ADR-012 propõe substituí-la; esta continua valendo até a ADR-012 ser aceita
 - **Decisão:** usar Firebase para banco, arquivos, autenticação e funções de servidor.
 - **Motivo:** oferece banco, armazenamento, login e funções sem manter servidor próprio, tem ambiente local de testes (Emulator Suite) e cotas gratuitas compatíveis com a prioridade de custo baixo (D25).
 - **Consequência:** a composição exata (Firestore, Storage, Authentication, Functions) é ajustada com a modelagem e o custo (DEP-07). Cloud Functions exige o plano Blaze, pago por uso e com cota gratuita, o que exige conta de faturamento e alerta de orçamento antes do ambiente público.
@@ -81,7 +81,7 @@ Registro das decisões de arquitetura (ADR) e do motivo de cada uma. Elas só mu
 
 ## ADR-012 · Supabase como backend
 
-- **Situação:** Proposta · 11/11/2026
+- **Situação:** Proposta · 11/11/2026. Ao ser aceita, a ADR-003 passa a "Substituída pela ADR-012"
 - **Decisão:** usar Supabase para banco (Postgres), arquivos (Storage), login dos agentes (Auth) e funções de servidor (Edge Functions).
 - **Motivo:** o modelo de dados do Aedes é relacional (denúncia, dados privados, versão pública e histórico de eventos), e o Postgres oferece transações no banco, chaves estrangeiras e regras de acesso por linha escritas em SQL e versionadas no Git. O Supabase tem ambiente local completo pela Supabase CLI e plano gratuito compatível com a fase de desenvolvimento (D25).
 - **Consequência:** a pasta `supabase/` guarda migrações, políticas e funções. As regras de acesso viram políticas de RLS, testadas com acesso negado para cada perfil. O plano gratuito limita o número de projetos e pausa projetos sem uso; o plano da produção e o alerta de orçamento entram na decisão de custo (DEP-07).

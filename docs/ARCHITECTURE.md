@@ -14,7 +14,7 @@ Este documento descreve **como** o Aedes Data Lab será construído. O que o pro
 |---|---|---|
 | Interface | HTML, um CSS compartilhado e JavaScript em módulos ES, sem framework | Decidida (ADR-001, ADR-002) |
 | Mapas | Leaflet, com provedor de camada visual a escolher | Proposta (ADR-005, DEP-07) |
-| Backend | Supabase: Edge Functions para as operações que validam e autorizam | Proposta (ADR-012, substitui a ADR-003) |
+| Backend | Supabase: Edge Functions para as operações que validam e autorizam | Proposta (ADR-012 propõe substituir a ADR-003, ainda em vigor) |
 | Banco de dados | Postgres do Supabase, com tabelas separadas para dados públicos e privados e políticas de acesso por linha (RLS) | Proposta (ADR-004) |
 | Arquivos | Supabase Storage, com um bucket privado para os originais e um bucket público para as fotos tratadas | Proposta |
 | Autenticação | Supabase Auth para agentes e administrador; confirmação de e-mail por denúncia para o cidadão | Proposta (ADR-006) |

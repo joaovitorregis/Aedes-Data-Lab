@@ -345,7 +345,7 @@ O sistema usa três mensagens distintas no envio: "Não foi possível enviar", "
 
 O cidadão com vínculo comprovado acessa os campos que enviou na própria denúncia para corrigi-los, dentro do prazo de D26. Esse acesso não torna os dados públicos e não libera histórico, observações ou dados de outras pessoas.
 
-A separação entre público e privado acontece nos dados que o serviço devolve; esconder campos só na tela não basta. Nomes de coleções e contratos estão em [ARCHITECTURE.md](./ARCHITECTURE.md), e as regras de proteção em [SECURITY.md](./SECURITY.md). O e-mail confirmado não autentica o CPF, e a V1 não tem integração de verificação de identidade.
+A separação entre público e privado acontece nos dados que o serviço devolve; esconder campos só na tela não basta. Nomes de tabelas e contratos estão em [ARCHITECTURE.md](./ARCHITECTURE.md), e as regras de proteção em [SECURITY.md](./SECURITY.md). O e-mail confirmado não autentica o CPF, e a V1 não tem integração de verificação de identidade.
 
 O produto não terá perfil público de denunciante, rastreamento de localização atual nem credenciais administrativas guardadas no navegador. A preferência por guardar as informações por prazo indefinido está registrada em D24. Antes da coleta de dados reais, DEP-06 precisa definir retenção por tipo de dado, correção, retirada e exclusão aplicáveis. Não haverá expiração automática arbitrária, e o produto não promete armazenamento eterno gratuito.
 

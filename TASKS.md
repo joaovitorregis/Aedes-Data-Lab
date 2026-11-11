@@ -21,7 +21,9 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 
 - [ ] TASK-010 Cadastrar as cores, fontes e raios do [DESIGN.md](docs/DESIGN.md) como estilos ou variáveis no Figma
 - [ ] TASK-011 Trocar Segoe UI por Inter nas telas que ainda usam a fonte antiga
-- [ ] TASK-012 Usar os nomes de etapa do PRD: o filtro de status mostra "Não visualizados / Resolvidos" e a tela de protocolo mostra "Em análise" logo após o envio (telas 12 e 25; PRD seção 10)
+- [ ] TASK-012 Usar os nomes de etapa do PRD: o filtro de status mostra "Não visualizados / Resolvidos", a tela de protocolo mostra "Em análise" logo após o envio e a área dos agentes escreve "Atendido" (telas 12, 25, 46 e 47; PRD seção 10)
+- [ ] TASK-012a Unificar as etiquetas de etapa: Em análise usa fundo `#D9CBB0` no mapa público e `#FFEA83` na área dos agentes, com raios diferentes; desenhar também Recebida e Oculta (DESIGN.md, seção 5)
+- [ ] TASK-012b Desenhar o botão de ocultar publicação e os estados de foco, desabilitado e "Enviando…" dos botões (DESIGN.md, seção 5)
 - [ ] TASK-013 Desenhar a confirmação de e-mail antes do formulário (RF-AUT-01)
 - [ ] TASK-014 Desenhar a correção da denúncia pelo cidadão enquanto ela está Recebida (RF-COR-01, D26)
 - [ ] TASK-015 Conferir se o detalhe do agente cobre iniciar análise, registrar observação, concluir, ocultar e republicar (tela 46; RF-AGE-02 a RF-AGE-06)
@@ -65,12 +67,12 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 - [ ] TASK-053 Concluir após visita (RF-AGE-03)
 - [ ] TASK-054 Ocultar e republicar (RF-AGE-04, RF-AGE-06)
 
-## Fase 6 · Firebase
+## Fase 6 · Supabase
 
-- [ ] TASK-060 Criar o projeto Firebase de teste, separado do Repecol, e configurar o Emulator Suite
-- [ ] TASK-061 Criar as coleções e as regras de acesso público e privado, com testes de acesso negado (SECURITY.md)
+- [ ] TASK-060 Criar o projeto Supabase de teste, separado do Repecol, e configurar a Supabase CLI no ambiente local
+- [ ] TASK-061 Criar as tabelas, os buckets e as políticas de RLS em migrações, com testes de acesso negado (SECURITY.md)
 - [ ] TASK-062 Login individual dos agentes e papéis de agente e administrador (RF-AUT-02)
-- [ ] TASK-063 Trocar o serviço fictício pelo Firebase sem alterar as telas
+- [ ] TASK-063 Trocar o serviço fictício pelo Supabase sem alterar as telas
 
 ## Fase 7 · Envio real
 

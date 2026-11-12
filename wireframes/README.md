@@ -56,9 +56,9 @@ Exportação das 47 telas da página **Fluxo de telas · Jornada do Usuário** d
 | Tela | Arquivo | Escopo no PRD |
 |---|---|---|
 | Portal técnico (login) | [45-portal-tecnico](45-portal-tecnico.png) | V1 · RF-AUT-02 |
-| Ocorrências | [47-agente-ocorrencias](47-agente-ocorrencias.png) | V1 · RF-AGE-01 |
-| Detalhe da ocorrência | [46-agente-detalhe-da-ocorrencia](46-agente-detalhe-da-ocorrencia.png) | V1 · RF-AGE-01 a RF-AGE-06 |
-| Mapa do agente | [42-agente-mapa](42-agente-mapa.png) | Consulta espacial (RF-AGE-01) |
+| Ocorrências | [47-agente-ocorrencias](47-agente-ocorrencias.png) | V1 · RF-AGE-01; desatualizada em relação ao PRD 2.2, redesenho na TASK-015c |
+| Detalhe da ocorrência | [46-agente-detalhe-da-ocorrencia](46-agente-detalhe-da-ocorrencia.png) | V1 · RF-AGE-01 a RF-AGE-07; desatualizada em relação ao PRD 2.2, redesenho nas TASK-015 e TASK-016 |
+| Mapa do agente | [42-agente-mapa](42-agente-mapa.png) | Substituída pelo mapa dentro de Ocorrências (TASK-016a) |
 | Dashboard · desktop | [43-dashboard-proposta-desktop-refinado](43-dashboard-proposta-desktop-refinado.png) | Fase seguinte |
 | Dashboard · celular | [44-dashboard-proposta-celular-refinado](44-dashboard-proposta-celular-refinado.png) | Fase seguinte |
 

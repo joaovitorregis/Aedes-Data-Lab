@@ -1,6 +1,6 @@
 # Aedes Data Lab: Decisões técnicas
 
-Registro das decisões de arquitetura (ADR) e do motivo de cada uma. Elas só mudam com um novo registro que substitua o anterior; ninguém, pessoa ou IA, troca uma escolha daqui sem passar por esse processo. As decisões de produto (D01 a D26) ficam no [PRD](./PRD.md), seção 5.
+Registro das decisões de arquitetura (ADR) e do motivo de cada uma. Elas só mudam com um novo registro que substitua o anterior; ninguém, pessoa ou IA, troca uma escolha daqui sem passar por esse processo. As decisões de produto (D01 a D34) ficam no [PRD](./PRD.md), seção 5.
 
 **Situação:** *Aceita* já vale para o projeto. *Proposta* é a direção atual e pode ser ajustada durante a implementação, com registro aqui.
 
@@ -86,6 +86,13 @@ Registro das decisões de arquitetura (ADR) e do motivo de cada uma. Elas só mu
 - **Motivo:** o modelo de dados do Aedes é relacional (denúncia, dados privados, versão pública e histórico de eventos), e o Postgres oferece transações no banco, chaves estrangeiras e regras de acesso por linha escritas em SQL e versionadas no Git. O Supabase tem ambiente local completo pela Supabase CLI e plano gratuito compatível com a fase de desenvolvimento (D25).
 - **Consequência:** a pasta `supabase/` guarda migrações, políticas e funções. As regras de acesso viram políticas de RLS, testadas com acesso negado para cada perfil. O plano gratuito limita o número de projetos e pausa projetos sem uso; o plano da produção e o alerta de orçamento entram na decisão de custo (DEP-07).
 - **Substitui:** ADR-003.
+
+## ADR-013 · Relatório do agente gerado no navegador
+
+- **Situação:** Proposta · 12/11/2026
+- **Decisão:** gerar o relatório do agente (RF-AGE-08) no próprio navegador, com jsPDF e o complemento AutoTable para o PDF e a biblioteca `docx` para o Word, importadas como módulos ES e carregadas só na tela do relatório.
+- **Motivo:** mantém o custo zero (D25), não envia dados a serviços de terceiros e funciona com o mesmo JavaScript sem framework (ADR-001). A biblioteca `docx` gera um arquivo Word de verdade, que o supervisor consegue editar; imprimir a página como PDF não daria o formato Word e varia entre navegadores.
+- **Consequência:** os dados do relatório vêm de um contrato próprio (`dadosRelatorio`), que não devolve campos privados do morador. As versões das bibliotecas ficam fixas na importação. Relatórios muito longos podem demorar no celular; se isso acontecer, o período máximo será limitado.
 
 ## Modelo para uma nova decisão
 

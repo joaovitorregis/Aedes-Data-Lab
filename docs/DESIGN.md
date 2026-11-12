@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versão | 1.1 · 11/11/2026 |
+| Versão | 1.2 · 12/11/2026 |
 | Fonte | Telas finais da página "Fluxo de telas · Jornada do Usuário" no [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13) |
 | Telas exportadas | [wireframes/](../wireframes/README.md) |
 
@@ -87,9 +87,19 @@ O Figma usa dois estilos de etiqueta:
 | Recebida | Não desenhada | Não desenhada |
 | Em análise | Fundo `--cor-borda`, texto `--cor-primaria`, raio 16px | Fundo `--cor-destaque-amarelo`, texto `--cor-primaria`, raio 7px |
 | Atendida | Não desenhada | Fundo `--cor-primaria`, texto branco, raio 7px (escrito "Atendido") |
+| Encerrada | Não desenhada | Não desenhada |
 | Oculta | Não se aplica | Não desenhada |
+| Sem acesso (N tentativas) | Não se aplica | Não desenhada |
 
-Até a TASK-012 unificar as etiquetas e desenhar as que faltam, cada área usa o estilo da sua tela. A etiqueta sempre mostra o nome da etapa por escrito, com os nomes do PRD (Recebida, Em análise e Atendida); a cor nunca é o único sinal.
+Até a TASK-012 unificar as etiquetas e desenhar as que faltam, cada área usa o estilo da sua tela. A etiqueta sempre mostra o nome da etapa por escrito, com os nomes do PRD (Recebida, Em análise, Atendida e Encerrada); a cor nunca é o único sinal. Encerrada precisa ser visualmente diferente de Atendida, porque não houve inspeção.
+
+### Opções de toque
+
+Usadas no registro de visita (PRD, seção 8.1) para responder sem digitar. Cada opção é um botão com pelo menos 44px de altura, texto visível e estado selecionado indicado também por ícone ou texto, não só por cor. Perguntas de uma resposta (Acesso, Tipo do local, Foco encontrado) se comportam como grupo de rádio; perguntas de várias respostas (Depósitos, Ações) como grupo de caixas de seleção. Os depósitos mostram o código e o nome, como "A1 · Caixa d'água elevada". A aparência ainda não está desenhada no Figma (TASK-015b).
+
+### Janela de confirmação
+
+Usada antes de ações que não voltam atrás: registrar visita com acesso, encerrar sem acesso, ocultar e republicar. Mostra o resumo do que será gravado, o efeito na etapa e dois botões: o principal com a ação ("Confirmar e concluir") e o secundário "Voltar". Não desenhada no Figma (TASK-015b).
 
 ### Indicador de passos da denúncia
 
@@ -97,7 +107,7 @@ Quatro círculos numerados ligados por uma linha, no topo do formulário, como n
 
 ### Mapa
 
-Mapa centrado em Itambé, marcadores em `--cor-marcador` e botões flutuantes "Filtros" e "Centralizar em mim", como nas telas 16 e 17.
+Mapa centrado em Itambé, marcadores em `--cor-marcador` e botões flutuantes "Filtros" e "Centralizar em mim", como nas telas 16 e 17. O mapa de Ocorrências dos agentes usa o mesmo componente, com marcadores diferenciados por etapa; as cores desses marcadores ainda não estão desenhadas.
 
 ## 6. Estados obrigatórios
 
@@ -157,3 +167,4 @@ Os ajustes abaixo estão em [TASKS.md](../TASKS.md), fase Ajustes de design:
 - Alinhar os nomes das etapas ao PRD, unificar os dois estilos de etiqueta e desenhar Recebida, Atendida e Oculta.
 - Desenhar o botão de ocultar publicação e os estados de foco, desabilitado e enviando.
 - Corrigir os restos do Repecol (endereço `repecol.web.app` na barra do navegador e textos de Quem somos).
+- Área do agente (PRD 2.2): redesenhar Ocorrências e o detalhe, desenhar Registrar visita, a janela de confirmação, as opções de toque, as etiquetas Encerrada e Sem acesso, os marcadores por etapa e a tela do relatório.

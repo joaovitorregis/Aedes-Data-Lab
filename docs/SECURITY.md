@@ -15,7 +15,7 @@ O Aedes Data Lab guarda nome, CPF, e-mail e telefone de moradores, além de foto
 |---|---|---|
 | Visitante | Ler a versão pública do mapa; enviar denúncia após confirmar o e-mail | Ler qualquer dado privado ou histórico |
 | Cidadão responsável pelo envio | Ler e corrigir os campos da própria denúncia enquanto ela está Recebida | Ver denúncias de outras pessoas, observações ou histórico interno |
-| Agente autorizado | Ler todas as ocorrências de Itambé, incluindo dados privados; analisar, concluir, ocultar e republicar | Corrigir os campos enviados; gerenciar contas |
+| Agente autorizado | Ler todas as ocorrências de Itambé, incluindo dados privados; analisar, registrar visitas, encerrar sem acesso, gerar relatório, ocultar e republicar | Corrigir os campos enviados; gerenciar contas |
 | Administrador | Gerenciar contas de agentes; corrigir qualquer denúncia | Apagar histórico |
 
 - Toda permissão é conferida no servidor. Esconder um botão ou uma página não conta como proteção.
@@ -28,13 +28,17 @@ O Aedes Data Lab guarda nome, CPF, e-mail e telefone de moradores, além de foto
 - A separação acontece nas tabelas do banco (ADR-004). O navegador do visitante nunca recebe a linha privada.
 - CPF é conferido só no formato e nos dígitos. O sistema não consulta bases externas nem afirma que a identidade foi verificada.
 - Testes e demonstrações usam somente dados fictícios.
+- O resultado das visitas (acesso, foco, depósitos, ações e observações) é interno e nunca vai para a versão pública.
+- O relatório do agente não contém nome, CPF, e-mail ou telefone do morador. O contrato `dadosRelatorio` não lê `report_private`, e o arquivo é gerado no navegador, sem passar por serviço de terceiros (RNF-12, ADR-013).
+- O formulário de visita guardado no aparelho após falha de envio contém só os campos da visita, nunca dados do morador, e é apagado quando o envio é confirmado ou descartado.
 - Adequação à LGPD (Lei nº 13.709/2018) concluída antes de coletar dados reais: finalidade do CPF, base legal, controlador e encarregado, aviso de privacidade, direitos do titular e retenção por tipo de dado (DEP-06).
 
 ## 4. Banco de dados e arquivos
 
 - Toda tabela tem RLS ativado e nega por padrão; as políticas liberam só o que cada perfil precisa. Tabela nova sem política é tratada como erro no PR.
 - O navegador não escreve diretamente nas tabelas de denúncia; toda mudança passa por Edge Function (ADR-008).
-- `public_reports` é a única tabela com leitura pública.
+- `public_reports` é a única tabela de denúncias com leitura pública. O catálogo de bairros (`neighborhoods`) também é público, porque não contém dados pessoais.
+- `report_visits` segue as mesmas regras de `report_events`: leitura só por agentes autorizados e administrador, escrita só por Edge Function.
 - O papel do usuário (agente ou administrador) é lido da tabela `profiles` no servidor, nunca de um dado que o próprio usuário consiga editar.
 - No Storage, as fotos originais ficam no bucket privado, lido só por agentes autorizados; o bucket público recebe só a versão tratada.
 - Ocultar uma denúncia retira também o acesso público às fotos dela.

@@ -2,7 +2,7 @@
 
 Retrato do momento atual do projeto. Diferente de [DECISIONS.md](./DECISIONS.md), que guarda escolhas permanentes, este arquivo muda a cada entrega. Quem concluir uma tarefa que altere o estado do projeto atualiza este arquivo no mesmo PR.
 
-**Última atualização:** 11/11/2026
+**Última atualização:** 12/11/2026
 
 ## Situação atual
 
@@ -14,6 +14,7 @@ Documentação e design concluídos. A implementação está no começo: o `main
 - 47 telas finais no Figma, exportadas em `wireframes/` com o requisito de cada uma
 - Estrutura de documentação: PRD, ARCHITECTURE, DESIGN, RULES, TASKS, DECISIONS, MEMORY, TEST_PLAN e SECURITY
 - Estrutura inicial das páginas, do CSS compartilhado e dos módulos JavaScript em `site/`
+- PRD 2.2 com o MVP da área do agente, definido no levantamento com a coordenação de endemias em 12/11/2026: a ficha em papel do PNCD não é digitalizada; o agente registra a visita com opções de toque, encerra depois de três tentativas sem acesso e baixa relatório em PDF ou Word para o supervisor. ARCHITECTURE 3.2, DESIGN 1.2, ADR-013, TEST_PLAN (AC-15 e AC-16) e TASKS atualizados juntos
 
 ## Em andamento
 
@@ -35,10 +36,13 @@ As branches `Laura-Galdino`, `Rhillary` e `sky` estão atrás do `main`. Antes d
 - A etiqueta Em análise tem dois estilos no Figma (bege no mapa público, amarela na área dos agentes), e as etiquetas Recebida e Oculta não foram desenhadas (TASK-012).
 - A tela 45 (Portal técnico) foi exportada por captura, porque as camadas estão fora do frame no Figma.
 - A página de login dos agentes se chama `agentes/Login.html`, com inicial maiúscula, fora do padrão de nomes do RULES.md. Renomear junto com a TASK-025.
+- As telas 42, 46 e 47 ainda mostram a área do agente anterior ao PRD 2.2 (Programar visita, caixa de conclusão, barra com Meu trabalho e Dashboard, bairros que não são de Itambé). O redesenho está nas TASK-015 a TASK-016b. As páginas `agentes/mapa.html`, `agentes/meu-trabalho.html` e `agentes/dashboard.html` continuam como espaço reservado, fora da V1.
 
 ## Decisões pendentes
 
 - DEP-10, DEP-11 e DEP-12: decisões de produto em aberto (PRD, seção 18).
+- DEP-01: os 15 bairros estão definidos (D33); falta o contorno de cada um no mapa.
+- Confirmar com a coordenação se o raio de 150 m para ocorrências próximas (D34) é o que eles esperam; o pedido original falava em "150 metros quadrados".
 - DEP-04 e DEP-05: nome da instituição parceira, e-mail de contato e responsável pela conferência diária.
 - Filtros por origem, tipo, distrito, rua e área, que aparecem nas telas e não estão no PRD.
 - Backend: Supabase está proposto no lugar do Firebase (ADR-012). Confirmar antes da Fase 6.

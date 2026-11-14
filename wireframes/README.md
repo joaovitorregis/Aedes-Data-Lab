@@ -1,6 +1,8 @@
 # Telas finais do Aedes Data Lab
 
-Exportação das 47 telas da página **Fluxo de telas · Jornada do Usuário** do [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13), feita em 05/11/2026 em PNG com escala 2x. A tela 45 foi capturada direto do canvas e tem resolução menor. O arquivo do Figma continua sendo a fonte editável. Quando uma tela divergir do [PRD](../docs/PRD.md) sobre comportamento, vale o PRD.
+Exportação das 47 telas da página **Fluxo de telas · Jornada do Usuário** do [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13), em PNG com escala 2x. A tela 45 foi capturada direto do canvas e tem resolução menor. O arquivo do Figma continua sendo a fonte editável. Quando uma tela divergir do [PRD](../docs/PRD.md) sobre comportamento, vale o PRD.
+
+**Atenção:** estas exportações são anteriores ao fluxo novo da denúncia (D35, D36), que vive na seção 02 da jornada do usuário no Figma e ainda não foi exportado (TASK-013a). As telas de denúncia e de GPS abaixo mostram o fluxo anterior e servem só de histórico; para implementar, use o Figma e o PRD.
 
 [Visão geral de todas as telas](montage.png)
 
@@ -17,7 +19,7 @@ Exportação das 47 telas da página **Fluxo de telas · Jornada do Usuário** d
 | Quem somos | [05-quem-somos](05-quem-somos.png) | Complementar |
 | Repelentes | [06-repelente](06-repelente.png) | Complementar |
 
-### Denúncia
+### Denúncia (fluxo anterior)
 
 | Tela | Arquivo | Requisitos |
 |---|---|---|
@@ -61,5 +63,3 @@ Exportação das 47 telas da página **Fluxo de telas · Jornada do Usuário** d
 | Mapa do agente | [42-agente-mapa](42-agente-mapa.png) | Substituída pelo mapa dentro de Ocorrências (TASK-016a) |
 | Dashboard · desktop | [43-dashboard-proposta-desktop-refinado](43-dashboard-proposta-desktop-refinado.png) | Fase seguinte |
 | Dashboard · celular | [44-dashboard-proposta-celular-refinado](44-dashboard-proposta-celular-refinado.png) | Fase seguinte |
-
-As exportações anteriores, com telas herdadas do Repecol, continuam disponíveis no histórico do Git.

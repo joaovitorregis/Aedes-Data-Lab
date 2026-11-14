@@ -2,28 +2,27 @@
 
 | Campo | Valor |
 |---|---|
-| Versão | 3.2 · 12/11/2026 |
-| Estado | Aprovada como base de construção; serviços ainda não implementados |
+| Versão | 3.3 · 14/11/2026 |
 | Documentos relacionados | [PRD](./PRD.md) · [Decisões](./DECISIONS.md) · [Segurança](./SECURITY.md) · [Tarefas](../TASKS.md) |
 
 Este documento descreve **como** o Aedes Data Lab será construído. O que o produto faz e as regras de aceite estão no [PRD](./PRD.md); se os dois divergirem sobre comportamento, vale o PRD. As escolhas técnicas e seus motivos ficam registrados em [DECISIONS.md](./DECISIONS.md).
 
 ## 1. Stack
 
-| Camada | Escolha | Situação |
+| Camada | Escolha | Registro |
 |---|---|---|
-| Interface | HTML, um CSS compartilhado e JavaScript em módulos ES, sem framework | Decidida (ADR-001, ADR-002) |
-| Mapas | Leaflet, com provedor de camada visual a escolher | Proposta (ADR-005, DEP-07) |
-| Backend | Supabase: Edge Functions para as operações que validam e autorizam | Proposta (ADR-012 propõe substituir a ADR-003, ainda em vigor) |
-| Banco de dados | Postgres do Supabase, com tabelas separadas para dados públicos e privados e políticas de acesso por linha (RLS) | Proposta (ADR-004) |
-| Arquivos | Supabase Storage, com um bucket privado para os originais e um bucket público para as fotos tratadas | Proposta |
-| Autenticação | Supabase Auth para agentes e administrador; confirmação de e-mail por denúncia para o cidadão | Proposta (ADR-006) |
-| Cliente | Biblioteca `supabase-js` importada como módulo ES, usada só em `js/servicos/` | Proposta |
-| Ambiente local | Supabase CLI, que sobe banco, Auth, Storage e funções na própria máquina (exige Docker); Vite opcional, quando ajudar | Proposta |
-| Hospedagem | A definir junto com o custo (DEP-07) | Em aberto |
-| Versionamento | Git e GitHub, com PR revisado antes de entrar no `main` | Em uso |
-| Relatório do agente | jsPDF com o complemento AutoTable para PDF e a biblioteca `docx` para Word, carregadas como módulos ES só na tela do relatório | Proposta (ADR-013) |
-| Gráficos | Chart.js, só na fase do dashboard | Fase seguinte |
+| Interface | HTML, um CSS compartilhado e JavaScript em módulos ES, sem framework | ADR-001, ADR-002 |
+| Mapas | Leaflet, com provedor de camada visual a escolher | ADR-005, DEP-07 |
+| Backend | Supabase: Edge Functions para as operações que validam e autorizam | ADR-012, ADR-008 |
+| Banco de dados | Postgres do Supabase, com tabelas separadas para dados públicos e privados e políticas de acesso por linha (RLS) | ADR-004 |
+| Arquivos | Supabase Storage, com um bucket privado para os originais e um bucket público para as fotos tratadas | ADR-012 |
+| Autenticação | Supabase Auth para agentes e administrador. O cidadão não tem conta: confirma por código o contato escolhido em cada denúncia (e-mail, SMS ou WhatsApp) | ADR-006, DEP-03 |
+| Cliente | Biblioteca `supabase-js` importada como módulo ES, usada só em `js/servicos/` | ADR-012 |
+| Ambiente local | Supabase CLI, que sobe banco, Auth, Storage e funções na própria máquina (exige Docker); Vite opcional, quando ajudar | ADR-012 |
+| Hospedagem | A definir junto com o custo | DEP-07 |
+| Versionamento | Git e GitHub, com PR revisado antes de entrar no `main` | RULES.md |
+| Relatório do agente | jsPDF com o complemento AutoTable para PDF e a biblioteca `docx` para Word, carregadas como módulos ES só na tela do relatório | ADR-013 |
+| Gráficos | Chart.js, só na fase do dashboard | D15 (depois da V1) |
 
 ## 2. Como os dados circulam
 
@@ -89,8 +88,9 @@ As pastas `js/dominio/`, `supabase/` e `tests/` ainda não existem; elas são cr
 
 | Contrato | Quem pode chamar |
 |---|---|
-| `confirmarEmail` | Qualquer pessoa, com limite de repetição (RNF-08) |
-| `salvarDenuncia` | Pessoa com e-mail confirmado para aquela tentativa |
+| `enviarCodigo` | Qualquer pessoa, depois de preencher os dados da denúncia; envia o código ao canal escolhido (e-mail, SMS ou WhatsApp), com limite de pedidos e reenvios (RNF-08) |
+| `confirmarCodigo` | Qualquer pessoa; liga o contato confirmado àquela tentativa de envio, sem criar conta |
+| `salvarDenuncia` | Pessoa com o contato confirmado para aquela tentativa |
 | `listarDenunciasPublicas` | Qualquer pessoa; lê só a versão pública |
 | `listarOcorrencias` | Agente autorizado; devolve também o resumo por etapa, os dias em aberto e as tentativas sem acesso |
 | `listarOcorrenciasProximas` | Agente autorizado; ocorrências num raio de 150 m do ponto exato (D34) |
@@ -110,20 +110,20 @@ Ter apenas o papel de agente não dá permissão para corrigir os campos enviado
 | `reports` | Dados operacionais: ponto exato, bairro, categoria, etapa (`recebida`, `em_analise`, `atendida`, `encerrada`), datas, contador de tentativas sem acesso e versão | Agentes autorizados e administrador |
 | `report_visits` | Uma linha por visita: data, acesso (`com_acesso`, `fechado`, `recusado`, `nao_localizado`), tipo do local (`R`, `C`, `TB`, `PE`, `O`), foco encontrado, depósitos (`A1`, `A2`, `B`, `C`, `D1`, `D2`, `E`), ações, observação, autor e momento | Agentes autorizados e administrador; nunca público |
 | `neighborhoods` | Catálogo dos 15 bairros de D33, com nome e, depois de DEP-01, o contorno no mapa | Leitura pública |
-| `report_private` | Nome, CPF declarado, e-mail confirmado e telefone opcional | Todos os agentes autorizados (D11) e administrador; o cidadão lê e corrige só a própria denúncia, enquanto Recebida |
+| `report_private` | Nome, CPF declarado, e-mail, telefone e qual desses contatos foi confirmado no envio, por qual canal (D06) | Todos os agentes autorizados (D11) e administrador; o cidadão lê e corrige só a própria denúncia, enquanto Recebida |
 | `public_reports` | Área aproximada, bairro, categoria, data, etapa, foto tratada e descrição | Leitura pública |
 | `report_events` | Início de análise, observações, visitas, encerramento, ocultação, republicação e correções, com autor e data | Agentes autorizados e administrador; nunca público nem liberado ao cidadão |
 | `profiles` | Habilitação e papel (agente, administrador), ligados ao usuário do Supabase Auth | Acesso mínimo; gerido pelo administrador |
 | Storage | Bucket `fotos-originais` (privado) e bucket `fotos-publicas` (versões tratadas) | Políticas separadas para cada bucket |
 
-Cada tabela tem RLS ativado e nega tudo por padrão; as políticas liberam só o que a coluna Acesso descreve. O modelo será refinado durante a implementação. Nenhum caractere de nome, CPF ou e-mail vai para `public_reports`, e a foto pública é gerada sem metadados pessoais. As regras de proteção de cada recurso estão em [SECURITY.md](./SECURITY.md).
+Cada tabela tem RLS ativado e nega tudo por padrão; as políticas liberam só o que a coluna Acesso descreve. O modelo será refinado durante a implementação. Nenhum caractere de nome, CPF, e-mail ou telefone vai para `public_reports`, e a foto pública é gerada sem metadados pessoais. As regras de proteção de cada recurso estão em [SECURITY.md](./SECURITY.md).
 
 ## 7. Fluxos técnicos da V1
 
 ### 7.1 Envio
 
-1. Confirmar o acesso ao e-mail para aquela denúncia, sem criar conta permanente. A confirmação fica vinculada à tentativa e acontece antes do formulário longo. Expiração, reenvio e limite de tentativas são configurados em DEP-03.
-2. Coletar ponto exato, bairro, categoria, descrição, de uma a três fotos, nome, CPF e telefone opcional. O endereço digitado aguarda DEP-12.
+1. Coletar ponto exato, bairro, categoria, descrição, de uma a três fotos, nome, CPF, e-mail e telefone. O endereço digitado aguarda DEP-12.
+2. Depois dos dados, enviar um código ao contato escolhido pela pessoa (e-mail, ou telefone por SMS ou WhatsApp) e conferir o código digitado. A confirmação fica vinculada à tentativa, não cria conta e não marca o outro contato como confirmado. Provedores, expiração, reenvio e limites são definidos em DEP-03.
 3. Validar no servidor o território, os tipos e tamanhos de arquivo e os dados.
 4. Usar um ID estável por tentativa: reservar o registro como pendente, receber as fotos na área restrita, finalizar e só então gerar o protocolo.
 5. Gerar a versão pública com posição aproximada e fotos tratadas. O agente vê o registro recebido imediatamente.
@@ -133,7 +133,7 @@ O banco e o Storage não compartilham transação, por isso reenvios e retentati
 
 ### 7.2 Mapa público
 
-O mapa lê somente `public_reports`: foto, descrição, bairro, categoria, data, etapa e área aproximada. Denúncias atendidas continuam visíveis; as ocultas saem. A aproximação não pode revelar o ponto exato nem deslocar o marcador para outra localidade; método e precisão são definidos em DEP-02.
+O mapa lê somente `public_reports`: foto, descrição, bairro, categoria, data, etapa e área aproximada. Denúncias atendidas e encerradas continuam visíveis; as ocultas saem. A aproximação não pode revelar o ponto exato nem deslocar o marcador para outra localidade; método e precisão são definidos em DEP-02.
 
 ### 7.3 Ocorrências do agente
 
@@ -157,7 +157,7 @@ Ocultar exige motivo, preserva o registro interno e mantém a etapa. A V1 oculta
 
 ### 7.5 Correção de campos
 
-O administrador corrige qualquer denúncia em qualquer etapa. O cidadão comprova acesso ao e-mail confirmado na denúncia e recebe uma autorização de edição restrita àquele registro, com prazo de validade e proteção contra reutilização. O serviço confere a etapa no momento de salvar: se a ocorrência já estiver Em análise, a correção do cidadão é recusada com orientação para usar o e-mail de contato (D26). Um ponto corrigido passa de novo pela validação de território.
+O administrador corrige qualquer denúncia em qualquer etapa. O cidadão comprova o vínculo com a denúncia pelo contato confirmado no envio e recebe uma autorização de edição restrita àquele registro, com prazo de validade e proteção contra reutilização. O serviço confere a etapa no momento de salvar: se a ocorrência já estiver Em análise, a correção do cidadão é recusada com orientação para usar o e-mail de contato (D26). Um ponto corrigido passa de novo pela validação de território.
 
 Cada correção grava valor original, novo valor, motivo, autor e data em `report_events`. Se a denúncia estiver publicada, só a versão pública permitida é atualizada; se estiver oculta, continua oculta. O mecanismo detalhado é fechado em DEP-08.
 
@@ -166,7 +166,7 @@ Cada correção grava valor original, novo valor, motivo, autor e data em `repor
 | Ambiente | Uso | Dados |
 |---|---|---|
 | Local | Desenvolvimento com servidor local (Live Server) e Supabase CLI | Fictícios, carregados por `seed.sql` |
-| Prévia | Projeto Supabase de teste, separado do Repecol, para revisar cada entrega | Fictícios |
+| Prévia | Projeto Supabase de teste, separado da produção, para revisar cada entrega | Fictícios |
 | Produção | Projeto Supabase próprio, aberto aos moradores após as dependências de lançamento | Reais |
 
 As migrações são aplicadas primeiro no ambiente local, depois na prévia e só então na produção. As configurações de cada ambiente seguem [.env.example](../.env.example). Nenhum valor real entra no repositório.
@@ -180,3 +180,4 @@ As migrações são aplicadas primeiro no ambiente local, depois na prévia e s�
 | 3.0 | 11/11/2026 | Start Técnico vira `ARCHITECTURE.md`: stack, fluxo de dados, estrutura de pastas, regras de arquitetura e ambientes. Sequência de trabalho movida para TASKS.md, verificações para TEST_PLAN.md e SECURITY.md, motivos das escolhas para DECISIONS.md |
 | 3.1 | 11/11/2026 | Backend proposto passa de Firebase para Supabase (ADR-012): Postgres com RLS, Storage, Auth, Edge Functions e Supabase CLI no ambiente local |
 | 3.2 | 12/11/2026 | Alinhada ao PRD 2.2: contratos `registrarVisita`, `encerrarSemAcesso`, `listarOcorrenciasProximas` e `dadosRelatorio`; tabelas `report_visits` e `neighborhoods`; etapa Encerrada; relatório gerado no navegador (ADR-013) |
+| 3.3 | 14/11/2026 | Alinhada ao PRD 2.3: confirmação por código no canal escolhido depois dos dados (`enviarCodigo` e `confirmarCodigo` no lugar de `confirmarEmail`); telefone obrigatório em `report_private`; coluna de situação trocada pela referência à ADR ou à dependência de cada escolha |

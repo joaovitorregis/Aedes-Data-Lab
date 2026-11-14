@@ -2,8 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versão | 2.3 · 13/11/2026 |
-| Estado | Base de construção da V1; revisão da versão 2.3 pela equipe pendente |
+| Versão | 2.3 · 14/11/2026 |
 | Território | Itambé, Pernambuco |
 | Responsável pelo documento | Administrador do produto |
 | Público | Produto, design, desenvolvimento, testes e agentes participantes |
@@ -48,7 +47,7 @@ O desenvolvimento pode avançar com dados fictícios enquanto houver dependênci
 
 | Termo | Significado |
 |---|---|
-| Denúncia | Envio feito pelo morador no fluxo Registrar foco |
+| Denúncia | Envio feito pelo morador no fluxo de denúncia, que começa na tela Início e na página `registrar-foco.html` |
 | Ocorrência | A mesma denúncia, tratada na área dos agentes |
 | Publicação | Versão pública da denúncia no mapa, apenas com os campos permitidos |
 | Protocolo | Código gerado pelo serviço depois que a denúncia foi gravada; comprova o recebimento |
@@ -73,7 +72,7 @@ A experiência é pensada primeiro para o celular e precisa funcionar bem no com
 
 O andamento da implementação é registrado em [MEMORY.md](./MEMORY.md), que é atualizado a cada entrega. As páginas Meu trabalho, Mapa técnico e Dashboard já existem no repositório como espaço reservado, fora do aceite da V1 (seção 6.1).
 
-**Design:** o Figma é a referência visual em evolução. O fluxo atualizado de denúncia contém 22 telas completas em quadros de imagem nas páginas "Fluxo de telas - Jornada do Usuário" e "06 · Denúncia". Na jornada do usuário, essas telas ocupam a seção 02, e os links das outras telas que levam à denúncia abrem a Localização nova; a versão anterior fica arquivada fora da jornada, só como consulta. As imagens ainda não têm campos editáveis nem navegação de protótipo entre as etapas da denúncia. As exportações anteriores em `wireframes/` não substituem o fluxo atualizado. Se uma tela divergir deste PRD sobre comportamento, vale o PRD.
+**Design:** a referência visual é o [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13), página "Fluxo de telas · Jornada do Usuário". A denúncia segue o fluxo da seção 02 dessa página (D35, D36); a versão anterior fica arquivada fora da jornada, só para consulta. As telas simulam código, envio, protocolo e publicação e não comprovam serviço implementado. As exportações em `wireframes/` são anteriores a esse fluxo. O estado atual do arquivo fica em [MEMORY.md](./MEMORY.md).
 
 ## 5. Decisões de produto
 
@@ -151,7 +150,7 @@ Este PRD não fixa prazo de vistoria, número de usuários, volume de denúncias
 | Aprovação ou acesso do supervisor | Fora da V1 (D31) | Supervisor recebe o relatório |
 | Chat, resposta individual, push e central de notificações | Fora da V1 | Sem compromisso |
 | Conta e histórico pessoal do cidadão | Fora da V1 | Sem compromisso |
-| Comércio e produção de repelente | Fora do produto | Não importar do Repecol |
+| Comércio e produção de repelente | Fora do produto | Sem compromisso |
 
 A confirmação por código faz parte da V1 mesmo com notificações fora do escopo. O canal escolhido serve para essa confirmação; não cria chat nem canal de resposta individual. A ausência do dashboard também não dispensa a gravação dos dados que as análises futuras vão usar.
 
@@ -191,7 +190,7 @@ Os agentes autorizados enxergam o município inteiro, sem divisão por equipe ou
 | Protocolo, data e etapa | Gerados pelo serviço | Data e etapa são públicas; o protocolo é o comprovante de recebimento |
 | Visitas, observações e autor | Registrados pelo agente | Internos; ver 8.1. Só a etapa resultante vai para o mapa |
 
-O ponto marcado no mapa é a referência espacial exata da denúncia. Endereço e referência ficam privados porque revelariam o local que a área aproximada protege. Categorias, formatos e tamanhos de arquivo e a precisão da área pública serão configurados na implementação, sem reaproveitar automaticamente os valores do Repecol.
+O ponto marcado no mapa é a referência espacial exata da denúncia. Endereço e referência ficam privados porque revelariam o local que a área aproximada protege. Categorias, formatos e tamanhos de arquivo e a precisão da área pública serão configurados na implementação.
 
 O CPF passa por conferência de formato e dígitos verificadores, para pegar erro de digitação. Não há consulta externa nem validação de titularidade. O mesmo CPF ou e-mail pode aparecer em denúncias diferentes, e o sistema não limita o número de denúncias por pessoa. Controle de abuso (RNF-08) atua sobre repetição e volume, sem bloquear relatos legítimos.
 
@@ -511,7 +510,7 @@ Os testes começam com dados fictícios e serviços de teste. Cada execução re
 | E5 · Aceite da V1 | Evidências de AC-01 a AC-16 e preparação da operação |
 | E6 · Evolução | Dashboard, gráficos e melhorias priorizadas pelo uso |
 
-As primeiras atividades de HTML já combinadas são, nesta ordem, Registrar foco/Denúncia, Início, Jogo e Guia Aedes. A ordem é didática e não muda a jornada do cidadão, que começa em Início (D35). Jogo e Guia não bloqueiam o fluxo operacional. A divisão dessas entregas em tarefas numeradas está em [TASKS.md](../TASKS.md).
+As primeiras atividades de HTML já combinadas são, nesta ordem, a página da denúncia (`registrar-foco.html`), Início, Jogo e Guia Aedes. A ordem é didática e não muda a jornada do cidadão, que começa em Início (D35). Jogo e Guia não bloqueiam o fluxo operacional. A divisão dessas entregas em tarefas numeradas está em [TASKS.md](../TASKS.md).
 
 ## 17. Riscos assumidos
 
@@ -546,12 +545,14 @@ Esses riscos fazem parte do produto escolhido. Mudanças como moderação prévi
 | DEP-10 | A quem pertencem os dados no envio em nome de terceiros, no envio assistido e no envio por menores de idade | Antes de implementar essa modalidade | Administrador, instituição parceira e operação |
 | DEP-11 | Encerramento de denúncias falsas ou improcedentes que não exigem visita | Antes de tratar esses casos no piloto | Administrador e agentes |
 | DEP-12 | Obrigatoriedade do endereço digitado | Antes de fechar o formulário (E3) | Produto |
+| DEP-13 | Filtros que aparecem nas telas e não estão em RF-MAP-02 (origem, tipo, distrito, rua e área): entrar no PRD ou sair das telas | Antes dos filtros do mapa (TASK-046) | Produto |
+| DEP-14 | Confirmar com a coordenação que o aviso de D34 é um raio de 150 m; o pedido original falava em "150 metros quadrados" | Antes do aviso de ocorrências próximas (TASK-051a) | Produto e agentes |
 
-DEP-10, DEP-11 e DEP-12 são decisões de produto em aberto. As demais são preparação técnica ou operacional. Nenhuma delas impede o trabalho com dados fictícios.
+DEP-10 a DEP-14 são decisões de produto em aberto; as demais são preparação técnica ou operacional. Esta é a lista única de pendências do projeto: os outros documentos citam o ID em vez de repetir o texto. Nenhuma delas impede o trabalho com dados fictícios.
 
 ## 19. Definição de pronto
 
-**Documento:** decisões registradas, requisitos com critério de aceite, dados e permissões definidos, rastreabilidade completa e dependências identificadas. A versão 2.3 registra as decisões atuais; DEP-08, DEP-10, DEP-11 e DEP-12 ainda exigem definição de produto ou operação antes das respectivas integrações.
+**Documento:** decisões registradas, requisitos com critério de aceite, dados e permissões definidos, rastreabilidade completa e dependências identificadas na seção 18.
 
 **V1 técnica:** cenários AC-01 a AC-16 demonstrados na versão candidata. Dashboard e recursos complementares não entram nesse aceite.
 
@@ -559,27 +560,24 @@ DEP-10, DEP-11 e DEP-12 são decisões de produto em aberto. As demais são prep
 
 ## 20. Referências e precedência
 
-1. Decisões de produto registradas pelo responsável em 04 e 05/11/2026, incluindo publicação automática, dados privados, CPF obrigatório, dashboard posterior e prazo de correção pelo cidadão.
+1. Decisões do responsável pelo produto: publicação automática, dados privados, CPF obrigatório, dashboard posterior e prazo de correção pelo cidadão (D01 a D26).
 2. Notas internas de contexto e o roteiro de aprendizagem do projeto, mantidos fora do repositório.
 3. [Figma do Aedes](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y), com as telas finais, e [Jira ADL](https://aedesdatalab.atlassian.net/browse/ADL-65), para o planejamento das tarefas.
-4. PRD do Repecol (`docs/PRD_REPELCONTROL.md`, em repositório separado), usado como modelo de estrutura. Contas de cidadão, chat, produção, comércio, o território de Mogeiro, prioridade automática e SLA não foram herdados.
-5. Levantamento com a coordenação de endemias de Itambé em 12/11/2026: ficha em papel Registro Diário do Serviço Antivetorial (PNCD), lista de bairros, cobertura por ciclo e período de retorno. Origem de D27 a D34.
-6. Decisões do responsável pelo produto em 12 e 13/11/2026: completar as novas prévias, confirmar um canal após informar e-mail e telefone, permitir e-mail ou telefone por SMS/WhatsApp, iniciar pela tela Início, usar telas inteiras e reaproveitar visualmente o mapa antigo com a ressalva territorial. Origem das alterações de 2.3 e de D35 a D37.
+4. Levantamento com a coordenação de endemias de Itambé: ficha em papel Registro Diário do Serviço Antivetorial (PNCD), lista de bairros, cobertura por ciclo e período de retorno. Origem de D27 a D34.
+5. Decisões do responsável pelo produto sobre a jornada da denúncia: confirmar um canal depois de informar e-mail e telefone, escolher entre e-mail, SMS e WhatsApp, começar pela tela Início, usar telas inteiras e reaproveitar o mapa antigo só como imagem ilustrativa. Origem de D35 a D37.
 
 Em conflito com telas antigas ou recomendações anteriores, valem as decisões deste PRD. Mudanças futuras registram o motivo no histórico abaixo.
-
-`DECISIONS.md` (ADR-006), `SECURITY.md`, `TEST_PLAN.md` e `TASKS.md` ainda contêm referências ao fluxo anterior de e-mail único ou confirmação antecipada. Esses trechos precisam ser sincronizados antes da implementação de E3; não revogam D06, D08 nem RF-AUT-01 desta versão.
 
 ## 21. Histórico do documento
 
 | Versão | Data | Alteração |
 |---|---|---|
 | 0.1 | 04/11/2026 | Primeiro rascunho do PRD e do Start Técnico (PR #2) |
-| 0.2 | 04/11/2026 | Estrutura adaptada do Repecol e decisões da entrevista de produto |
+| 0.2 | 04/11/2026 | Estrutura do documento e decisões da entrevista de produto |
 | 1.0 | 05/11/2026 | Critérios por requisito, campos e acessos, etapas de atendimento e publicação, rastreabilidade e dependências de lançamento |
 | 1.1 | 05/11/2026 | Visita obrigatória para Atendida, observações durante a análise, sem reabertura, republicação pelo agente, responsabilidades e preferências de retenção e custo |
 | 1.2 | 05/11/2026 | Correção liberada ao administrador e ao cidadão responsável pelo envio; responsabilidades descritas por papel |
-| 2.0 | 05/11/2026 | Aprovado como base de construção. Texto revisado em tom corporativo; glossário; aviso epidemiológico restaurado no resumo; D26 limita a correção do cidadão à etapa Recebida; especificações propostas incorporadas aos requisitos; papel "operador" substituído por agente autorizado; permissões separadas por perfil; riscos em tabela; LGPD explícita em DEP-06; DEP-12 para o endereço digitado; estado do repositório atualizado para `f403ef5`; telas do Figma registradas como concluídas |
+| 2.0 | 05/11/2026 | Texto revisado em tom corporativo; glossário; aviso epidemiológico restaurado no resumo; D26 limita a correção do cidadão à etapa Recebida; especificações propostas incorporadas aos requisitos; papel "operador" substituído por agente autorizado; permissões separadas por perfil; riscos em tabela; LGPD explícita em DEP-06; DEP-12 para o endereço digitado; estado do repositório atualizado para `f403ef5`; telas do Figma registradas como concluídas |
 | 2.1 | 11/11/2026 | Arquivo renomeado para `PRD.md` na nova estrutura de documentação; seção Visão do produto; estado da implementação movido para MEMORY.md; referências a ARCHITECTURE, DESIGN, TASKS, TEST_PLAN e SECURITY |
 | 2.2 | 12/11/2026 | MVP do agente a partir do levantamento com a coordenação: ficha do PNCD não digitalizada (D27); registro de visita com campos de toque (seção 8.1, RF-AGE-03); etapa Encerrada após três tentativas sem acesso (RF-AGE-07); relatório em PDF e Word para o supervisor (RF-AGE-08); uma conta de agente na V1; 15 bairros; aviso de ocorrências próximas em 150 m; lista com resumo, dias em aberto e mapa interno; RNF-11, RNF-12, AC-15 e AC-16 |
-| 2.3 | 13/11/2026 | Fluxo cidadão completo da tela Início ao protocolo; e-mail e telefone obrigatórios; código depois dos dados, com escolha de e-mail ou telefone e, no telefone, SMS ou WhatsApp; revisão, estados de erro e telas completas; mapa antigo mantido só como referência visual com ressalva de Itambé/BA; correção do cidadão vinculada a mecanismo seguro ainda a definir para os três canais; decisões anteriores do dashboard pós-V1 registradas com conflito da contagem antiga explicitado |
+| 2.3 | 14/11/2026 | Fluxo cidadão completo da tela Início ao protocolo; e-mail e telefone obrigatórios; código depois dos dados, com escolha de e-mail ou telefone e, no telefone, SMS ou WhatsApp; revisão, estados de erro e telas completas; mapa antigo mantido só como referência visual com ressalva de Itambé/BA; correção do cidadão vinculada a mecanismo seguro ainda a definir para os três canais; decisões anteriores do dashboard pós-V1 registradas com conflito da contagem antiga explicitado; DEP-13 e DEP-14 reúnem as pendências que estavam espalhadas em TASKS e MEMORY; documentos derivados alinhados a esta versão |

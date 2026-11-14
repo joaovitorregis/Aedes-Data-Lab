@@ -5,7 +5,7 @@ Estas regras valem para todas as pessoas da equipe e para qualquer ferramenta de
 ## 1. Antes de programar
 
 - Leia a parte do [PRD](./PRD.md) ligada à tarefa e o requisito citado em [TASKS.md](../TASKS.md).
-- Abra a tela correspondente em [wireframes/](../wireframes/README.md) e confira [DESIGN.md](./DESIGN.md).
+- Abra a tela correspondente no [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13) (a pasta [wireframes/](../wireframes/README.md) guarda só as exportações anteriores) e confira [DESIGN.md](./DESIGN.md).
 - Veja o que já existe no repositório antes de criar algo novo. Reaproveite em vez de duplicar.
 - Para mudanças grandes, escreva o plano primeiro e combine com a equipe.
 - Pegue uma tarefa por vez e marque em TASKS.md quem está com ela.

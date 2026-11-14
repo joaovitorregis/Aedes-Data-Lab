@@ -14,7 +14,7 @@ Este plano define o que significa "funcionando" para cada parte da V1. Os cenár
 Antes de abrir o PR de qualquer tarefa:
 
 - [ ] A página abre sem erro no console do navegador
-- [ ] A tela confere com o wireframe e com o [DESIGN.md](./DESIGN.md)
+- [ ] A tela confere com o Figma e com o [DESIGN.md](./DESIGN.md)
 - [ ] Sem rolagem horizontal em 320, 390, 768 e 1440px
 - [ ] Dá para usar só com o teclado, com o foco visível
 - [ ] Estados de carregando, vazio e erro aparecem quando devem
@@ -25,14 +25,22 @@ Antes de abrir o PR de qualquer tarefa:
 ### Denúncia
 
 **AC-01 · Envio válido** (RF-AUT-01, RF-DEN-01 a RF-DEN-04)
-1. Abrir Registrar foco e confirmar o e-mail.
-2. Marcar um ponto dentro de Itambé, preencher categoria, descrição, uma foto, nome e CPF de teste.
-3. Revisar e enviar.
-4. Esperado: protocolo exibido; depois de recarregar, a denúncia continua gravada.
+1. Na tela Início, tocar em denunciar.
+2. Marcar um ponto dentro de Itambé; preencher categoria, descrição e uma foto.
+3. Em "Seus dados para o registro", preencher nome, CPF, e-mail e telefone de teste.
+4. Escolher onde receber o código e digitar o código recebido.
+5. Revisar e enviar.
+6. Esperado: protocolo exibido; depois de recarregar, a denúncia continua gravada.
+
+Repetir o cenário três vezes, uma por canal: e-mail, telefone com SMS e telefone com WhatsApp.
 
 **AC-02 · Entrada inválida** (RF-AUT-01, RF-DEN-01 a RF-DEN-03)
-- [ ] Sem confirmar o e-mail, o envio não é aceito
-- [ ] Campo obrigatório vazio mostra erro no próprio campo
+- [ ] A escolha do canal do código só aparece depois dos dados do cidadão
+- [ ] E-mail escolhido abre direto a tela do código; telefone oferece SMS e WhatsApp antes
+- [ ] Sem código, com código errado ou expirado, a revisão e o envio não são liberados
+- [ ] Confirmar um canal não marca o outro contato como confirmado
+- [ ] Campo obrigatório vazio, inclusive e-mail ou telefone, mostra erro no próprio campo
+- [ ] CPF, e-mail ou telefone malformado mostra erro no próprio campo
 - [ ] Arquivo que não é imagem, ou acima do limite, é recusado com explicação
 - [ ] Ponto fora de Itambé é recusado, mesmo trocando o bairro digitado
 
@@ -43,7 +51,7 @@ Antes de abrir o PR de qualquer tarefa:
 - [ ] Clicar duas vezes em Enviar gera um único protocolo
 - [ ] Cortar a rede antes da gravação mostra "Não foi possível enviar" e mantém o formulário
 - [ ] Cortar a rede depois da gravação permite recuperar o mesmo protocolo
-- [ ] Repetir confirmações de e-mail além do limite é bloqueado pelo serviço
+- [ ] Pedir ou reenviar código além do limite é bloqueado pelo serviço, sem apagar o formulário
 
 **AC-05 · Publicação pendente** (RF-DEN-05)
 - [ ] Com a publicação falhando, a pessoa recebe o protocolo e o aviso de publicação pendente, e o agente vê a denúncia
@@ -121,7 +129,8 @@ Antes de abrir o PR de qualquer tarefa:
 
 ### Interface
 
-**AC-12 · Interfaces** (RNF-01, RNF-02)
+**AC-12 · Interfaces** (RNF-01, RNF-02, D35, D36)
+- [ ] A denúncia vai da tela Início ao resultado sem conteúdo cortado, com os estados de erro dentro da mesma etapa
 - [ ] Todas as jornadas funcionam em 320, 390, 768 e 1440px
 - [ ] Todas as jornadas funcionam só com o teclado
 - [ ] Etapas indicadas por texto, não só por cor
@@ -131,7 +140,8 @@ Antes de abrir o PR de qualquer tarefa:
 Roteiro completo, executado antes de cada entrega de fase e antes do lançamento:
 
 ```
-Abrir o site → Registrar foco → confirmar e-mail → enviar denúncia → anotar protocolo
+Abrir o site → Início: denunciar → preencher local, foco, fotos e dados → confirmar o código
+→ revisar e enviar → anotar protocolo
 → recarregar → ver a denúncia no mapa → entrar como agente → encontrar pelo protocolo
 → iniciar análise → registrar observação → registrar visita sem acesso → registrar visita
 com acesso → ver "Atendida" no mapa → ocultar → confirmar que saiu do mapa → republicar

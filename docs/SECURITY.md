@@ -6,14 +6,14 @@ O Aedes Data Lab guarda nome, CPF, e-mail e telefone de moradores, além de foto
 
 - Agentes e administrador entram com login individual (Supabase Auth). Não existem contas compartilhadas.
 - Contas de agente são criadas e liberadas pelo administrador, fora do cadastro público.
-- O cidadão não tem conta. Ele prova acesso ao e-mail a cada denúncia, e a confirmação de uma tentativa não vale para outra.
+- O cidadão não tem conta. A cada denúncia, depois de preencher os próprios dados, ele confirma por código o contato que escolheu (e-mail, ou telefone por SMS ou WhatsApp). A confirmação de uma tentativa não vale para outra, e confirmar um contato não marca o outro como confirmado (ADR-006).
 - Ao sair, a interface apaga os dados privados que estavam na tela.
 
 ## 2. Autorização
 
 | Perfil | Pode | Não pode |
 |---|---|---|
-| Visitante | Ler a versão pública do mapa; enviar denúncia após confirmar o e-mail | Ler qualquer dado privado ou histórico |
+| Visitante | Ler a versão pública do mapa; enviar denúncia após confirmar o contato escolhido | Ler qualquer dado privado ou histórico |
 | Cidadão responsável pelo envio | Ler e corrigir os campos da própria denúncia enquanto ela está Recebida | Ver denúncias de outras pessoas, observações ou histórico interno |
 | Agente autorizado | Ler todas as ocorrências de Itambé, incluindo dados privados; analisar, registrar visitas, encerrar sem acesso, gerar relatório, ocultar e republicar | Corrigir os campos enviados; gerenciar contas |
 | Administrador | Gerenciar contas de agentes; corrigir qualquer denúncia | Apagar histórico |
@@ -62,7 +62,7 @@ Cada foto é conferida no servidor:
 
 ## 7. Abuso e custo
 
-- Confirmação de e-mail e envio de denúncia têm limite de repetição no servidor (RNF-08).
+- Envio de denúncia e pedido ou reenvio de código (e-mail, SMS ou WhatsApp) têm limite de repetição no servidor (RNF-08). O código expira e só vale para a tentativa em que foi pedido (DEP-03).
 - Consultas e uploads têm limites configurados, e a lista dos agentes é paginada (RNF-07).
 - O projeto de produção tem alerta de orçamento antes de ser aberto ao público (DEP-07).
 

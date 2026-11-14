@@ -2,9 +2,11 @@
 
 Plataforma web, pensada primeiro para o celular, em que moradores de Itambé/PE registram possíveis focos do mosquito da dengue e agentes autorizados acompanham o atendimento.
 
-O Aedes Data Lab é a evolução do projeto Repecol, que agora fica como referência histórica. A documentação e as telas estão concluídas, e a implementação do site começou: a pasta `site/` tem a estrutura inicial das páginas, ainda sem envio, banco ou autenticação. O andamento fica em [docs/MEMORY.md](docs/MEMORY.md).
+A documentação está alinhada ao PRD, e a implementação do site começou: a pasta `site/` tem a estrutura inicial das páginas, ainda sem envio, banco ou autenticação. O andamento fica em [docs/MEMORY.md](docs/MEMORY.md).
 
 ## Documentação
+
+Cada documento responde uma pergunta, e cada informação mora em um só lugar. Os outros documentos apontam para ela em vez de repetir.
 
 | Arquivo | Responde | Etapa |
 |---|---|---|
@@ -20,7 +22,7 @@ O Aedes Data Lab é a evolução do projeto Repecol, que agora fica como referê
 | [.env.example](.env.example) | Que configurações são necessárias? | Preparação |
 | [site/LEIA-ME.md](site/LEIA-ME.md) | Onde fica cada página? | Desenvolvimento |
 
-O PRD é a base aprovada para a construção da V1. Quando outro documento ou uma tela divergir dele sobre comportamento, vale o PRD.
+O PRD é a fonte única do comportamento da V1 e da lista de pendências (seção 18). Quando outro documento ou uma tela divergir dele, vale o PRD.
 
 ## Como trabalhar
 
@@ -32,7 +34,7 @@ Ler → Entender → Planejar → Implementar → Testar → Revisar → Corrigi
 
 1. Escolha a próxima tarefa livre em [TASKS.md](TASKS.md) e coloque seu nome nela.
 2. Crie uma branch para ela, como `feature/registrar-foco`.
-3. Leia o requisito no PRD, a tela em `wireframes/` e o DESIGN.md.
+3. Leia o requisito no PRD, veja a tela no Figma e leia o DESIGN.md.
 4. Implemente, teste com o [TEST_PLAN.md](docs/TEST_PLAN.md) e abra um PR para outra integrante revisar.
 5. Depois do merge, marque a tarefa como concluída e atualize o MEMORY.md se o estado do projeto mudou.
 
@@ -44,11 +46,9 @@ Na fase de HTML e CSS, basta abrir `site/index.html` no navegador. Quando entrar
 
 ## Design
 
-As telas finais estão na página **Fluxo de telas · Jornada do Usuário** do [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13) e exportadas em [wireframes/](wireframes/README.md), cada uma ligada ao seu requisito. Cores, fontes e componentes estão no [DESIGN.md](docs/DESIGN.md).
+As telas estão na página **Fluxo de telas · Jornada do Usuário** do [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13), que é a fonte editável. A pasta [wireframes/](wireframes/README.md) guarda a exportação das telas anteriores ao fluxo novo da denúncia. Cores, fontes e componentes estão no [DESIGN.md](docs/DESIGN.md).
 
 ![Visão geral das telas finais do Aedes Data Lab](wireframes/montage.png)
-
-As exportações anteriores, ainda com conteúdo do Repecol, ficam no histórico do Git. A [captura da organização original do arquivo](imagens/organizacao-figma.jpg) registra a origem do projeto.
 
 ## Autoria
 

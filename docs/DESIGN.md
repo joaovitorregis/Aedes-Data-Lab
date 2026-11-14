@@ -2,15 +2,15 @@
 
 | Campo | Valor |
 |---|---|
-| Versão | 1.2 · 12/11/2026 |
-| Fonte | Telas finais da página "Fluxo de telas · Jornada do Usuário" no [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13) |
-| Telas exportadas | [wireframes/](../wireframes/README.md) |
+| Versão | 1.3 · 14/11/2026 |
+| Fonte | Página "Fluxo de telas · Jornada do Usuário" no [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13) |
+| Telas exportadas | [wireframes/](../wireframes/README.md), anteriores ao fluxo novo da denúncia (TASK-013a) |
 
-Este documento define como o site deve parecer e se comportar visualmente, para que todas as páginas usem os mesmos botões, cartões, cores e textos. **As cores são as do Figma.** Todos os valores abaixo foram lidos nas 47 telas finais, que ainda não têm estilos nem variáveis cadastrados. Nenhuma cor foi inventada: onde o Figma não define um caso, o documento diz "não desenhado", e o caso vira tarefa de design em [TASKS.md](../TASKS.md) em vez de ser resolvido no código.
+Este documento define como o site deve parecer e se comportar visualmente, para que todas as páginas usem os mesmos botões, cartões, cores e textos. **As cores são as do Figma.** Todos os valores abaixo foram lidos nas telas do Figma, que ainda não têm estilos nem variáveis cadastrados. Nenhuma cor foi inventada: onde o Figma não define um caso, o documento diz "não desenhado", e o caso vira tarefa de design em [TASKS.md](../TASKS.md) em vez de ser resolvido no código.
 
 ## 1. Estilo
 
-Visual calmo e institucional, em tons de bege e verde, pensado para leitura no celular ao ar livre. Cartões claros sobre fundo creme, títulos fortes em verde escuro e poucos elementos por tela. A cor de alerta aparece só nos marcadores do mapa.
+Visual calmo e institucional, em tons de bege e verde, pensado para leitura no celular ao ar livre. O Figma mostra o celular com barra de endereço simulada e navegação inferior dentro do quadro; esses elementos são moldura da apresentação, não fazem parte do site. Cartões claros sobre fundo creme, títulos fortes em verde escuro e poucos elementos por tela. A cor de alerta aparece só nos marcadores do mapa.
 
 ## 2. Cores
 
@@ -103,7 +103,7 @@ Usada antes de ações que não voltam atrás: registrar visita com acesso, ence
 
 ### Indicador de passos da denúncia
 
-Quatro círculos numerados ligados por uma linha, no topo do formulário, como nas telas 07 a 11.
+Quatro círculos numerados ligados por uma linha, no topo do formulário, com o texto "Etapa N de 4", como nas telas de Localização a Revisão da denúncia. As quatro etapas são Localização, Identificação do foco, Seus dados e Revisão; a escolha do canal e o código ficam entre Seus dados e Revisão, sem etapa própria.
 
 ### Mapa
 
@@ -160,11 +160,4 @@ Os componentes usam classes compartilhadas (`.botao`, `.botao--secundario`, `.ca
 
 ## 9. Pendências de design
 
-Os ajustes abaixo estão em [TASKS.md](../TASKS.md), fase Ajustes de design:
-
-- Cadastrar estes tokens como estilos ou variáveis no Figma.
-- Trocar Segoe UI por Inter nas telas que ainda usam a fonte antiga.
-- Alinhar os nomes das etapas ao PRD, unificar os dois estilos de etiqueta e desenhar Recebida, Atendida e Oculta.
-- Desenhar o botão de ocultar publicação e os estados de foco, desabilitado e enviando.
-- Corrigir os restos do Repecol (endereço `repecol.web.app` na barra do navegador e textos de Quem somos).
-- Área do agente (PRD 2.2): redesenhar Ocorrências e o detalhe, desenhar Registrar visita, a janela de confirmação, as opções de toque, as etiquetas Encerrada e Sem acesso, os marcadores por etapa e a tela do relatório.
+Os ajustes de design estão na Fase 1 de [TASKS.md](../TASKS.md). Este documento só descreve o que já está definido; o que falta desenhar vira tarefa lá, não texto aqui.

@@ -43,7 +43,7 @@ Exportação das 47 telas da página **Fluxo de telas · Jornada do Usuário** d
 | Mapa | [16-mapa](16-mapa.png) | RF-MAP-01 |
 | Mapa com marcadores | [17-mapa-marcadores](17-mapa-marcadores.png) | RF-MAP-01 |
 | Lista de ocorrências | [18-mapa-lista-de-ocorrencias](18-mapa-lista-de-ocorrencias.png) | RF-MAP-01 |
-| Detalhe da ocorrência (4 variações) | [19](19-mapa-detalhe-da-ocorrencia.png), [20](20-mapa-detalhe-da-ocorrencia-2.png), [21](21-mapa-detalhe-da-ocorrencia-3.png), [22](22-mapa-detalhe-da-ocorrencia-4.png) | RF-MAP-01 |
+| Detalhe da ocorrência (4 variações) | [19](19-mapa-detalhe-da-ocorrencia.png), [20](20-mapa-detalhe-da-ocorrencia-2.png), [21](21-mapa-detalhe-da-ocorrencia-3.png), [22](22-mapa-detalhe-da-ocorrencia-4.png) | Substituído pela prévia curta (D47) |
 | Menu de filtros | [23-mapa-menu-de-filtros](23-mapa-menu-de-filtros.png) | RF-MAP-02 |
 | Filtro por período | [24-mapa-filtro-por-periodo](24-mapa-filtro-por-periodo.png), [39-filtro-de-periodos](39-filtro-de-periodos.png) | RF-MAP-02 |
 | Filtro por status | [25-mapa-filtro-por-status](25-mapa-filtro-por-status.png) | RF-MAP-02 |

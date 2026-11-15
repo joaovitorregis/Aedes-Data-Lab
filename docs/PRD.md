@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versão | 2.4 · 14/11/2026 |
+| Versão | 2.6 · 15/11/2026 |
 | Território | Itambé, Pernambuco |
 | Responsável pelo documento | Administrador do produto |
 | Público | Produto, design, desenvolvimento, testes e agentes participantes |
@@ -85,12 +85,12 @@ O andamento da implementação é registrado em [MEMORY.md](./MEMORY.md), que é
 | D03 | Foto e descrição são publicadas automaticamente, sem aprovação prévia de agente. |
 | D04 | Agente autorizado pode ocultar uma publicação, com motivo, preservando o registro interno enquanto ela está na lixeira (D44). Antes da abertura pública haverá um responsável e uma rotina diária de conferência. |
 | D05 | Botão público para sinalizar conteúdo e análise automática de fotos ficam fora da V1. |
-| D06 | Nome, CPF, e-mail e telefone são obrigatórios no formulário. O cidadão confirma por código apenas o canal escolhido naquela denúncia: e-mail ou telefone por SMS ou WhatsApp. Nenhum desses campos aparece no mapa, nem de forma parcial. |
-| D07 | O CPF é obrigatório. A intenção é confirmar que a pessoa existe; como digitar ou validar o formato não comprova titularidade, o produto não anuncia identidade verificada. |
+| D06 | Nome, e-mail e telefone são obrigatórios no formulário. O cidadão confirma por código apenas o canal escolhido naquela denúncia: e-mail ou, quando ativos (D45), telefone por SMS ou WhatsApp. Nenhum desses campos aparece no mapa, nem de forma parcial. |
+| D07 | O CPF não é coletado nem guardado. Digitar o CPF nunca comprovou a identidade de ninguém e aumentaria o dado pessoal guardado; nome, e-mail e telefone continuam obrigatórios, e o produto não anuncia identidade verificada. |
 | D08 | A confirmação do contato acontece depois de preencher os dados do cidadão e antes da revisão e do envio. A confirmação de uma denúncia não vale para outra. A V1 não tem conta permanente nem histórico pessoal. |
 | D09 | O público vê a localização aproximada; agentes autorizados veem o ponto exato. |
 | D10 | Só são aceitas denúncias dentro de Itambé/PE. O mapa pode ser navegado fora do município, o envio não. |
-| D11 | Cada agente tem login individual liberado pelo administrador. Todos os agentes autorizados consultam todas as ocorrências de Itambé e os dados privados, inclusive o CPF completo. |
+| D11 | Cada agente tem login individual liberado pelo administrador. Todos os agentes autorizados consultam todas as ocorrências de Itambé e os dados privados, inclusive nome, e-mail e telefone. |
 | D12 | Etapas de atendimento: Recebida → Em análise → Atendida ou Encerrada. Abrir o detalhe não muda a etapa; iniciar a análise é uma ação explícita. |
 | D13 | Para marcar como Atendida, o agente precisa ter ido ao local e analisado a situação, registrando a visita com acesso (D28). A resposta ao cidadão é a atualização da ocorrência, sem mensagem individual. |
 | D14 | Se a gravação funcionar e a publicação falhar, o cidadão recebe o protocolo e o aviso de publicação pendente. |
@@ -104,14 +104,14 @@ O andamento da implementação é registrado em [MEMORY.md](./MEMORY.md), que é
 | D22 | O administrador libera, revoga e recupera contas de agentes, aprova a abertura pública e assume a manutenção. A responsabilidade pelo serviço é compartilhada com uma instituição parceira a formalizar (DEP-04). |
 | D23 | A falta de agentes por vários dias não suspende o recebimento. Haverá um e-mail de contato para reclamações, pedidos de correção e retirada de conteúdo (DEP-05). |
 | D24 | As informações devem ser preservadas por prazo indefinido, sem perda de histórico, exceto as denúncias ocultas, que são removidas depois de 30 dias na lixeira (D44). A política por tipo de dado será formalizada em DEP-06. |
-| D25 | O custo de operação deve ser baixo, idealmente zero. Ainda não há teto financeiro definido (DEP-07). |
+| D25 | O custo de operação deve ser baixo. O custo zero é o ideal, mas pagar um valor pequeno é aceito, por exemplo o plano pago do Supabase ou da hospedagem. Ainda não há teto financeiro definido (DEP-07). |
 | D26 | O cidadão corrige a própria denúncia somente enquanto ela estiver Recebida. Depois que entra Em análise, ele pede a correção pelo e-mail de contato (D23) e o administrador decide se aplica. |
 | D27 | A ficha de campo do PNCD (Registro Diário do Serviço Antivetorial) não é digitalizada. O Aedes Data Lab registra só a visita feita para atender a denúncia, com campos de toque inspirados na ficha e os mesmos códigos dela. |
 | D28 | A conclusão acontece pelo registro de visita. Visita com acesso leva a Atendida; visita sem acesso (imóvel fechado, morador recusou ou local não encontrado) mantém Em análise e conta uma tentativa. "Programar visita" sai da V1. |
 | D29 | A partir da terceira tentativa sem acesso, o agente pode encerrar a ocorrência na etapa Encerrada, por ação explícita. Encerrada é final e não se confunde com Atendida. |
 | D30 | Sobre tratamento, a V1 registra apenas se houve larvicida aplicado. Tipo de produto, quantidade em gramas e depósitos tratados ficam fora. |
 | D31 | A V1 opera com uma única conta de agente, individual. Todo evento continua gravando o autor, para que novas contas possam ser liberadas sem mudar o modelo. O supervisor não usa o sistema. |
-| D32 | O agente gera um relatório do período em PDF ou Word para enviar ao supervisor. O relatório não traz nome, CPF, e-mail ou telefone do morador. |
+| D32 | O agente gera um relatório do período em PDF ou Word para enviar ao supervisor. O relatório não traz nome, e-mail ou telefone do morador. |
 | D33 | As localidades da V1 são os 15 bairros informados pela coordenação: Altiplano, Boa Vista, Gildo Andrade, Jardim Bela Vista, Loteamento Figueiredo, Luís Gonzaga, Maracujá, Novo Itambé, Novo Itambé II, Parque das Palmeiras, Pedra Bela, Planalto, Salgadeira, Santa Maria e Vila Cohab. Não há bairro "Centro". |
 | D34 | O detalhe da ocorrência avisa quando há outras denúncias num raio de 150 metros do ponto exato, distância em linha reta que corresponde ao alcance médio de voo do mosquito (100 a 150 m). O aviso não funde nem descarta ocorrências. |
 | D35 | A jornada de denúncia começa na tela Início: o cidadão escolhe denunciar, informa localização, descreve o foco e anexa fotos, preenche seus dados, confirma o contato escolhido, revisa o que será público e privado, envia e recebe o resultado. Estados de erro e publicação pendente pertencem à mesma jornada. |
@@ -124,6 +124,9 @@ O andamento da implementação é registrado em [MEMORY.md](./MEMORY.md), que é
 | D42 | O cidadão recupera o acesso para corrigir a própria denúncia informando o protocolo e confirmando um código enviado ao contato que confirmou no envio. A resposta é a mesma para protocolo inexistente ou sem vínculo. Trocar o contato confirmado só o administrador faz, a pedido pelo e-mail de contato (D23). |
 | D43 | O mapa público mostra cada denúncia como a célula de uma grade fixa de cerca de 200 m, nunca como ponto. Denúncias na mesma célula mostram a mesma área. O ponto exato só é lido pelos agentes. |
 | D44 | Ocultar funciona como lixeira: a publicação sai do mapa e das mídias públicas, e o agente pode republicar em até 30 dias. Passado o prazo sem republicação, a denúncia é removida definitivamente do banco de dados e das fotos, com dados privados, visitas e histórico. É a exceção a D24. Denúncias arquivadas (D41) também entram na lixeira. As demais denúncias, com suas visitas, ficam no banco por prazo indefinido, para que ocorrências antigas continuem consultáveis; só as ocultas, que são as inválidas, são removidas. |
+| D45 | A V1 garante o código de confirmação por e-mail. SMS e WhatsApp só ficam ativos se o custo e o prazo de contratação forem aceitáveis (DEP-03); enquanto não estiverem, a tela de canal os mostra como "em breve" e o código vai só por e-mail. O telefone continua obrigatório em qualquer caso, mas só é confirmado quando o seu canal estiver ativo. |
+| D46 | O site é hospedado na Vercel. Os dados e as funções de servidor ficam no Supabase (D38). |
+| D47 | O mapa público mostra uma prévia curta ao tocar no ponto ou no cartão: categoria, bairro, data, etapa, a primeira foto e a descrição pública. A V1 não tem página de detalhe completo da denúncia pública. |
 
 ## 6. Objetivos e escopo da V1
 
@@ -169,7 +172,7 @@ A confirmação por código faz parte da V1 mesmo com notificações fora do esc
 |---|---|---|---|---|
 | Ver o mapa público | Sim | Sim | Sim | Sim |
 | Enviar denúncia | Sim, após confirmar o canal escolhido | Sim, uma nova denúncia | Pelo fluxo público | Pelo fluxo público |
-| Ler campos privados | Não | Só os que enviou na própria denúncia | Todas as ocorrências de Itambé, inclusive CPF completo | Sim, para corrigir |
+| Ler campos privados | Não | Só os que enviou na própria denúncia | Todas as ocorrências de Itambé, inclusive nome, e-mail e telefone | Sim, para corrigir |
 | Corrigir campos enviados | Não | Própria denúncia, enquanto Recebida | Não | Qualquer denúncia, em qualquer etapa |
 | Iniciar análise, registrar visita e observação, encerrar sem acesso | Não | Não | Sim | Somente se também tiver papel de agente |
 | Gerar relatório em PDF ou Word | Não | Não | Sim | Somente se também tiver papel de agente |
@@ -185,9 +188,8 @@ Os agentes autorizados enxergam o município inteiro, sem divisão por equipe ou
 | Campo | Obrigatório | Destino e regra |
 |---|---|---|
 | Nome | Sim | Privado. Iniciais e apelidos derivados também não são publicados |
-| CPF | Sim | Privado. Dado declarado, sem prova de titularidade |
-| E-mail | Sim | Privado. É confirmado se o cidadão escolher o código por e-mail; informar o endereço não valida CPF nem identidade civil |
-| Telefone | Sim, com DDD | Privado. É confirmado se o cidadão escolher código por SMS ou WhatsApp; informar o número não valida CPF nem identidade civil |
+| E-mail | Sim | Privado. É confirmado se o cidadão escolher o código por e-mail; informar o endereço não valida a identidade civil |
+| Telefone | Sim, com DDD | Privado. É confirmado se o cidadão escolher código por SMS ou WhatsApp, canais que só entram se forem viáveis (D45); informar o número não valida a identidade civil |
 | Canal de confirmação | Um por denúncia | Privado. E-mail, SMS ou WhatsApp; registra qual contato foi confirmado, sem tornar o outro confirmado |
 | Ponto do foco | Sim | Exato na área dos agentes; aproximado no mapa público |
 | Bairro ou localidade | Sim | Público, escolhido entre os 15 bairros de D33 |
@@ -201,7 +203,7 @@ Os agentes autorizados enxergam o município inteiro, sem divisão por equipe ou
 
 O ponto marcado no mapa é a referência espacial exata da denúncia. Endereço e referência ficam privados porque revelariam o local que a área aproximada protege. Categorias, formatos e tamanhos de arquivo e a precisão da área pública serão configurados na implementação.
 
-O CPF passa por conferência de formato e dígitos verificadores, para pegar erro de digitação. Não há consulta externa nem validação de titularidade. O mesmo CPF ou e-mail pode aparecer em denúncias diferentes, e o sistema não limita o número de denúncias por pessoa. Controle de abuso (RNF-08) atua sobre repetição e volume, sem bloquear relatos legítimos.
+O produto não coleta CPF (D07) e não verifica a identidade de quem denuncia. O mesmo e-mail ou telefone pode aparecer em denúncias diferentes, e o sistema não limita o número de denúncias por pessoa. Controle de abuso (RNF-08) atua sobre repetição e volume, sem bloquear relatos legítimos.
 
 Antes do envio, o formulário avisa que foto e descrição serão públicas e orienta a evitar rostos, placas e dados pessoais. Como a V1 publica sem revisão prévia, uma foto ou um texto ainda pode identificar alguém. A separação dos campos protege os dados estruturados; para conteúdo indevido encontrado depois, o caminho é a ocultação.
 
@@ -226,9 +228,9 @@ Na visita sem acesso, o agente informa só a data, o motivo e, se quiser, observ
 
 ### RF-AUT-01 · Confirmar o contato escolhido a cada denúncia
 
-Depois de informar localização, foco, fotos, nome, CPF, e-mail e telefone, a pessoa escolhe receber um código por e-mail ou pelo telefone. A opção e-mail avança diretamente à tela do código enviado à caixa de entrada. A opção telefone abre a escolha entre SMS e WhatsApp; só depois de escolher um deles a pessoa avança à tela do código. O código confirma o acesso ao contato escolhido e fica vinculado apenas àquela tentativa de denúncia. O outro contato permanece informado, mas não confirmado. A pessoa pode corrigir o contato correspondente e pedir novo código se ele falhar ou expirar, sem perder o formulário. Essa etapa não vira cadastro com senha.
+Depois de informar localização, foco, fotos, nome, e-mail e telefone, a pessoa escolhe receber um código por e-mail ou pelo telefone. A opção e-mail avança diretamente à tela do código enviado à caixa de entrada. A opção telefone abre a escolha entre SMS e WhatsApp; só depois de escolher um deles a pessoa avança à tela do código. O código confirma o acesso ao contato escolhido e fica vinculado apenas àquela tentativa de denúncia. O outro contato permanece informado, mas não confirmado. A pessoa pode corrigir o contato correspondente e pedir novo código se ele falhar ou expirar, sem perder o formulário. Essa etapa não vira cadastro com senha. O e-mail é o canal garantido da V1. SMS e WhatsApp só ficam ativos se o custo e o prazo de contratação forem aceitáveis (D45, DEP-03); enquanto não estiverem, a tela de canal mostra os dois como "em breve", o código vai só por e-mail, e o telefone continua obrigatório e informado, mas não confirmado.
 
-**Aceite:** a escolha do canal só aparece depois dos dados do cidadão; e-mail abre a entrada do código sem uma escolha intermediária; telefone oferece SMS e WhatsApp; código ausente, inválido ou expirado impede a revisão e o envio; confirmar um canal não marca o outro como confirmado; a confirmação de uma tentativa não vale para outra; falha de entrega ou resposta perdida preserva o preenchimento e permite recuperação sem duplicar a denúncia.
+**Aceite:** a escolha do canal só aparece depois dos dados do cidadão; e-mail abre a entrada do código sem uma escolha intermediária; telefone oferece SMS e WhatsApp quando ativos (D45) e, enquanto não estiverem, a tela os mostra como "em breve" e o código vai por e-mail; código ausente, inválido ou expirado impede a revisão e o envio; confirmar um canal não marca o outro como confirmado; a confirmação de uma tentativa não vale para outra; falha de entrega ou resposta perdida preserva o preenchimento e permite recuperação sem duplicar a denúncia.
 
 ### RF-AUT-02 · Proteger a sessão do agente
 
@@ -268,9 +270,9 @@ Recebimento e publicação são resultados distintos. A denúncia gravada fica d
 
 ### RF-MAP-01 · Consultar denúncias públicas
 
-Mapa sem login, com a área aproximada (célula de uma grade fixa de cerca de 200 m, D43), bairro ou localidade, categoria, data de recebimento, etapa atual, foto e descrição. Denúncias atendidas e encerradas continuam no mapa, a menos que estejam ocultas. O resultado da visita (foco, depósitos, ações e observações) não é público.
+Mapa sem login, com a área aproximada (célula de uma grade fixa de cerca de 200 m, D43), bairro ou localidade, categoria, data de recebimento, etapa atual, foto e descrição. Ao tocar no ponto ou no cartão da lista, abre-se uma prévia curta com categoria, bairro, data, etapa, a primeira foto e a descrição pública; não há página de detalhe completo (D47). Denúncias atendidas e encerradas continuam no mapa, a menos que estejam ocultas. O resultado da visita (foco, depósitos, ações e observações) não é público.
 
-**Aceite:** o visitante encontra a denúncia publicada e abre seu detalhe; nenhuma resposta de rede, URL de mídia ou metadado entrega campo privado, referência do local ou ponto exato. O limite sobre conteúdo incidental em texto e foto segue a seção 8.
+**Aceite:** o visitante encontra a denúncia publicada e abre a prévia curta, sem página de detalhe; nenhuma resposta de rede, URL de mídia ou metadado entrega campo privado, referência do local ou ponto exato. O limite sobre conteúdo incidental em texto e foto segue a seção 8.
 
 ### RF-MAP-02 · Filtrar e tratar falhas
 
@@ -343,7 +345,7 @@ Conteúdo do relatório:
 6. Pendentes: ocorrências ainda Recebidas ou Em análise, com dias em aberto e tentativas.
 7. Rodapé: espaço para as assinaturas do agente e do supervisor.
 
-O relatório não traz nome, CPF, e-mail ou telefone do morador (D32). Denúncias já removidas da lixeira (D44) não entram nos totais. O arquivo Word é editável, para o supervisor anotar ou ajustar.
+O relatório não traz nome, e-mail ou telefone do morador (D32). Denúncias já removidas da lixeira (D44) não entram nos totais. O arquivo Word é editável, para o supervisor anotar ou ajustar.
 
 **Aceite:** os totais do relatório batem com a lista filtrada pelo mesmo período e bairro; nenhum dado de identificação do morador aparece no arquivo; período sem dados gera relatório com aviso "Nenhuma visita no período", sem erro; o PDF abre em leitores comuns e o Word abre no Microsoft Word e no LibreOffice; a geração funciona no celular e no computador.
 
@@ -359,7 +361,7 @@ O administrador corrige os campos de qualquer denúncia, em qualquer etapa. O ci
 
 Podem ser corrigidos o ponto do foco, bairro, categoria, descrição e os dados de identificação e contato. Um ponto corrigido passa de novo pela validação de território. A correção é diferente de uma observação de agente e nunca reabre uma ocorrência concluída.
 
-O cidadão precisa comprovar o vínculo com aquela denúncia antes de obter uma autorização temporária de edição, restrita ao registro e protegida contra reutilização. O envio registra qual contato foi confirmado. Protocolo, CPF, e-mail ou telefone digitados, isoladamente, não liberam acesso. Para recuperar o acesso, o cidadão informa o protocolo e confirma um código enviado ao contato que confirmou no envio (D42). A resposta é a mesma quando o protocolo não existe ou não tem vínculo, para não revelar quais protocolos existem. Trocar o contato confirmado é feito só pelo administrador, a pedido pelo e-mail de contato; um contato novo não serve para autorizações antes de ser confirmado.
+O cidadão precisa comprovar o vínculo com aquela denúncia antes de obter uma autorização temporária de edição, restrita ao registro e protegida contra reutilização. O envio registra qual contato foi confirmado. Protocolo, e-mail ou telefone digitados, isoladamente, não liberam acesso. Para recuperar o acesso, o cidadão informa o protocolo e confirma um código enviado ao contato que confirmou no envio (D42). A resposta é a mesma quando o protocolo não existe ou não tem vínculo, para não revelar quais protocolos existem. Trocar o contato confirmado é feito só pelo administrador, a pedido pelo e-mail de contato; um contato novo não serve para autorizações antes de ser confirmado.
 
 Toda correção guarda o valor original, o novo valor, o motivo, o autor e o instante em histórico privado. Se a denúncia estiver publicada, a versão pública é atualizada sem expor dados privados. Se estiver oculta, continua oculta até uma republicação explícita.
 
@@ -409,9 +411,9 @@ Quando o agente vai ao local e não o encontra, registra uma visita com o motivo
 
 ## 11. Jornadas e mensagens
 
-**Morador:** na tela Início, toca em denunciar → marca o local → descreve o foco, escolhe categoria e anexa de uma a três fotos → informa nome, CPF, e-mail e telefone em "Seus dados para o registro" → escolhe receber o código por e-mail ou telefone; no telefone, escolhe SMS ou WhatsApp → digita e valida o código → revisa o que será público e privado → envia → recebe o protocolo e o estado da publicação. E-mail leva diretamente à tela do código, com orientação para conferir a caixa de entrada. GPS negado, ponto fora do município, foto ausente ou com falha, dados inválidos, código inválido, falha antes de gravar e publicação pendente têm estados próprios, sem cortar a jornada.
+**Morador:** na tela Início, toca em denunciar → marca o local → descreve o foco, escolhe categoria e anexa de uma a três fotos → informa nome, e-mail e telefone em "Seus dados para o registro" → escolhe receber o código por e-mail ou, quando ativos (D45), por telefone, em SMS ou WhatsApp → digita e valida o código → revisa o que será público e privado → envia → recebe o protocolo e o estado da publicação. E-mail leva diretamente à tela do código, com orientação para conferir a caixa de entrada. GPS negado, ponto fora do município, foto ausente ou com falha, dados inválidos, código inválido, falha antes de gravar e publicação pendente têm estados próprios, sem cortar a jornada.
 
-**Visitante:** abre o mapa → aplica filtros → consulta descrição, fotos e etapa de uma denúncia publicada. Não precisa de conta e não vê identidade nem contato.
+**Visitante:** abre o mapa → aplica filtros → toca no ponto ou no cartão e lê a prévia de uma denúncia publicada (categoria, bairro, data, etapa, foto e descrição). Não precisa de conta e não vê identidade nem contato.
 
 **Agente:** entra com a conta autorizada → vê o resumo e as Ocorrências mais antigas primeiro → abre o detalhe, confere ocorrências próximas e liga para o morador se precisar → inicia a análise (ou arquiva a denúncia, se for falsa ou improcedente) → toca em "Como chegar" e vai ao local → registra a visita. Com acesso, a ocorrência fica Atendida; sem acesso, continua Em análise e, a partir da terceira tentativa, pode ser encerrada. Em qualquer etapa pode ocultar conteúdo inadequado e, depois de revisar, republicar.
 
@@ -431,16 +433,16 @@ O sistema usa três mensagens distintas no envio: "Não foi possível enviar", "
 | Descrição e fotos tratadas | Sim, sem revisão humana prévia | Sim |
 | Área aproximada | Sim | Sim, quando útil |
 | Ponto exato e referência do local | Não | Sim |
-| Nome, CPF, e-mail e telefone | Não, nem mascarados | Sim |
+| Nome, e-mail e telefone | Não, nem mascarados | Sim |
 | Histórico, autor das ações e observações | Não | Sim |
 | Visitas: acesso, tipo do local, foco, depósitos e ações | Não | Sim |
 | Motivo da ocultação | Não | Sim |
 
-O relatório para o supervisor traz bairro, endereço e o resultado das visitas, mas nunca nome, CPF, e-mail ou telefone do morador. Depois de baixado, o arquivo fica sob responsabilidade de quem o recebe, como qualquer documento interno da equipe de saúde.
+O relatório para o supervisor traz bairro, endereço e o resultado das visitas, mas nunca nome, e-mail ou telefone do morador. Depois de baixado, o arquivo fica sob responsabilidade de quem o recebe, como qualquer documento interno da equipe de saúde.
 
 O cidadão com vínculo comprovado acessa os campos que enviou na própria denúncia para corrigi-los, dentro do prazo de D26. Esse acesso não torna os dados públicos e não libera histórico, observações ou dados de outras pessoas.
 
-A separação entre público e privado acontece nos dados que o serviço devolve; esconder campos só na tela não basta. Nomes de tabelas e contratos estão em [ARCHITECTURE.md](./ARCHITECTURE.md), e as regras de proteção em [SECURITY.md](./SECURITY.md). Confirmar e-mail ou telefone não autentica o CPF nem a identidade civil, e a V1 não tem integração de verificação de identidade.
+A separação entre público e privado acontece nos dados que o serviço devolve; esconder campos só na tela não basta. Nomes de tabelas e contratos estão em [ARCHITECTURE.md](./ARCHITECTURE.md), e as regras de proteção em [SECURITY.md](./SECURITY.md). Confirmar e-mail ou telefone não autentica a identidade civil, e a V1 não tem integração de verificação de identidade.
 
 O produto não terá perfil público de denunciante, rastreamento de localização atual nem credenciais administrativas guardadas no navegador. A preferência por guardar as informações por prazo indefinido está registrada em D24. Antes da coleta de dados reais, DEP-06 precisa definir retenção por tipo de dado, correção, retirada e exclusão aplicáveis. A única expiração automática é a remoção da denúncia oculta depois de 30 dias na lixeira (D44), e o produto não promete armazenamento eterno gratuito. As cópias de segurança do provedor entram na política de DEP-06.
 
@@ -457,9 +459,9 @@ O produto não terá perfil público de denunciante, rastreamento de localizaç�
 | RNF-07 | Uso limitado de recursos | Fotos e consultas têm limites configurados, a lista dos agentes é paginada e as assinaturas são encerradas ao sair |
 | RNF-08 | Proteção contra abuso | Envio e solicitação/reenvio de códigos por e-mail, SMS ou WhatsApp têm limites no serviço, além do bloqueio do botão |
 | RNF-09 | Histórico confiável | Autor e instante vêm da sessão e do serviço; ações simultâneas não apagam registros |
-| RNF-10 | Dados pessoais em logs | Logs e métricas não registram CPF, contato, texto livre ou foto sem necessidade operacional definida |
+| RNF-10 | Dados pessoais em logs | Logs e métricas não registram contato, texto livre ou foto sem necessidade operacional definida |
 | RNF-11 | Registro de visita em campo | O formulário cabe numa tela de 320 px com rolagem vertical, usa opções de toque de pelo menos 44 px e, se o envio falhar, guarda o preenchimento só no aparelho até nova tentativa ou descarte |
-| RNF-12 | Relatório sem dados do morador | Arquivo gerado no navegador, sem servidor de terceiros; testes conferem que PDF e Word não contêm nome, CPF, e-mail ou telefone |
+| RNF-12 | Relatório sem dados do morador | Arquivo gerado no navegador, sem servidor de terceiros; testes conferem que PDF e Word não contêm nome, e-mail ou telefone |
 
 Metas numéricas de latência, volume e disponibilidade serão definidas junto com as cotas do provedor (DEP-07). A forma e a precisão do mapa público precisam ser testadas também em áreas pouco povoadas, onde aproximar o ponto protege menos.
 
@@ -497,7 +499,7 @@ As primeiras prévias do dashboard usavam três etapas e a igualdade "Recebidas 
 
 | Cenário | Critério verificável | Requisitos |
 |---|---|---|
-| AC-01 · Envio válido | A partir de Início, preenche localização, foco, fotos, nome, CPF, e-mail e telefone; escolhe e confirma um código por e-mail, SMS ou WhatsApp após os dados; revisa, envia, recebe protocolo e encontra o registro gravado. Cada um dos três canais é exercitado | RF-AUT-01, RF-DEN-01 a RF-DEN-04 |
+| AC-01 · Envio válido | A partir de Início, preenche localização, foco, fotos, nome, e-mail e telefone; escolhe e confirma um código pelo canal disponível (e-mail e, se ativos, SMS ou WhatsApp) após os dados; revisa, envia, recebe protocolo e encontra o registro gravado. Cada canal ativo é exercitado | RF-AUT-01, RF-DEN-01 a RF-DEN-04 |
 | AC-02 · Entrada inválida | Contato obrigatório ausente ou malformado, código ausente/inválido/expirado, campo ausente, foto inválida e ponto fora do território não finalizam o envio; falha de entrega e reenvio preservam o formulário e respeitam os limites do serviço | RF-AUT-01, RF-DEN-01 a RF-DEN-03, RNF-08 |
 | AC-03 · GPS negado | A pessoa marca o ponto manualmente e segue sem perder dados | RF-DEN-02 |
 | AC-04 · Rede e reenvio | Falha antes ou depois da gravação e envio repetido resultam em no máximo um registro por tentativa; limites de repetição aplicados no serviço | RF-DEN-03 a RF-DEN-05, RNF-04, RNF-08 |
@@ -534,7 +536,6 @@ As primeiras atividades de HTML já combinadas são, nesta ordem, a página da d
 | Risco | Efeito | Tratamento na V1 |
 |---|---|---|
 | Publicação automática | Foto ou descrição pode identificar alguém por acidente | Aviso no formulário, ocultação e conferência diária; a revisão prévia foi adiada de propósito |
-| CPF obrigatório | Aumenta o volume de dados pessoais guardados sem comprovar identidade | Mantido por decisão de produto (D07); finalidade e proteção definidas em DEP-06 |
 | Dois contatos obrigatórios | Amplia a coleta de dados pessoais; SMS e WhatsApp podem ter custo, falha de entrega e abuso | Uso e retenção em DEP-06; provedores, limites e custo em DEP-03 e DEP-07 |
 | Adesão dos agentes | Contas ativas não comprovam disponibilidade nem vínculo oficial | Sem promessa de prazo; vínculo formalizado em DEP-04 |
 | Representação do território | Imagem, texto e contexto podem revelar o local apesar da aproximação | Grade fixa de 200 m (D43), testada em áreas pouco povoadas e perto de divisas (AC-07) |
@@ -544,18 +545,18 @@ As primeiras atividades de HTML já combinadas são, nesta ordem, a página da d
 | Ausência de agentes | Fila cresce e a retirada de conteúdo demora | Recebimento mantido (D23); responsável pela conferência e pelo e-mail em DEP-05 |
 | Retenção e custo | Guardar fotos por tempo indefinido pressiona armazenamento e orçamento | Estimativa de volume e teto de custo em DEP-07 |
 
-Esses riscos fazem parte do produto escolhido. Mudanças como moderação prévia, retirada do CPF ou restrição a convidados exigem nova decisão registrada neste PRD.
+Esses riscos fazem parte do produto escolhido. Mudanças como moderação prévia ou restrição a convidados exigem nova decisão registrada neste PRD.
 
 ## 18. Dependências de implementação e lançamento
 
 | ID | O que precisa ser resolvido | Prazo | Responsável |
 |---|---|---|---|
 | DEP-01 | Catálogo de categorias e limite territorial de Itambé/PE, com fonte e versão. As localidades já estão definidas em D33; faltam o mapa real e o contorno municipal e de cada bairro. A imagem antiga de Itambé/BA é só referência visual (D37) | Antes da validação de território | Produto, agentes e desenvolvimento |
-| DEP-03 | Provedores de código por e-mail, SMS e WhatsApp; custo, consentimento aplicável, entrega, expiração, reenvio, limites contra abuso e tratamento de arquivos. Nenhuma prévia comprova que mensagens reais foram entregues | Antes da integração real do envio | Desenvolvimento, produto e operação |
+| DEP-03 | Provedor de código por e-mail e viabilidade de SMS e WhatsApp (custo por mensagem, prazo e burocracia de contratação; se forem inviáveis, ficam como "em breve", D45); consentimento aplicável, entrega, expiração, reenvio, limites contra abuso e tratamento de arquivos. Nenhuma prévia comprova que mensagens reais foram entregues | Antes da integração real do envio | Desenvolvimento, produto e operação |
 | DEP-04 | Nome da instituição parceira, formato do vínculo e confirmação do uso pelos agentes | Antes do lançamento | Administrador e instituição parceira |
 | DEP-05 | Responsável e substituto pela conferência diária; criação e acompanhamento do e-mail de contato | Antes de publicar conteúdo real | Administrador e operação |
-| DEP-06 | Adequação à LGPD (Lei nº 13.709/2018): finalidade do CPF, base legal, controlador e encarregado, aviso de privacidade, atendimento aos direitos do titular e política de retenção por tipo de dado, incluindo cópias de segurança do provedor e a lixeira de 30 dias (D44) | Antes de coletar dados reais | Administrador, instituição parceira e operação |
-| DEP-07 | Provedor de mapa, plano do Supabase (incluindo se há cópias de segurança e por quantos dias elas guardam dados removidos), estimativa de volume e custo, teto financeiro e comportamento ao atingir cotas | Antes do ambiente público | Administrador, instituição parceira e desenvolvimento |
+| DEP-06 | Adequação à LGPD (Lei nº 13.709/2018): base legal, controlador e encarregado, aviso de privacidade, atendimento aos direitos do titular e política de retenção por tipo de dado, incluindo cópias de segurança do provedor e a lixeira de 30 dias (D44) | Antes de coletar dados reais | Administrador, instituição parceira e operação |
+| DEP-07 | Provedor de mapa, plano do Supabase (incluindo se há cópias de segurança e por quantos dias elas guardam dados removidos), plano da Vercel (confirmar se o gratuito vale para um serviço mantido por instituição), estimativa de volume e custo, teto financeiro e comportamento ao atingir cotas | Antes do ambiente público | Administrador, instituição parceira e desenvolvimento |
 | DEP-09 | Período e critérios de avaliação do piloto | Antes da avaliação de resultados | Produto e agentes participantes |
 
 As pendências abertas são todas de preparação técnica ou operacional. Esta é a lista única de pendências do projeto: os outros documentos citam o ID em vez de repetir o texto. Nenhuma delas impede o trabalho com dados fictícios.
@@ -570,7 +571,7 @@ As pendências abertas são todas de preparação técnica ou operacional. Esta 
 
 ## 20. Referências e precedência
 
-1. Decisões do responsável pelo produto: publicação automática, dados privados, CPF obrigatório, dashboard posterior e prazo de correção pelo cidadão (D01 a D26).
+1. Decisões do responsável pelo produto: publicação automática, dados privados, dashboard posterior e prazo de correção pelo cidadão (D01 a D26).
 2. Notas internas de contexto e o roteiro de aprendizagem do projeto, mantidos fora do repositório.
 3. [Figma do Aedes](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y), com as telas finais, e [Jira ADL](https://aedesdatalab.atlassian.net/browse/ADL-65), para o planejamento das tarefas.
 4. Levantamento com a coordenação de endemias de Itambé: ficha em papel Registro Diário do Serviço Antivetorial (PNCD), lista de bairros, cobertura por ciclo e período de retorno. Origem de D27 a D34.
@@ -592,3 +593,5 @@ Em conflito com telas antigas ou recomendações anteriores, valem as decisões 
 | 2.2 | 12/11/2026 | MVP do agente a partir do levantamento com a coordenação: ficha do PNCD não digitalizada (D27); registro de visita com campos de toque (seção 8.1, RF-AGE-03); etapa Encerrada após três tentativas sem acesso (RF-AGE-07); relatório em PDF e Word para o supervisor (RF-AGE-08); uma conta de agente na V1; 15 bairros; aviso de ocorrências próximas em 150 m; lista com resumo, dias em aberto e mapa interno; RNF-11, RNF-12, AC-15 e AC-16 |
 | 2.3 | 14/11/2026 | Fluxo cidadão completo da tela Início ao protocolo; e-mail e telefone obrigatórios; código depois dos dados, com escolha de e-mail ou telefone e, no telefone, SMS ou WhatsApp; revisão, estados de erro e telas completas; mapa antigo mantido só como referência visual com ressalva de Itambé/BA; correção do cidadão vinculada a mecanismo seguro ainda a definir para os três canais; decisões anteriores do dashboard pós-V1 registradas com conflito da contagem antiga explicitado; a seção 18 reúne as pendências que estavam espalhadas em TASKS e MEMORY; D38 registra o Supabase como backend; documentos derivados alinhados a esta versão |
 | 2.4 | 14/11/2026 | Decisões de produto fechadas: D21 (quem denuncia e risco aceito), D39 (endereço digitado obrigatório), D40 (filtros do mapa: localidade, período e etapa) e D41 (arquivar denúncia improcedente, RF-AGE-09); as pendências sobre dados de terceiros, endereço, filtros e arquivamento saem da seção 18; D34 confirma o raio de 150 m como alcance de voo do mosquito; D42 (recuperar o acesso por protocolo e código), D43 (grade fixa de 200 m no mapa público) e D44 (ocultar como lixeira de 30 dias); as pendências da aproximação do ponto e da recuperação de acesso saem da seção 18 |
+| 2.5 | 15/11/2026 | D07 retira o CPF do produto (nome, e-mail e telefone seguem obrigatórios); D25 aceita pagar um custo baixo; D45 mantém só o e-mail como canal garantido e condiciona SMS e WhatsApp a custo e prazo; D46 define a Vercel como hospedagem |
+| 2.6 | 15/11/2026 | D47: o mapa público usa prévia curta e não tem detalhe completo (RF-MAP-01) |

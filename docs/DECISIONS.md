@@ -1,6 +1,6 @@
 # Aedes Data Lab: Decisões técnicas
 
-Registro das decisões de arquitetura (ADR) e do motivo de cada uma. As decisões de produto (D01 a D37) ficam no [PRD](./PRD.md), seção 5, e as questões ainda em aberto, na seção 18 do PRD.
+Registro das decisões de arquitetura (ADR) e do motivo de cada uma. As decisões de produto (D01 a D44) ficam no [PRD](./PRD.md), seção 5, e as questões ainda em aberto, na seção 18 do PRD.
 
 Uma ADR não é reescrita para mudar de ideia. A nova escolha entra como outra ADR com a linha **Substitui**, e a antiga recebe **Substituída por** e fica no arquivo como histórico. Ninguém, pessoa ou IA, troca uma escolha daqui sem passar por esse processo.
 
@@ -16,12 +16,11 @@ Uma ADR não é reescrita para mudar de ideia. A nova escolha entra como outra A
 - **Motivo:** evitar que cada tela tenha botões, cores e espaçamentos diferentes, e manter os tokens do DESIGN.md num só lugar.
 - **Consequência:** estilos de uma página ficam numa seção própria, presos à classe da página. Mudanças em estilos compartilhados são combinadas antes.
 
-## ADR-003 · Firebase como backend
+## ADR-003 · Supabase como backend
 
-- **Substituída por:** ADR-012.
-- **Decisão:** usar Firebase para banco, arquivos, autenticação e funções de servidor.
-- **Motivo:** oferecia banco, armazenamento, login e funções sem servidor próprio, com ambiente local de testes e cotas gratuitas.
-- **Por que saiu:** o modelo de dados do Aedes é relacional e precisa de regras de acesso por linha versionadas no Git, o que o Postgres do Supabase resolve melhor (ADR-012).
+- **Decisão:** usar o Supabase como backend (D38): banco de dados Postgres, arquivos (Storage), login dos agentes (Auth) e funções de servidor (Edge Functions).
+- **Motivo:** o modelo de dados do Aedes é relacional (denúncia, dados privados, versão pública, visitas e histórico de eventos), e o Postgres oferece transações no banco, chaves estrangeiras e regras de acesso por linha escritas em SQL e versionadas no Git. O Supabase tem ambiente local completo pela Supabase CLI e plano gratuito compatível com a fase de desenvolvimento (D25).
+- **Consequência:** a pasta `supabase/` guarda migrações, políticas e funções. As regras de acesso viram políticas de RLS, testadas com acesso negado para cada perfil. O plano gratuito limita o número de projetos e pausa projetos sem uso; o plano da produção e o alerta de orçamento entram em DEP-07.
 
 ## ADR-004 · Dados públicos e privados em tabelas separadas
 
@@ -39,7 +38,7 @@ Uma ADR não é reescrita para mudar de ideia. A nova escolha entra como outra A
 
 - **Decisão:** o cidadão não cria conta nem senha. A cada denúncia, depois de preencher os próprios dados, ele confirma por código o contato que escolher: e-mail, ou telefone por SMS ou WhatsApp. Só agentes e administrador têm login.
 - **Motivo:** decisões de produto D06 e D08; reduz o atrito para enviar e o volume de dados pessoais guardados.
-- **Consequência:** a confirmação fica presa àquela tentativa de envio e não vale para outra. A correção pelo cidadão usa uma autorização temporária ligada ao contato confirmado na denúncia (D26); o mecanismo é fechado em DEP-08, e os provedores de envio do código em DEP-03.
+- **Consequência:** a confirmação fica presa àquela tentativa de envio e não vale para outra. A correção pelo cidadão usa uma autorização temporária ligada ao contato confirmado na denúncia (D26); o mecanismo está em D42, e os provedores de envio do código em DEP-03.
 
 ## ADR-007 · Envio idempotente por tentativa
 
@@ -55,7 +54,7 @@ Uma ADR não é reescrita para mudar de ideia. A nova escolha entra como outra A
 
 ## ADR-009 · Projetos de backend separados por ambiente
 
-- **Decisão:** criar projetos Supabase exclusivos do Aedes (ADR-012), um de teste e um de produção.
+- **Decisão:** criar projetos Supabase exclusivos do Aedes (ADR-003), um de teste e um de produção.
 - **Motivo:** dados de teste e dados reais não podem se misturar; um projeto por ambiente evita vazamento e confusão de regras e permissões.
 
 ## ADR-010 · O PRD prevalece
@@ -69,18 +68,23 @@ Uma ADR não é reescrita para mudar de ideia. A nova escolha entra como outra A
 - **Motivo:** é a fonte de quase todas as telas do Figma; algumas ainda usam Segoe UI, que não existe em celulares Android e iPhone.
 - **Consequência:** as telas com Segoe UI são ajustadas no Figma (TASK-011).
 
-## ADR-012 · Supabase como backend
-
-- **Substitui:** ADR-003.
-- **Decisão:** usar Supabase para banco (Postgres), arquivos (Storage), login dos agentes (Auth) e funções de servidor (Edge Functions).
-- **Motivo:** o modelo de dados do Aedes é relacional (denúncia, dados privados, versão pública, visitas e histórico de eventos), e o Postgres oferece transações no banco, chaves estrangeiras e regras de acesso por linha escritas em SQL e versionadas no Git. O Supabase tem ambiente local completo pela Supabase CLI e plano gratuito compatível com a fase de desenvolvimento (D25).
-- **Consequência:** a pasta `supabase/` guarda migrações, políticas e funções. As regras de acesso viram políticas de RLS, testadas com acesso negado para cada perfil. O plano gratuito limita o número de projetos e pausa projetos sem uso; o plano da produção e o alerta de orçamento entram em DEP-07.
-
-## ADR-013 · Relatório do agente gerado no navegador
+## ADR-012 · Relatório do agente gerado no navegador
 
 - **Decisão:** gerar o relatório do agente (RF-AGE-08) no próprio navegador, com jsPDF e o complemento AutoTable para o PDF e a biblioteca `docx` para o Word, importadas como módulos ES e carregadas só na tela do relatório.
 - **Motivo:** mantém o custo zero (D25), não envia dados a serviços de terceiros e funciona com o mesmo JavaScript sem framework (ADR-001). A biblioteca `docx` gera um arquivo Word de verdade, que o supervisor consegue editar; imprimir a página como PDF não daria o formato Word e varia entre navegadores.
 - **Consequência:** os dados do relatório vêm de um contrato próprio (`dadosRelatorio`), que não devolve campos privados do morador. As versões das bibliotecas ficam fixas na importação. Relatórios muito longos podem demorar no celular; se isso acontecer, o período máximo será limitado.
+
+## ADR-013 · Área pública em grade fixa de 200 m
+
+- **Decisão:** mostrar no mapa público a célula de uma grade fixa de cerca de 200 m, calculada no servidor, e nunca o ponto exato (D43).
+- **Motivo:** o resultado é determinístico: o mesmo local sempre cai na mesma célula, então repetir a consulta ou comparar denúncias não aproxima do ponto. Um deslocamento sorteado pode ser deduzido em área pouco povoada, e mostrar só o bairro tiraria a utilidade do mapa.
+- **Consequência:** `public_reports` guarda a célula e não o ponto. O tamanho da célula é configuração e é testado em áreas pouco povoadas e perto de divisas (AC-07). A célula pode cruzar a divisa de um bairro; o bairro exibido continua sendo o escolhido pela pessoa.
+
+## ADR-014 · Ocultar como lixeira de 30 dias
+
+- **Decisão:** ocultar leva a denúncia a uma lixeira; depois de 30 dias sem republicação, uma rotina diária a remove definitivamente do banco de dados e do armazenamento (D44).
+- **Motivo:** tira o conteúdo inadequado do ar na hora, mas deixa o erro do agente reversível por um prazo, e evita guardar para sempre o que foi retirado, o que reduz dado pessoal retido (DEP-06) e custo de armazenamento (D25).
+- **Consequência:** é exceção a D24. A remoção apaga também as visitas e o histórico da denúncia, e os totais de relatórios gerados depois dela não a incluem. Cópias de segurança do provedor podem guardar os dados por mais tempo, e isso entra em DEP-06 e DEP-07. As denúncias arquivadas (D41) também entram na lixeira. A rotina nunca remove uma denúncia que não esteja oculta, então o histórico das válidas fica por prazo indefinido (D24). A rotina é testada com data simulada.
 
 ## Modelo para uma nova decisão
 

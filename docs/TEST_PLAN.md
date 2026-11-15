@@ -34,13 +34,15 @@ Antes de abrir o PR de qualquer tarefa:
 
 Repetir o cenário três vezes, uma por canal: e-mail, telefone com SMS e telefone com WhatsApp.
 
-**AC-02 · Entrada inválida** (RF-AUT-01, RF-DEN-01 a RF-DEN-03)
+**AC-02 · Entrada inválida** (RF-AUT-01, RF-DEN-01 a RF-DEN-03, RNF-08)
 - [ ] A escolha do canal do código só aparece depois dos dados do cidadão
 - [ ] E-mail escolhido abre direto a tela do código; telefone oferece SMS e WhatsApp antes
 - [ ] Sem código, com código errado ou expirado, a revisão e o envio não são liberados
 - [ ] Confirmar um canal não marca o outro contato como confirmado
 - [ ] Campo obrigatório vazio, inclusive e-mail ou telefone, mostra erro no próprio campo
+- [ ] Endereço digitado vazio impede avançar da localização e mostra erro no próprio campo
 - [ ] CPF, e-mail ou telefone malformado mostra erro no próprio campo
+- [ ] Falha na entrega do código ou pedido de novo código preserva o formulário preenchido
 - [ ] Arquivo que não é imagem, ou acima do limite, é recusado com explicação
 - [ ] Ponto fora de Itambé é recusado, mesmo trocando o bairro digitado
 
@@ -62,11 +64,14 @@ Repetir o cenário três vezes, uma por canal: e-mail, telefone com SMS e telefo
 - [ ] Visitante vê área aproximada, bairro, categoria, data, etapa, foto e descrição
 - [ ] Denúncias atendidas continuam no mapa
 - [ ] Filtros por localidade, período e etapa mostram o mesmo recorte nos marcadores e na lista
+- [ ] O mapa não oferece outros filtros (origem, tipo, distrito, rua ou área)
 - [ ] "Sem denúncias", "sem resultado para os filtros" e "erro ao carregar" aparecem como mensagens diferentes
 - [ ] A lista dos agentes carrega em páginas
 
 **AC-07 · Privacidade** (RF-MAP-01, RNF-05, RNF-10)
 - [ ] Na aba Rede do navegador, nenhuma resposta pública contém nome, CPF, e-mail, telefone, referência ou ponto exato
+- [ ] A resposta pública traz a célula da grade e nunca o ponto exato; duas denúncias na mesma célula mostram a mesma área
+- [ ] Em área pouco povoada e perto de uma divisa, a célula não permite deduzir o ponto
 - [ ] As fotos públicas não têm coordenadas nem dados da câmera
 - [ ] Logs e métricas não registram dados pessoais
 
@@ -101,23 +106,36 @@ Repetir o cenário três vezes, uma por canal: e-mail, telefone com SMS e telefo
 - [ ] Depois de ocultar, a denúncia e suas fotos saem do mapa e das URLs públicas
 - [ ] O agente continua vendo o registro e o motivo
 - [ ] Uma retentativa antiga de publicação não traz a denúncia de volta
+- [ ] A denúncia oculta mostra os dias que faltam para a remoção
+- [ ] Com a data simulada 30 dias depois, a rotina remove registro, dados privados, visitas, histórico e fotos dos dois buckets; antes disso, nada é removido
+- [ ] Denúncia republicada dentro do prazo não é removida
+- [ ] Denúncia que nunca foi oculta continua no banco, com as visitas, mesmo depois de muito tempo
+- [ ] Depois de restaurar uma cópia de teste, a rotina remove de novo as denúncias ocultas há mais de 30 dias
 
 **AC-13 · Republicação** (RF-AGE-06, RNF-06)
 - [ ] Republicar exige ação explícita, mantém a etapa e registra as duas decisões no histórico
+- [ ] Republicar uma denúncia já removida não é possível
 
 **AC-14 · Correção** (RF-COR-01, RNF-03, RNF-05, RNF-09)
 - [ ] O administrador corrige uma denúncia em qualquer etapa
 - [ ] O cidadão corrige a própria denúncia enquanto ela está Recebida
 - [ ] Depois do início da análise, a correção do cidadão é recusada com orientação para usar o e-mail de contato
 - [ ] O cidadão não acessa denúncias de outras pessoas
+- [ ] Informar o protocolo e confirmar o código enviado ao contato confirmado libera a edição
+- [ ] Protocolo inexistente e protocolo sem vínculo recebem a mesma resposta
+- [ ] O código vale uma vez, só para aquele registro, e os pedidos têm limite
+- [ ] Trocar o contato confirmado só é aceito do administrador
 - [ ] O valor original e o motivo ficam no histórico; protocolo, etapa e visibilidade não mudam
 
-**AC-15 · Sem acesso e encerramento** (RF-AGE-03, RF-AGE-07)
+**AC-15 · Sem acesso e encerramento** (RF-AGE-03, RF-AGE-07, RF-AGE-09)
 - [ ] Visita com "Imóvel fechado" mantém Em análise, registra "Visita sem acesso" no histórico e mostra "Sem acesso (1 tentativa)" na lista
 - [ ] O filtro "Sem acesso" mostra só ocorrências com tentativa
 - [ ] Com uma ou duas tentativas, "Encerrar sem acesso" não aparece, e a chamada direta ao serviço é recusada
 - [ ] Na terceira tentativa, o botão aparece; ao confirmar, a ocorrência fica Encerrada com o motivo e o número de tentativas
-- [ ] Encerrada não reabre, não aceita visita e aparece como Encerrada no mapa público
+- [ ] Encerrada sem acesso não reabre, não aceita visita e aparece como Encerrada no mapa público
+- [ ] "Arquivar" aparece em Recebida e Em análise e não aparece em Atendida nem Encerrada; a chamada direta ao serviço também é recusada nessas etapas
+- [ ] Arquivar sem motivo ou sem confirmação é recusado; confirmado, a ocorrência fica Encerrada com "Arquivada: motivo", autor e data
+- [ ] Arquivar oculta a publicação na mesma ação: a denúncia e as fotos saem do mapa e das URLs públicas e a contagem de 30 dias começa; clicar duas vezes grava um único evento
 
 **AC-16 · Relatório** (RF-AGE-08, RNF-12)
 - [ ] Gerar PDF e Word do mês atual, para todos os bairros e para um bairro

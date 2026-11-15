@@ -30,6 +30,7 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 - [ ] TASK-013a Exportar as telas da denúncia do Figma para `wireframes/` e atualizar o README da pasta
 - [ ] TASK-013b Trocar a imagem ilustrativa do mapa (Itambé/BA) pelo mapa de Itambé/PE nas telas de localização (D37; depende de DEP-01)
 - [ ] TASK-013c Marcar o endereço digitado como obrigatório na tela 02 Localização e desenhar o erro de campo vazio (D39)
+- [ ] TASK-013d Tirar o campo CPF das telas do Figma (04, 04a a 04c, revisão e textos de privacidade) e desenhar a escolha de canal com SMS e WhatsApp como "em breve" (D07, D45)
 - [ ] TASK-014 Desenhar a correção da denúncia pelo cidadão enquanto ela está Recebida e a recuperação do acesso por protocolo e código (RF-COR-01, D26, D42)
 - [ ] TASK-015 Redesenhar o detalhe da ocorrência: fotos ampliáveis, "Como chegar", endereço e referência, bloco do morador com telefone para ligar, estado de publicação (na Oculta, os dias para a remoção), ocorrências próximas em 150 m, histórico com visitas e botões por etapa (incluindo Arquivar); ocultar e republicar num menu (tela 46; RF-AGE-01 a RF-AGE-07)
 - [ ] TASK-015a Desenhar a tela Registrar visita, com os estados com acesso, sem acesso e erro de envio (PRD seção 8.1; RF-AGE-03)
@@ -57,15 +58,15 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 
 - [ ] TASK-030 Definir o formato de uma denúncia (público, privado, eventos e visitas) em `js/servicos/`
 - [ ] TASK-031 Serviço fictício que atende os contratos da ARCHITECTURE, seção 5, incluindo `enviarCodigo` e `confirmarCodigo` (código simulado), `registrarVisita`, `encerrarSemAcesso`, `arquivarOcorrencia`, `solicitarAcessoCorrecao`, `confirmarAcessoCorrecao`, `listarOcorrenciasProximas` e `dadosRelatorio`
-- [ ] TASK-032 Criar `js/dominio/` com etapas (incluindo Encerrada), validação de CPF, regra de território provisória, cálculo da célula de 200 m (D43), catálogo dos 15 bairros e códigos da visita (tipo do local, depósitos, ações)
+- [ ] TASK-032 Criar `js/dominio/` com etapas (incluindo Encerrada), regra de território provisória, cálculo da célula de 200 m (D43), catálogo dos 15 bairros e códigos da visita (tipo do local, depósitos, ações)
 - [ ] TASK-033 Dados fictícios com ocorrências em todas as etapas, visitas com e sem acesso, uma ocorrência com três tentativas duas denúncias a menos de 150 m, uma oculta há 25 dias e outra oculta há 31 dias (lixeira, D44)
 
 ## Fase 4 · Fatia vertical 1: da denúncia ao mapa (dados fictícios)
 
 - [ ] TASK-040 Etapa 1: bairro, endereço digitado obrigatório, marcar o ponto manualmente e usar GPS opcional (02 Localização, 02a GPS negado, 02b Ponto fora de Itambé; telas 35 a 37; RF-DEN-02)
 - [ ] TASK-041 Etapa 2: descrição, categoria e fotos com prévia, remoção e limite de três (03 Foco e evidências, 03a Foto obrigatória, 03b Falha ao adicionar foto; RF-DEN-03)
-- [ ] TASK-042 Etapa 3: nome, CPF, e-mail e telefone obrigatórios, com validação de formato (04 Dados para o registro, 04a a 04c; RF-DEN-01, D06)
-- [ ] TASK-042a Escolha do canal e código simulado: e-mail direto ao código, telefone com SMS ou WhatsApp, código inválido (05, 05a, 05b, 06, 06a e 10; RF-AUT-01)
+- [ ] TASK-042 Etapa 3: nome, e-mail e telefone obrigatórios, com validação de formato (04 Dados para o registro, 04a a 04c; RF-DEN-01, D06)
+- [ ] TASK-042a Escolha do canal e código simulado: e-mail direto ao código, telefone com SMS ou WhatsApp (ou "em breve" enquanto inativos, D45), código inválido (05, 05a, 05b, 06, 06a e 10; RF-AUT-01)
 - [ ] TASK-043 Etapa 4: revisão separando público e privado, envio com bloqueio de clique (07 Revisão, 07a Enviando; RF-DEN-01, RF-DEN-04)
 - [ ] TASK-044 Protocolo, publicação pendente e falha antes de salvar (08, 09 e 11; RF-DEN-04, RF-DEN-05)
 - [ ] TASK-045 Mapa lê as denúncias fictícias, mostra a célula de 200 m e abre o detalhe (telas 16 a 22; RF-MAP-01)
@@ -91,13 +92,15 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 ## Fase 6 · Supabase
 
 - [ ] TASK-060 Criar o projeto Supabase de teste, separado da produção, e configurar a Supabase CLI no ambiente local
+- [ ] TASK-060a Provar que uma Edge Function importa um módulo de `js/dominio/` (ADR-015)
+- [ ] TASK-060b Publicar a prévia do site na Vercel (D46, ADR-016)
 - [ ] TASK-061 Criar as tabelas (incluindo `report_visits` e `neighborhoods`), os buckets e as políticas de RLS em migrações, com testes de acesso negado (SECURITY.md)
 - [ ] TASK-062 Login individual dos agentes e papéis de agente e administrador (RF-AUT-02)
 - [ ] TASK-063 Trocar o serviço fictício pelo Supabase sem alterar as telas
 
 ## Fase 7 · Envio real
 
-- [ ] TASK-070 Envio e conferência do código por e-mail, SMS e WhatsApp, com expiração e limites (RF-AUT-01, RNF-08; depende de DEP-03)
+- [ ] TASK-070 Envio e conferência do código por e-mail e, se DEP-03 provar custo e prazo aceitáveis, por SMS e WhatsApp, com expiração e limites (RF-AUT-01, RNF-08, D45)
 - [ ] TASK-071 Upload das fotos, tratamento e remoção de metadados (RF-DEN-03)
 - [ ] TASK-072 Gravação idempotente e geração do protocolo (RF-DEN-04)
 - [ ] TASK-073 Geração da versão pública e recuperação de publicação pendente (RF-DEN-05)
@@ -119,7 +122,7 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 ## Fase 10 · Lançamento
 
 - [ ] TASK-100 Resolver as dependências de lançamento DEP-01 a DEP-09 (PRD, seção 18)
-- [ ] TASK-101 Criar o ambiente de produção com limites de custo e monitoramento
+- [ ] TASK-101 Criar o ambiente de produção (Supabase e Vercel) com limites de custo e monitoramento
 - [ ] TASK-102 Testar no endereço publicado antes de divulgar aos moradores
 
 ## Decisões pendentes

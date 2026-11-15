@@ -4,7 +4,7 @@ Este plano define o que significa "funcionando" para cada parte da V1. Os cenár
 
 ## 1. Como testar
 
-- Teste sempre com dados fictícios: nomes inventados e CPFs gerados para teste, nunca dados de pessoas reais.
+- Teste sempre com dados fictícios: nomes, e-mails e telefones inventados, nunca dados de pessoas reais.
 - Até a Fase 6 de [TASKS.md](../TASKS.md), os testes usam o serviço fictício; depois, o Supabase local (Supabase CLI) e o projeto de teste.
 - Cada execução registra a data, a versão testada (commit ou PR), o resultado e o que ficou de fora, no próprio PR.
 - Telas do Figma não substituem teste. O teste é feito no site.
@@ -27,7 +27,7 @@ Antes de abrir o PR de qualquer tarefa:
 **AC-01 · Envio válido** (RF-AUT-01, RF-DEN-01 a RF-DEN-04)
 1. Na tela Início, tocar em denunciar.
 2. Marcar um ponto dentro de Itambé; preencher categoria, descrição e uma foto.
-3. Em "Seus dados para o registro", preencher nome, CPF, e-mail e telefone de teste.
+3. Em "Seus dados para o registro", preencher nome, e-mail e telefone de teste.
 4. Escolher onde receber o código e digitar o código recebido.
 5. Revisar e enviar.
 6. Esperado: protocolo exibido; depois de recarregar, a denúncia continua gravada.
@@ -36,12 +36,12 @@ Repetir o cenário três vezes, uma por canal: e-mail, telefone com SMS e telefo
 
 **AC-02 · Entrada inválida** (RF-AUT-01, RF-DEN-01 a RF-DEN-03, RNF-08)
 - [ ] A escolha do canal do código só aparece depois dos dados do cidadão
-- [ ] E-mail escolhido abre direto a tela do código; telefone oferece SMS e WhatsApp antes
+- [ ] E-mail escolhido abre direto a tela do código; com SMS e WhatsApp ativos, o telefone oferece os dois antes; sem eles, a tela os mostra como "em breve"
 - [ ] Sem código, com código errado ou expirado, a revisão e o envio não são liberados
 - [ ] Confirmar um canal não marca o outro contato como confirmado
 - [ ] Campo obrigatório vazio, inclusive e-mail ou telefone, mostra erro no próprio campo
 - [ ] Endereço digitado vazio impede avançar da localização e mostra erro no próprio campo
-- [ ] CPF, e-mail ou telefone malformado mostra erro no próprio campo
+- [ ] E-mail ou telefone malformado mostra erro no próprio campo
 - [ ] Falha na entrega do código ou pedido de novo código preserva o formulário preenchido
 - [ ] Arquivo que não é imagem, ou acima do limite, é recusado com explicação
 - [ ] Ponto fora de Itambé é recusado, mesmo trocando o bairro digitado
@@ -62,6 +62,7 @@ Repetir o cenário três vezes, uma por canal: e-mail, telefone com SMS e telefo
 
 **AC-06 · Mapa e filtros** (RF-MAP-01, RF-MAP-02, RF-AGE-01, RNF-07)
 - [ ] Visitante vê área aproximada, bairro, categoria, data, etapa, foto e descrição
+- [ ] Tocar no ponto ou no cartão abre uma prévia curta (categoria, bairro, data, etapa, primeira foto e descrição) e nenhuma página de detalhe
 - [ ] Denúncias atendidas continuam no mapa
 - [ ] Filtros por localidade, período e etapa mostram o mesmo recorte nos marcadores e na lista
 - [ ] O mapa não oferece outros filtros (origem, tipo, distrito, rua ou área)
@@ -69,7 +70,7 @@ Repetir o cenário três vezes, uma por canal: e-mail, telefone com SMS e telefo
 - [ ] A lista dos agentes carrega em páginas
 
 **AC-07 · Privacidade** (RF-MAP-01, RNF-05, RNF-10)
-- [ ] Na aba Rede do navegador, nenhuma resposta pública contém nome, CPF, e-mail, telefone, referência ou ponto exato
+- [ ] Na aba Rede do navegador, nenhuma resposta pública contém nome, e-mail, telefone, referência ou ponto exato
 - [ ] A resposta pública traz a célula da grade e nunca o ponto exato; duas denúncias na mesma célula mostram a mesma área
 - [ ] Em área pouco povoada e perto de uma divisa, a célula não permite deduzir o ponto
 - [ ] As fotos públicas não têm coordenadas nem dados da câmera
@@ -140,7 +141,7 @@ Repetir o cenário três vezes, uma por canal: e-mail, telefone com SMS e telefo
 **AC-16 · Relatório** (RF-AGE-08, RNF-12)
 - [ ] Gerar PDF e Word do mês atual, para todos os bairros e para um bairro
 - [ ] Os totais do relatório batem com a lista filtrada pelo mesmo período e bairro
-- [ ] Buscar no texto do PDF e do Word pelo nome, CPF, e-mail e telefone de teste do morador: nenhum aparece
+- [ ] Buscar no texto do PDF e do Word pelo nome, e-mail e telefone de teste do morador: nenhum aparece
 - [ ] Período sem visitas gera o arquivo com o aviso "Nenhuma visita no período"
 - [ ] O PDF abre num leitor comum; o Word abre no Microsoft Word e no LibreOffice e pode ser editado
 - [ ] A geração funciona no celular (390px) e no computador

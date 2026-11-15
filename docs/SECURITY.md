@@ -1,6 +1,6 @@
 # Aedes Data Lab: Requisitos de segurança
 
-O Aedes Data Lab guarda nome, CPF, e-mail e telefone de moradores, além de fotos e da localização exata de cada denúncia. Este documento reúne as regras que protegem esses dados. Ele detalha o [PRD](./PRD.md) (seções 7, 8, 12 e 13) e vale desde a primeira tarefa, não só antes do lançamento.
+O Aedes Data Lab guarda nome, e-mail e telefone de moradores, além de fotos e da localização exata de cada denúncia. Este documento reúne as regras que protegem esses dados. Ele detalha o [PRD](./PRD.md) (seções 7, 8, 12 e 13) e vale desde a primeira tarefa, não só antes do lançamento.
 
 ## 1. Autenticação
 
@@ -24,15 +24,15 @@ O Aedes Data Lab guarda nome, CPF, e-mail e telefone de moradores, além de foto
 
 ## 3. Dados pessoais
 
-- Nome, CPF, e-mail, telefone, endereço digitado, referência e ponto exato nunca aparecem na versão pública, nem mascarados.
+- Nome, e-mail, telefone, endereço digitado, referência e ponto exato nunca aparecem na versão pública, nem mascarados.
 - A versão pública guarda só a célula da grade de 200 m, nunca o ponto exato (D43, ADR-013).
 - A separação acontece nas tabelas do banco (ADR-004). O navegador do visitante nunca recebe a linha privada.
-- CPF é conferido só no formato e nos dígitos. O sistema não consulta bases externas nem afirma que a identidade foi verificada.
+- O produto não coleta CPF (D07) e não afirma que a identidade de quem denuncia foi verificada.
 - Testes e demonstrações usam somente dados fictícios.
 - O resultado das visitas (acesso, foco, depósitos, ações e observações) é interno e nunca vai para a versão pública.
-- O relatório do agente não contém nome, CPF, e-mail ou telefone do morador. O contrato `dadosRelatorio` não lê `report_private`, e o arquivo é gerado no navegador, sem passar por serviço de terceiros (RNF-12, ADR-012).
+- O relatório do agente não contém nome, e-mail ou telefone do morador. O contrato `dadosRelatorio` não lê `report_private`, e o arquivo é gerado no navegador, sem passar por serviço de terceiros (RNF-12, ADR-012).
 - O formulário de visita guardado no aparelho após falha de envio contém só os campos da visita, nunca dados do morador, e é apagado quando o envio é confirmado ou descartado.
-- Adequação à LGPD (Lei nº 13.709/2018) concluída antes de coletar dados reais: finalidade do CPF, base legal, controlador e encarregado, aviso de privacidade, direitos do titular e retenção por tipo de dado (DEP-06).
+- Adequação à LGPD (Lei nº 13.709/2018) concluída antes de coletar dados reais: base legal, controlador e encarregado, aviso de privacidade, direitos do titular e retenção por tipo de dado (DEP-06).
 
 ## 4. Banco de dados e arquivos
 
@@ -78,7 +78,7 @@ Cada foto é conferida no servidor:
 
 ## 9. Registros
 
-- Logs e métricas não guardam CPF, contato, texto livre ou fotos (RNF-10).
+- Logs e métricas não guardam contato, texto livre ou fotos (RNF-10).
 - Autor e horário de cada ação vêm da sessão e do servidor, nunca do navegador.
 
 ## 10. Lista de verificação antes do lançamento

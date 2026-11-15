@@ -44,7 +44,7 @@ Estas regras valem para todas as pessoas da equipe e para qualquer ferramenta de
 ## 6. Segurança
 
 - Nunca coloque chaves, senhas ou dados reais no código ou no Git. Use `.env.example` como modelo.
-- Nunca use dados pessoais reais em testes. Use nomes e CPFs fictícios.
+- Nunca use dados pessoais reais em testes. Use nomes, e-mails e telefones fictícios.
 - Permissão se confere no servidor. Esconder um botão não protege nada.
 - Siga [SECURITY.md](./SECURITY.md) em tudo que tocar dados pessoais, fotos ou login.
 

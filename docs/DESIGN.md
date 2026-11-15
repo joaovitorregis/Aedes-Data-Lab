@@ -10,7 +10,7 @@ Este documento define como o site deve parecer e se comportar visualmente, para 
 
 ## 1. Estilo
 
-Visual calmo e institucional, em tons de bege e verde, pensado para leitura no celular ao ar livre. O Figma mostra o celular com barra de endereço simulada e navegação inferior dentro do quadro; esses elementos são moldura da apresentação, não fazem parte do site. Cartões claros sobre fundo creme, títulos fortes em verde escuro e poucos elementos por tela. A cor de alerta aparece só nos marcadores do mapa.
+Visual calmo e institucional, em tons de bege e verde, pensado para leitura no celular ao ar livre. O Figma mostra o celular com barra de endereço simulada e navegação inferior dentro do quadro; esses elementos são moldura da apresentação, não fazem parte do site. Cartões claros sobre fundo creme, títulos fortes em verde escuro e poucos elementos por tela. A cor de alerta aparece só nos marcadores do mapa; as ações destrutivas da área do agente (arquivar, ocultar, encerrar) ainda vão ganhar a sua (TASK-012b).
 
 ## 2. Cores
 
@@ -68,7 +68,7 @@ Em telas de até 390px de largura, o título de página pode descer para 28px pa
 | Secundário | `--cor-campo` | `--cor-primaria`, 16px Bold | conforme a tela no Figma | Ação alternativa: Voltar ao início, Agora não, Limpar filtro |
 | Texto | transparente | `--cor-primaria` ou `--cor-texto`, 12px Bold | nenhuma | Voltar |
 
-Botões principal e secundário têm raio `--raio-pequeno` e 44px de altura, como nas telas 12, 15, 35 e 36. Foco visível, estado desabilitado e o texto "Enviando…" durante um envio são requisitos de comportamento (RNF-02, RF-DEN-04); a aparência desses estados não está desenhada no Figma. O botão de ocultar publicação também não está desenhado (TASK-015).
+Botões principal e secundário têm raio `--raio-pequeno` e 44px de altura, como nas telas 12, 15, 35 e 36. Foco visível, estado desabilitado e o texto "Enviando…" durante um envio são requisitos de comportamento (RNF-02, RF-DEN-04); a aparência desses estados não está desenhada no Figma. O botão de ocultar publicação também não está desenhado (TASK-012b).
 
 ### Cartões
 
@@ -99,7 +99,7 @@ Usadas no registro de visita (PRD, seção 8.1) para responder sem digitar. Cada
 
 ### Janela de confirmação
 
-Usada antes de ações que não voltam atrás: registrar visita com acesso, encerrar sem acesso, ocultar e republicar. Mostra o resumo do que será gravado, o efeito na etapa e dois botões: o principal com a ação ("Confirmar e concluir") e o secundário "Voltar". Não desenhada no Figma (TASK-015b).
+Usada antes de ações que não voltam atrás: confirmar visita, encerrar sem acesso, arquivar, ocultar e republicar. Mostra o resumo do que será gravado, o efeito na etapa e dois botões: o principal com a ação ("Confirmar visita", "Encerrar", "Arquivar", "Ocultar", "Republicar") e o secundário "Voltar". Não desenhada no Figma (TASK-015b).
 
 ### Indicador de passos da denúncia
 

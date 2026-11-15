@@ -62,6 +62,7 @@ Repetir o cenário três vezes, uma por canal: e-mail, telefone com SMS e telefo
 
 **AC-06 · Mapa e filtros** (RF-MAP-01, RF-MAP-02, RF-AGE-01, RNF-07)
 - [ ] Visitante vê área aproximada, bairro, categoria, data, etapa, foto e descrição
+- [ ] Tocar no ponto ou no cartão abre uma prévia curta (categoria, bairro, data, etapa, primeira foto e descrição) e nenhuma página de detalhe
 - [ ] Denúncias atendidas continuam no mapa
 - [ ] Filtros por localidade, período e etapa mostram o mesmo recorte nos marcadores e na lista
 - [ ] O mapa não oferece outros filtros (origem, tipo, distrito, rua ou área)

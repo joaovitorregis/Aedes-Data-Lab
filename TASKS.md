@@ -49,7 +49,7 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 - [ ] TASK-021 Menu compartilhado da área pública (tela 02; `js/compartilhado/menu.js`)
 - [ ] TASK-022 Página Início (tela 01) · primeira versão em `site/index.html`; falta alinhar à tela, ver MEMORY.md
 - [ ] TASK-023 HTML da denúncia: Início → Localização → Identificação do foco → Seus dados → canal e código → Revisão → resultado, com os estados de erro (telas 01 a 11 da denúncia no Figma; D35)
-- [ ] TASK-024 HTML do mapa público: mapa, lista, detalhe e menu de filtros (telas 16 a 24, 27, 28)
+- [ ] TASK-024 HTML do mapa público: mapa, lista, prévia curta e menu de filtros (telas 16 a 24, 27, 28; D47)
 - [ ] TASK-025 HTML do Portal técnico (tela 45; `agentes/Login.html`)
 - [ ] TASK-026 HTML de Ocorrências e do detalhe da ocorrência (telas 46 e 47)
 - [ ] TASK-027 Páginas complementares: Guia Aedes, Repelentes, Quem somos e Entrada do jogo (telas 03 a 06)
@@ -69,7 +69,7 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 - [ ] TASK-042a Escolha do canal e código simulado: e-mail direto ao código, telefone com SMS ou WhatsApp (ou "em breve" enquanto inativos, D45), código inválido (05, 05a, 05b, 06, 06a e 10; RF-AUT-01)
 - [ ] TASK-043 Etapa 4: revisão separando público e privado, envio com bloqueio de clique (07 Revisão, 07a Enviando; RF-DEN-01, RF-DEN-04)
 - [ ] TASK-044 Protocolo, publicação pendente e falha antes de salvar (08, 09 e 11; RF-DEN-04, RF-DEN-05)
-- [ ] TASK-045 Mapa lê as denúncias fictícias, mostra a célula de 200 m e abre o detalhe (telas 16 a 22; RF-MAP-01)
+- [ ] TASK-045 Mapa lê as denúncias fictícias, mostra a célula de 200 m e abre a prévia curta (telas 16 a 22; RF-MAP-01, D47)
 - [ ] TASK-046 Filtros por localidade, período e etapa, com estados vazio, sem resultado e erro (telas 23, 24, 27, 28; RF-MAP-02; só esses três filtros, D40)
 
 ## Fase 5 · Fatia vertical 2: área do agente (dados fictícios)

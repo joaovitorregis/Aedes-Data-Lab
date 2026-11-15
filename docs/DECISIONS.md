@@ -1,6 +1,6 @@
 # Aedes Data Lab: Decisões técnicas
 
-Registro das decisões de arquitetura (ADR) e do motivo de cada uma. As decisões de produto (D01 a D44) ficam no [PRD](./PRD.md), seção 5, e as questões ainda em aberto, na seção 18 do PRD.
+Registro das decisões de arquitetura (ADR) e do motivo de cada uma. As decisões de produto (D01 a D46) ficam no [PRD](./PRD.md), seção 5, e as questões ainda em aberto, na seção 18 do PRD.
 
 Uma ADR não é reescrita para mudar de ideia. A nova escolha entra como outra ADR com a linha **Substitui**, e a antiga recebe **Substituída por** e fica no arquivo como histórico. Ninguém, pessoa ou IA, troca uma escolha daqui sem passar por esse processo.
 
@@ -20,12 +20,12 @@ Uma ADR não é reescrita para mudar de ideia. A nova escolha entra como outra A
 
 - **Decisão:** usar o Supabase como backend (D38): banco de dados Postgres, arquivos (Storage), login dos agentes (Auth) e funções de servidor (Edge Functions).
 - **Motivo:** o modelo de dados do Aedes é relacional (denúncia, dados privados, versão pública, visitas e histórico de eventos), e o Postgres oferece transações no banco, chaves estrangeiras e regras de acesso por linha escritas em SQL e versionadas no Git. O Supabase tem ambiente local completo pela Supabase CLI e plano gratuito compatível com a fase de desenvolvimento (D25).
-- **Consequência:** a pasta `supabase/` guarda migrações, políticas e funções. As regras de acesso viram políticas de RLS, testadas com acesso negado para cada perfil. O plano gratuito limita o número de projetos e pausa projetos sem uso; o plano da produção e o alerta de orçamento entram em DEP-07.
+- **Consequência:** a pasta `supabase/` guarda migrações, políticas e funções. As regras de acesso viram políticas de RLS, testadas com acesso negado para cada perfil. O plano gratuito limita o número de projetos e pausa projetos sem uso; pagar um plano pequeno é aceito (D25), e o plano da produção e o alerta de orçamento entram em DEP-07.
 
 ## ADR-004 · Dados públicos e privados em tabelas separadas
 
 - **Decisão:** guardar a versão pública da denúncia (`public_reports`) separada dos dados operacionais (`reports`) e pessoais (`report_private`).
-- **Motivo:** as políticas de RLS do Postgres valem por linha, não por coluna. Restringir colunas na mesma tabela é possível, mas fácil de errar numa consulta futura; separar as tabelas é a forma segura de garantir que o visitante nunca receba nome, CPF, e-mail, telefone ou ponto exato.
+- **Motivo:** as políticas de RLS do Postgres valem por linha, não por coluna. Restringir colunas na mesma tabela é possível, mas fácil de errar numa consulta futura; separar as tabelas é a forma segura de garantir que o visitante nunca receba nome, e-mail, telefone ou ponto exato.
 - **Consequência:** toda gravação atualiza a versão pública por uma função de servidor, e as duas precisam ficar coerentes. Entre as tabelas de denúncia, `public_reports` é a única com leitura pública.
 
 ## ADR-005 · Leaflet para os mapas
@@ -36,7 +36,7 @@ Uma ADR não é reescrita para mudar de ideia. A nova escolha entra como outra A
 
 ## ADR-006 · Sem conta para o cidadão
 
-- **Decisão:** o cidadão não cria conta nem senha. A cada denúncia, depois de preencher os próprios dados, ele confirma por código o contato que escolher: e-mail, ou telefone por SMS ou WhatsApp. Só agentes e administrador têm login.
+- **Decisão:** o cidadão não cria conta nem senha. A cada denúncia, depois de preencher os próprios dados, ele confirma por código o contato que escolher: e-mail ou, quando ativos (D45), telefone por SMS ou WhatsApp. Só agentes e administrador têm login.
 - **Motivo:** decisões de produto D06 e D08; reduz o atrito para enviar e o volume de dados pessoais guardados.
 - **Consequência:** a confirmação fica presa àquela tentativa de envio e não vale para outra. A correção pelo cidadão usa uma autorização temporária ligada ao contato confirmado na denúncia (D26); o mecanismo está em D42, e os provedores de envio do código em DEP-03.
 
@@ -85,6 +85,18 @@ Uma ADR não é reescrita para mudar de ideia. A nova escolha entra como outra A
 - **Decisão:** ocultar leva a denúncia a uma lixeira; depois de 30 dias sem republicação, uma rotina diária a remove definitivamente do banco de dados e do armazenamento (D44).
 - **Motivo:** tira o conteúdo inadequado do ar na hora, mas deixa o erro do agente reversível por um prazo, e evita guardar para sempre o que foi retirado, o que reduz dado pessoal retido (DEP-06) e custo de armazenamento (D25).
 - **Consequência:** é exceção a D24. A remoção apaga também as visitas e o histórico da denúncia, e os totais de relatórios gerados depois dela não a incluem. Cópias de segurança do provedor podem guardar os dados por mais tempo, e isso entra em DEP-06 e DEP-07. As denúncias arquivadas (D41) também entram na lixeira. A rotina nunca remove uma denúncia que não esteja oculta, então o histórico das válidas fica por prazo indefinido (D24). A rotina é testada com data simulada.
+
+## ADR-015 · Regras de negócio em módulo JavaScript compartilhado
+
+- **Decisão:** as regras de negócio (etapas, território, grade de 200 m) ficam em `js/dominio/` e são importadas tanto pelo navegador quanto pelas Edge Functions do Supabase.
+- **Motivo:** as Edge Functions rodam em Deno, com TypeScript, uma linguagem a mais para a equipe. Um único módulo evita escrever cada regra duas vezes e impede que a versão do navegador e a do servidor divirjam.
+- **Consequência:** o código de `js/dominio/` não pode depender do navegador (sem `window` nem `document`). A viabilidade de uma função importar esse módulo é provada logo na primeira função (TASK-060a); se o empacotamento do Supabase não permitir, um script copia o módulo para `supabase/functions/_shared/`, sem edição manual.
+
+## ADR-016 · Site hospedado na Vercel
+
+- **Decisão:** publicar o site estático na Vercel (D46).
+- **Motivo:** o deploy sai direto do GitHub, com prévia por PR e domínio próprio, e combina com um site sem etapa de build (ADR-001).
+- **Consequência:** o plano gratuito da Vercel é voltado a uso pessoal e não comercial, então um serviço mantido por instituição pode exigir o plano pago; isso entra em DEP-07, e pagar pouco é aceito (D25). Dados e funções de servidor ficam no Supabase, não na Vercel.
 
 ## Modelo para uma nova decisão
 

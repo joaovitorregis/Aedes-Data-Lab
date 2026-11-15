@@ -33,6 +33,7 @@ As branches `Laura-Galdino`, `Rhillary` e `sky` estão atrás do `main`. Antes d
 
 - O fluxo da denúncia no Figma tem telas inteiras, mas ainda não está exportado para `wireframes/` (TASK-013a). Até lá, `wireframes/` mostra a denúncia anterior; vale o PRD.
 - O mapa das telas de localização é uma imagem ilustrativa de Itambé/BA, não de Itambé/PE (D37, TASK-013b). Ele não valida território nem posição de pontos.
+- O Figma ainda mostra o campo CPF nas telas da denúncia, e a escolha de canal ainda não tem a variante com SMS e WhatsApp "em breve" (TASK-013d).
 - Algumas telas antigas do Figma divergem do PRD: nomes de etapa, filtros fora da V1 (D40, TASK-012c), agenda de visitas e a área do agente anterior ao PRD 2.2. As correções estão na Fase 1 de [TASKS.md](../TASKS.md).
 - O CSS compartilhado já declara os tokens (`:root` em `site/css/estilos.css`), mas os componentes base ainda faltam (TASK-020).
 - O Figma não tem estilos nem variáveis cadastrados (TASK-010).

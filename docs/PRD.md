@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versão | 2.5 · 15/11/2026 |
+| Versão | 2.6 · 15/11/2026 |
 | Território | Itambé, Pernambuco |
 | Responsável pelo documento | Administrador do produto |
 | Público | Produto, design, desenvolvimento, testes e agentes participantes |
@@ -126,6 +126,7 @@ O andamento da implementação é registrado em [MEMORY.md](./MEMORY.md), que é
 | D44 | Ocultar funciona como lixeira: a publicação sai do mapa e das mídias públicas, e o agente pode republicar em até 30 dias. Passado o prazo sem republicação, a denúncia é removida definitivamente do banco de dados e das fotos, com dados privados, visitas e histórico. É a exceção a D24. Denúncias arquivadas (D41) também entram na lixeira. As demais denúncias, com suas visitas, ficam no banco por prazo indefinido, para que ocorrências antigas continuem consultáveis; só as ocultas, que são as inválidas, são removidas. |
 | D45 | A V1 garante o código de confirmação por e-mail. SMS e WhatsApp só ficam ativos se o custo e o prazo de contratação forem aceitáveis (DEP-03); enquanto não estiverem, a tela de canal os mostra como "em breve" e o código vai só por e-mail. O telefone continua obrigatório em qualquer caso, mas só é confirmado quando o seu canal estiver ativo. |
 | D46 | O site é hospedado na Vercel. Os dados e as funções de servidor ficam no Supabase (D38). |
+| D47 | O mapa público mostra uma prévia curta ao tocar no ponto ou no cartão: categoria, bairro, data, etapa, a primeira foto e a descrição pública. A V1 não tem página de detalhe completo da denúncia pública. |
 
 ## 6. Objetivos e escopo da V1
 
@@ -269,9 +270,9 @@ Recebimento e publicação são resultados distintos. A denúncia gravada fica d
 
 ### RF-MAP-01 · Consultar denúncias públicas
 
-Mapa sem login, com a área aproximada (célula de uma grade fixa de cerca de 200 m, D43), bairro ou localidade, categoria, data de recebimento, etapa atual, foto e descrição. Denúncias atendidas e encerradas continuam no mapa, a menos que estejam ocultas. O resultado da visita (foco, depósitos, ações e observações) não é público.
+Mapa sem login, com a área aproximada (célula de uma grade fixa de cerca de 200 m, D43), bairro ou localidade, categoria, data de recebimento, etapa atual, foto e descrição. Ao tocar no ponto ou no cartão da lista, abre-se uma prévia curta com categoria, bairro, data, etapa, a primeira foto e a descrição pública; não há página de detalhe completo (D47). Denúncias atendidas e encerradas continuam no mapa, a menos que estejam ocultas. O resultado da visita (foco, depósitos, ações e observações) não é público.
 
-**Aceite:** o visitante encontra a denúncia publicada e abre seu detalhe; nenhuma resposta de rede, URL de mídia ou metadado entrega campo privado, referência do local ou ponto exato. O limite sobre conteúdo incidental em texto e foto segue a seção 8.
+**Aceite:** o visitante encontra a denúncia publicada e abre a prévia curta, sem página de detalhe; nenhuma resposta de rede, URL de mídia ou metadado entrega campo privado, referência do local ou ponto exato. O limite sobre conteúdo incidental em texto e foto segue a seção 8.
 
 ### RF-MAP-02 · Filtrar e tratar falhas
 
@@ -412,7 +413,7 @@ Quando o agente vai ao local e não o encontra, registra uma visita com o motivo
 
 **Morador:** na tela Início, toca em denunciar → marca o local → descreve o foco, escolhe categoria e anexa de uma a três fotos → informa nome, e-mail e telefone em "Seus dados para o registro" → escolhe receber o código por e-mail ou, quando ativos (D45), por telefone, em SMS ou WhatsApp → digita e valida o código → revisa o que será público e privado → envia → recebe o protocolo e o estado da publicação. E-mail leva diretamente à tela do código, com orientação para conferir a caixa de entrada. GPS negado, ponto fora do município, foto ausente ou com falha, dados inválidos, código inválido, falha antes de gravar e publicação pendente têm estados próprios, sem cortar a jornada.
 
-**Visitante:** abre o mapa → aplica filtros → consulta descrição, fotos e etapa de uma denúncia publicada. Não precisa de conta e não vê identidade nem contato.
+**Visitante:** abre o mapa → aplica filtros → toca no ponto ou no cartão e lê a prévia de uma denúncia publicada (categoria, bairro, data, etapa, foto e descrição). Não precisa de conta e não vê identidade nem contato.
 
 **Agente:** entra com a conta autorizada → vê o resumo e as Ocorrências mais antigas primeiro → abre o detalhe, confere ocorrências próximas e liga para o morador se precisar → inicia a análise (ou arquiva a denúncia, se for falsa ou improcedente) → toca em "Como chegar" e vai ao local → registra a visita. Com acesso, a ocorrência fica Atendida; sem acesso, continua Em análise e, a partir da terceira tentativa, pode ser encerrada. Em qualquer etapa pode ocultar conteúdo inadequado e, depois de revisar, republicar.
 
@@ -593,3 +594,4 @@ Em conflito com telas antigas ou recomendações anteriores, valem as decisões 
 | 2.3 | 14/11/2026 | Fluxo cidadão completo da tela Início ao protocolo; e-mail e telefone obrigatórios; código depois dos dados, com escolha de e-mail ou telefone e, no telefone, SMS ou WhatsApp; revisão, estados de erro e telas completas; mapa antigo mantido só como referência visual com ressalva de Itambé/BA; correção do cidadão vinculada a mecanismo seguro ainda a definir para os três canais; decisões anteriores do dashboard pós-V1 registradas com conflito da contagem antiga explicitado; a seção 18 reúne as pendências que estavam espalhadas em TASKS e MEMORY; D38 registra o Supabase como backend; documentos derivados alinhados a esta versão |
 | 2.4 | 14/11/2026 | Decisões de produto fechadas: D21 (quem denuncia e risco aceito), D39 (endereço digitado obrigatório), D40 (filtros do mapa: localidade, período e etapa) e D41 (arquivar denúncia improcedente, RF-AGE-09); as pendências sobre dados de terceiros, endereço, filtros e arquivamento saem da seção 18; D34 confirma o raio de 150 m como alcance de voo do mosquito; D42 (recuperar o acesso por protocolo e código), D43 (grade fixa de 200 m no mapa público) e D44 (ocultar como lixeira de 30 dias); as pendências da aproximação do ponto e da recuperação de acesso saem da seção 18 |
 | 2.5 | 15/11/2026 | D07 retira o CPF do produto (nome, e-mail e telefone seguem obrigatórios); D25 aceita pagar um custo baixo; D45 mantém só o e-mail como canal garantido e condiciona SMS e WhatsApp a custo e prazo; D46 define a Vercel como hospedagem |
+| 2.6 | 15/11/2026 | D47: o mapa público usa prévia curta e não tem detalhe completo (RF-MAP-01) |

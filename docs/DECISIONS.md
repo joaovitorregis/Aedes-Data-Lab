@@ -1,6 +1,6 @@
 # Aedes Data Lab: Decisões técnicas
 
-Registro das decisões de arquitetura (ADR) e do motivo de cada uma. As decisões de produto (D01 a D46) ficam no [PRD](./PRD.md), seção 5, e as questões ainda em aberto, na seção 18 do PRD.
+Registro das decisões de arquitetura (ADR) e do motivo de cada uma. As decisões de produto (D01 a D47) ficam no [PRD](./PRD.md), seção 5, e as questões ainda em aberto, na seção 18 do PRD.
 
 Uma ADR não é reescrita para mudar de ideia. A nova escolha entra como outra ADR com a linha **Substitui**, e a antiga recebe **Substituída por** e fica no arquivo como histórico. Ninguém, pessoa ou IA, troca uma escolha daqui sem passar por esse processo.
 

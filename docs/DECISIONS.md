@@ -36,7 +36,7 @@ Uma ADR não é reescrita para mudar de ideia. A nova escolha entra como outra A
 
 ## ADR-006 · Sem conta para o cidadão
 
-- **Decisão:** o cidadão não cria conta nem senha. A cada denúncia, depois de preencher os próprios dados, ele confirma por código o contato que escolher: e-mail ou, quando ativos (D45), telefone por SMS ou WhatsApp. Só agentes e administrador têm login.
+- **Decisão:** o cidadão não cria conta nem senha. A cada denúncia, depois de preencher os próprios dados, ele confirma por código o contato que escolher: e-mail ou, quando ativos (D45), telefone por SMS ou WhatsApp. Só agentes têm login.
 - **Motivo:** decisões de produto D06 e D08; reduz o atrito para enviar e o volume de dados pessoais guardados.
 - **Consequência:** a confirmação fica presa àquela tentativa de envio e não vale para outra. A correção pelo cidadão usa uma autorização temporária ligada ao contato confirmado na denúncia (D26); o mecanismo está em D42, e os provedores de envio do código em DEP-03.
 

@@ -4,8 +4,8 @@ O Aedes Data Lab guarda nome, e-mail e telefone de moradores, além de fotos e d
 
 ## 1. Autenticação
 
-- Agentes e administrador entram com login individual (Supabase Auth). Não existem contas compartilhadas.
-- Contas de agente são criadas e liberadas pelo administrador, fora do cadastro público.
+- Agentes entram com login individual (Supabase Auth). Não existem contas compartilhadas.
+- Contas de agente são criadas e liberadas pela equipe do projeto direto no Supabase, fora do cadastro público. Não existe papel nem tela de administrador (D22).
 - O cidadão não tem conta. A cada denúncia, depois de preencher os próprios dados, ele confirma por código o contato que escolheu (e-mail, ou telefone por SMS ou WhatsApp). A confirmação de uma tentativa não vale para outra, e confirmar um contato não marca o outro como confirmado (ADR-006).
 - Ao sair, a interface apaga os dados privados que estavam na tela.
 
@@ -15,8 +15,7 @@ O Aedes Data Lab guarda nome, e-mail e telefone de moradores, além de fotos e d
 |---|---|---|
 | Visitante | Ler a versão pública do mapa; enviar denúncia após confirmar o contato escolhido | Ler qualquer dado privado ou histórico |
 | Cidadão responsável pelo envio | Ler e corrigir os campos da própria denúncia enquanto ela está Recebida | Ver denúncias de outras pessoas, observações ou histórico interno |
-| Agente autorizado | Ler todas as ocorrências de Itambé, incluindo dados privados; analisar, registrar visitas, encerrar sem acesso, gerar relatório, ocultar e republicar | Corrigir os campos enviados; gerenciar contas |
-| Administrador | Gerenciar contas de agentes; corrigir qualquer denúncia | Apagar histórico |
+| Agente autorizado | Ler todas as ocorrências de Itambé, incluindo dados privados; analisar, registrar visitas, encerrar sem acesso, arquivar, gerar relatório, ocultar, republicar e corrigir os campos de qualquer denúncia, com motivo | Trocar o contato confirmado; gerenciar contas; apagar histórico |
 
 - Toda permissão é conferida no servidor. Esconder um botão ou uma página não conta como proteção.
 - Conta revogada perde o acesso na próxima operação.
@@ -39,8 +38,8 @@ O Aedes Data Lab guarda nome, e-mail e telefone de moradores, além de fotos e d
 - Toda tabela tem RLS ativado e nega por padrão; as políticas liberam só o que cada perfil precisa. Tabela nova sem política é tratada como erro no PR.
 - O navegador não escreve diretamente nas tabelas de denúncia; toda mudança passa por Edge Function (ADR-008).
 - `public_reports` é a única tabela de denúncias com leitura pública. O catálogo de bairros (`neighborhoods`) também é público, porque não contém dados pessoais.
-- `report_visits` segue as mesmas regras de `report_events`: leitura só por agentes autorizados e administrador, escrita só por Edge Function.
-- O papel do usuário (agente ou administrador) é lido da tabela `profiles` no servidor, nunca de um dado que o próprio usuário consiga editar.
+- `report_visits` segue as mesmas regras de `report_events`: leitura só por agentes autorizados, escrita só por Edge Function.
+- O papel do usuário (agente) é lido da tabela `profiles` no servidor, nunca de um dado que o próprio usuário consiga editar.
 - No Storage, as fotos originais ficam no bucket privado, lido só por agentes autorizados; o bucket público recebe só a versão tratada.
 - Ocultar uma denúncia retira também o acesso público às fotos dela.
 - Depois de 30 dias na lixeira, a rotina `limparLixeira` remove o registro, os dados privados, as visitas, o histórico e as fotos dos dois buckets (D44, ADR-014). Cópias de segurança do provedor entram em DEP-06.

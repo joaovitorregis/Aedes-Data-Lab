@@ -10,7 +10,7 @@ Este documento define como o site deve parecer e se comportar visualmente, para 
 
 ## 1. Estilo
 
-Visual calmo e institucional, em tons de bege e verde, pensado para leitura no celular ao ar livre. O Figma mostra o celular com barra de endereço simulada e navegação inferior dentro do quadro; esses elementos são moldura da apresentação, não fazem parte do site. Cartões claros sobre fundo creme, títulos fortes em verde escuro e poucos elementos por tela. A cor de alerta aparece só nos marcadores do mapa.
+Visual calmo e institucional, em tons de bege e verde, pensado para leitura no celular ao ar livre. O Figma mostra o celular com barra de endereço simulada e navegação inferior dentro do quadro; esses elementos são moldura da apresentação, não fazem parte do site. Cartões claros sobre fundo creme, títulos fortes em verde escuro e poucos elementos por tela. A cor de alerta aparece só nos marcadores do mapa; as ações destrutivas da área do agente (arquivar, ocultar, encerrar) ainda vão ganhar a sua (TASK-012b).
 
 ## 2. Cores
 
@@ -68,7 +68,7 @@ Em telas de até 390px de largura, o título de página pode descer para 28px pa
 | Secundário | `--cor-campo` | `--cor-primaria`, 16px Bold | conforme a tela no Figma | Ação alternativa: Voltar ao início, Agora não, Limpar filtro |
 | Texto | transparente | `--cor-primaria` ou `--cor-texto`, 12px Bold | nenhuma | Voltar |
 
-Botões principal e secundário têm raio `--raio-pequeno` e 44px de altura, como nas telas 12, 15, 35 e 36. Foco visível, estado desabilitado e o texto "Enviando…" durante um envio são requisitos de comportamento (RNF-02, RF-DEN-04); a aparência desses estados não está desenhada no Figma. O botão de ocultar publicação também não está desenhado (TASK-015).
+Botões principal e secundário têm raio `--raio-pequeno` e 44px de altura, como nas telas 12, 15, 35 e 36. Foco visível, estado desabilitado e o texto "Enviando…" durante um envio são requisitos de comportamento (RNF-02, RF-DEN-04); a aparência desses estados não está desenhada no Figma. O botão de ocultar publicação também não está desenhado (TASK-012b).
 
 ### Cartões
 
@@ -99,7 +99,7 @@ Usadas no registro de visita (PRD, seção 8.1) para responder sem digitar. Cada
 
 ### Janela de confirmação
 
-Usada antes de ações que não voltam atrás: registrar visita com acesso, encerrar sem acesso, ocultar e republicar. Mostra o resumo do que será gravado, o efeito na etapa e dois botões: o principal com a ação ("Confirmar e concluir") e o secundário "Voltar". Não desenhada no Figma (TASK-015b).
+Usada antes de ações que não voltam atrás: confirmar visita, encerrar sem acesso, arquivar, ocultar e republicar. Mostra o resumo do que será gravado, o efeito na etapa e dois botões: o principal com a ação ("Confirmar visita", "Encerrar", "Arquivar", "Ocultar", "Republicar") e o secundário "Voltar". Não desenhada no Figma (TASK-015b).
 
 ### Indicador de passos da denúncia
 
@@ -109,9 +109,13 @@ Quatro círculos numerados ligados por uma linha, no topo do formulário, com o 
 
 O mapa público usa como referência atual a seção [Mapa público · v2 · referência atual](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y?node-id=2992-1006) na página `02 · Mapa`. Ela substitui os seis quadros antigos dessa página, agora ocultos e nomeados como arquivo. Há estados editáveis para mapa padrão, ocorrência selecionada, filtros abertos e desktop.
 
-O título é `Mapa de ocorrências` e o subtítulo explica que são relatos de possíveis criadouros em Itambé/PE. As áreas desenhadas são ilustrativas: a precisão pública e a cartografia real continuam pendentes. Filtros da V1: período, bairro e situação. O resumo da ocorrência mostra apenas categoria, bairro, data, situação, foto e descrição pública. A visão do agente continua separada e não recebe esta revisão.
+O título é `Mapa de ocorrências` e o subtítulo explica que são relatos de possíveis criadouros em Itambé/PE. A cartografia desenhada é ilustrativa; na implementação, cada denúncia pública corresponde à célula de uma grade fixa de cerca de 200 m, nunca ao ponto exato (PRD D43). Denúncias na mesma célula mostram a mesma área. A cartografia real e o contorno territorial continuam dependentes de DEP-01 e DEP-07. Os únicos filtros da V1 são etapa, período e localidade (D40); a localidade é escolhida entre os 15 bairros de D33. Distrito, rua e área não entram na jornada ativa. A visão do agente continua separada.
 
-Os quadros antigos na página `Fluxo de telas - Jornada do Usuário` ainda precisam ser substituídos e suas ligações de protótipo refeitas antes de usar aquela jornada como referência do mapa. O design novo ainda não representa mapa funcional, estados de erro ou todos os tamanhos de tela.
+Na página `Fluxo de telas - Jornada do Usuário`, a cartografia nova foi aplicada aos quadros de mapa, lista e filtros, e os quatro destinos públicos foram convertidos em prévias curtas. Em 15/11/2026, `Localidades` foi ligada diretamente ao seletor dos 15 bairros, cada opção foi conferida com seu quadro de resultado, e o submenu e os três resultados de distrito, rua e área foram ocultados. As seções vizinhas foram reposicionadas para não cobrir os resultados de bairro. A edição persistiu após recarga do editor. A aparência dos resultados foi conferida visualmente em quadros representativos; os 15 compartilham dimensões de 390 × 993 px, nome do bairro correspondente e ação de limpar filtro. Isso ainda não comprova responsividade ou funcionamento de filtros com dados reais.
+
+**Prévia curta (PRD D47):** tocar no ponto ou no cartão da lista abre uma prévia com categoria, bairro, data, etapa, a primeira foto e a descrição pública. A V1 não tem página de detalhe completo da denúncia pública; os quadros antigos de detalhe (telas 19 a 22) ficam só como histórico.
+
+Para o mapa, RF-MAP-02 exige estados distintos para ausência de denúncias, filtro sem resultados e erro de carregamento; erro não pode aparecer como zero. Também exige conservar os filtros ao abrir uma denúncia e voltar. Esses estados, os retornos da prévia no apresentador e a responsividade da jornada ainda precisam de validação no Figma. O mapa visual atual usa círculos com centro ilustrativo e não comprova a grade de 200 m nem o comportamento de rede. Em 15/11/2026, a aba do apresentador não pôde ser vinculada com URL atual verificável; nenhum retorno foi validado nessa rodada.
 
 ## 6. Estados obrigatórios
 

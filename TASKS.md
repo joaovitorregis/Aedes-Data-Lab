@@ -35,8 +35,9 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 - [ ] TASK-015 Redesenhar o detalhe da ocorrência: fotos ampliáveis, "Como chegar", endereço e referência, bloco do morador com telefone para ligar, estado de publicação (na Oculta, os dias para a remoção), ocorrências próximas em 150 m, histórico com visitas e botões por etapa (incluindo Arquivar); ocultar e republicar num menu (tela 46; RF-AGE-01 a RF-AGE-07)
 - [ ] TASK-015a Desenhar a tela Registrar visita, com os estados com acesso, sem acesso e erro de envio (PRD seção 8.1; RF-AGE-03)
 - [ ] TASK-015b Desenhar as opções de toque e a janela de confirmação, incluindo "Encerrar sem acesso" e "Arquivar" com motivo e aviso de que a denúncia sai do mapa (DESIGN.md, seção 5; RF-AGE-03, RF-AGE-07, RF-AGE-09)
-- [ ] TASK-015c Redesenhar Ocorrências: resumo por etapa, dias em aberto, etiquetas Sem acesso e Oculta, filtro Sem acesso, ordem por mais antigas, botão Lista/Mapa e marcadores por etapa; trocar a barra inferior por Ocorrências e Sair (tela 47; RF-AGE-01)
+- [ ] TASK-015c Redesenhar Ocorrências: resumo por etapa, dias em aberto, etiquetas Sem acesso e Oculta, filtro Sem acesso, ordem por mais antigas, botão Lista/Mapa e marcadores por etapa; tirar a barra inferior; Ocorrências, Relatório e Sair ficam no menu ☰ (tela 47; RF-AGE-01)
 - [ ] TASK-015d Desenhar a tela Relatório: período, bairro, formato, prévia e estado sem dados (RF-AGE-08)
+- [ ] TASK-015e Desenhar Corrigir dados pelo agente: campos editáveis, contato confirmado só para leitura, motivo obrigatório e revisão antes → depois (RF-COR-01, D20, D42)
 - [ ] TASK-016 Retirar "Programar visita", a caixa "Conclusão" e o botão "Salvar conclusão e marcar atendimento" da tela 46; a conclusão passa a ser feita em Registrar visita (D28)
 - [ ] TASK-016a Retirar a tela 42 (mapa do agente), que passa a ficar dentro de Ocorrências (RF-AGE-01)
 - [ ] TASK-016b Trocar os bairros fictícios das telas (Centro, São José, Torre, Bongi) pelos 15 bairros de Itambé (D33)
@@ -57,7 +58,7 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 ## Fase 3 · Dados fictícios
 
 - [ ] TASK-030 Definir o formato de uma denúncia (público, privado, eventos e visitas) em `js/servicos/`
-- [ ] TASK-031 Serviço fictício que atende os contratos da ARCHITECTURE, seção 5, incluindo `enviarCodigo` e `confirmarCodigo` (código simulado), `registrarVisita`, `encerrarSemAcesso`, `arquivarOcorrencia`, `solicitarAcessoCorrecao`, `confirmarAcessoCorrecao`, `listarOcorrenciasProximas` e `dadosRelatorio`
+- [ ] TASK-031 Serviço fictício que atende os contratos da ARCHITECTURE, seção 5, incluindo `enviarCodigo` e `confirmarCodigo` (código simulado), `registrarVisita`, `encerrarSemAcesso`, `arquivarOcorrencia`, `solicitarAcessoCorrecao`, `confirmarAcessoCorrecao`, `listarOcorrenciasProximas`, `obterOcorrencia`, `corrigirCamposDenuncia` e `dadosRelatorio`
 - [ ] TASK-032 Criar `js/dominio/` com etapas (incluindo Encerrada), regra de território provisória, cálculo da célula de 200 m (D43), catálogo dos 15 bairros e códigos da visita (tipo do local, depósitos, ações)
 - [ ] TASK-033 Dados fictícios com ocorrências em todas as etapas, visitas com e sem acesso, uma ocorrência com três tentativas duas denúncias a menos de 150 m, uma oculta há 25 dias e outra oculta há 31 dias (lixeira, D44)
 
@@ -85,6 +86,7 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 - [ ] TASK-053c Guardar o formulário de visita no aparelho quando o envio falhar e reenviar sem duplicar (RF-AGE-03, RNF-11)
 - [ ] TASK-053d Arquivar denúncia improcedente, com motivo e confirmação, levando a Encerrada e ocultando a publicação (RF-AGE-09, D41, D44)
 - [ ] TASK-054 Ocultar e republicar com motivo, dentro da lixeira de 30 dias (RF-AGE-04, RF-AGE-06, D44)
+- [ ] TASK-054a Corrigir dados pelo agente, com motivo e revisão antes → depois, sem trocar o contato confirmado (RF-COR-01, D20, D42)
 - [ ] TASK-055 Tela do relatório com período, bairro e prévia (RF-AGE-08)
 - [ ] TASK-056 Gerar o relatório em PDF com jsPDF e AutoTable (RF-AGE-08, ADR-012)
 - [ ] TASK-057 Gerar o relatório em Word com a biblioteca `docx` (RF-AGE-08, ADR-012)
@@ -95,7 +97,7 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 - [ ] TASK-060a Provar que uma Edge Function importa um módulo de `js/dominio/` (ADR-015)
 - [ ] TASK-060b Publicar a prévia do site na Vercel (D46, ADR-016)
 - [ ] TASK-061 Criar as tabelas (incluindo `report_visits` e `neighborhoods`), os buckets e as políticas de RLS em migrações, com testes de acesso negado (SECURITY.md)
-- [ ] TASK-062 Login individual dos agentes e papéis de agente e administrador (RF-AUT-02)
+- [ ] TASK-062 Login individual dos agentes e papel de agente; contas criadas pela equipe no Supabase, sem tela de administrador (RF-AUT-02, D22)
 - [ ] TASK-063 Trocar o serviço fictício pelo Supabase sem alterar as telas
 
 ## Fase 7 · Envio real
@@ -111,7 +113,7 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 - [ ] TASK-080a Relatório com dados reais, conferindo que `dadosRelatorio` não devolve campos privados (RF-AGE-08, RNF-12)
 - [ ] TASK-081 Ocultação e republicação com versão de decisão (RF-AGE-04, RF-AGE-06)
 - [ ] TASK-081a Rotina diária `limparLixeira`: remove denúncias ocultas há mais de 30 dias, com fotos dos dois buckets (D44, ADR-014)
-- [ ] TASK-082 Correção pelo administrador e pelo cidadão, com recuperação de acesso por protocolo e código (RF-COR-01, D42)
+- [ ] TASK-082 Correção pelo agente e pelo cidadão, com recuperação de acesso por protocolo e código (RF-COR-01, D42)
 
 ## Fase 9 · Validação da V1
 

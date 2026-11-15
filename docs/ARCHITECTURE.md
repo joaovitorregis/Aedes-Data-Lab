@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versão | 3.5 · 15/11/2026 |
+| Versão | 3.6 · 15/11/2026 |
 | Documentos relacionados | [PRD](./PRD.md) · [Decisões](./DECISIONS.md) · [Segurança](./SECURITY.md) · [Tarefas](../TASKS.md) |
 
 Este documento descreve **como** o Aedes Data Lab será construído. O que o produto faz e as regras de aceite estão no [PRD](./PRD.md); se os dois divergirem sobre comportamento, vale o PRD. As escolhas técnicas e seus motivos ficam registrados em [DECISIONS.md](./DECISIONS.md).
@@ -16,7 +16,7 @@ Este documento descreve **como** o Aedes Data Lab será construído. O que o pro
 | Backend | Supabase (D38): Edge Functions para as operações que validam e autorizam | ADR-003, ADR-008 |
 | Banco de dados | Postgres do Supabase, com tabelas separadas para dados públicos e privados e políticas de acesso por linha (RLS) | ADR-004 |
 | Arquivos | Supabase Storage, com um bucket privado para os originais e um bucket público para as fotos tratadas | ADR-003 |
-| Autenticação | Supabase Auth para agentes e administrador. O cidadão não tem conta: confirma por código o contato escolhido em cada denúncia (e-mail; SMS e WhatsApp se ativos, D45) | ADR-006, DEP-03 |
+| Autenticação | Supabase Auth para agentes, com contas criadas pela equipe do projeto no Supabase (D22). O cidadão não tem conta: confirma por código o contato escolhido em cada denúncia (e-mail; SMS e WhatsApp se ativos, D45) | ADR-006, DEP-03 |
 | Cliente | Biblioteca `supabase-js` importada como módulo ES, usada só em `js/servicos/` | ADR-003 |
 | Ambiente local | Supabase CLI, que sobe banco, Auth, Storage e funções na própria máquina (exige Docker); Vite opcional, quando ajudar | ADR-003 |
 | Hospedagem | Vercel para o site estático (D46) | ADR-016, DEP-07 |
@@ -94,6 +94,7 @@ As pastas `js/dominio/`, `supabase/` e `tests/` ainda não existem; elas são cr
 | `listarDenunciasPublicas` | Qualquer pessoa; lê só a versão pública |
 | `listarOcorrencias` | Agente autorizado; devolve também o resumo por etapa, os dias em aberto e as tentativas sem acesso |
 | `listarOcorrenciasProximas` | Agente autorizado; ocorrências num raio de 150 m do ponto exato (D34) |
+| `obterOcorrencia` | Agente autorizado; devolve uma ocorrência com `reports`, `report_private`, `report_visits`, `report_events` e endereços temporários das fotos do bucket privado |
 | `iniciarAnalise`, `registrarObservacao` | Agente autorizado |
 | `registrarVisita` | Agente autorizado, só com a ocorrência Em análise; com acesso leva a Atendida, sem acesso soma uma tentativa |
 | `encerrarSemAcesso` | Agente autorizado, só com três ou mais tentativas sem acesso |
@@ -102,21 +103,21 @@ As pastas `js/dominio/`, `supabase/` e `tests/` ainda não existem; elas são cr
 | `ocultarPublicacao`, `republicarOcorrencia` | Agente autorizado; ocultar leva a denúncia à lixeira por 30 dias, e republicar só vale dentro desse prazo (D44) |
 | `solicitarAcessoCorrecao`, `confirmarAcessoCorrecao` | Qualquer pessoa; com o protocolo, envia um código ao contato confirmado na denúncia e, confirmado o código, devolve a autorização temporária de edição. A resposta é igual para protocolo inexistente ou sem vínculo, e os pedidos têm limite (D42, RNF-08) |
 | `limparLixeira` | Rotina agendada do servidor, sem chamada pelo navegador; remove as denúncias ocultas há mais de 30 dias (D44) |
-| `corrigirCamposDenuncia` | Administrador, em qualquer etapa; cidadão com vínculo comprovado, só na própria denúncia e só enquanto Recebida (D26) |
+| `corrigirCamposDenuncia` | Agente autorizado, em qualquer etapa, com motivo, sem trocar o contato confirmado; cidadão com vínculo comprovado, só na própria denúncia e só enquanto Recebida (D26) |
 
-Ter apenas o papel de agente não dá permissão para corrigir os campos enviados. Enquanto o backend não existe, os mesmos contratos são atendidos por dados fictícios em `js/servicos/`, para que as telas não mudem quando o Supabase entrar.
+O agente corrige os campos com motivo, menos o contato confirmado, que só a equipe do projeto troca direto no Supabase (D42). Enquanto o backend não existe, os mesmos contratos são atendidos por dados fictícios em `js/servicos/`, para que as telas não mudem quando o Supabase entrar.
 
 ## 6. Modelo de dados
 
 | Tabela ou recurso | Conteúdo | Acesso |
 |---|---|---|
-| `reports` | Dados operacionais: protocolo, ponto exato, bairro, categoria, etapa (`recebida`, `em_analise`, `atendida`, `encerrada`), estado de publicação (`pendente`, `publicada`, `oculta`) com o motivo, o momento da ocultação e a versão da decisão, datas, contador de tentativas sem acesso e versão | Agentes autorizados e administrador |
-| `report_visits` | Uma linha por visita: data, acesso (`com_acesso`, `fechado`, `recusado`, `nao_localizado`), tipo do local (`R`, `C`, `TB`, `PE`, `O`), foco encontrado, depósitos (`A1`, `A2`, `B`, `C`, `D1`, `D2`, `E`), ações, observação, autor e momento | Agentes autorizados e administrador; nunca público |
+| `reports` | Dados operacionais: protocolo, ponto exato, bairro, categoria, etapa (`recebida`, `em_analise`, `atendida`, `encerrada`), estado de publicação (`pendente`, `publicada`, `oculta`) com o motivo, o momento da ocultação e a versão da decisão, datas, contador de tentativas sem acesso e versão | Agentes autorizados |
+| `report_visits` | Uma linha por visita: data, acesso (`com_acesso`, `fechado`, `recusado`, `nao_localizado`), tipo do local (`R`, `C`, `TB`, `PE`, `O`), foco encontrado, depósitos (`A1`, `A2`, `B`, `C`, `D1`, `D2`, `E`), ações, observação, autor e momento | Agentes autorizados; nunca público |
 | `neighborhoods` | Catálogo dos 15 bairros de D33, com nome e, depois de DEP-01, o contorno no mapa | Leitura pública |
-| `report_private` | Nome, e-mail, telefone, endereço digitado (D39), referência do local e qual desses contatos foi confirmado no envio, por qual canal (D06) | Todos os agentes autorizados (D11) e administrador; o cidadão lê e corrige só a própria denúncia, enquanto Recebida |
+| `report_private` | Nome, e-mail, telefone, endereço digitado (D39), referência do local e qual desses contatos foi confirmado no envio, por qual canal (D06) | Todos os agentes autorizados (D11); o cidadão lê e corrige só a própria denúncia, enquanto Recebida |
 | `public_reports` | Célula da grade de 200 m (D43), no lugar do ponto, bairro, categoria, data, etapa, foto tratada e descrição | Leitura pública |
-| `report_events` | Início de análise, observações, visitas, encerramento, ocultação, republicação e correções, com autor e data | Agentes autorizados e administrador; nunca público nem liberado ao cidadão |
-| `profiles` | Habilitação e papel (agente, administrador), ligados ao usuário do Supabase Auth | Acesso mínimo; gerido pelo administrador |
+| `report_events` | Início de análise, observações, visitas, encerramento, ocultação, republicação e correções, com autor e data | Agentes autorizados; nunca público nem liberado ao cidadão |
+| `profiles` | Habilitação e papel (agente), ligados ao usuário do Supabase Auth | Acesso mínimo; mantido pela equipe do projeto direto no Supabase, sem tela (D22) |
 | Storage | Bucket `fotos-originais` (privado) e bucket `fotos-publicas` (versões tratadas) | Políticas separadas para cada bucket |
 
 Cada tabela tem RLS ativado e nega tudo por padrão; as políticas liberam só o que a coluna Acesso descreve. O modelo será refinado durante a implementação. Nenhum caractere de nome, e-mail ou telefone vai para `public_reports`, e a foto pública é gerada sem metadados pessoais. As regras de proteção de cada recurso estão em [SECURITY.md](./SECURITY.md).
@@ -140,7 +141,7 @@ O mapa lê somente `public_reports`: foto, descrição, bairro, categoria, data,
 
 ### 7.3 Ocorrências do agente
 
-O administrador libera, revoga e recupera as contas; a V1 tem uma conta de agente (D31). Todos os agentes autorizados consultam as ocorrências de Itambé inteira e os campos privados, inclusive nome, e-mail e telefone. Abrir o detalhe não altera a etapa. "Iniciar análise", "Registrar visita", "Encerrar sem acesso" e "Arquivar" são operações explícitas com autor e data.
+A equipe do projeto cria, libera, revoga e recupera as contas direto no Supabase, sem tela de administrador (D22); a V1 tem uma conta de agente (D31). Todos os agentes autorizados consultam as ocorrências de Itambé inteira e os campos privados, inclusive nome, e-mail e telefone. Abrir o detalhe não altera a etapa. "Iniciar análise", "Registrar visita", "Encerrar sem acesso" e "Arquivar" são operações explícitas com autor e data.
 
 `registrarVisita` grava a linha em `report_visits`, o evento em `report_events` e, se houver acesso, muda a etapa para Atendida, tudo numa única transação. Sem acesso, a etapa não muda e o contador de tentativas aumenta. `encerrarSemAcesso` confere no servidor se há pelo menos três tentativas. Cada visita leva um ID gerado no aparelho, para que o reenvio depois de uma falha não grave a mesma visita duas vezes. Enquanto o envio não é confirmado, o formulário fica guardado no `localStorage` do aparelho, só com os campos da visita.
 
@@ -162,9 +163,9 @@ Ocultar é uma lixeira (ADR-014). `limparLixeira` roda uma vez por dia por agend
 
 ### 7.5 Correção de campos
 
-O administrador corrige qualquer denúncia em qualquer etapa. O cidadão comprova o vínculo com a denúncia pelo contato confirmado no envio e recebe uma autorização de edição restrita àquele registro, com prazo de validade e proteção contra reutilização. O serviço confere a etapa no momento de salvar: se a ocorrência já estiver Em análise, a correção do cidadão é recusada com orientação para usar o e-mail de contato (D26). Um ponto corrigido passa de novo pela validação de território.
+O agente autorizado corrige qualquer denúncia em qualquer etapa, com motivo. O cidadão comprova o vínculo com a denúncia pelo contato confirmado no envio e recebe uma autorização de edição restrita àquele registro, com prazo de validade e proteção contra reutilização. O serviço confere a etapa no momento de salvar: se a ocorrência já estiver Em análise, a correção do cidadão é recusada com orientação para usar o e-mail de contato (D26). Um ponto corrigido passa de novo pela validação de território.
 
-Cada correção grava valor original, novo valor, motivo, autor e data em `report_events`. Se a denúncia estiver publicada, só a versão pública permitida é atualizada; se estiver oculta, continua oculta. O acesso do cidadão usa `solicitarAcessoCorrecao` e `confirmarAcessoCorrecao` (D42), e a troca do contato confirmado é uma correção feita só pelo administrador.
+Cada correção grava valor original, novo valor, motivo, autor e data em `report_events`. Se a denúncia estiver publicada, só a versão pública permitida é atualizada; se estiver oculta, continua oculta. O acesso do cidadão usa `solicitarAcessoCorrecao` e `confirmarAcessoCorrecao` (D42), e a troca do contato confirmado é feita só pela equipe do projeto, direto no Supabase; `corrigirCamposDenuncia` recusa essa troca vinda do agente.
 
 ## 8. Ambientes
 
@@ -188,3 +189,4 @@ As migrações são aplicadas primeiro no ambiente local, depois na prévia e s�
 | 3.3 | 14/11/2026 | Alinhada ao PRD 2.3: confirmação por código no canal escolhido depois dos dados (`enviarCodigo` e `confirmarCodigo`, um contrato para os três canais); telefone obrigatório em `report_private`; coluna de situação trocada pela referência à ADR ou à dependência de cada escolha |
 | 3.4 | 14/11/2026 | Alinhada ao PRD 2.4: contrato `arquivarOcorrencia` (D41); endereço digitado e referência em `report_private` (D39); contratos de recuperação de acesso (D42), grade de 200 m em `public_reports` (D43) e rotina `limparLixeira` (D44) |
 | 3.5 | 15/11/2026 | CPF retirado do modelo (D07); SMS e WhatsApp condicionados (D45); módulo de regras compartilhado entre navegador e servidor (ADR-015); hospedagem na Vercel (ADR-016) |
+| 3.6 | 15/11/2026 | Alinhada ao PRD 2.7: sem papel de administrador; contas e troca do contato confirmado pela equipe do projeto no Supabase; `corrigirCamposDenuncia` passa ao agente; contrato `obterOcorrencia` para o detalhe |

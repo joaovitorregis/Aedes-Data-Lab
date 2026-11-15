@@ -118,19 +118,19 @@ Repetir o cenário três vezes, uma por canal: e-mail, telefone com SMS e telefo
 - [ ] Republicar uma denúncia já removida não é possível
 
 **AC-14 · Correção** (RF-COR-01, RNF-03, RNF-05, RNF-09)
-- [ ] O administrador corrige uma denúncia em qualquer etapa
+- [ ] O agente corrige uma denúncia em qualquer etapa, com motivo
 - [ ] O cidadão corrige a própria denúncia enquanto ela está Recebida
 - [ ] Depois do início da análise, a correção do cidadão é recusada com orientação para usar o e-mail de contato
 - [ ] O cidadão não acessa denúncias de outras pessoas
 - [ ] Informar o protocolo e confirmar o código enviado ao contato confirmado libera a edição
 - [ ] Protocolo inexistente e protocolo sem vínculo recebem a mesma resposta
 - [ ] O código vale uma vez, só para aquele registro, e os pedidos têm limite
-- [ ] Trocar o contato confirmado só é aceito do administrador
+- [ ] Trocar o contato confirmado é recusado quando vem do agente (só a equipe do projeto troca, direto no Supabase)
 - [ ] O valor original e o motivo ficam no histórico; protocolo, etapa e visibilidade não mudam
 
 **AC-15 · Sem acesso e encerramento** (RF-AGE-03, RF-AGE-07, RF-AGE-09)
 - [ ] Visita com "Imóvel fechado" mantém Em análise, registra "Visita sem acesso" no histórico e mostra "Sem acesso (1 tentativa)" na lista
-- [ ] O filtro "Sem acesso" mostra só ocorrências com tentativa
+- [ ] O filtro "Sem acesso" mostra só ocorrências Em análise com pelo menos uma tentativa; Encerrada sem acesso não aparece nele
 - [ ] Com uma ou duas tentativas, "Encerrar sem acesso" não aparece, e a chamada direta ao serviço é recusada
 - [ ] Na terceira tentativa, o botão aparece; ao confirmar, a ocorrência fica Encerrada com o motivo e o número de tentativas
 - [ ] Encerrada sem acesso não reabre, não aceita visita e aparece como Encerrada no mapa público
@@ -140,7 +140,7 @@ Repetir o cenário três vezes, uma por canal: e-mail, telefone com SMS e telefo
 
 **AC-16 · Relatório** (RF-AGE-08, RNF-12)
 - [ ] Gerar PDF e Word do mês atual, para todos os bairros e para um bairro
-- [ ] Os totais do relatório batem com a lista filtrada pelo mesmo período e bairro
+- [ ] As recebidas do relatório batem com a lista filtrada pelo mesmo período e bairro, e as pendentes com a lista filtrada por bairro e pelas etapas Recebida e Em análise
 - [ ] Buscar no texto do PDF e do Word pelo nome, e-mail e telefone de teste do morador: nenhum aparece
 - [ ] Período sem visitas gera o arquivo com o aviso "Nenhuma visita no período"
 - [ ] O PDF abre num leitor comum; o Word abre no Microsoft Word e no LibreOffice e pode ser editado

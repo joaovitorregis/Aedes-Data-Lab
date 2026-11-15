@@ -11,7 +11,7 @@ Lista de trabalho da V1, dividida em fases pequenas. Cada tarefa cita a tela e o
 
 ## Fase 0 · Documentação
 
-- [x] TASK-001 Aprovar o PRD 2.0 como base de construção
+- [x] TASK-001 Escrever o PRD da V1 e mantê-lo como fonte única do comportamento
 - [x] TASK-002 Concluir as telas no Figma e exportar para `wireframes/`
 - [x] TASK-003 Organizar a documentação em PRD, ARCHITECTURE, DESIGN, RULES, TASKS, DECISIONS, MEMORY, TEST_PLAN e SECURITY
 - [x] TASK-004 Registrar no PRD 2.3 a jornada completa da denúncia e alinhar os demais documentos
@@ -25,13 +25,15 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 - [ ] TASK-012 Usar os nomes de etapa do PRD: o filtro de status mostra "Não visualizados / Resolvidos" e a área dos agentes escreve "Atendido" (telas 25, 46 e 47; PRD seção 10)
 - [ ] TASK-012a Unificar as etiquetas de etapa: Em análise usa fundo `#D9CBB0` no mapa público e `#FFEA83` na área dos agentes, com raios diferentes; desenhar também Recebida, Encerrada, Oculta e Sem acesso (DESIGN.md, seção 5; PRD D29)
 - [ ] TASK-012b Desenhar o botão de ocultar publicação e os estados de foco, desabilitado e "Enviando…" dos botões (DESIGN.md, seção 5)
+- [ ] TASK-012c Retirar do Figma os filtros fora da V1 (origem, distrito, rua e área) e as telas de mapa que dependem deles: telas 26 e 29 a 34 (D40)
 - [x] TASK-013 Desenhar a denúncia completa da tela Início ao protocolo, com a confirmação por código depois dos dados (e-mail, SMS ou WhatsApp) e os estados de erro (D35, D36, RF-AUT-01)
 - [ ] TASK-013a Exportar as telas da denúncia do Figma para `wireframes/` e atualizar o README da pasta
 - [ ] TASK-013b Trocar a imagem ilustrativa do mapa (Itambé/BA) pelo mapa de Itambé/PE nas telas de localização (D37; depende de DEP-01)
-- [ ] TASK-014 Desenhar a correção da denúncia pelo cidadão enquanto ela está Recebida (RF-COR-01, D26)
-- [ ] TASK-015 Redesenhar o detalhe da ocorrência: fotos ampliáveis, "Como chegar", endereço e referência, bloco do morador com telefone para ligar, estado de publicação, ocorrências próximas em 150 m, histórico com visitas e botões por etapa; ocultar e republicar num menu (tela 46; RF-AGE-01 a RF-AGE-07)
+- [ ] TASK-013c Marcar o endereço digitado como obrigatório na tela 02 Localização e desenhar o erro de campo vazio (D39)
+- [ ] TASK-014 Desenhar a correção da denúncia pelo cidadão enquanto ela está Recebida e a recuperação do acesso por protocolo e código (RF-COR-01, D26, D42)
+- [ ] TASK-015 Redesenhar o detalhe da ocorrência: fotos ampliáveis, "Como chegar", endereço e referência, bloco do morador com telefone para ligar, estado de publicação (na Oculta, os dias para a remoção), ocorrências próximas em 150 m, histórico com visitas e botões por etapa (incluindo Arquivar); ocultar e republicar num menu (tela 46; RF-AGE-01 a RF-AGE-07)
 - [ ] TASK-015a Desenhar a tela Registrar visita, com os estados com acesso, sem acesso e erro de envio (PRD seção 8.1; RF-AGE-03)
-- [ ] TASK-015b Desenhar as opções de toque e a janela de confirmação, incluindo "Encerrar sem acesso" (DESIGN.md, seção 5; RF-AGE-03, RF-AGE-07)
+- [ ] TASK-015b Desenhar as opções de toque e a janela de confirmação, incluindo "Encerrar sem acesso" e "Arquivar" com motivo e aviso de que a denúncia sai do mapa (DESIGN.md, seção 5; RF-AGE-03, RF-AGE-07, RF-AGE-09)
 - [ ] TASK-015c Redesenhar Ocorrências: resumo por etapa, dias em aberto, etiquetas Sem acesso e Oculta, filtro Sem acesso, ordem por mais antigas, botão Lista/Mapa e marcadores por etapa; trocar a barra inferior por Ocorrências e Sair (tela 47; RF-AGE-01)
 - [ ] TASK-015d Desenhar a tela Relatório: período, bairro, formato, prévia e estado sem dados (RF-AGE-08)
 - [ ] TASK-016 Retirar "Programar visita", a caixa "Conclusão" e o botão "Salvar conclusão e marcar atendimento" da tela 46; a conclusão passa a ser feita em Registrar visita (D28)
@@ -54,36 +56,37 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 ## Fase 3 · Dados fictícios
 
 - [ ] TASK-030 Definir o formato de uma denúncia (público, privado, eventos e visitas) em `js/servicos/`
-- [ ] TASK-031 Serviço fictício que atende os contratos da ARCHITECTURE, seção 5, incluindo `registrarVisita`, `encerrarSemAcesso`, `listarOcorrenciasProximas` e `dadosRelatorio`
-- [ ] TASK-032 Criar `js/dominio/` com etapas (incluindo Encerrada), validação de CPF, regra de território provisória, catálogo dos 15 bairros e códigos da visita (tipo do local, depósitos, ações)
-- [ ] TASK-033 Dados fictícios com ocorrências em todas as etapas, visitas com e sem acesso, uma ocorrência com três tentativas e duas denúncias a menos de 150 m
+- [ ] TASK-031 Serviço fictício que atende os contratos da ARCHITECTURE, seção 5, incluindo `enviarCodigo` e `confirmarCodigo` (código simulado), `registrarVisita`, `encerrarSemAcesso`, `arquivarOcorrencia`, `solicitarAcessoCorrecao`, `confirmarAcessoCorrecao`, `listarOcorrenciasProximas` e `dadosRelatorio`
+- [ ] TASK-032 Criar `js/dominio/` com etapas (incluindo Encerrada), validação de CPF, regra de território provisória, cálculo da célula de 200 m (D43), catálogo dos 15 bairros e códigos da visita (tipo do local, depósitos, ações)
+- [ ] TASK-033 Dados fictícios com ocorrências em todas as etapas, visitas com e sem acesso, uma ocorrência com três tentativas duas denúncias a menos de 150 m, uma oculta há 25 dias e outra oculta há 31 dias (lixeira, D44)
 
 ## Fase 4 · Fatia vertical 1: da denúncia ao mapa (dados fictícios)
 
-- [ ] TASK-040 Etapa 1: marcar o ponto manualmente e usar GPS opcional (02 Localização, 02a GPS negado, 02b Ponto fora de Itambé; telas 35 a 37; RF-DEN-02)
+- [ ] TASK-040 Etapa 1: bairro, endereço digitado obrigatório, marcar o ponto manualmente e usar GPS opcional (02 Localização, 02a GPS negado, 02b Ponto fora de Itambé; telas 35 a 37; RF-DEN-02)
 - [ ] TASK-041 Etapa 2: descrição, categoria e fotos com prévia, remoção e limite de três (03 Foco e evidências, 03a Foto obrigatória, 03b Falha ao adicionar foto; RF-DEN-03)
 - [ ] TASK-042 Etapa 3: nome, CPF, e-mail e telefone obrigatórios, com validação de formato (04 Dados para o registro, 04a a 04c; RF-DEN-01, D06)
 - [ ] TASK-042a Escolha do canal e código simulado: e-mail direto ao código, telefone com SMS ou WhatsApp, código inválido (05, 05a, 05b, 06, 06a e 10; RF-AUT-01)
 - [ ] TASK-043 Etapa 4: revisão separando público e privado, envio com bloqueio de clique (07 Revisão, 07a Enviando; RF-DEN-01, RF-DEN-04)
 - [ ] TASK-044 Protocolo, publicação pendente e falha antes de salvar (08, 09 e 11; RF-DEN-04, RF-DEN-05)
-- [ ] TASK-045 Mapa lê as denúncias fictícias, mostra área aproximada e abre o detalhe (telas 16 a 22; RF-MAP-01)
-- [ ] TASK-046 Filtros por localidade, período e etapa, com estados vazio, sem resultado e erro (telas 23, 24, 27, 28; RF-MAP-02; depende de DEP-13)
+- [ ] TASK-045 Mapa lê as denúncias fictícias, mostra a célula de 200 m e abre o detalhe (telas 16 a 22; RF-MAP-01)
+- [ ] TASK-046 Filtros por localidade, período e etapa, com estados vazio, sem resultado e erro (telas 23, 24, 27, 28; RF-MAP-02; só esses três filtros, D40)
 
 ## Fase 5 · Fatia vertical 2: área do agente (dados fictícios)
 
 - [ ] TASK-050 Lista de ocorrências com resumo por etapa, dias em aberto, etiquetas, filtros (incluindo Sem acesso) e ordem por mais antigas (tela 47; RF-AGE-01)
 - [ ] TASK-050a Alternância Lista/Mapa dentro de Ocorrências, com marcadores por etapa e os mesmos filtros (RF-AGE-01)
 - [ ] TASK-051 Detalhe com fotos, ponto exato, "Como chegar", endereço, dados do morador, estado de publicação e histórico (tela 46; RF-AGE-01)
-- [ ] TASK-051a Aviso de ocorrências próximas em 150 m (RF-AGE-01, D34; depende de DEP-14)
+- [ ] TASK-051a Aviso de ocorrências próximas em 150 m (RF-AGE-01, D34)
 - [ ] TASK-052 Iniciar análise e registrar observações (RF-AGE-02, RF-AGE-05)
 - [ ] TASK-053 Registrar visita com acesso, com resumo e confirmação, levando a Atendida (RF-AGE-03)
 - [ ] TASK-053a Registrar visita sem acesso, com contador de tentativas (RF-AGE-03)
 - [ ] TASK-053b Encerrar sem acesso a partir da terceira tentativa (RF-AGE-07)
 - [ ] TASK-053c Guardar o formulário de visita no aparelho quando o envio falhar e reenviar sem duplicar (RF-AGE-03, RNF-11)
-- [ ] TASK-054 Ocultar e republicar com motivo (RF-AGE-04, RF-AGE-06)
+- [ ] TASK-053d Arquivar denúncia improcedente, com motivo e confirmação, levando a Encerrada e ocultando a publicação (RF-AGE-09, D41, D44)
+- [ ] TASK-054 Ocultar e republicar com motivo, dentro da lixeira de 30 dias (RF-AGE-04, RF-AGE-06, D44)
 - [ ] TASK-055 Tela do relatório com período, bairro e prévia (RF-AGE-08)
-- [ ] TASK-056 Gerar o relatório em PDF com jsPDF e AutoTable (RF-AGE-08, ADR-013)
-- [ ] TASK-057 Gerar o relatório em Word com a biblioteca `docx` (RF-AGE-08, ADR-013)
+- [ ] TASK-056 Gerar o relatório em PDF com jsPDF e AutoTable (RF-AGE-08, ADR-012)
+- [ ] TASK-057 Gerar o relatório em Word com a biblioteca `docx` (RF-AGE-08, ADR-012)
 
 ## Fase 6 · Supabase
 
@@ -104,7 +107,8 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 - [ ] TASK-080 Ocorrências com dados reais, visitas gravadas em transação e controle de ações simultâneas (RF-AGE-01 a RF-AGE-03, RF-AGE-07)
 - [ ] TASK-080a Relatório com dados reais, conferindo que `dadosRelatorio` não devolve campos privados (RF-AGE-08, RNF-12)
 - [ ] TASK-081 Ocultação e republicação com versão de decisão (RF-AGE-04, RF-AGE-06)
-- [ ] TASK-082 Correção pelo administrador e pelo cidadão (RF-COR-01; depende de DEP-08)
+- [ ] TASK-081a Rotina diária `limparLixeira`: remove denúncias ocultas há mais de 30 dias, com fotos dos dois buckets (D44, ADR-014)
+- [ ] TASK-082 Correção pelo administrador e pelo cidadão, com recuperação de acesso por protocolo e código (RF-COR-01, D42)
 
 ## Fase 9 · Validação da V1
 
@@ -120,7 +124,7 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 
 ## Decisões pendentes
 
-As decisões e dependências em aberto ficam numa lista única, no [PRD, seção 18](docs/PRD.md) (DEP-01 a DEP-14). As tarefas que dependem de uma delas citam o ID.
+As decisões e dependências em aberto ficam numa lista única, no [PRD, seção 18](docs/PRD.md) (seção 18). As tarefas que dependem de uma delas citam o ID.
 
 ## Fase seguinte (fora da V1)
 

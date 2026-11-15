@@ -47,10 +47,10 @@ Exportação das 47 telas da página **Fluxo de telas · Jornada do Usuário** d
 | Menu de filtros | [23-mapa-menu-de-filtros](23-mapa-menu-de-filtros.png) | RF-MAP-02 |
 | Filtro por período | [24-mapa-filtro-por-periodo](24-mapa-filtro-por-periodo.png), [39-filtro-de-periodos](39-filtro-de-periodos.png) | RF-MAP-02 |
 | Filtro por status | [25-mapa-filtro-por-status](25-mapa-filtro-por-status.png) | RF-MAP-02 |
-| Filtro por origem | [26-mapa-filtro-por-origem](26-mapa-filtro-por-origem.png) | Fora do PRD |
+| Filtro por origem | [26-mapa-filtro-por-origem](26-mapa-filtro-por-origem.png) | Retirado da V1 (D40) |
 | Filtro por localidade e bairros | [27](27-mapa-filtro-por-localidade.png), [28](28-mapa-bairros.png), [40](40-filtro-de-localidades.png), [41](41-mapa-bairros-variante.png) | RF-MAP-02 |
-| Seleção de distrito, rua e área | [29](29-filtro-distritos.png), [30](30-filtro-ruas.png), [31](31-filtro-areas.png) | Fora do aceite da V1 |
-| Mapa com distrito, rua ou área selecionado | [32](32-mapa-distritos-selecionado.png), [33](33-mapa-ruas-selecionado.png), [34](34-mapa-areas-selecionado.png) | Fora do aceite da V1 |
+| Seleção de distrito, rua e área | [29](29-filtro-distritos.png), [30](30-filtro-ruas.png), [31](31-filtro-areas.png) | Retirado da V1 (D40) |
+| Mapa com distrito, rua ou área selecionado | [32](32-mapa-distritos-selecionado.png), [33](33-mapa-ruas-selecionado.png), [34](34-mapa-areas-selecionado.png) | Retirado da V1 (D40) |
 | Mapa · variante | [38-mapa-variante](38-mapa-variante.png) | RF-MAP-01 |
 
 ## Jornada do agente

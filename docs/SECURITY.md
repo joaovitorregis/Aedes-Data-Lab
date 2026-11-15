@@ -25,11 +25,12 @@ O Aedes Data Lab guarda nome, CPF, e-mail e telefone de moradores, além de foto
 ## 3. Dados pessoais
 
 - Nome, CPF, e-mail, telefone, endereço digitado, referência e ponto exato nunca aparecem na versão pública, nem mascarados.
+- A versão pública guarda só a célula da grade de 200 m, nunca o ponto exato (D43, ADR-013).
 - A separação acontece nas tabelas do banco (ADR-004). O navegador do visitante nunca recebe a linha privada.
 - CPF é conferido só no formato e nos dígitos. O sistema não consulta bases externas nem afirma que a identidade foi verificada.
 - Testes e demonstrações usam somente dados fictícios.
 - O resultado das visitas (acesso, foco, depósitos, ações e observações) é interno e nunca vai para a versão pública.
-- O relatório do agente não contém nome, CPF, e-mail ou telefone do morador. O contrato `dadosRelatorio` não lê `report_private`, e o arquivo é gerado no navegador, sem passar por serviço de terceiros (RNF-12, ADR-013).
+- O relatório do agente não contém nome, CPF, e-mail ou telefone do morador. O contrato `dadosRelatorio` não lê `report_private`, e o arquivo é gerado no navegador, sem passar por serviço de terceiros (RNF-12, ADR-012).
 - O formulário de visita guardado no aparelho após falha de envio contém só os campos da visita, nunca dados do morador, e é apagado quando o envio é confirmado ou descartado.
 - Adequação à LGPD (Lei nº 13.709/2018) concluída antes de coletar dados reais: finalidade do CPF, base legal, controlador e encarregado, aviso de privacidade, direitos do titular e retenção por tipo de dado (DEP-06).
 
@@ -42,6 +43,7 @@ O Aedes Data Lab guarda nome, CPF, e-mail e telefone de moradores, além de foto
 - O papel do usuário (agente ou administrador) é lido da tabela `profiles` no servidor, nunca de um dado que o próprio usuário consiga editar.
 - No Storage, as fotos originais ficam no bucket privado, lido só por agentes autorizados; o bucket público recebe só a versão tratada.
 - Ocultar uma denúncia retira também o acesso público às fotos dela.
+- Depois de 30 dias na lixeira, a rotina `limparLixeira` remove o registro, os dados privados, as visitas, o histórico e as fotos dos dois buckets (D44, ADR-014). Cópias de segurança do provedor entram em DEP-06.
 
 ## 5. Envio de arquivos
 
@@ -58,6 +60,7 @@ Cada foto é conferida no servidor:
 - Todo dado recebido é validado no servidor: tipo, tamanho, campos obrigatórios e valores permitidos.
 - Textos livres são exibidos como texto, nunca interpretados como HTML.
 - O território é validado pelo ponto marcado no mapa, não pelo bairro digitado.
+- A recuperação de acesso do cidadão responde igual para protocolo inexistente ou sem vínculo, tem limite de pedidos e só entrega a autorização depois do código (D42).
 - A etapa e a versão da ocorrência são conferidas antes de cada gravação.
 
 ## 7. Abuso e custo

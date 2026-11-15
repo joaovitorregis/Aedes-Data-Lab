@@ -107,7 +107,11 @@ Quatro círculos numerados ligados por uma linha, no topo do formulário, com o 
 
 ### Mapa
 
-Mapa centrado em Itambé, marcadores em `--cor-marcador` e botões flutuantes "Filtros" e "Centralizar em mim", como nas telas 16 e 17. O mapa de Ocorrências dos agentes usa o mesmo componente, com marcadores diferenciados por etapa; as cores desses marcadores ainda não estão desenhadas.
+O mapa público usa como referência atual a seção [Mapa público · v2 · referência atual](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y?node-id=2992-1006) na página `02 · Mapa`. Ela substitui os seis quadros antigos dessa página, agora ocultos e nomeados como arquivo. Há estados editáveis para mapa padrão, ocorrência selecionada, filtros abertos e desktop.
+
+O título é `Mapa de ocorrências` e o subtítulo explica que são relatos de possíveis criadouros em Itambé/PE. As áreas desenhadas são ilustrativas: a precisão pública e a cartografia real continuam pendentes. Filtros da V1: período, bairro e situação. O resumo da ocorrência mostra apenas categoria, bairro, data, situação, foto e descrição pública. A visão do agente continua separada e não recebe esta revisão.
+
+Os quadros antigos na página `Fluxo de telas - Jornada do Usuário` ainda precisam ser substituídos e suas ligações de protótipo refeitas antes de usar aquela jornada como referência do mapa. O design novo ainda não representa mapa funcional, estados de erro ou todos os tamanhos de tela.
 
 ## 6. Estados obrigatórios
 

@@ -6,7 +6,7 @@ Retrato do momento atual do projeto. Diferente de [DECISIONS.md](./DECISIONS.md)
 
 ## Situação atual
 
-A documentação está alinhada ao [PRD 2.3](./PRD.md), e o fluxo da denúncia está desenhado no Figma. A implementação está no começo: o `main` tem a estrutura das 12 páginas em `site/`, todas ainda com conteúdo inicial, sem envio, banco, autenticação ou mapa.
+A documentação está alinhada ao [PRD 2.4](./PRD.md), e o fluxo da denúncia está desenhado no Figma. A implementação está no começo: o `main` tem a estrutura das 12 páginas em `site/`, todas ainda com conteúdo inicial, sem envio, banco, autenticação ou mapa.
 
 ## Concluído
 
@@ -33,7 +33,7 @@ As branches `Laura-Galdino`, `Rhillary` e `sky` estão atrás do `main`. Antes d
 
 - O fluxo da denúncia no Figma tem telas inteiras, mas ainda não está exportado para `wireframes/` (TASK-013a). Até lá, `wireframes/` mostra a denúncia anterior; vale o PRD.
 - O mapa das telas de localização é uma imagem ilustrativa de Itambé/BA, não de Itambé/PE (D37, TASK-013b). Ele não valida território nem posição de pontos.
-- Algumas telas antigas do Figma divergem do PRD: nomes de etapa, filtros extras, agenda de visitas e a área do agente anterior ao PRD 2.2. As correções estão na Fase 1 de [TASKS.md](../TASKS.md).
+- Algumas telas antigas do Figma divergem do PRD: nomes de etapa, filtros fora da V1 (D40, TASK-012c), agenda de visitas e a área do agente anterior ao PRD 2.2. As correções estão na Fase 1 de [TASKS.md](../TASKS.md).
 - O CSS compartilhado já declara os tokens (`:root` em `site/css/estilos.css`), mas os componentes base ainda faltam (TASK-020).
 - O Figma não tem estilos nem variáveis cadastrados (TASK-010).
 - A etiqueta Em análise tem dois estilos no Figma, e as etiquetas Recebida, Encerrada, Oculta e Sem acesso não foram desenhadas (TASK-012a).
@@ -42,8 +42,6 @@ As branches `Laura-Galdino`, `Rhillary` e `sky` estão atrás do `main`. Antes d
 
 ## Decisões pendentes
 
-Todas estão no [PRD, seção 18](./PRD.md) (DEP-01 a DEP-14). As que bloqueiam o próximo trabalho:
+Todas estão no [PRD, seção 18](./PRD.md) e são de preparação técnica ou operacional; nenhuma decisão de produto está em aberto. As que bloqueiam o próximo trabalho:
 
-- DEP-13 (filtros extras nas telas) antes dos filtros do mapa.
-- DEP-14 (raio de 150 m) antes do aviso de ocorrências próximas.
 - DEP-01 (mapa real e contornos) antes da validação de território e da troca do mapa ilustrativo.

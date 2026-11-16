@@ -2,11 +2,11 @@
 
 Retrato do momento atual do projeto. Diferente de [DECISIONS.md](./DECISIONS.md), que guarda escolhas permanentes, este arquivo muda a cada entrega. Quem concluir uma tarefa que altere o estado do projeto atualiza este arquivo no mesmo PR.
 
-**Última atualização:** 14/11/2026
+**Última atualização:** 16/11/2026
 
 ## Situação atual
 
-A documentação está alinhada ao [PRD 2.4](./PRD.md), e o fluxo da denúncia está desenhado no Figma. A implementação está no começo: o `main` tem a estrutura das 12 páginas em `site/`, todas ainda com conteúdo inicial, sem envio, banco, autenticação ou mapa.
+A documentação está alinhada ao [PRD 2.8](./PRD.md), e o fluxo da denúncia e a jornada do agente estão desenhados no Figma. A implementação está no começo: o `main` tem a estrutura das 12 páginas em `site/`, todas ainda com conteúdo inicial, sem envio, banco, autenticação ou mapa.
 
 ## Concluído
 
@@ -16,6 +16,7 @@ A documentação está alinhada ao [PRD 2.4](./PRD.md), e o fluxo da denúncia e
 - Área do agente definida no PRD 2.2 a partir do levantamento com a coordenação de endemias: ficha do PNCD não digitalizada, registro de visita, encerramento após três tentativas sem acesso e relatório em PDF e Word
 - Fluxo da denúncia definido no PRD 2.3: da tela Início ao protocolo, com e-mail e telefone obrigatórios e código confirmado depois dos dados, por e-mail, SMS ou WhatsApp
 - Fluxo da denúncia desenhado no Figma: 22 telas na seção 02 da jornada do usuário, com os estados de erro. A versão anterior está arquivada fora da jornada, e os links de entrada abrem a Localização nova
+- Jornada do agente revista no PRD 2.8 e desenhada no Figma, na seção "Jornada do agente · telas e conexões" da página do fluxo: origem cidadão ou agente, arquivar como ação única, análise e visita num passo, foco em local sem denúncia, perguntas na linguagem do cidadão e relatório novo. É protótipo com dados de exemplo, ainda não validado com agentes
 
 ## Em andamento
 
@@ -37,12 +38,12 @@ As branches `Laura-Galdino`, `Rhillary` e `sky` estão atrás do `main`. Antes d
 - Algumas telas antigas do Figma divergem do PRD: nomes de etapa, filtros fora da V1 (D40, TASK-012c), agenda de visitas e a área do agente anterior ao PRD 2.2. As correções estão na Fase 1 de [TASKS.md](../TASKS.md).
 - O CSS compartilhado já declara os tokens (`:root` em `site/css/estilos.css`), mas os componentes base ainda faltam (TASK-020).
 - O Figma não tem estilos nem variáveis cadastrados (TASK-010).
-- A etiqueta Em análise tem dois estilos no Figma, e as etiquetas Recebida, Encerrada, Oculta e Sem acesso não foram desenhadas (TASK-012a).
+- A etiqueta Em análise tem dois estilos no Figma. As etiquetas da área do agente foram desenhadas na jornada nova, mas as cores ainda não viraram tokens do DESIGN.md (TASK-012a).
 - A página de login dos agentes se chama `agentes/Login.html`, com inicial maiúscula, fora do padrão de nomes do RULES.md. Renomear junto com a TASK-025.
 - As páginas `agentes/mapa.html`, `agentes/meu-trabalho.html` e `agentes/dashboard.html` continuam como espaço reservado, fora da V1.
 
 ## Decisões pendentes
 
-Todas estão no [PRD, seção 18](./PRD.md) e são de preparação técnica ou operacional; nenhuma decisão de produto está em aberto. As que bloqueiam o próximo trabalho:
+As dependências estão no [PRD, seção 18](./PRD.md) e são de preparação técnica ou operacional. Três pontos de produto ficaram a confirmar no PRD 2.8: o prazo da lixeira para ocorrências já atendidas (D44), o que acontece ao sair do registro da visita sem gravar (D52) e como contar no relatório a ocorrência arquivada depois de atendida (RF-AGE-08). As que bloqueiam o próximo trabalho:
 
 - DEP-01 (mapa real e contornos) antes da validação de território e da troca do mapa ilustrativo.

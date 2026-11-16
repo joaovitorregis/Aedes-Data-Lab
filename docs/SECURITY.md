@@ -15,7 +15,7 @@ O Aedes Data Lab guarda nome, e-mail e telefone de moradores, além de fotos e d
 |---|---|---|
 | Visitante | Ler a versão pública do mapa; enviar denúncia após confirmar o contato escolhido | Ler qualquer dado privado ou histórico |
 | Cidadão responsável pelo envio | Ler e corrigir os campos da própria denúncia enquanto ela está Recebida | Ver denúncias de outras pessoas, observações ou histórico interno |
-| Agente autorizado | Ler todas as ocorrências de Itambé, incluindo dados privados; analisar, registrar visitas, encerrar sem acesso, arquivar, gerar relatório, ocultar, republicar e corrigir os campos de qualquer denúncia, com motivo | Trocar o contato confirmado; gerenciar contas; apagar histórico |
+| Agente autorizado | Ler todas as ocorrências de Itambé, incluindo dados privados; analisar, registrar visitas, registrar foco em local sem denúncia, encerrar sem acesso, arquivar, devolver ao mapa, gerar relatório e corrigir os campos de qualquer denúncia, com motivo | Trocar o contato confirmado; gerenciar contas; apagar histórico |
 
 - Toda permissão é conferida no servidor. Esconder um botão ou uma página não conta como proteção.
 - Conta revogada perde o acesso na próxima operação.
@@ -28,7 +28,8 @@ O Aedes Data Lab guarda nome, e-mail e telefone de moradores, além de fotos e d
 - A separação acontece nas tabelas do banco (ADR-004). O navegador do visitante nunca recebe a linha privada.
 - O produto não coleta CPF (D07) e não afirma que a identidade de quem denuncia foi verificada.
 - Testes e demonstrações usam somente dados fictícios.
-- O resultado das visitas (acesso, foco, depósitos, ações e observações) é interno e nunca vai para a versão pública.
+- O resultado das visitas (acesso, onde está o foco, recipientes, larvas, o que foi feito e observações) é interno e nunca vai para a versão pública.
+- A versão pública mostra a origem da ocorrência só como "feita por cidadão" ou "feita por agente". O nome do agente que registrou nunca vai para a versão pública (D50).
 - O relatório do agente não contém nome, e-mail ou telefone do morador. O contrato `dadosRelatorio` não lê `report_private`, e o arquivo é gerado no navegador, sem passar por serviço de terceiros (RNF-12, ADR-012).
 - O formulário de visita guardado no aparelho após falha de envio contém só os campos da visita, nunca dados do morador, e é apagado quando o envio é confirmado ou descartado.
 - Adequação à LGPD (Lei nº 13.709/2018) concluída antes de coletar dados reais: base legal, controlador e encarregado, aviso de privacidade, direitos do titular e retenção por tipo de dado (DEP-06).
@@ -41,8 +42,9 @@ O Aedes Data Lab guarda nome, e-mail e telefone de moradores, além de fotos e d
 - `report_visits` segue as mesmas regras de `report_events`: leitura só por agentes autorizados, escrita só por Edge Function.
 - O papel do usuário (agente) é lido da tabela `profiles` no servidor, nunca de um dado que o próprio usuário consiga editar.
 - No Storage, as fotos originais ficam no bucket privado, lido só por agentes autorizados; o bucket público recebe só a versão tratada.
-- Ocultar uma denúncia retira também o acesso público às fotos dela.
-- Depois de 30 dias na lixeira, a rotina `limparLixeira` remove o registro, os dados privados, as visitas, o histórico e as fotos dos dois buckets (D44, ADR-014). Cópias de segurança do provedor entram em DEP-06.
+- Arquivar uma denúncia retira também o acesso público às fotos dela.
+- A ocorrência criada por agente (RF-AGE-10) segue as mesmas regras: só Edge Function grava, com o papel conferido no servidor, e as fotos passam pelo mesmo tratamento das do cidadão.
+- Depois de 30 dias na lixeira, a rotina `limparLixeira` remove o registro, os dados privados, as visitas, o histórico e as fotos dos dois buckets (D44, ADR-017). Cópias de segurança do provedor entram em DEP-06.
 
 ## 5. Envio de arquivos
 

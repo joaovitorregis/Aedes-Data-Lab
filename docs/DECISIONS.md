@@ -1,6 +1,6 @@
 # Aedes Data Lab: Decisões técnicas
 
-Registro das decisões de arquitetura (ADR) e do motivo de cada uma. As decisões de produto (D01 a D47) ficam no [PRD](./PRD.md), seção 5, e as questões ainda em aberto, na seção 18 do PRD.
+Registro das decisões de arquitetura (ADR) e do motivo de cada uma. As decisões de produto (D01 a D56) ficam no [PRD](./PRD.md), seção 5, e as questões ainda em aberto, na seção 18 do PRD.
 
 Uma ADR não é reescrita para mudar de ideia. A nova escolha entra como outra ADR com a linha **Substitui**, e a antiga recebe **Substituída por** e fica no arquivo como histórico. Ninguém, pessoa ou IA, troca uma escolha daqui sem passar por esse processo.
 
@@ -48,7 +48,7 @@ Uma ADR não é reescrita para mudar de ideia. A nova escolha entra como outra A
 
 ## ADR-008 · Toda mudança de dados passa por função de servidor
 
-- **Decisão:** o navegador só lê dados diretamente; envio, confirmação do código, mudança de etapa, registro de visita, ocultação e correção passam por Edge Functions do Supabase.
+- **Decisão:** o navegador só lê dados diretamente; envio, confirmação do código, mudança de etapa, registro de visita, arquivamento e correção passam por Edge Functions do Supabase.
 - **Motivo:** permissão, etapa, território e versão precisam ser conferidos num lugar que o usuário não controla.
 - **Consequência:** as políticas de RLS não liberam inserção, alteração nem exclusão pelo navegador nas tabelas de denúncia. As funções usam a chave secreta do projeto, que fica só no servidor.
 
@@ -82,6 +82,8 @@ Uma ADR não é reescrita para mudar de ideia. A nova escolha entra como outra A
 
 ## ADR-014 · Ocultar como lixeira de 30 dias
 
+- **Substituída por:** ADR-017.
+
 - **Decisão:** ocultar leva a denúncia a uma lixeira; depois de 30 dias sem republicação, uma rotina diária a remove definitivamente do banco de dados e do armazenamento (D44).
 - **Motivo:** tira o conteúdo inadequado do ar na hora, mas deixa o erro do agente reversível por um prazo, e evita guardar para sempre o que foi retirado, o que reduz dado pessoal retido (DEP-06) e custo de armazenamento (D25).
 - **Consequência:** é exceção a D24. A remoção apaga também as visitas e o histórico da denúncia, e os totais de relatórios gerados depois dela não a incluem. Cópias de segurança do provedor podem guardar os dados por mais tempo, e isso entra em DEP-06 e DEP-07. As denúncias arquivadas (D41) também entram na lixeira. A rotina nunca remove uma denúncia que não esteja oculta, então o histórico das válidas fica por prazo indefinido (D24). A rotina é testada com data simulada.
@@ -97,6 +99,13 @@ Uma ADR não é reescrita para mudar de ideia. A nova escolha entra como outra A
 - **Decisão:** publicar o site estático na Vercel (D46).
 - **Motivo:** o deploy sai direto do GitHub, com prévia por PR e domínio próprio, e combina com um site sem etapa de build (ADR-001).
 - **Consequência:** o plano gratuito da Vercel é voltado a uso pessoal e não comercial, então um serviço mantido por instituição pode exigir o plano pago; isso entra em DEP-07, e pagar pouco é aceito (D25). Dados e funções de servidor ficam no Supabase, não na Vercel.
+
+## ADR-017 · Arquivar como lixeira de 30 dias
+
+- **Substitui:** ADR-014.
+- **Decisão:** arquivar leva a denúncia a uma lixeira, em qualquer etapa; depois de 30 dias sem volta ao mapa, uma rotina diária a remove definitivamente do banco de dados e do armazenamento (D44, D48, D49).
+- **Motivo:** ocultar e arquivar passaram a ser a mesma ação (D48). O restante do motivo da ADR-014 continua valendo: tira o conteúdo do ar na hora, deixa o erro do agente reversível por um prazo e evita guardar para sempre o que foi retirado.
+- **Consequência:** o estado de publicação `oculta` passa a se chamar `arquivada`; `ocultarPublicacao` é incorporado a `arquivarOcorrencia`, e `republicarOcorrencia` vira `voltarAoMapa`. Arquivar em Recebida ou Em análise também encerra a ocorrência; em Atendida ou Encerrada, a etapa não muda. Onde a ADR-008 cita ocultação, leia arquivamento. **Em aberto:** como arquivar agora vale para ocorrências já atendidas, a remoção em 30 dias apagaria visitas feitas; o prazo e o que é removido ainda precisam ser rediscutidos (PRD D44).
 
 ## Modelo para uma nova decisão
 

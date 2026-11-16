@@ -1,6 +1,6 @@
 # Aedes Data Lab: Plano de testes
 
-Este plano define o que significa "funcionando" para cada parte da V1. Os cenários AC-01 a AC-16 são os critérios de aceite do [PRD](./PRD.md), seção 15; aqui eles viram passos que qualquer pessoa da equipe consegue executar e repetir.
+Este plano define o que significa "funcionando" para cada parte da V1. Os cenários AC-01 a AC-17 são os critérios de aceite do [PRD](./PRD.md), seção 15; aqui eles viram passos que qualquer pessoa da equipe consegue executar e repetir.
 
 ## 1. Como testar
 
@@ -62,7 +62,8 @@ Repetir o cenário três vezes, uma por canal: e-mail, telefone com SMS e telefo
 
 **AC-06 · Mapa e filtros** (RF-MAP-01, RF-MAP-02, RF-AGE-01, RNF-07)
 - [ ] Visitante vê área aproximada, bairro, categoria, data, etapa, foto e descrição
-- [ ] Tocar no ponto ou no cartão abre uma prévia curta (categoria, bairro, data, etapa, primeira foto e descrição) e nenhuma página de detalhe
+- [ ] Tocar no ponto ou no cartão abre uma prévia curta (categoria, bairro, data, etapa, primeira foto, descrição e origem) e nenhuma página de detalhe
+- [ ] A prévia mostra "feita por cidadão" ou "feita por agente" e nunca o nome de quem fez
 - [ ] Denúncias atendidas continuam no mapa
 - [ ] Filtros por localidade, período e etapa mostram o mesmo recorte nos marcadores e na lista
 - [ ] O mapa não oferece outros filtros (origem, tipo, distrito, rua ou área)
@@ -71,6 +72,7 @@ Repetir o cenário três vezes, uma por canal: e-mail, telefone com SMS e telefo
 
 **AC-07 · Privacidade** (RF-MAP-01, RNF-05, RNF-10)
 - [ ] Na aba Rede do navegador, nenhuma resposta pública contém nome, e-mail, telefone, referência ou ponto exato
+- [ ] Nenhuma resposta pública contém o nome do agente que registrou uma ocorrência
 - [ ] A resposta pública traz a célula da grade e nunca o ponto exato; duas denúncias na mesma célula mostram a mesma área
 - [ ] Em área pouco povoada e perto de uma divisa, a célula não permite deduzir o ponto
 - [ ] As fotos públicas não têm coordenadas nem dados da câmera
@@ -85,13 +87,17 @@ Repetir o cenário três vezes, uma por canal: e-mail, telefone com SMS e telefo
 
 **AC-09 · Atendimento** (RF-AGE-01 a RF-AGE-03, RF-AGE-05, RNF-11)
 - [ ] Abrir e fechar o detalhe não muda a etapa
-- [ ] A lista mostra o resumo por etapa, os dias em aberto e começa pelas mais antigas
+- [ ] A lista mostra o resumo, a origem (cidadão ou agente) e os dias em aberto de cada ocorrência, e começa pelas mais antigas
+- [ ] Com um filtro aplicado, o resumo mostra os números do recorte
+- [ ] O filtro de origem mostra só as ocorrências de cidadãos ou só as de agentes
+- [ ] O detalhe mostra a linha do tempo com o nome de quem fez cada passo
 - [ ] Lista e mapa de Ocorrências mostram o mesmo recorte com os mesmos filtros
 - [ ] "Como chegar" abre o aplicativo de mapas no ponto exato
 - [ ] O aviso de ocorrências próximas aparece para uma denúncia a 100 m e não para uma a 200 m
-- [ ] "Registrar visita" só aparece com a ocorrência Em análise
-- [ ] Visita com acesso sem tipo do local, sem resposta de foco ou sem ação é recusada, com o erro no campo
-- [ ] Foco = Sim sem nenhum depósito marcado é recusado
+- [ ] Na ocorrência Recebida, "Iniciar análise" leva a Em análise e abre o registro da visita, sem confirmação no meio; "Registrar visita" só aparece com a ocorrência Em análise
+- [ ] Visita com acesso sem "onde está o foco", sem resposta de água, sem resposta de larvas ou sem nada em "o que foi feito" é recusada, com o erro no campo
+- [ ] "Outro local" sem texto digitado é recusado
+- [ ] Água acumulada = Sim sem nenhum recipiente marcado é recusado
 - [ ] Data futura ou anterior ao recebimento é recusada
 - [ ] Visita com acesso completa mostra o resumo, e depois de confirmar a ocorrência fica Atendida
 - [ ] Observação registrada fica no histórico e não muda a etapa
@@ -103,19 +109,22 @@ Repetir o cenário três vezes, uma por canal: e-mail, telefone com SMS e telefo
 - [ ] Duas abas agindo na mesma ocorrência: a ação feita com a tela desatualizada é recusada, sem apagar a outra
 - [ ] Clicar duas vezes em confirmar a visita grava uma única visita
 
-**AC-11 · Ocultação** (RF-AGE-04, RNF-06)
-- [ ] Depois de ocultar, a denúncia e suas fotos saem do mapa e das URLs públicas
+**AC-11 · Arquivamento** (RF-AGE-04, RNF-06)
+- [ ] "Arquivar denúncia" aparece em "Outras ações" em qualquer etapa; sem motivo ou sem confirmação é recusado, também em chamada direta ao serviço
+- [ ] Arquivar em Recebida ou Em análise leva a Encerrada com "Arquivada: motivo", autor e data; arquivar em Atendida ou Encerrada mantém a etapa
+- [ ] Clicar duas vezes em arquivar grava um único evento
+- [ ] Depois de arquivar, a denúncia e suas fotos saem do mapa e das URLs públicas
 - [ ] O agente continua vendo o registro e o motivo
 - [ ] Uma retentativa antiga de publicação não traz a denúncia de volta
-- [ ] A denúncia oculta mostra os dias que faltam para a remoção
+- [ ] A denúncia arquivada mostra os dias que faltam para a remoção
 - [ ] Com a data simulada 30 dias depois, a rotina remove registro, dados privados, visitas, histórico e fotos dos dois buckets; antes disso, nada é removido
-- [ ] Denúncia republicada dentro do prazo não é removida
-- [ ] Denúncia que nunca foi oculta continua no banco, com as visitas, mesmo depois de muito tempo
-- [ ] Depois de restaurar uma cópia de teste, a rotina remove de novo as denúncias ocultas há mais de 30 dias
+- [ ] Denúncia devolvida ao mapa dentro do prazo não é removida
+- [ ] Denúncia que nunca foi arquivada continua no banco, com as visitas, mesmo depois de muito tempo
+- [ ] Depois de restaurar uma cópia de teste, a rotina remove de novo as denúncias arquivadas há mais de 30 dias
 
-**AC-13 · Republicação** (RF-AGE-06, RNF-06)
-- [ ] Republicar exige ação explícita, mantém a etapa e registra as duas decisões no histórico
-- [ ] Republicar uma denúncia já removida não é possível
+**AC-13 · Volta ao mapa** (RF-AGE-06, RNF-06)
+- [ ] Voltar ao mapa exige ação explícita, mantém a etapa e registra as duas decisões no histórico
+- [ ] Devolver ao mapa uma denúncia já removida não é possível
 
 **AC-14 · Correção** (RF-COR-01, RNF-03, RNF-05, RNF-09)
 - [ ] O agente corrige uma denúncia em qualquer etapa, com motivo
@@ -128,23 +137,31 @@ Repetir o cenário três vezes, uma por canal: e-mail, telefone com SMS e telefo
 - [ ] Trocar o contato confirmado é recusado quando vem do agente (só a equipe do projeto troca, direto no Supabase)
 - [ ] O valor original e o motivo ficam no histórico; protocolo, etapa e visibilidade não mudam
 
-**AC-15 · Sem acesso e encerramento** (RF-AGE-03, RF-AGE-07, RF-AGE-09)
+**AC-15 · Sem acesso e encerramento** (RF-AGE-03, RF-AGE-07)
 - [ ] Visita com "Imóvel fechado" mantém Em análise, registra "Visita sem acesso" no histórico e mostra "Sem acesso (1 tentativa)" na lista
 - [ ] O filtro "Sem acesso" mostra só ocorrências Em análise com pelo menos uma tentativa; Encerrada sem acesso não aparece nele
 - [ ] Com uma ou duas tentativas, "Encerrar sem acesso" não aparece, e a chamada direta ao serviço é recusada
 - [ ] Na terceira tentativa, o botão aparece; ao confirmar, a ocorrência fica Encerrada com o motivo e o número de tentativas
-- [ ] Encerrada sem acesso não reabre, não aceita visita e aparece como Encerrada no mapa público
-- [ ] "Arquivar" aparece em Recebida e Em análise e não aparece em Atendida nem Encerrada; a chamada direta ao serviço também é recusada nessas etapas
-- [ ] Arquivar sem motivo ou sem confirmação é recusado; confirmado, a ocorrência fica Encerrada com "Arquivada: motivo", autor e data
-- [ ] Arquivar oculta a publicação na mesma ação: a denúncia e as fotos saem do mapa e das URLs públicas e a contagem de 30 dias começa; clicar duas vezes grava um único evento
+- [ ] Encerrada sem acesso não reabre, não aceita visita e aparece como Encerrada no mapa público enquanto não for arquivada
 
 **AC-16 · Relatório** (RF-AGE-08, RNF-12)
 - [ ] Gerar PDF e Word do mês atual, para todos os bairros e para um bairro
 - [ ] As recebidas do relatório batem com a lista filtrada pelo mesmo período e bairro, e as pendentes com a lista filtrada por bairro e pelas etapas Recebida e Em análise
+- [ ] O resumo separa denúncias de cidadãos de registros de agentes, e Encerradas sem acesso de Arquivadas
+- [ ] Os recipientes com água aparecem pelos nomes do formulário, sem códigos
 - [ ] Buscar no texto do PDF e do Word pelo nome, e-mail e telefone de teste do morador: nenhum aparece
 - [ ] Período sem visitas gera o arquivo com o aviso "Nenhuma visita no período"
 - [ ] O PDF abre num leitor comum; o Word abre no Microsoft Word e no LibreOffice e pode ser editado
 - [ ] A geração funciona no celular (390px) e no computador
+
+**AC-17 · Foco em local sem denúncia** (RF-AGE-10, RF-MAP-01)
+- [ ] Em "Registrar visita", o agente escolhe "Local sem denúncia" e preenche local, o que encontrou, descrição, fotos e o que foi feito
+- [ ] Campo obrigatório vazio impede o envio e indica o campo; ponto fora de Itambé é recusado
+- [ ] A ocorrência nasce Atendida, com origem agente, protocolo e uma visita em nome do agente
+- [ ] No mapa público, ela aparece como "feita por agente", com foto e descrição, sem o nome do agente
+- [ ] Clicar duas vezes em confirmar cria uma única ocorrência
+- [ ] Conta sem papel de agente não cria o registro, nem por chamada direta ao serviço
+- [ ] O registro entra no relatório como registro de agente
 
 ### Interface
 
@@ -162,16 +179,17 @@ Roteiro completo, executado antes de cada entrega de fase e antes do lançamento
 Abrir o site → Início: denunciar → preencher local, foco, fotos e dados → confirmar o código
 → revisar e enviar → anotar protocolo
 → recarregar → ver a denúncia no mapa → entrar como agente → encontrar pelo protocolo
-→ iniciar análise → registrar observação → registrar visita sem acesso → registrar visita
-com acesso → ver "Atendida" no mapa → ocultar → confirmar que saiu do mapa → republicar
-→ baixar o relatório do mês em PDF e Word → conferir a visita no relatório → sair
+→ iniciar análise e registrar visita sem acesso → registrar observação → registrar visita
+com acesso → ver "Atendida" no mapa → arquivar → confirmar que saiu do mapa → voltar ao mapa
+→ registrar foco em local sem denúncia → ver "feita por agente" no mapa
+→ baixar o relatório do mês em PDF e Word → conferir as visitas no relatório → sair
 ```
 
 Quando o projeto tiver `package.json`, esse roteiro pode ser automatizado com Playwright, e as políticas de RLS testadas no Supabase local. Até lá, ele é executado à mão.
 
 ## 5. Antes do lançamento
 
-- [ ] AC-01 a AC-16 aprovados no ambiente de teste, com evidências
+- [ ] AC-01 a AC-17 aprovados no ambiente de teste, com evidências
 - [ ] Mesmo roteiro de ponta a ponta executado no endereço publicado, não só no computador local
 - [ ] Testes de página recarregada, endereço direto, usuário sem login, rede lenta e banco vazio
 - [ ] Lista de verificação do [SECURITY.md](./SECURITY.md) concluída

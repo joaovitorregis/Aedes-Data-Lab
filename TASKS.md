@@ -15,6 +15,7 @@ Lista de trabalho da V1, dividida em fases pequenas. Cada tarefa cita a tela e o
 - [x] TASK-002 Concluir as telas no Figma e exportar para `wireframes/`
 - [x] TASK-003 Organizar a documentação em PRD, ARCHITECTURE, DESIGN, RULES, TASKS, DECISIONS, MEMORY, TEST_PLAN e SECURITY
 - [x] TASK-004 Registrar no PRD 2.3 a jornada completa da denúncia e alinhar os demais documentos
+- [x] TASK-005 Registrar no PRD 2.8 a jornada do agente revista e alinhar os demais documentos
 
 ## Fase 1 · Ajustes de design no Figma
 
@@ -23,8 +24,8 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 - [ ] TASK-010 Cadastrar as cores, fontes e raios do [DESIGN.md](docs/DESIGN.md) como estilos ou variáveis no Figma
 - [ ] TASK-011 Trocar Segoe UI por Inter nas telas que ainda usam a fonte antiga
 - [ ] TASK-012 Usar os nomes de etapa do PRD: o filtro de status mostra "Não visualizados / Resolvidos" e a área dos agentes escreve "Atendido" (telas 25, 46 e 47; PRD seção 10)
-- [ ] TASK-012a Unificar as etiquetas de etapa: Em análise usa fundo `#D9CBB0` no mapa público e `#FFEA83` na área dos agentes, com raios diferentes; desenhar também Recebida, Encerrada, Oculta e Sem acesso (DESIGN.md, seção 5; PRD D29)
-- [ ] TASK-012b Desenhar o botão de ocultar publicação e os estados de foco, desabilitado e "Enviando…" dos botões (DESIGN.md, seção 5)
+- [ ] TASK-012a Unificar as etiquetas de etapa: Em análise usa fundo `#D9CBB0` no mapa público e `#FFEA83` na área dos agentes, com raios diferentes; transformar em tokens as cores de Recebida, Encerrada, Arquivada, Sem acesso e da origem, já desenhadas na jornada do agente (DESIGN.md, seção 5; PRD D29, D50)
+- [ ] TASK-012b Desenhar os estados de foco, desabilitado e "Enviando…" dos botões (DESIGN.md, seção 5); o botão de ocultar deixou de existir (D48)
 - [ ] TASK-012c Retirar do Figma os filtros fora da V1 (origem, distrito, rua e área) e as telas de mapa que dependem deles: telas 26 e 29 a 34 (D40)
 - [x] TASK-013 Desenhar a denúncia completa da tela Início ao protocolo, com a confirmação por código depois dos dados (e-mail, SMS ou WhatsApp) e os estados de erro (D35, D36, RF-AUT-01)
 - [ ] TASK-013a Exportar as telas da denúncia do Figma para `wireframes/` e atualizar o README da pasta
@@ -32,12 +33,14 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 - [ ] TASK-013c Marcar o endereço digitado como obrigatório na tela 02 Localização e desenhar o erro de campo vazio (D39)
 - [ ] TASK-013d Tirar o campo CPF das telas do Figma (04, 04a a 04c, revisão e textos de privacidade) e desenhar a escolha de canal com SMS e WhatsApp como "em breve" (D07, D45)
 - [ ] TASK-014 Desenhar a correção da denúncia pelo cidadão enquanto ela está Recebida e a recuperação do acesso por protocolo e código (RF-COR-01, D26, D42)
-- [ ] TASK-015 Redesenhar o detalhe da ocorrência: fotos ampliáveis, "Como chegar", endereço e referência, bloco do morador com telefone para ligar, estado de publicação (na Oculta, os dias para a remoção), ocorrências próximas em 150 m, histórico com visitas e botões por etapa (incluindo Arquivar); ocultar e republicar num menu (tela 46; RF-AGE-01 a RF-AGE-07)
-- [ ] TASK-015a Desenhar a tela Registrar visita, com os estados com acesso, sem acesso e erro de envio (PRD seção 8.1; RF-AGE-03)
-- [ ] TASK-015b Desenhar as opções de toque e a janela de confirmação, incluindo "Encerrar sem acesso" e "Arquivar" com motivo e aviso de que a denúncia sai do mapa (DESIGN.md, seção 5; RF-AGE-03, RF-AGE-07, RF-AGE-09)
-- [ ] TASK-015c Redesenhar Ocorrências: resumo por etapa, dias em aberto, etiquetas Sem acesso e Oculta, filtro Sem acesso, ordem por mais antigas, botão Lista/Mapa e marcadores por etapa; tirar a barra inferior; Ocorrências, Relatório e Sair ficam no menu ☰ (tela 47; RF-AGE-01)
-- [ ] TASK-015d Desenhar a tela Relatório: período, bairro, formato, prévia e estado sem dados (RF-AGE-08)
+- [ ] TASK-015 Redesenhar o detalhe da ocorrência: fotos ampliáveis, "Como chegar", endereço e referência, quem fez (morador com telefone para ligar, ou o agente que registrou), origem, visita registrada, ocorrências próximas em 150 m, linha do tempo com o nome de quem fez cada passo e botões por etapa (Recebida só com Iniciar análise); Corrigir dados, Arquivar, Adicionar observação e Voltar ao mapa em "Outras ações" (RF-AGE-01 a RF-AGE-07) · desenhado no Figma em 15/11/2026, a validar
+- [ ] TASK-015a Desenhar a tela Registrar visita, com as perguntas na linguagem do cidadão (D53), os quatro tipos de acesso, a opção Local sem denúncia (RF-AGE-10) e o erro de envio (PRD seção 8.1; RF-AGE-03) · desenhado no Figma em 15/11/2026, a validar; falta o erro de envio
+- [ ] TASK-015b Desenhar as opções de toque e a janela de confirmação, incluindo "Encerrar sem acesso", "Arquivar" com motivo e aviso de que a denúncia sai do mapa, e "Voltar ao mapa" (DESIGN.md, seção 5; RF-AGE-03, RF-AGE-04, RF-AGE-06, RF-AGE-07) · desenhado no Figma em 15/11/2026, a validar
+- [ ] TASK-015c Redesenhar Ocorrências: resumo que acompanha os filtros (D54), origem em cada cartão e no filtro (D50), dias em aberto, etiquetas Sem acesso e Arquivada, filtro Sem acesso, ordem por mais antigas, botão Lista/Mapa e marcadores por etapa; tirar a barra inferior; Ocorrências, Registrar visita, Relatório e Sair ficam no menu ☰ (RF-AGE-01) · desenhado no Figma em 15/11/2026, a validar
+- [ ] TASK-015d Desenhar a tela Relatório: período, bairro, formato, resumo em três grupos, por bairro, visitas, recipientes e pendentes, o arquivo em A4 e o estado sem dados (RF-AGE-08, D56) · desenhado no Figma em 15/11/2026, a validar; falta o estado sem dados
 - [ ] TASK-015e Desenhar Corrigir dados pelo agente: campos editáveis, contato confirmado só para leitura, motivo obrigatório e revisão antes → depois (RF-COR-01, D20, D42)
+- [ ] TASK-015f Mostrar a origem ("Feita por cidadão" ou "Feita por agente") na prévia do mapa público, sem nome (D50, RF-MAP-01) · desenhado no Figma em 15/11/2026, a validar
+- [ ] TASK-015g Desenhar a tela única de erro da área do agente (D55) · desenhado no Figma em 15/11/2026, a validar
 - [ ] TASK-016 Retirar "Programar visita", a caixa "Conclusão" e o botão "Salvar conclusão e marcar atendimento" da tela 46; a conclusão passa a ser feita em Registrar visita (D28)
 - [ ] TASK-016a Retirar a tela 42 (mapa do agente), que passa a ficar dentro de Ocorrências (RF-AGE-01)
 - [ ] TASK-016b Trocar os bairros fictícios das telas (Centro, São José, Torre, Bongi) pelos 15 bairros de Itambé (D33)
@@ -58,9 +61,9 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 ## Fase 3 · Dados fictícios
 
 - [ ] TASK-030 Definir o formato de uma denúncia (público, privado, eventos e visitas) em `js/servicos/`
-- [ ] TASK-031 Serviço fictício que atende os contratos da ARCHITECTURE, seção 5, incluindo `enviarCodigo` e `confirmarCodigo` (código simulado), `registrarVisita`, `encerrarSemAcesso`, `arquivarOcorrencia`, `solicitarAcessoCorrecao`, `confirmarAcessoCorrecao`, `listarOcorrenciasProximas`, `obterOcorrencia`, `corrigirCamposDenuncia` e `dadosRelatorio`
-- [ ] TASK-032 Criar `js/dominio/` com etapas (incluindo Encerrada), regra de território provisória, cálculo da célula de 200 m (D43), catálogo dos 15 bairros e códigos da visita (tipo do local, depósitos, ações)
-- [ ] TASK-033 Dados fictícios com ocorrências em todas as etapas, visitas com e sem acesso, uma ocorrência com três tentativas duas denúncias a menos de 150 m, uma oculta há 25 dias e outra oculta há 31 dias (lixeira, D44)
+- [ ] TASK-031 Serviço fictício que atende os contratos da ARCHITECTURE, seção 5, incluindo `enviarCodigo` e `confirmarCodigo` (código simulado), `registrarVisita`, `registrarFocoSemDenuncia`, `encerrarSemAcesso`, `arquivarOcorrencia`, `voltarAoMapa`, `solicitarAcessoCorrecao`, `confirmarAcessoCorrecao`, `listarOcorrenciasProximas`, `obterOcorrencia`, `corrigirCamposDenuncia` e `dadosRelatorio`
+- [ ] TASK-032 Criar `js/dominio/` com etapas (incluindo Encerrada), regra de território provisória, cálculo da célula de 200 m (D43), catálogo dos 15 bairros e opções da visita na linguagem do cidadão (onde está o foco, recipientes, o que foi feito; D53)
+- [ ] TASK-033 Dados fictícios com ocorrências em todas as etapas, visitas com e sem acesso, uma ocorrência com três tentativas, duas denúncias a menos de 150 m, uma arquivada há 25 dias e outra arquivada há 31 dias (lixeira, D44) e uma ocorrência feita por agente (D51)
 
 ## Fase 4 · Fatia vertical 1: da denúncia ao mapa (dados fictícios)
 
@@ -75,19 +78,20 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 
 ## Fase 5 · Fatia vertical 2: área do agente (dados fictícios)
 
-- [ ] TASK-050 Lista de ocorrências com resumo por etapa, dias em aberto, etiquetas, filtros (incluindo Sem acesso) e ordem por mais antigas (tela 47; RF-AGE-01)
+- [ ] TASK-050 Lista de ocorrências com resumo que acompanha os filtros, origem, dias em aberto, etiquetas, filtros (incluindo origem e Sem acesso) e ordem por mais antigas (tela 47; RF-AGE-01, D50, D54)
 - [ ] TASK-050a Alternância Lista/Mapa dentro de Ocorrências, com marcadores por etapa e os mesmos filtros (RF-AGE-01)
-- [ ] TASK-051 Detalhe com fotos, ponto exato, "Como chegar", endereço, dados do morador, estado de publicação e histórico (tela 46; RF-AGE-01)
+- [ ] TASK-051 Detalhe com fotos, ponto exato, "Como chegar", endereço, quem fez (morador ou agente), origem, se está arquivada e linha do tempo com o autor de cada passo (tela 46; RF-AGE-01)
 - [ ] TASK-051a Aviso de ocorrências próximas em 150 m (RF-AGE-01, D34)
-- [ ] TASK-052 Iniciar análise e registrar observações (RF-AGE-02, RF-AGE-05)
-- [ ] TASK-053 Registrar visita com acesso, com resumo e confirmação, levando a Atendida (RF-AGE-03)
+- [ ] TASK-052 Iniciar análise abrindo o registro da visita, e registrar observações (RF-AGE-02, RF-AGE-05, D52)
+- [ ] TASK-053 Registrar visita com acesso, com as perguntas na linguagem do cidadão (D53), resumo e confirmação, levando a Atendida (RF-AGE-03)
 - [ ] TASK-053a Registrar visita sem acesso, com contador de tentativas (RF-AGE-03)
 - [ ] TASK-053b Encerrar sem acesso a partir da terceira tentativa (RF-AGE-07)
 - [ ] TASK-053c Guardar o formulário de visita no aparelho quando o envio falhar e reenviar sem duplicar (RF-AGE-03, RNF-11)
-- [ ] TASK-053d Arquivar denúncia improcedente, com motivo e confirmação, levando a Encerrada e ocultando a publicação (RF-AGE-09, D41, D44)
-- [ ] TASK-054 Ocultar e republicar com motivo, dentro da lixeira de 30 dias (RF-AGE-04, RF-AGE-06, D44)
+- [ ] TASK-053d Arquivar denúncia em qualquer etapa, com motivo e confirmação: em Recebida ou Em análise leva a Encerrada; em Atendida ou Encerrada mantém a etapa; sempre tira do mapa (RF-AGE-04, D41, D44, D48, D49)
+- [ ] TASK-053e Registrar foco em local sem denúncia, criando a ocorrência feita por agente, já Atendida (RF-AGE-10, D51)
+- [ ] TASK-054 Voltar ao mapa uma denúncia arquivada, dentro da lixeira de 30 dias (RF-AGE-06, D44)
 - [ ] TASK-054a Corrigir dados pelo agente, com motivo e revisão antes → depois, sem trocar o contato confirmado (RF-COR-01, D20, D42)
-- [ ] TASK-055 Tela do relatório com período, bairro e prévia (RF-AGE-08)
+- [ ] TASK-055 Tela do relatório com período, bairro e prévia em três grupos, por origem e por tipo de encerramento (RF-AGE-08, D56)
 - [ ] TASK-056 Gerar o relatório em PDF com jsPDF e AutoTable (RF-AGE-08, ADR-012)
 - [ ] TASK-057 Gerar o relatório em Word com a biblioteca `docx` (RF-AGE-08, ADR-012)
 
@@ -111,13 +115,14 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 
 - [ ] TASK-080 Ocorrências com dados reais, visitas gravadas em transação e controle de ações simultâneas (RF-AGE-01 a RF-AGE-03, RF-AGE-07)
 - [ ] TASK-080a Relatório com dados reais, conferindo que `dadosRelatorio` não devolve campos privados (RF-AGE-08, RNF-12)
-- [ ] TASK-081 Ocultação e republicação com versão de decisão (RF-AGE-04, RF-AGE-06)
-- [ ] TASK-081a Rotina diária `limparLixeira`: remove denúncias ocultas há mais de 30 dias, com fotos dos dois buckets (D44, ADR-014)
+- [ ] TASK-080b Registro de foco em local sem denúncia com dados reais, em transação única e sem duplicar (RF-AGE-10)
+- [ ] TASK-081 Arquivamento e volta ao mapa com versão de decisão (RF-AGE-04, RF-AGE-06)
+- [ ] TASK-081a Rotina diária `limparLixeira`: remove denúncias arquivadas há mais de 30 dias, com fotos dos dois buckets (D44, ADR-017)
 - [ ] TASK-082 Correção pelo agente e pelo cidadão, com recuperação de acesso por protocolo e código (RF-COR-01, D42)
 
 ## Fase 9 · Validação da V1
 
-- [ ] TASK-090 Executar os cenários AC-01 a AC-16 do [TEST_PLAN.md](docs/TEST_PLAN.md) e registrar as evidências
+- [ ] TASK-090 Executar os cenários AC-01 a AC-17 do [TEST_PLAN.md](docs/TEST_PLAN.md) e registrar as evidências
 - [ ] TASK-091 Inspecionar as respostas de rede públicas em busca de dados privados (AC-07)
 - [ ] TASK-092 Revisar a lista de verificação do [SECURITY.md](docs/SECURITY.md)
 

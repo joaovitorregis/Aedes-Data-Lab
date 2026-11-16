@@ -44,6 +44,6 @@ As branches `Laura-Galdino`, `Rhillary` e `sky` estão atrás do `main`. Antes d
 
 ## Decisões pendentes
 
-As dependências estão no [PRD, seção 18](./PRD.md) e são de preparação técnica ou operacional. Três pontos de produto ficaram a confirmar no PRD 2.8: o prazo da lixeira para ocorrências já atendidas (D44), o que acontece ao sair do registro da visita sem gravar (D52) e como contar no relatório a ocorrência arquivada depois de atendida (RF-AGE-08). As que bloqueiam o próximo trabalho:
+As dependências estão no [PRD, seção 18](./PRD.md) e são de preparação técnica ou operacional. Os três pontos de produto que ficaram a confirmar no PRD 2.8 foram decididos em 16/11/2026: o prazo de 30 dias da lixeira vale para qualquer etapa (D44); ao sair do registro da visita sem gravar, a ocorrência fica Em análise e nada do formulário fica salvo (D52); a arquivada depois de atendida conta como Arquivada no relatório (RF-AGE-08). As que bloqueiam o próximo trabalho:
 
 - DEP-01 (mapa real e contornos) antes da validação de território e da troca do mapa ilustrativo.

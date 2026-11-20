@@ -69,19 +69,9 @@ header {
   cursor: pointer;
 }
 
-/* HERO */
-
 .hero {
   min-height: 520px;
   padding: 65px 29px 50px;
-}
-
-.eyebrow {
-  color: var(--green-light);
-  font-size: 13px;
-  font-weight: bold;
-  letter-spacing: .5px;
-  margin-bottom: 22px;
 }
 
 .hero h1 {
@@ -117,10 +107,8 @@ button:hover {
   filter: brightness(1.1);
 }
 
-/* CONTENT */
-
 .content {
-  background: #f8f3e7;
+  background: #f4eedc;
   padding: 19px 18px 28px;
 }
 
@@ -198,8 +186,6 @@ button:hover {
   overflow: hidden;
   margin-bottom: 48px;
 }
-
-/* MAP */
 
 .map-image {
   position: relative;

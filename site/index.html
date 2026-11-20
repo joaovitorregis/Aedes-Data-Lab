@@ -4,38 +4,44 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Início | Aedes Data Lab</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="icon" href="assets/imagens/logo-aedes-datalab.jpeg" type="image/jpeg">
   <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body class="pagina-inicio">
   <header>
-    <h1>Aedes Data Lab</h1>
-    <p>Itambé, PE</p>
+    <img src="assets/imagens/logo-aedes-datalab.jpeg" alt="Logo do Aedes Data Lab">
+    <div>
+      <h2>Aedes lab</h2>
+      <p>Itambé-PE</p>
+    </div>
+    <div class="menu" aria-hidden="true">☰</div>
   </header>
 
   <main id="conteudo">
-    <section>
-      <h2>Denuncie</h2>
-      <p>Denuncie pontos de foco no seu bairro</p>
-      <a class="botao" href="paginas/registrar-foco.html">Denuncie</a>
-    </section>
+    <h1>Denuncie</h1>
 
-    <section>
+    <p class="intro">Denuncie pontos de foco do aedes no seu bairro.</p>
+
+    <a href="paginas/registrar-foco.html" class="botao principal">Denuncie aqui</a>
+
+    <section class="guia">
       <h2>Guia Aedes</h2>
       <p>Descubra informações sobre o mosquito, a doença e as formas de prevenção.</p>
-      <a class="botao" href="paginas/guia-aedes.html">Descubra mais aqui</a>
+      <a href="paginas/guia-aedes.html" class="botao">Descubra mais aqui</a>
     </section>
 
-    <section>
-      <h2>Mapa de focos</h2>
-      <a class="botao" href="paginas/mapa.html">Mapa</a>
-    </section>
+    <section class="cards">
+      <div class="card">
+        <h2>Mapa de focos</h2>
+        <div class="mapa"></div>
+        <a href="paginas/mapa.html" class="botao">Ver mapa</a>
+      </div>
 
-    <section>
-      <h2>Jogo educativo</h2>
-      <a class="botao" href="paginas/jogo.html">Jogar</a>
+      <div class="card">
+        <h2>Jogo educativo</h2>
+        <img src="assets/imagens/mosquito.png" alt="Mosquito">
+        <a href="paginas/jogo.html" class="botao">Jogar</a>
+      </div>
     </section>
   </main>
 

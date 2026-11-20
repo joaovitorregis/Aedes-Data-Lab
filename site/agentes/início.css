@@ -19,7 +19,6 @@ body {
   color: var(--green);
 }
 
-/* HEADER */
 
 header {
   height: 66px;
@@ -112,8 +111,6 @@ button:hover {
   padding: 19px 18px 28px;
 }
 
-/* GUIDE CARD */
-
 .guide-card {
   background: var(--white);
   border: 1px solid var(--border);
@@ -154,8 +151,6 @@ button:hover {
   cursor: pointer;
 }
 
-/* FEATURE CARDS */
-
 .features {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -179,84 +174,11 @@ button:hover {
   letter-spacing: -.5px;
 }
 
-.feature-image {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: 9px;
-  overflow: hidden;
-  margin-bottom: 48px;
-}
-
-.map-image {
-  position: relative;
-  background: #aaba9c;
-}
-
-.map-image::before,
-.map-image::after {
-  content: "";
-  position: absolute;
-  background: #f3f1df;
-  height: 8px;
-  width: 160%;
-  top: 50%;
-  left: -25%;
-  transform: rotate(27deg);
-}
-
-.map-image::after {
-  transform: rotate(-73deg);
-  width: 140%;
-  left: -15%;
-}
-
-.pin {
-  width: 17px;
-  height: 17px;
-  border: 3px solid white;
-  background: #e75b47;
-  border-radius: 50%;
-  position: absolute;
-  z-index: 2;
-  box-shadow: 0 0 0 1px #e75b47;
-}
-
-.pin-one {
-  top: 31%;
-  left: 33%;
-}
-
-.pin-two {
-  top: 20%;
-  left: 73%;
-}
-
-.pin-three {
-  top: 69%;
-  left: 65%;
-}
-
-/* MOSQUITO IMAGE */
-
-.mosquito-image {
-  background: #fbf9f4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.mosquito-image svg {
-  width: 90%;
-  height: 90%;
-}
-
 .feature-card .secondary-button {
   margin-top: auto;
   font-size: 13px;
   height: 40px;
 }
-
-/* RESPONSIVE */
 
 @media (min-width: 600px) {
   header {

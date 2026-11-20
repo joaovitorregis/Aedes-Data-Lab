@@ -1,40 +1,106 @@
+
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Início</title>
-    <link rel="stylesheet" href="início.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aedes Lab - Denuncie</title>
+
+  <link rel="stylesheet" href="início.css">
 </head>
+
 <body>
-    <header>
-        <h1>Aedes DataLab</h1>
-        <p>Itambé-PE</p>
-    </header>
 
-    <main> 
-       
-          <h1>Denúncie</h1>
-          <p>Denúncie pontos de foco no seu bairro</p>
-          <button>Denúncie</button>
-       
-         
-         <section>
-          <h1>Guia Aedes</h1>
-          <p>Descubra informações sobre o mosquito, a doença e as formas de  prevenção.</p>
-          <button>Descubra mais aqui</button>
-       </section>
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <div class="logo"></div>
 
-       <section>
-          <h1>Mapa de focos</h1>
-          <button>Mapa</button>
-       </section>
+      <div class="brand-info">
+        <h3>Aedes Lab</h3>
+        <p>Itambé · PE</p>
+      </div>
+    </div>
 
-       <section>
-          <h1>Jogo educativo</h1>
-          <button>Jogar</button>
-       </section>
-    </main>
-   
+    <button class="report-small"
+      onclick="document.getElementById('denuncia').scrollIntoView({behavior:'smooth'})">
+      Denunciar
+    </button>
+  </header>
+
+  <!-- HERO -->
+  <main>
+    <section class="hero">
+
+      <p class="eyebrow">
+        AEDES DATA LAB · ITAMBÉ/PE
+      </p>
+
+      <h1>Denuncie</h1>
+
+      <p class="hero-description">
+        Denuncie possíveis focos do Aedes no seu bairro.
+      </p>
+
+      <button class="main-button" id="denuncia">
+        Denuncie aqui
+      </button>
+
+    </section>
+
+    <!-- CONTENT -->
+    <section class="content">
+
+      <!-- GUIDE -->
+      <div class="guide-card">
+
+        <p class="section-label">
+          INFORMAÇÃO PARA PREVENIR
+        </p>
+
+        <h2>Guia Aedes</h2>
+
+        <p>
+          Descubra informações sobre o mosquito,
+          a doença e as formas de prevenção.
+        </p>
+
+        <button class="secondary-button">
+          Descubra mais aqui
+        </button>
+
+      </div>
+
+      <!-- FEATURES -->
+      <div class="features">
+
+        <!-- MAP CARD -->
+        <article class="feature-card">
+
+          <h3>Mapa de focos</h3>
+
+          <button class="secondary-button">
+            Ver mapa
+          </button>
+
+        </article>
+
+        <!-- GAME CARD -->
+        <article class="feature-card">
+
+          <h3>Jogo educativo</h3>
+
+          
+
+          <button class="secondary-button">
+            Jogar
+          </button>
+
+        </article>
+
+      </div>
+    </section>
+  </main>
+
 </body>
 </html>

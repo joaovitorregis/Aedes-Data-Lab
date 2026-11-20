@@ -1,28 +1,56 @@
 # Aedes Data Lab
 
-Wireframes de uma plataforma web com foco no uso em celular.
+Plataforma web, pensada primeiro para o celular, em que moradores de Itambé/PE registram possíveis focos do mosquito da dengue e agentes autorizados acompanham o atendimento.
 
-Aedes Data Lab é a evolução do projeto Repecol para uma plataforma voltada à prevenção da dengue. O Repecol passa a ser uma referência histórica desta evolução. O trabalho apresentado aqui está na fase de organização dos fluxos e desenho das telas no Figma; não é uma aplicação implementada.
+A documentação está alinhada ao PRD, e a implementação do site começou: a pasta `site/` tem a estrutura inicial das páginas, ainda sem envio, banco ou autenticação. O andamento fica em [docs/MEMORY.md](docs/MEMORY.md).
 
-## Arquivo editável dos wireframes
+## Documentação
 
-[Abrir wireframes no Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y?node-id=2010-2).
+Cada documento responde uma pergunta, e cada informação mora em um só lugar. Os outros documentos apontam para ela em vez de repetir.
 
-![Captura histórica da organização do arquivo Figma, ainda com o nome Repecol](imagens/organizacao-figma.jpg)
+| Arquivo | Responde | Etapa |
+|---|---|---|
+| [docs/PRD.md](docs/PRD.md) | O que estamos construindo e por quê? | Planejamento |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Como vamos construir? | Planejamento |
+| [docs/DESIGN.md](docs/DESIGN.md) | Como deve parecer? | Planejamento |
+| [docs/RULES.md](docs/RULES.md) | Como a equipe e a IA devem programar? | Planejamento |
+| [TASKS.md](TASKS.md) | O que construir agora? | Desenvolvimento |
+| [docs/DECISIONS.md](docs/DECISIONS.md) | Por que fizemos esta escolha técnica? | Desenvolvimento |
+| [docs/MEMORY.md](docs/MEMORY.md) | Em que ponto o projeto está? | Desenvolvimento |
+| [docs/SECURITY.md](docs/SECURITY.md) | Como protegemos os dados? | Desenvolvimento |
+| [docs/TEST_PLAN.md](docs/TEST_PLAN.md) | Como sabemos que funciona? | Testes |
+| [.env.example](.env.example) | Que configurações são necessárias? | Preparação |
+| [site/LEIA-ME.md](site/LEIA-ME.md) | Onde fica cada página? | Desenvolvimento |
+| [docs/PRD_Aedes_Data_Lab.md](docs/PRD_Aedes_Data_Lab.md) | Rascunho inicial do PRD (1.1), anterior ao PRD atual | Histórico |
+| [docs/START_TECNICO_Aedes_Data_Lab.md](docs/START_TECNICO_Aedes_Data_Lab.md) | Proposta inicial de arquitetura e sequência de implementação | Histórico |
 
-A captura acima e as exportações locais são registros históricos. O índice das exportações informa que elas são anteriores à reorganização dos wireframes. Conservam nomes e conteúdos do Repecol, incluindo referências à Equipe Ecoimpactos e a Mogeiro. Esses elementos documentam a origem do material; não descrevem automaticamente a identidade, a equipe ou as entregas atuais do Aedes Data Lab.
+O PRD é a fonte única do comportamento da V1 e da lista de pendências (seção 18). Quando outro documento ou uma tela divergir dele, vale o PRD.
 
-## Jornadas representadas nas exportações históricas
+## Como trabalhar
 
-- Início, orientações e Guia Aedes.
-- Denúncia de foco, localização no mapa e acompanhamento.
-- Histórico, conversa com atendimento e notificações.
-- Acesso, perfil e privacidade.
-- Áreas de agentes, produção, distribuição e gestão.
+Cada tarefa segue o mesmo ciclo, descrito em [docs/RULES.md](docs/RULES.md):
 
-[Veja as 52 exportações históricas dos wireframes](wireframes/README.md). Elas representam telas e estados de exemplo, não uma contagem de páginas do Figma. Não comprovam o estado atual do arquivo editável, navegação clicável, permissões, envio ou armazenamento de dados.
+```
+Ler → Entender → Planejar → Implementar → Testar → Revisar → Corrigir → Commit → Atualizar documentação
+```
 
-O link do Figma abre o arquivo de design. A navegação do protótipo e a organização atual de suas páginas não foram verificadas nesta revisão documental.
+1. Escolha a próxima tarefa livre em [TASKS.md](TASKS.md) e coloque seu nome nela.
+2. Crie uma branch para ela, como `feature/registrar-foco`.
+3. Leia o requisito no PRD, veja a tela no Figma e leia o DESIGN.md.
+4. Implemente, teste com o [TEST_PLAN.md](docs/TEST_PLAN.md) e abra um PR para outra integrante revisar.
+5. Depois do merge, marque a tarefa como concluída e atualize o MEMORY.md se o estado do projeto mudou.
+
+Se for usar uma ferramenta de IA, comece pela mensagem de contexto da seção 9 do RULES.md. Ela faz a IA ler a documentação antes de mexer em qualquer arquivo.
+
+## Como rodar
+
+Na fase de HTML e CSS, basta abrir `site/index.html` no navegador. Quando entrarem os módulos JavaScript, use um servidor local, como o Live Server do VS Code, apontando para a pasta `site/`. A configuração do Supabase entra na Fase 6 de [TASKS.md](TASKS.md), a partir do [.env.example](.env.example).
+
+## Design
+
+As telas estão na página **Fluxo de telas · Jornada do Usuário** do [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13), que é a fonte editável. A pasta [wireframes/](wireframes/README.md) guarda a exportação das telas anteriores ao fluxo novo da denúncia. Cores, fontes e componentes estão no [DESIGN.md](docs/DESIGN.md).
+
+![Visão geral das telas finais do Aedes Data Lab](wireframes/montage.png)
 
 ## Autoria
 
@@ -30,6 +58,6 @@ João Vitor Regis · Aedes Data Lab.
 
 ## Licença
 
-A documentação, os wireframes e os designs de autoria de João Vitor Regis estão sob [CC BY 4.0](LICENSE), incluindo o protótipo identificado neste README. Ao reutilizar, credite o autor, informe as alterações e inclua um link para a licença.
+A documentação, os wireframes e os designs de autoria de João Vitor Regis estão sob [CC BY 4.0](LICENSE), incluindo o protótipo citado neste README. Ao reutilizar, credite o autor, informe as alterações e inclua um link para a licença.
 
-Elementos de terceiros conservam seus próprios direitos e licenças. A licença não concede direitos sobre marcas, imagem ou dados pessoais.
+Elementos de terceiros mantêm seus próprios direitos e licenças. A licença não concede direitos sobre marcas, imagem ou dados pessoais.

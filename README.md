@@ -21,6 +21,8 @@ Cada documento responde uma pergunta, e cada informação mora em um só lugar. 
 | [docs/TEST_PLAN.md](docs/TEST_PLAN.md) | Como sabemos que funciona? | Testes |
 | [.env.example](.env.example) | Que configurações são necessárias? | Preparação |
 | [site/LEIA-ME.md](site/LEIA-ME.md) | Onde fica cada página? | Desenvolvimento |
+| [docs/PRD_Aedes_Data_Lab.md](docs/PRD_Aedes_Data_Lab.md) | Rascunho inicial do PRD (1.1), anterior ao PRD atual | Histórico |
+| [docs/START_TECNICO_Aedes_Data_Lab.md](docs/START_TECNICO_Aedes_Data_Lab.md) | Proposta inicial de arquitetura e sequência de implementação | Histórico |
 
 O PRD é a fonte única do comportamento da V1 e da lista de pendências (seção 18). Quando outro documento ou uma tela divergir dele, vale o PRD.
 

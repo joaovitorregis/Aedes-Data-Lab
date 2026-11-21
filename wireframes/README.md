@@ -1,7 +1,8 @@
 # Telas finais do Aedes Data Lab
 
-Exportação das 47 telas da página **Fluxo de telas · Jornada do Usuário** do [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13), feita em 05/11/2026 em PNG com escala 2x. A tela 45 foi capturada direto do canvas e tem resolução menor. O arquivo do Figma continua sendo a fonte editável. Quando uma tela divergir do [PRD](../docs/PRD_Aedes_Data_Lab.md) sobre comportamento, vale o PRD.
+Exportação das 47 telas da página **Fluxo de telas · Jornada do Usuário** do [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13), feita em 05/11/2026 em PNG com escala 2x. A tela 45 foi capturada direto do canvas e tem resolução menor. O arquivo do Figma continua sendo a fonte editável. Quando uma tela divergir do [PRD](../docs/PRD.md) sobre comportamento, vale o PRD.
 
+**Atenção:** estas exportações são anteriores ao fluxo novo da denúncia (D35, D36), que vive na seção 02 da jornada do usuário no Figma e ainda não foi exportado (TASK-013a). As telas de denúncia e de GPS abaixo mostram o fluxo anterior e servem só de histórico; para implementar, use o Figma e o PRD.
 [Visão geral de todas as telas](montage.png)
 
 ## Jornada do usuário
@@ -17,7 +18,7 @@ Exportação das 47 telas da página **Fluxo de telas · Jornada do Usuário** d
 | Quem somos | [05-quem-somos](05-quem-somos.png) | Complementar |
 | Repelentes | [06-repelente](06-repelente.png) | Complementar |
 
-### Denúncia
+### Denúncia (fluxo anterior)
 
 | Tela | Arquivo | Requisitos |
 |---|---|---|
@@ -41,14 +42,14 @@ Exportação das 47 telas da página **Fluxo de telas · Jornada do Usuário** d
 | Mapa | [16-mapa](16-mapa.png) | RF-MAP-01 |
 | Mapa com marcadores | [17-mapa-marcadores](17-mapa-marcadores.png) | RF-MAP-01 |
 | Lista de ocorrências | [18-mapa-lista-de-ocorrencias](18-mapa-lista-de-ocorrencias.png) | RF-MAP-01 |
-| Detalhe da ocorrência (4 variações) | [19](19-mapa-detalhe-da-ocorrencia.png), [20](20-mapa-detalhe-da-ocorrencia-2.png), [21](21-mapa-detalhe-da-ocorrencia-3.png), [22](22-mapa-detalhe-da-ocorrencia-4.png) | RF-MAP-01 |
+| Detalhe da ocorrência (4 variações) | [19](19-mapa-detalhe-da-ocorrencia.png), [20](20-mapa-detalhe-da-ocorrencia-2.png), [21](21-mapa-detalhe-da-ocorrencia-3.png), [22](22-mapa-detalhe-da-ocorrencia-4.png) | Substituído pela prévia curta (D47) |
 | Menu de filtros | [23-mapa-menu-de-filtros](23-mapa-menu-de-filtros.png) | RF-MAP-02 |
 | Filtro por período | [24-mapa-filtro-por-periodo](24-mapa-filtro-por-periodo.png), [39-filtro-de-periodos](39-filtro-de-periodos.png) | RF-MAP-02 |
 | Filtro por status | [25-mapa-filtro-por-status](25-mapa-filtro-por-status.png) | RF-MAP-02 |
-| Filtro por origem | [26-mapa-filtro-por-origem](26-mapa-filtro-por-origem.png) | Fora do PRD |
+| Filtro por origem | [26-mapa-filtro-por-origem](26-mapa-filtro-por-origem.png) | Retirado da V1 (D40) |
 | Filtro por localidade e bairros | [27](27-mapa-filtro-por-localidade.png), [28](28-mapa-bairros.png), [40](40-filtro-de-localidades.png), [41](41-mapa-bairros-variante.png) | RF-MAP-02 |
-| Seleção de distrito, rua e área | [29](29-filtro-distritos.png), [30](30-filtro-ruas.png), [31](31-filtro-areas.png) | Fora do aceite da V1 |
-| Mapa com distrito, rua ou área selecionado | [32](32-mapa-distritos-selecionado.png), [33](33-mapa-ruas-selecionado.png), [34](34-mapa-areas-selecionado.png) | Fora do aceite da V1 |
+| Seleção de distrito, rua e área | [29](29-filtro-distritos.png), [30](30-filtro-ruas.png), [31](31-filtro-areas.png) | Retirado da V1 (D40) |
+| Mapa com distrito, rua ou área selecionado | [32](32-mapa-distritos-selecionado.png), [33](33-mapa-ruas-selecionado.png), [34](34-mapa-areas-selecionado.png) | Retirado da V1 (D40)
 | Mapa · variante | [38-mapa-variante](38-mapa-variante.png) | RF-MAP-01 |
 
 ## Jornada do agente
@@ -56,10 +57,8 @@ Exportação das 47 telas da página **Fluxo de telas · Jornada do Usuário** d
 | Tela | Arquivo | Escopo no PRD |
 |---|---|---|
 | Portal técnico (login) | [45-portal-tecnico](45-portal-tecnico.png) | V1 · RF-AUT-02 |
-| Ocorrências | [47-agente-ocorrencias](47-agente-ocorrencias.png) | V1 · RF-AGE-01 |
-| Detalhe da ocorrência | [46-agente-detalhe-da-ocorrencia](46-agente-detalhe-da-ocorrencia.png) | V1 · RF-AGE-01 a RF-AGE-06 |
-| Mapa do agente | [42-agente-mapa](42-agente-mapa.png) | Consulta espacial (RF-AGE-01) |
+| Ocorrências | [47-agente-ocorrencias](47-agente-ocorrencias.png) | V1 · RF-AGE-01; desatualizada em relação ao PRD 2.2, redesenho na TASK-015c |
+| Detalhe da ocorrência | [46-agente-detalhe-da-ocorrencia](46-agente-detalhe-da-ocorrencia.png) | V1 · RF-AGE-01 a RF-AGE-07; desatualizada em relação ao PRD 2.2, redesenho nas TASK-015 e TASK-016 |
+| Mapa do agente | [42-agente-mapa](42-agente-mapa.png) | Substituída pelo mapa dentro de Ocorrências (TASK-016a) |
 | Dashboard · desktop | [43-dashboard-proposta-desktop-refinado](43-dashboard-proposta-desktop-refinado.png) | Fase seguinte |
 | Dashboard · celular | [44-dashboard-proposta-celular-refinado](44-dashboard-proposta-celular-refinado.png) | Fase seguinte |
-
-As exportações anteriores, com telas herdadas do Repecol, continuam disponíveis no histórico do Git.

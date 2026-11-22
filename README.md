@@ -2,7 +2,7 @@
 
 Plataforma web, pensada primeiro para o celular, em que moradores de Itambé/PE registram possíveis focos do mosquito da dengue e agentes autorizados acompanham o atendimento.
 
-A documentação está alinhada ao PRD, e a implementação do site começou: a pasta `site/` tem a estrutura inicial das páginas, ainda sem envio, banco ou autenticação. O andamento fica em [docs/MEMORY.md](docs/MEMORY.md).
+O Aedes Data Lab é a evolução do projeto Repecol, que agora fica como referência histórica. As telas do produto estão concluídas no Figma e a implementação do site começou: a pasta `site/` tem a estrutura inicial das páginas, ainda sem envio, banco ou autenticação. A documentação está alinhada ao PRD, e o andamento fica em [docs/MEMORY.md](docs/MEMORY.md).
 
 ## Documentação
 

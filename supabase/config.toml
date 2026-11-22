@@ -1,0 +1,75 @@
+# Configuração do Supabase LOCAL (supabase start) e das Edge Functions.
+# Não contém chaves: segredos vão em .env.local ou nos segredos do projeto (SECURITY.md, seção 8).
+project_id = "Aedes-Data-Lab"
+
+[api]
+enabled = true
+port = 54321
+# Esquemas que a API pública expõe. "internal" NÃO está aqui de propósito:
+# as funções de negócio ficam fora do alcance direto do navegador.
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 17
+
+[db.migrations]
+enabled = true
+
+[db.seed]
+# Dados FICTÍCIOS para desenvolvimento local. Nunca dados reais.
+enabled = true
+sql_paths = ["./seed.sql"]
+
+[studio]
+enabled = true
+port = 54323
+
+[storage]
+enabled = true
+file_size_limit = "10MiB"
+
+[auth]
+enabled = true
+site_url = "http://127.0.0.1:5500"
+# Sem cadastro público: contas de agente são criadas pela equipe do projeto (D22).
+enable_signup = false
+jwt_expiry = 3600
+
+[auth.email]
+enable_signup = false
+enable_confirmations = false
+
+# ---------------------------------------------------------------------
+# Edge Functions. Todas com verify_jwt = false porque CADA UMA se protege sozinha:
+#
+#  - enviar-codigo, confirmar-codigo, salvar-denuncia, acesso-correcao:
+#    públicas (visitante sem login). Protegem-se com validação, limites de
+#    repetição, código de confirmação e, no banco, regras que não dependem do site.
+#  - agente: só agente. A função confere o login (JWT) com o Supabase Auth e o
+#    banco confere o papel na tabela profiles. Não usamos o verify_jwt do
+#    gateway porque a chave pública (anon) também é um JWT válido; só a conferência
+#    do USUÁRIO distingue agente de visitante.
+#  - rotina-diaria: faxina agendada (lixeira, fotos públicas, publicações
+#    pendentes). Só roda com o cabeçalho Authorization: Bearer <CRON_SECRET>.
+# ---------------------------------------------------------------------
+[functions.enviar-codigo]
+verify_jwt = false
+
+[functions.confirmar-codigo]
+verify_jwt = false
+
+[functions.salvar-denuncia]
+verify_jwt = false
+
+[functions.acesso-correcao]
+verify_jwt = false
+
+[functions.agente]
+verify_jwt = false
+
+[functions.rotina-diaria]
+verify_jwt = false

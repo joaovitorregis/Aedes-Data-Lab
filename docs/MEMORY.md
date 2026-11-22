@@ -6,7 +6,7 @@ Retrato do momento atual do projeto. Diferente de [DECISIONS.md](./DECISIONS.md)
 
 ## Situação atual
 
-A documentação está alinhada ao [PRD 2.8](./PRD.md), e o fluxo da denúncia e a jornada do agente estão desenhados no Figma. O `main` tem a estrutura das 12 páginas em `site/`, todas ainda com conteúdo inicial, sem envio, banco, autenticação ou mapa. O back-end do Supabase está escrito e testado localmente em `supabase/` (9 migrations, 6 Edge Functions, 96 testes de banco e 41 de funções), mas ainda **não aplicado** ao projeto de teste, e o site ainda não o usa. Guia: [BACKEND.md](./BACKEND.md).
+A documentação está alinhada ao [PRD 2.9](./PRD.md), e o fluxo da denúncia e a jornada do agente estão desenhados no Figma. O `main` tem a estrutura das 12 páginas em `site/`, todas ainda com conteúdo inicial, sem envio, banco, autenticação ou mapa. O back-end do Supabase está escrito e testado localmente em `supabase/` (9 migrations, 6 Edge Functions, 96 testes de banco e 41 de funções), mas ainda **não aplicado** ao projeto de teste, e o site ainda não o usa. Guia: [BACKEND.md](./BACKEND.md).
 
 ## Concluído
 

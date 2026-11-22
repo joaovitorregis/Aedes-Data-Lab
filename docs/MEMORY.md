@@ -2,11 +2,11 @@
 
 Retrato do momento atual do projeto. Diferente de [DECISIONS.md](./DECISIONS.md), que guarda escolhas permanentes, este arquivo muda a cada entrega. Quem concluir uma tarefa que altere o estado do projeto atualiza este arquivo no mesmo PR.
 
-**Última atualização:** 16/11/2026
+**Última atualização:** 22/11/2026
 
 ## Situação atual
 
-A documentação está alinhada ao [PRD 2.8](./PRD.md), e o fluxo da denúncia e a jornada do agente estão desenhados no Figma. A implementação está no começo: o `main` tem a estrutura das 12 páginas em `site/`, todas ainda com conteúdo inicial, sem envio, banco, autenticação ou mapa.
+A documentação está alinhada ao [PRD 2.8](./PRD.md), e o fluxo da denúncia e a jornada do agente estão desenhados no Figma. O `main` tem a estrutura das 12 páginas em `site/`, todas ainda com conteúdo inicial, sem envio, banco, autenticação ou mapa. O back-end do Supabase está escrito e testado localmente em `supabase/` (9 migrations, 6 Edge Functions, 96 testes de banco e 41 de funções), mas ainda **não aplicado** ao projeto de teste, e o site ainda não o usa. Guia: [BACKEND.md](./BACKEND.md).
 
 ## Concluído
 
@@ -17,12 +17,13 @@ A documentação está alinhada ao [PRD 2.8](./PRD.md), e o fluxo da denúncia e
 - Fluxo da denúncia definido no PRD 2.3: da tela Início ao protocolo, com e-mail e telefone obrigatórios e código confirmado depois dos dados, por e-mail, SMS ou WhatsApp
 - Fluxo da denúncia desenhado no Figma: 22 telas na seção 02 da jornada do usuário, com os estados de erro. A versão anterior está arquivada fora da jornada, e os links de entrada abrem a Localização nova
 - Jornada do agente revista no PRD 2.8 e desenhada no Figma, na seção "Jornada do agente · telas e conexões" da página do fluxo: origem cidadão ou agente, arquivar como ação única, análise e visita num passo, foco em local sem denúncia, perguntas na linguagem do cidadão e relatório novo. É protótipo com dados de exemplo, ainda não validado com agentes
+- Back-end Supabase (TASK-061, 062 e parte da 060a): tabelas públicas e privadas, RLS, buckets, funções `api_*`, Edge Functions de denúncia, código de confirmação por e-mail, correção por código, ações do agente, lixeira de 30 dias e rotina diária, com testes de acesso negado
 
 ## Em andamento
 
 | Tarefa | Onde | Observação |
 |---|---|---|
-| TASK-022 Página Início | `site/index.html` | Primeira versão com os blocos Denuncie, Guia Aedes, Mapa de focos e Jogo, já no CSS único e nos tokens. Falta alinhar à tela Início do Figma: botão principal Denuncie aqui, cartões com borda, ilustrações, logotipo e menu (TASK-021) |
+| TASK-022 Página Início | `site/inicio.html` | Primeira versão com os blocos Denuncie, Guia Aedes, Mapa de focos e Jogo, já no CSS único e nos tokens. Falta alinhar à tela Início do Figma: botão principal Denuncie aqui, cartões com borda, ilustrações, logotipo e menu (TASK-021) |
 
 As branches `Laura-Galdino`, `Rhillary` e `sky` estão atrás do `main`. Antes de abrir PR, rodar `git merge origin/main` e, se houver conflito em README.md ou site/LEIA-ME.md, manter a versão do `main`.
 

@@ -128,6 +128,7 @@ Repetir o cenário três vezes, uma por canal: e-mail, telefone com SMS e telefo
 
 **AC-14 · Correção** (RF-COR-01, RNF-03, RNF-05, RNF-09)
 - [ ] O agente corrige uma denúncia em qualquer etapa, com motivo
+- [ ] O agente corrige onde está o foco, água acumulada, recipiente ou estrutura e larvas ou pupas; há quanto tempo percebeu e a outra evidência não aparecem para edição
 - [ ] O cidadão corrige a própria denúncia enquanto ela está Recebida
 - [ ] Depois do início da análise, a correção do cidadão é recusada com orientação para usar o e-mail de contato
 - [ ] O cidadão não acessa denúncias de outras pessoas

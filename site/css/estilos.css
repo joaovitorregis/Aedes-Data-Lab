@@ -40,52 +40,150 @@ body {
 /* Cidadão: início, denúncia, mapa, guia, repelentes, equipe e jogo */
 /* Delimitar estilos específicos com classes como .pagina-denuncia. */
 
-/* Página Início (tela 01) */
+/* Página Início (tela 01) — layout da Bia */
+.pagina-inicio,
+.pagina-inicio * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.pagina-inicio {
+  font-family: Arial, sans-serif;
+  background: #f5f0e2;
+  color: #304f3c;
+}
+
 .pagina-inicio header {
-  background: var(--cor-superficie);
-  padding: 16px;
-  text-align: center;
+  background: #fbfaf6;
+  padding: 15px 7%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pagina-inicio header img {
+  width: 50px;
+  height: 50px;
+}
+
+.pagina-inicio header p {
+  color: #518064;
+}
+
+.pagina-inicio .menu {
+  margin-left: auto;
+  font-size: 30px;
 }
 
 .pagina-inicio main {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 40px 20px;
-}
-
-.pagina-inicio section {
-  background: var(--cor-superficie);
-  border-radius: var(--raio-medio);
-  padding: 24px;
-  margin-bottom: 24px;
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 25px;
 }
 
 .pagina-inicio h1 {
-  margin: 0;
-  font-size: 36px;
-  color: var(--cor-primaria);
+  font-size: 38px;
+  margin-bottom: 25px;
 }
 
-.pagina-inicio h2 {
-  margin: 0 0 8px;
-  font-size: 24px;
-  color: var(--cor-primaria);
-}
-
-.pagina-inicio p {
-  margin: 0 0 16px;
+.pagina-inicio .intro {
   font-size: 20px;
-  color: var(--cor-acento);
+  color: #518064;
+  max-width: 300px;
 }
 
 .pagina-inicio .botao {
-  display: inline-block;
-  padding: 12px 24px;
-  border-radius: var(--raio-medio);
-  background: var(--cor-acento);
-  color: var(--cor-fundo);
-  font-size: 20px;
+  display: block;
+  background: #4c8062;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 7px;
   text-decoration: none;
+  font-weight: bold;
+}
+
+.pagina-inicio .principal {
+  background: #304f3c;
+  padding: 28px;
+  margin: 65px auto 25px;
+  font-size: 23px;
+}
+
+.pagina-inicio .guia {
+  background: #fbfaf6;
+  border: 1px solid #ddcfb2;
+  border-radius: 10px;
+  padding: 25px;
+  margin-bottom: 30px;
+}
+
+.pagina-inicio .guia h2 {
+  font-size: 27px;
+  margin-bottom: 15px;
+}
+
+.pagina-inicio .guia p {
+  color: #518064;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.pagina-inicio .cards {
+  display: flex;
+  gap: 20px;
+}
+
+.pagina-inicio .card {
+  background: #fbfaf6;
+  border: 1px solid #ddcfb2;
+  border-radius: 7px;
+  padding: 15px;
+  text-align: center;
+  flex: 1;
+}
+
+.pagina-inicio .card h2 {
+  font-size: 27px;
+  margin-bottom: 15px;
+}
+
+.pagina-inicio .card img,
+.pagina-inicio .mapa {
+  width: 100%;
+  height: 150px;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+
+.pagina-inicio .mapa {
+  background: #aab99d;
+  border-radius: 5px;
+}
+
+@media (max-width: 500px) {
+  .pagina-inicio main {
+    padding: 35px 20px;
+  }
+
+  .pagina-inicio .cards {
+    gap: 15px;
+  }
+
+  .pagina-inicio .card {
+    padding: 10px;
+  }
+
+  .pagina-inicio .card h2 {
+    font-size: 17px;
+  }
+
+  .pagina-inicio .card img,
+  .pagina-inicio .mapa {
+    height: 143px;
+  }
 }
 
 /* Agentes: acesso, meu trabalho, ocorrências, mapa e dashboard */

@@ -1,9 +1,8 @@
 # Telas finais do Aedes Data Lab
 
-Exportação das 47 telas da página **Fluxo de telas · Jornada do Usuário** do [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13), em PNG com escala 2x. A tela 45 foi capturada direto do canvas e tem resolução menor. O arquivo do Figma continua sendo a fonte editável. Quando uma tela divergir do [PRD](../docs/PRD.md) sobre comportamento, vale o PRD.
+Exportação das 47 telas da página **Fluxo de telas · Jornada do Usuário** do [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13), feita em 05/11/2026 em PNG com escala 2x. A tela 45 foi capturada direto do canvas e tem resolução menor. O arquivo do Figma continua sendo a fonte editável. Quando uma tela divergir do [PRD](../docs/PRD.md) sobre comportamento, vale o PRD.
 
 **Atenção:** estas exportações são anteriores ao fluxo novo da denúncia (D35, D36), que vive na seção 02 da jornada do usuário no Figma e ainda não foi exportado (TASK-013a). As telas de denúncia e de GPS abaixo mostram o fluxo anterior e servem só de histórico; para implementar, use o Figma e o PRD.
-
 [Visão geral de todas as telas](montage.png)
 
 ## Jornada do usuário
@@ -50,7 +49,7 @@ Exportação das 47 telas da página **Fluxo de telas · Jornada do Usuário** d
 | Filtro por origem | [26-mapa-filtro-por-origem](26-mapa-filtro-por-origem.png) | Retirado da V1 (D40) |
 | Filtro por localidade e bairros | [27](27-mapa-filtro-por-localidade.png), [28](28-mapa-bairros.png), [40](40-filtro-de-localidades.png), [41](41-mapa-bairros-variante.png) | RF-MAP-02 |
 | Seleção de distrito, rua e área | [29](29-filtro-distritos.png), [30](30-filtro-ruas.png), [31](31-filtro-areas.png) | Retirado da V1 (D40) |
-| Mapa com distrito, rua ou área selecionado | [32](32-mapa-distritos-selecionado.png), [33](33-mapa-ruas-selecionado.png), [34](34-mapa-areas-selecionado.png) | Retirado da V1 (D40) |
+| Mapa com distrito, rua ou área selecionado | [32](32-mapa-distritos-selecionado.png), [33](33-mapa-ruas-selecionado.png), [34](34-mapa-areas-selecionado.png) | Retirado da V1 (D40)
 | Mapa · variante | [38-mapa-variante](38-mapa-variante.png) | RF-MAP-01 |
 
 ## Jornada do agente

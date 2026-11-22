@@ -20,7 +20,7 @@ Estas regras valem para todas as pessoas da equipe e para qualquer ferramenta de
 
 ## 3. HTML
 
-- Páginas públicas em `site/index.html` e `site/paginas/`; páginas dos agentes em `site/agentes/`.
+- Páginas públicas em `site/inicio.html` e `site/paginas/`; páginas dos agentes em `site/agentes/`.
 - Use a estrutura semântica: `header`, `nav`, `main`, `section`, `footer`, um `h1` por página.
 - Todo campo tem `label`. Toda imagem tem `alt`.
 - Cada página carrega `css/estilos.css` e o próprio módulo em `js/`.

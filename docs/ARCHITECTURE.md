@@ -50,7 +50,7 @@ As telas nunca falam direto com o banco. Toda leitura e escrita passa pela camad
 Aedes-Data-Lab/
 ├── docs/                  Documentação do produto e do projeto
 ├── site/
-│   ├── index.html         Início (área pública)
+│   ├── inicio.html        Início (área pública)
 │   ├── paginas/           Demais páginas públicas
 │   ├── agentes/           Páginas da área dos agentes
 │   ├── css/estilos.css    Único CSS do site

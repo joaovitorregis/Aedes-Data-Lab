@@ -6,7 +6,7 @@ Esta pasta tem a estrutura inicial de estudo do site. Ainda não há formulário
 
 | Área | Arquivo | Escopo no PRD |
 |---|---|---|
-| Pública | `index.html` (Início) | V1 |
+| Pública | `inicio.html` (Início) | V1 |
 | Pública | `paginas/registrar-foco.html` | V1 |
 | Pública | `paginas/mapa.html` | V1 |
 | Pública | `paginas/guia-aedes.html`, `paginas/repelentes.html`, `paginas/quem-somos.html`, `paginas/jogo.html` | Complementares, em paralelo |
@@ -36,11 +36,11 @@ Combine com a equipe antes de editar arquivos comuns, como o CSS e o menu. A div
 
 ## Como visualizar
 
-Na fase de HTML e CSS, basta abrir `index.html` no navegador. Para usar módulos JavaScript, rode um servidor local (por exemplo, o Live Server do editor) em vez de abrir por `file://`. Vite e npm ainda não foram configurados nesta pasta.
+Na fase de HTML e CSS, basta abrir `inicio.html` no navegador. Para usar módulos JavaScript, rode um servidor local (por exemplo, o Live Server do editor, clicando com o botão direito em `inicio.html` e escolhendo *Open with Live Server*) em vez de abrir por `file://`. O endereço raiz `/` só leva à Início na Vercel, por causa da regra em `vercel.json`; no servidor local, abra `inicio.html` direto. Vite e npm ainda não foram configurados nesta pasta.
 
 ## Navegação durante o aprendizado
 
-Na fase de HTML, crie links entre páginas da mesma área e confira os caminhos relativos: páginas em `paginas/` voltam ao início com `../index.html`, e as páginas dos agentes navegam dentro de `agentes/`, a partir de `agentes/Login.html`. Na etapa de JavaScript, o menu passa a ser compartilhado para evitar cópias diferentes.
+Na fase de HTML, crie links entre páginas da mesma área e confira os caminhos relativos: páginas em `paginas/` voltam ao início com `../inicio.html`, e as páginas dos agentes navegam dentro de `agentes/`, a partir de `agentes/Login.html`. Na etapa de JavaScript, o menu passa a ser compartilhado para evitar cópias diferentes.
 
 ## Primeira entrega
 

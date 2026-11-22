@@ -51,7 +51,7 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 
 - [ ] TASK-020 Declarar os tokens e os componentes base em `site/css/estilos.css` (DESIGN, seção 8)
 - [ ] TASK-021 Menu compartilhado da área pública (tela 02; `js/compartilhado/menu.js`)
-- [ ] TASK-022 Página Início (tela 01) · primeira versão em `site/index.html`; falta alinhar à tela, ver MEMORY.md
+- [ ] TASK-022 Página Início (tela 01) · primeira versão em `site/inicio.html`; falta alinhar à tela, ver MEMORY.md
 - [ ] TASK-023 HTML da denúncia: Início → Localização → Identificação do foco → Seus dados → canal e código → Revisão → resultado, com os estados de erro (telas 01 a 11 da denúncia no Figma; D35)
 - [ ] TASK-024 HTML do mapa público: mapa, lista, prévia curta e menu de filtros (telas 16 a 24, 27, 28; D47)
 - [ ] TASK-025 HTML do Portal técnico (tela 45; `agentes/Login.html`)
@@ -100,8 +100,8 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 - [ ] TASK-060 Criar o projeto Supabase de teste, separado da produção, e configurar a Supabase CLI no ambiente local
 - [ ] TASK-060a Provar que uma Edge Function importa um módulo de `js/dominio/` (ADR-015)
 - [ ] TASK-060b Publicar a prévia do site na Vercel (D46, ADR-016)
-- [ ] TASK-061 Criar as tabelas (incluindo `report_visits` e `neighborhoods`), os buckets e as políticas de RLS em migrações, com testes de acesso negado (SECURITY.md)
-- [ ] TASK-062 Login individual dos agentes e papel de agente; contas criadas pela equipe no Supabase, sem tela de administrador (RF-AUT-02, D22)
+- [ ] TASK-061 (escrito e testado localmente em `supabase/`; falta aplicar no projeto de teste com `db push`) Criar as tabelas (incluindo `report_visits` e `neighborhoods`), os buckets e as políticas de RLS em migrações, com testes de acesso negado (SECURITY.md)
+- [ ] TASK-062 (papel de agente em `profiles` e conferência nas funções prontos; falta criar as contas no projeto de teste) Login individual dos agentes e papel de agente; contas criadas pela equipe no Supabase, sem tela de administrador (RF-AUT-02, D22)
 - [ ] TASK-063 Trocar o serviço fictício pelo Supabase sem alterar as telas
 
 ## Fase 7 · Envio real

@@ -162,9 +162,9 @@ Dica: o que os testes provam de privacidade: foto pública sem EXIF, XMP, coment
 
 **O que os testes NÃO provam:** o comportamento no Supabase hospedado (criação de buckets e políticas por migration, Storage real, envio real de e-mail). Isso se confere no projeto de teste (seção 5).
 
-## 5. Colocando no ar (projeto de TESTE)
+## 5. Colocando no ar (teste e produção)
 
-> Nunca aplique nada no projeto de produção sem decisão da equipe (TASK-101).
+> Os mesmos passos valem para teste e produção; só muda o `--project-ref`. Antes de qualquer comando, confira o "Target" (nome do projeto). Produção só com decisão da equipe (TASK-101).
 
 1. **Entrar e ligar ao projeto de teste**
    ```
@@ -177,7 +177,7 @@ Dica: o que os testes provam de privacidade: foto pública sem EXIF, XMP, coment
    npx supabase db push --remote   # pede a senha do banco
    ```
    O `seed.sql` **não** vai junto (é só para ambiente local).
-3. **Definir os segredos** (valores longos e aleatórios; guarde no gerenciador de senhas):
+3. **Definir os segredos** (valores longos e aleatórios, **diferentes entre si e entre os ambientes**; guarde no gerenciador de senhas). No PowerShell, `function Novo { $b = New-Object byte[] 32; (New-Object Security.Cryptography.RNGCryptoServiceProvider).GetBytes($b); [Convert]::ToBase64String($b) }` gera um valor; use `"$(Novo)"` em cada segredo. Cole os comandos já com os valores reais: se um `<...>` de exemplo for colado, o valor vira esse texto (na produção isso gerou URL inválida e três segredos iguais; no painel, resumos iguais indicam valores repetidos):
    ```
    npx supabase secrets set CODE_PEPPER=... CORRECTION_TOKEN_SECRET=... CRON_SECRET=... \
      ALLOWED_ORIGINS="https://seu-site.vercel.app,http://localhost:5500"
@@ -222,4 +222,5 @@ Dica: o que os testes provam de privacidade: foto pública sem EXIF, XMP, coment
 - **Fotos:** só JPEG e PNG (WebP/HEIC são recusados). A cópia pública não é redimensionada (tem o mesmo tamanho do original, até 10 MB): reduzir a foto no navegador antes de enviar economiza banda e deixa o mapa mais rápido.
 - **Migrations de Storage** (buckets e políticas) foram testadas só no simulador; confira no projeto real ao aplicar.
 - **Funções ainda não reutilizam `js/dominio/`** (TASK-060a, ADR-015): as regras estão duplicadas no SQL e em `_shared/`.
+- **Produção (23/11/2026):** projeto criado em West US (Oregon); a região não muda depois de criado. As 9 migrations, as 6 funções e os segredos estão aplicados. Teste real: denúncia com foto (AED-2026-000001, publicada), leitura pública só com os 12 campos, bloqueio de origem fora do `ALLOWED_ORIGINS` e `acesso-correcao` completo. A denúncia AED-2026-000001 é de teste e ainda está lá: apague a linha no banco e as pastas dela nos dois buckets antes de divulgar o site.
 - **Front-end:** trocar o serviço fictício pelas chamadas acima é a TASK-063.

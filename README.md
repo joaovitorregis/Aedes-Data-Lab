@@ -2,7 +2,7 @@
 
 Plataforma web, pensada primeiro para o celular, em que moradores de Itambé/PE registram possíveis focos do mosquito da dengue e agentes autorizados acompanham o atendimento.
 
-O Aedes Data Lab é a evolução do projeto Repecol, que agora fica como referência histórica. As telas do produto estão concluídas no Figma e a implementação do site começou: a pasta `site/` tem a estrutura inicial das páginas, ainda sem envio, banco ou autenticação. O back-end (Supabase) já roda no projeto de teste, com envio real de código por e-mail. A documentação está alinhada ao PRD, e o andamento fica em [docs/MEMORY.md](docs/MEMORY.md). Versões antigas de documentos (PRD 1.1/2.0 e Start Técnico) foram removidas e continuam no histórico do Git.
+O Aedes Data Lab é a evolução do projeto Repecol, que agora fica como referência histórica. As telas do produto estão concluídas no Figma e a implementação do site começou: a pasta `site/` tem a estrutura inicial das páginas, ainda sem envio, banco ou autenticação. O back-end (Supabase) já roda no projeto de teste, com envio real de código por e-mail. A documentação está alinhada ao PRD, e o andamento fica na seção Estado do projeto do [TASKS.md](TASKS.md). Versões antigas de documentos (PRD 1.1/2.0 e Start Técnico) foram removidas e continuam no histórico do Git.
 
 ## Documentação
 
@@ -11,13 +11,11 @@ Cada documento responde uma pergunta, e cada informação mora em um só lugar. 
 | Arquivo | Responde | Etapa |
 |---|---|---|
 | [docs/PRD.md](docs/PRD.md) | O que estamos construindo e por quê? | Planejamento |
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Como vamos construir? | Planejamento |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Como vamos construir e por que fizemos cada escolha técnica? | Planejamento |
 | [docs/BACKEND.md](docs/BACKEND.md) | Como funciona e como se coloca no ar o back-end (Supabase, e-mail)? | Desenvolvimento |
 | [docs/DESIGN.md](docs/DESIGN.md) | Como deve parecer? | Planejamento |
 | [docs/RULES.md](docs/RULES.md) | Como a equipe e a IA devem programar? | Planejamento |
-| [TASKS.md](TASKS.md) | O que construir agora? | Desenvolvimento |
-| [docs/DECISIONS.md](docs/DECISIONS.md) | Por que fizemos esta escolha técnica? | Desenvolvimento |
-| [docs/MEMORY.md](docs/MEMORY.md) | Em que ponto o projeto está? | Desenvolvimento |
+| [TASKS.md](TASKS.md) | O que construir agora e em que ponto o projeto está? | Desenvolvimento |
 | [docs/SECURITY.md](docs/SECURITY.md) | Como protegemos os dados? | Desenvolvimento |
 | [docs/TEST_PLAN.md](docs/TEST_PLAN.md) | Como sabemos que funciona? | Testes |
 | [.env.example](.env.example) | Que configurações são necessárias? | Preparação |
@@ -37,7 +35,7 @@ Ler → Entender → Planejar → Implementar → Testar → Revisar → Corrigi
 2. Crie uma branch para ela, como `feature/registrar-foco`.
 3. Leia o requisito no PRD, veja a tela no Figma e leia o DESIGN.md.
 4. Implemente, teste com o [TEST_PLAN.md](docs/TEST_PLAN.md) e abra um PR para outra integrante revisar.
-5. Depois do merge, marque a tarefa como concluída e atualize o MEMORY.md se o estado do projeto mudou.
+5. Depois do merge, marque a tarefa como concluída e atualize a seção Estado do projeto do TASKS.md se o estado do projeto mudou.
 
 Se for usar uma ferramenta de IA, comece pela mensagem de contexto da seção 9 do RULES.md. Ela faz a IA ler a documentação antes de mexer em qualquer arquivo.
 

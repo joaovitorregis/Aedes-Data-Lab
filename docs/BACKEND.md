@@ -1,6 +1,6 @@
 # Back-end (Supabase): guia explicado
 
-Este guia explica o back-end do Aedes Data Lab: o que existe, por que foi feito assim, como rodar os testes e como colocar no ar. Foi escrito para quem está aprendendo: cada parte diz **o que faz** e **por quê**. As decisões de fundo estão em [DECISIONS.md](./DECISIONS.md) (ADR-004, 007, 008, 015, 017) e as regras de segurança em [SECURITY.md](./SECURITY.md).
+Este guia explica o back-end do Aedes Data Lab: o que existe, por que foi feito assim, como rodar os testes e como colocar no ar. Foi escrito para quem está aprendendo: cada parte diz **o que faz** e **por quê**. As decisões de fundo estão em [ARCHITECTURE.md, seção 9](./ARCHITECTURE.md#9-decisões-técnicas-adr) (ADR-004, 007, 008, 015, 017) e as regras de segurança em [SECURITY.md](./SECURITY.md).
 
 Tudo está na pasta `supabase/`:
 

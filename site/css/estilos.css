@@ -1,5 +1,31 @@
-/* Aedes Data Lab — estilos compartilhados pelas 12 páginas. */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: Arial. Helvetica, sans-serif;
+    background-color: #eaf4ff
+}
+/*CABEÇALHO*/
+.CABEÇALHO{
+    width:100%;
+    min-height:75px;
+    padding:10px 25px:
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #dce5f5
 
+}.CABEÇALHO-marca{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.logo{
+    width: 65px;
+    height: 50px;
+    object-fit: contain;
 /* Base: cores, fontes e espaçamentos (valores em docs/DESIGN.md) */
 :root {
   --cor-fundo: #F6F0E2;
@@ -33,13 +59,54 @@ body {
   color: var(--cor-texto);
 }
 
-/* Componentes: botões e campos */
+}
+.marca-textos{
+    display: flex;
+    flex-direction: column;
+}
+.marca-titulo{
+    font-size: 17px;
+    font-weight: bold;
+    color: #253b65
+}.marca-subtitulo{
+    font-size: 14px;
+    color: #253b65
+}
+/*MENU*/
+.menu-toggle{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.linha{
+    width: 30px;
+    height: 4px
+    background-color: #344767;
+    border-radius: 5px;
+}
+/*ÁREA PRINCIPAL*/
+.pagina-jogo {
+    width: 100%;
+    height: calc(100vh - 75px);
 
-/* Menu público e menu técnico */
+    position: relative;
+    overflow: hidden;
 
-/* Cidadão: início, denúncia, mapa, guia, repelentes, equipe e jogo */
-/* Delimitar estilos específicos com classes como .pagina-denuncia. */
+    background-image: url("../assets/imagens/imagens/Paisagem Suburbana Colorida em Vetor.png");
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+}
+/*CONTEÚDO*/
+.conteudo-principal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
+    padding: 70px 30px 40px;
 /* Página Início (tela 01): layout da Bia. Escopo: <body class="pagina-inicio"> */
 .pagina-inicio,
 .pagina-inicio * {
@@ -373,4 +440,127 @@ body.menu-aberto {
 
 /* Agentes: acesso, meu trabalho, ocorrências, mapa e dashboard */
 
-/* Responsividade */
+    position: relative;
+    z-index: 2;
+}
+.texto-principal {
+    width: 60%;
+    max-width: 400px;
+}
+.texto-principal h1 {
+    font-size: 36px;
+    font-weight: bold;
+    color: #264b76;
+    margin-bottom: 25px;
+}
+
+.texto-principal h1 span {
+    display: block;
+    color: #e84959;
+}
+.texto-principal p {
+    font-size: 17px;
+    line-height: 1.5;
+    color: #345b82;
+    margin-bottom: 35px;
+}
+
+/* BOTÃO */
+
+.botao-jogar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    padding: 15px 35px;   
+    background-color: #e84959;
+    color: white;
+
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+
+    border-radius: 40px;
+    transition: 0.3s;
+}.botao-jogar:hover {
+    background-color: #cf3445;
+    transform: scale(1.05);
+}
+
+.icone-jogo {
+    font-size: 22px;
+}
+/* MOSQUITO */
+
+.imagem-mosquito {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagem-mosquito img {
+    width: 100%;
+    max-width: 300px;
+    object-fit: contain;
+}
+/* PAISAGEM */
+
+.paisagem {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.paisagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+
+.conteudo-principal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 30px;
+    position: relative;
+    z-index: 2;
+}
+.texto-principal {
+        width: 100%;
+    }
+
+.texto-principal h1 {
+        font-size: 34px;
+    }
+
+.texto-principal p {
+        font-size: 16px;
+        max-width: 300px;
+    }
+.imagem-mosquito {
+        position: absolute;
+        top: 150px;
+        right: 10px;
+
+        width: 48%;
+    }
+
+.imagem-mosquito img {
+        max-width: 230px;
+    }
+
+    .botao-jogar {
+        padding: 14px 30px;
+        font-size: 17px;
+    }

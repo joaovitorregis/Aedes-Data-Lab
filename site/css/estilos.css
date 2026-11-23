@@ -56,16 +56,17 @@ body{
     border-radius: 5px;
 }
 /*ÁREA PRINCIPAL*/
-.pagina-jogo{
-    min-height: calc(100vh - 75px);
+.pagina-jogo {
+    width: 100%;
+    height: calc(100vh - 75px);
+
     position: relative;
     overflow: hidden;
-    background: linear-gradient(
-        to bottom,
-        #2385e7
-        #a9d9f7
-        #dff2ff
-    );
+
+    background-image: url("../assets/imagens/imagens/Paisagem Suburbana Colorida em Vetor.png");
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
 }
 /*CONTEÚDO*/
 .conteudo-principal {
@@ -146,12 +147,11 @@ body{
     position: absolute;
     bottom: 0;
     left: 0;
-
     width: 100%;
-    height: 40%;
-
+    height: 100%;
     z-index: 1;
 }
+
 .paisagem img {
     width: 100%;
     height: 100%;
@@ -159,12 +159,19 @@ body{
     object-position: center;
 }
 
-.conteudo-principal {
-        flex-direction: column;
-        align-items: flex-start;
 
-        padding: 55px 30px 20px;
-    }
+.conteudo-principal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 30px;
+    position: relative;
+    z-index: 2;
+}
 .texto-principal {
         width: 100%;
     }
@@ -193,7 +200,3 @@ body{
         padding: 14px 30px;
         font-size: 17px;
     }
-.paisagem {
-        height: 35%;
-    }
-

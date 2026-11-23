@@ -180,9 +180,23 @@ Dica: o que os testes provam de privacidade: foto pública sem EXIF, XMP, coment
 3. **Definir os segredos** (valores longos e aleatórios; guarde no gerenciador de senhas):
    ```
    npx supabase secrets set CODE_PEPPER=... CORRECTION_TOKEN_SECRET=... CRON_SECRET=... \
-     ALLOWED_ORIGINS=https://seu-site.vercel.app RESEND_API_KEY=... EMAIL_FROM="Aedes <no-reply@seu-dominio>"
+     ALLOWED_ORIGINS="https://seu-site.vercel.app,http://localhost:5500"
    ```
-   `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY` o Supabase já injeta. **Não** defina `EMAIL_MODE=log` fora do desenvolvimento (ele escreve o código no log em vez de enviar).
+   `ALLOWED_ORIGINS` é a lista (separada por vírgula) de endereços que podem chamar as funções; `secrets set` **substitui** o valor inteiro, então sempre envie a lista completa. Em produção, só o domínio oficial. `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY` o Supabase já injeta.
+
+   **E-mail do código.** A variável `EMAIL_PROVIDER` escolhe o provedor (para trocar, basta mudar a variável e publicar de novo; as funções não mudam):
+
+   | Valor | Quando usar | Variáveis |
+   |---|---|---|
+   | `appscript` | Hoje. Gratuito, sem domínio próprio. Limite de 100 destinatários por dia em Gmail comum (1.500 em Workspace pago); cada reenvio conta | `APPS_SCRIPT_URL`, `APPS_SCRIPT_SECRET` |
+   | `resend` | Quando houver domínio verificado (o plano grátis dá 3.000 e-mails por mês, 100 por dia) | `RESEND_API_KEY`, `EMAIL_FROM` |
+   | `log` | Só em desenvolvimento: escreve o código no log em vez de enviar | (nenhuma). `EMAIL_MODE=log` é o nome antigo e ainda vale |
+
+   Montagem do `appscript`: crie um projeto em script.google.com **com a conta Gmail do projeto** e cole `supabase/email/apps-script-email.gs`; em Configurações do projeto, crie a propriedade `APPS_SCRIPT_SECRET` (valor longo e aleatório); em Implantar, Nova implantação, App da Web, executar como você e acesso para qualquer pessoa; copie a URL que termina em `/exec`. Depois:
+   ```
+   npx supabase secrets set EMAIL_PROVIDER=appscript APPS_SCRIPT_URL="<URL /exec>" APPS_SCRIPT_SECRET="<o mesmo segredo>"
+   ```
+   Ao mudar o código do script, publique uma **nova versão** da implantação (Implantar, Gerenciar implantações, editar, Nova versão); a URL não muda.
 4. **Publicar as funções:**
    ```
    npx supabase functions deploy enviar-codigo confirmar-codigo salvar-denuncia acesso-correcao agente rotina-diaria
@@ -203,7 +217,7 @@ Dica: o que os testes provam de privacidade: foto pública sem EXIF, XMP, coment
 
 ## 6. Limitações conhecidas e pendências
 
-- **E-mail:** só e-mail está implementado. SMS e WhatsApp respondem `canal_indisponivel` até a decisão de custo (DEP-03).
+- **E-mail:** só e-mail está implementado. SMS e WhatsApp respondem `canal_indisponivel` até a decisão de custo (DEP-03). Com `appscript` o remetente é um Gmail, não um domínio do projeto: entrega confirmada no Gmail; outros provedores (Outlook, Yahoo) ainda sem teste e podem mandar para spam. Se a cota diária acabar, o script devolve `cota_diaria_esgotada` e o envio falha.
 - **Território e categorias** são provisórios (um retângulo; DEP-01). Trocar o contorno é uma nova migration.
 - **Fotos:** só JPEG e PNG (WebP/HEIC são recusados). A cópia pública não é redimensionada (tem o mesmo tamanho do original, até 10 MB): reduzir a foto no navegador antes de enviar economiza banda e deixa o mapa mais rápido.
 - **Migrations de Storage** (buckets e políticas) foram testadas só no simulador; confira no projeto real ao aplicar.

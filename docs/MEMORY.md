@@ -6,7 +6,7 @@ Retrato do momento atual do projeto. Diferente de [DECISIONS.md](./DECISIONS.md)
 
 ## Situação atual
 
-A documentação está alinhada ao [PRD 2.9](./PRD.md), e o fluxo da denúncia e a jornada do agente estão desenhados no Figma. O `main` tem a estrutura das 12 páginas em `site/`, todas ainda com conteúdo inicial, sem envio, banco, autenticação ou mapa. O back-end do Supabase está escrito e testado localmente em `supabase/` (9 migrations, 6 Edge Functions, 96 testes de banco e 41 de funções), mas ainda **não aplicado** ao projeto de teste, e o site ainda não o usa. Guia: [BACKEND.md](./BACKEND.md).
+A documentação está alinhada ao [PRD 2.9](./PRD.md), e o fluxo da denúncia e a jornada do agente estão desenhados no Figma. O `main` tem a estrutura das 12 páginas em `site/`, ainda com conteúdo inicial. O back-end do Supabase (9 migrations, 6 Edge Functions) está **aplicado e provado no projeto de teste**: denúncia ponta a ponta com fotos, código por e-mail real, leitura pública sem dados privados e fluxo do agente (iniciar análise, observação, arquivar, voltar ao mapa, rotina diária). O site ainda não o usa; a ligação do front (formulário e mapa) é da equipe de front. Guia: [BACKEND.md](./BACKEND.md).
 
 ## Concluído
 
@@ -17,6 +17,7 @@ A documentação está alinhada ao [PRD 2.9](./PRD.md), e o fluxo da denúncia e
 - Fluxo da denúncia definido no PRD 2.3: da tela Início ao protocolo, com e-mail e telefone obrigatórios e código confirmado depois dos dados, por e-mail, SMS ou WhatsApp
 - Fluxo da denúncia desenhado no Figma: 22 telas na seção 02 da jornada do usuário, com os estados de erro. A versão anterior está arquivada fora da jornada, e os links de entrada abrem a Localização nova
 - Jornada do agente revista no PRD 2.8 e desenhada no Figma, na seção "Jornada do agente · telas e conexões" da página do fluxo: origem cidadão ou agente, arquivar como ação única, análise e visita num passo, foco em local sem denúncia, perguntas na linguagem do cidadão e relatório novo. É protótipo com dados de exemplo, ainda não validado com agentes
+- E-mail do código em produção de teste (22/11/2026): provedor escolhido por `EMAIL_PROVIDER`; hoje Google Apps Script (gratuito, sem domínio, limite de 100 destinatários por dia em Gmail comum), com Resend como troca quando houver domínio. Entrega real confirmada em Gmail (caixa de entrada); outros provedores ainda não testados. SMS e WhatsApp seguem "em breve" (D45)
 - Back-end Supabase (TASK-061, 062 e parte da 060a): tabelas públicas e privadas, RLS, buckets, funções `api_*`, Edge Functions de denúncia, código de confirmação por e-mail, correção por código, ações do agente, lixeira de 30 dias e rotina diária, com testes de acesso negado
 
 ## Em andamento

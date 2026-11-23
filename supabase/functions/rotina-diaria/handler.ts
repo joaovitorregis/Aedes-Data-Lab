@@ -31,7 +31,7 @@ export function criarHandler(svc: Servico) {
     const cabecalho = req.headers.get("authorization") ?? "";
     const enviado = cabecalho.toLowerCase().startsWith("bearer ") ? cabecalho.slice(7).trim() : "";
     // Segredo vazio na configuração = rotina desligada (nunca aceita "sem senha").
-    if (!svc.config.segredoRotina || !iguais(enviado, svc.config.segredoRotina)) throw new ErroNegocio("nao_autenticado");
+    if (!svc.config.segredoRotina || !iguais(enviado, svc.config.segredoRotina)) throw new ErroNegocio("rotina_nao_autorizada");
 
     const resumo = { fotos_publicas_removidas: 0, lixeira_removidas: 0, publicadas: 0, falhas: 0 };
 

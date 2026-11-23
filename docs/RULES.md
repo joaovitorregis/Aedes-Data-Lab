@@ -60,7 +60,7 @@ Estas regras valem para todas as pessoas da equipe e para qualquer ferramenta de
 - Commits pequenos, com mensagem que diga o que mudou: `feat: adiciona passo 1 da denúncia`.
 - Prefixos: `feat` (funcionalidade), `fix` (correção), `style` (visual), `docs` (documentação), `test` (testes), `chore` (manutenção).
 - Todo código entra no `main` por PR, revisado por outra integrante.
-- Ao terminar uma tarefa, atualize TASKS.md e, se o estado do projeto mudou, [MEMORY.md](./MEMORY.md).
+- Ao terminar uma tarefa, atualize o TASKS.md e, se o estado do projeto mudou, a seção Estado do projeto no mesmo arquivo.
 
 ## 9. Como trabalhar com IA
 
@@ -76,13 +76,13 @@ Peça uma coisa pequena por vez. "Construa o site" é grande demais; "monte o HT
 
 ```
 Leia estes arquivos antes de qualquer mudança:
-docs/PRD.md, docs/ARCHITECTURE.md, docs/DESIGN.md, docs/RULES.md, TASKS.md e docs/MEMORY.md.
+docs/PRD.md, docs/ARCHITECTURE.md, docs/DESIGN.md, docs/RULES.md e TASKS.md.
 
 Não altere nada ainda.
 
 Depois:
 1. Resuma o produto e a arquitetura em poucas linhas.
-2. Diga qual é a tarefa atual em MEMORY.md.
+2. Diga qual é a tarefa atual na seção Estado do projeto do TASKS.md.
 3. Aponte informações que faltam ou que parecem contraditórias.
 4. Explique o plano para a tarefa TASK-XXX.
 

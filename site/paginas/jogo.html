@@ -5,22 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Entrada do jogo | Aedes Data Lab</title>
   <link rel="stylesheet" href="../css/estilos.css">
+  <link rel="stylesheet" href="../css/jogo.css">
 </head>
-<body>
-  <header>
-    <!-- Etapa HTML: construir o cabeçalho e a navegação desta área. -->
+<body class="pagina-jogo-corpo">
+  <header class="cabecalho">
+    <div class="cabecalho-marca">
+      <a href="../inicio.html" class="logo-link">
+        <img src="../assets/imagens/jogo/logo.png" alt="Logo Aedes Datalab" class="logo">
+      </a>
+      <div class="marca-textos">
+        <span class="marca-titulo">Aedes Datalab</span>
+        <span class="marca-subtitulo">Itambé-PE</span>
+      </div>
+    </div>
+    <button type="button" class="menu-toggle" aria-label="Abrir menu de navegação">
+      <span class="linha"></span>
+      <span class="linha"></span>
+      <span class="linha"></span>
+    </button>
   </header>
 
-  <main id="conteudo">
-    <h1>Entrada do jogo</h1>
-    <p>Página de estudo em construção.</p>
-    <!-- Desenvolver aqui a estrutura desta tela a partir do Figma. -->
+  <main class="pagina-jogo">
+    <section class="conteudo-principal">
+      <div class="texto-principal">
+        <h1>Vamos combater a <span>dengue?</span></h1>
+        <p>Aprenda de forma divertida como prevenir a dengue e faça a diferença na sua comunidade!</p>
+        <a href="#" class="botao-jogar"><span class="icone-jogo">🎮</span> Jogue aqui!</a>
+      </div>
+      <div class="imagem-mosquito">
+        <img src="../assets/imagens/jogo/sinal-nao-mosquitos.png" alt="Sinal de proibido mosquitos">
+      </div>
+    </section>
+    <section class="paisagem">
+      <img src="../assets/imagens/jogo/paisagem.png" alt="Paisagem de uma comunidade">
+    </section>
   </main>
-
-  <footer>
-    <!-- Construir o rodapé quando necessário. -->
-  </footer>
-
-  <script type="module" src="../js/cidadao/jogo.js"></script>
 </body>
 </html>

@@ -36,9 +36,9 @@ export function criarHandler(svc: Servico) {
     });
     if (!permitido) throw new ErroNegocio("limite_excedido");
 
-    const { assunto, texto } = emailDoCodigo(codigo, VALIDADE_SEGUNDOS / 60);
+    const { assunto, texto, html } = emailDoCodigo(codigo, VALIDADE_SEGUNDOS / 60);
     try {
-      await svc.enviarEmail(contato, assunto, texto);
+      await svc.enviarEmail(contato, assunto, texto, html);
     } catch (e) {
       console.error("falha ao enviar o código:", e); // o detalhe fica só no log
       throw new ErroNegocio("envio_falhou");

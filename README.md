@@ -2,7 +2,7 @@
 
 Plataforma web, pensada primeiro para o celular, em que moradores de Itambé/PE registram possíveis focos do mosquito da dengue e agentes autorizados acompanham o atendimento.
 
-O Aedes Data Lab é a evolução do projeto Repecol, que agora fica como referência histórica. As telas do produto estão concluídas no Figma e a implementação do site começou: a pasta `site/` tem a estrutura inicial das páginas, ainda sem envio, banco ou autenticação. A documentação está alinhada ao PRD, e o andamento fica em [docs/MEMORY.md](docs/MEMORY.md).
+O Aedes Data Lab é a evolução do projeto Repecol, que agora fica como referência histórica. As telas do produto estão concluídas no Figma e a implementação do site começou: a pasta `site/` tem a estrutura inicial das páginas, ainda sem envio, banco ou autenticação. O back-end (Supabase) já roda no projeto de teste, com envio real de código por e-mail. A documentação está alinhada ao PRD, e o andamento fica em [docs/MEMORY.md](docs/MEMORY.md). Versões antigas de documentos (PRD 1.1/2.0 e Start Técnico) foram removidas e continuam no histórico do Git.
 
 ## Documentação
 
@@ -12,6 +12,7 @@ Cada documento responde uma pergunta, e cada informação mora em um só lugar. 
 |---|---|---|
 | [docs/PRD.md](docs/PRD.md) | O que estamos construindo e por quê? | Planejamento |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Como vamos construir? | Planejamento |
+| [docs/BACKEND.md](docs/BACKEND.md) | Como funciona e como se coloca no ar o back-end (Supabase, e-mail)? | Desenvolvimento |
 | [docs/DESIGN.md](docs/DESIGN.md) | Como deve parecer? | Planejamento |
 | [docs/RULES.md](docs/RULES.md) | Como a equipe e a IA devem programar? | Planejamento |
 | [TASKS.md](TASKS.md) | O que construir agora? | Desenvolvimento |
@@ -21,8 +22,6 @@ Cada documento responde uma pergunta, e cada informação mora em um só lugar. 
 | [docs/TEST_PLAN.md](docs/TEST_PLAN.md) | Como sabemos que funciona? | Testes |
 | [.env.example](.env.example) | Que configurações são necessárias? | Preparação |
 | [site/LEIA-ME.md](site/LEIA-ME.md) | Onde fica cada página? | Desenvolvimento |
-| [docs/PRD_Aedes_Data_Lab.md](docs/PRD_Aedes_Data_Lab.md) | Rascunho inicial do PRD (1.1), anterior ao PRD atual | Histórico |
-| [docs/START_TECNICO_Aedes_Data_Lab.md](docs/START_TECNICO_Aedes_Data_Lab.md) | Proposta inicial de arquitetura e sequência de implementação | Histórico |
 
 O PRD é a fonte única do comportamento da V1 e da lista de pendências (seção 18). Quando outro documento ou uma tela divergir dele, vale o PRD.
 

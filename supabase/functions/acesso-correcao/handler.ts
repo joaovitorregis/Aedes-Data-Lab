@@ -55,9 +55,9 @@ export function criarHandler(svc: Servico) {
           p_contact: alvo.contact, p_code_hash: hash, p_ttl_seconds: VALIDADE_CODIGO_SEGUNDOS,
         });
         if (permitido) {
-          const { assunto, texto } = emailDoCodigo(codigo, VALIDADE_CODIGO_SEGUNDOS / 60);
+          const { assunto, texto, html } = emailDoCodigo(codigo, VALIDADE_CODIGO_SEGUNDOS / 60);
           // Falha de envio não muda a resposta (senão revelaria que o protocolo existe).
-          await svc.enviarEmail(alvo.contact, assunto, texto).catch((e) => console.error("falha ao enviar o código:", e));
+          await svc.enviarEmail(alvo.contact, assunto, texto, html).catch((e) => console.error("falha ao enviar o código:", e));
         }
         return resposta();
       }

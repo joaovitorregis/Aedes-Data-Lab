@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versão | 2.8 · 15/11/2026 |
+| Versão | 2.9 · 22/11/2026 |
 | Território | Itambé, Pernambuco |
 | Responsável pelo documento | Responsável pelo produto |
 | Público | Produto, design, desenvolvimento, testes e agentes participantes |
@@ -258,9 +258,9 @@ Login individual, com a conta criada e liberada pela equipe do projeto no Supaba
 
 ### RF-DEN-01 · Preencher e revisar
 
-Da tela Início, a ação de denunciar abre um formulário completo em passos claros: localização do foco, identificação e evidências, dados do cidadão, confirmação do contato escolhido e revisão. A revisão mostra o conteúdo público e o privado antes do envio. A pessoa pode corrigir qualquer campo e remover ou trocar fotos; voltar um passo não apaga o que foi preenchido.
+Da tela Início, a ação de denunciar abre um formulário completo em passos claros: localização do foco, identificação e evidências, dados do cidadão, confirmação do contato escolhido e revisão. Na etapa dos dados do cidadão, um aviso, antes dos campos, informa que nome, e-mail e telefone não são divulgados: só os agentes que atendem a denúncia os veem, e no mapa público a denúncia aparece como anônima (D07, D50). A revisão mostra o conteúdo público e o privado antes do envio. A pessoa pode corrigir qualquer campo e remover ou trocar fotos; voltar um passo não apaga o que foi preenchido.
 
-**Aceite:** campo obrigatório vazio impede o envio e a mensagem de erro indica o campo; a revisão separa visualmente o que será público do que é privado; os valores são preservados entre os passos. A V1 não recupera o preenchimento depois que o navegador é fechado.
+**Aceite:** a etapa dos dados mostra o aviso de que nome, e-mail e telefone não são divulgados; campo obrigatório vazio impede o envio e a mensagem de erro indica o campo; a revisão separa visualmente o que será público do que é privado; os valores são preservados entre os passos. A V1 não recupera o preenchimento depois que o navegador é fechado.
 
 ### RF-DEN-02 · Escolher o local e validar o território
 
@@ -626,3 +626,4 @@ Em conflito com telas antigas ou recomendações anteriores, valem as decisões 
 | 2.6 | 15/11/2026 | D47: o mapa público usa prévia curta e não tem detalhe completo (RF-MAP-01) |
 | 2.7 | 15/11/2026 | Resumo e filtro "Sem acesso" só com ocorrências Em análise; Atendida e Encerrada sem ações de atendimento, mas com correção e publicação no menu; reenvio da visita guardada confere etapa e versão; período e regras de contagem do relatório. Sem papel nem tela de administrador: a equipe do projeto cria as contas e troca o contato confirmado direto no Supabase (D22, D42); o agente corrige os dados de qualquer denúncia (D20, D26, RF-COR-01, AC-14) |
 | 2.8 | 15/11/2026 | Jornada do agente revista: ocultar e arquivar viram uma ação só, válida em qualquer etapa, com volta ao mapa (D48, D49, RF-AGE-04, RF-AGE-06; RF-AGE-09 incorporado); origem da ocorrência, cidadão ou agente, visível também no mapa público sem o nome (D50, RF-MAP-01); registro de foco em local sem denúncia (D51, RF-AGE-10, AC-17); iniciar análise abre o registro da visita (D52); perguntas da visita na linguagem do cidadão, sem os códigos do PNCD (D53, seção 8.1); resumo que acompanha os filtros (D54); tela única de erro (D55); relatório em três grupos, por origem e por tipo de encerramento (D56, RF-AGE-08). Em 16/11/2026 confirmados o prazo da lixeira para qualquer etapa (D44), a ocorrência que fica Em análise quando o agente sai da visita sem gravar (D52) e a contagem da arquivada depois de atendida como Arquivada (RF-AGE-08). Também em 16/11/2026: respostas do formulário no detalhe e corrigíveis pelo agente, menos o tempo e a outra evidência (RF-AGE-01, RF-COR-01) |
+| 2.9 | 22/11/2026 | RF-DEN-01: a etapa dos dados do cidadão traz o aviso de que nome, e-mail e telefone não são divulgados. Confirmado: CPF fora do produto (D07) e identificação obrigatória, com denúncia anônima no mapa público (D50) |

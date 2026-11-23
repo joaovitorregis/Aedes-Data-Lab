@@ -36,7 +36,7 @@ export interface Servico {
   };
   // Confere o login (JWT) enviado pelo navegador do agente. Devolve o id do usuário ou null.
   usuarioDoToken(jwt: string): Promise<string | null>;
-  enviarEmail(para: string, assunto: string, texto: string): Promise<void>;
+  enviarEmail(para: string, assunto: string, texto: string, html?: string): Promise<void>;
 }
 
 function exigir(nome: string): string {
@@ -89,17 +89,37 @@ export function criarServico(): Servico {
       return error || !data.user ? null : data.user.id;
     },
 
-    // E-mail pelo Resend (https://resend.com). O provedor definitivo depende de DEP-03:
-    // para trocar, só esta função muda. EMAIL_MODE=log imprime em vez de enviar (SÓ para desenvolvimento).
-    async enviarEmail(para, assunto, texto) {
-      if (Deno.env.get("EMAIL_MODE") === "log") {
+    // E-mail. O provedor é escolhido por EMAIL_PROVIDER (DEP-03):
+    //   "log"       imprime no log em vez de enviar (SÓ desenvolvimento; também vale EMAIL_MODE=log, o nome antigo);
+    //   "appscript" Google Apps Script (gratuito, sem domínio próprio; limite de 100 destinatários por dia em conta Gmail comum);
+    //   "resend"    Resend (exige domínio verificado para enviar a qualquer pessoa).
+    // Para trocar de provedor basta mudar a variável, sem alterar as funções.
+    async enviarEmail(para, assunto, texto, html) {
+      const provedor = Deno.env.get("EMAIL_PROVIDER") ?? (Deno.env.get("EMAIL_MODE") === "log" ? "log" : "resend");
+      if (provedor === "log") {
         console.log(`[EMAIL de desenvolvimento] para=${para} assunto=${assunto}\n${texto}`);
+        return;
+      }
+      if (provedor === "appscript") {
+        // O Apps Script responde com um redirecionamento (302); o fetch o segue sozinho e o envio já aconteceu no POST.
+        const resp = await fetch(exigir("APPS_SCRIPT_URL"), {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ segredo: exigir("APPS_SCRIPT_SECRET"), para, assunto, texto, html }),
+          redirect: "follow",
+          signal: AbortSignal.timeout(15000),
+        });
+        let corpo: { ok?: boolean } = {};
+        try {
+          corpo = await resp.json();
+        } catch { /* resposta que não é JSON conta como falha, abaixo */ }
+        if (!resp.ok || corpo.ok !== true) throw new Error(`falha ao enviar e-mail (Apps Script): HTTP ${resp.status}`);
         return;
       }
       const resp = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: { "Authorization": `Bearer ${exigir("RESEND_API_KEY")}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ from: exigir("EMAIL_FROM"), to: [para], subject: assunto, text: texto }),
+        body: JSON.stringify({ from: exigir("EMAIL_FROM"), to: [para], subject: assunto, text: texto, ...(html ? { html } : {}) }),
       });
       if (!resp.ok) throw new Error(`falha ao enviar e-mail: HTTP ${resp.status}`);
     },

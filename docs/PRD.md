@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versão | 2.8 · 15/11/2026 |
+| Versão | 2.9 · 22/11/2026 |
 | Território | Itambé, Pernambuco |
 | Responsável pelo documento | Responsável pelo produto |
 | Público | Produto, design, desenvolvimento, testes e agentes participantes |
@@ -73,9 +73,9 @@ O Aedes Data Lab precisa reunir relatos com informação suficiente para o traba
 
 A experiência é pensada primeiro para o celular e precisa funcionar bem no computador. Quatro integrantes constroem HTML, CSS e JavaScript das telas. Banco de dados e integrações serão aprendidos em conjunto com a coordenação do projeto, e essa ordem de aprendizagem não altera os critérios de aceite.
 
-O andamento da implementação é registrado em [MEMORY.md](./MEMORY.md), que é atualizado a cada entrega. As páginas Meu trabalho, Mapa técnico e Dashboard já existem no repositório como espaço reservado, fora do aceite da V1 (seção 6.1).
+O andamento da implementação é registrado em a seção Estado do projeto de [TASKS.md](../TASKS.md), que é atualizada a cada entrega. As páginas Meu trabalho, Mapa técnico e Dashboard já existem no repositório como espaço reservado, fora do aceite da V1 (seção 6.1).
 
-**Design:** a referência visual é o [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13), página "Fluxo de telas · Jornada do Usuário". A denúncia segue o fluxo da seção 02 dessa página (D35, D36); a versão anterior fica arquivada fora da jornada, só para consulta. A área do agente segue a seção "Jornada do agente · telas e conexões" da mesma página. As telas simulam código, envio, protocolo e publicação e não comprovam serviço implementado. As exportações em `wireframes/` são anteriores a esse fluxo. O estado atual do arquivo fica em [MEMORY.md](./MEMORY.md).
+**Design:** a referência visual é o [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13), página "Fluxo de telas · Jornada do Usuário". A denúncia segue o fluxo da seção 02 dessa página (D35, D36); a versão anterior fica arquivada fora da jornada, só para consulta. A área do agente segue a seção "Jornada do agente · telas e conexões" da mesma página. As telas simulam código, envio, protocolo e publicação e não comprovam serviço implementado. As exportações em `wireframes/` são anteriores a esse fluxo. O estado atual do arquivo fica na seção Estado do projeto de [TASKS.md](../TASKS.md).
 
 ## 5. Decisões de produto
 
@@ -118,7 +118,7 @@ O andamento da implementação é registrado em [MEMORY.md](./MEMORY.md), que é
 | D35 | A jornada de denúncia começa na tela Início: o cidadão escolhe denunciar, informa localização, descreve o foco e anexa fotos, preenche seus dados, confirma o contato escolhido, revisa o que será público e privado, envia e recebe o resultado. Estados de erro e publicação pendente pertencem à mesma jornada. |
 | D36 | O fluxo visual atualizado substitui a versão antiga como referência de implementação. Usa telas inteiras, conteúdo sem cortes, textos e ações alinhados, navegação em posição consistente e barra de URL simulada uniforme. Estados alternativos ficam próximos da etapa a que pertencem; as telas antigas servem apenas como histórico. |
 | D37 | Na prévia do Figma, o mapa da tela de localização reaproveita a imagem da versão anterior por escolha visual do responsável. Essa imagem mostra Itambé/BA e não serve como mapa, contorno territorial ou validação de ponto para Itambé/PE. A cartografia real depende de DEP-01 e DEP-07 antes do uso com moradores. |
-| D38 | O backend do produto é o Supabase: banco de dados Postgres, armazenamento de arquivos, login dos agentes e funções de servidor. O site é HTML, CSS e JavaScript sem framework. Como o serviço é construído está em [ARCHITECTURE.md](./ARCHITECTURE.md), e o motivo da escolha em [DECISIONS.md](./DECISIONS.md). |
+| D38 | O backend do produto é o Supabase: banco de dados Postgres, armazenamento de arquivos, login dos agentes e funções de servidor. O site é HTML, CSS e JavaScript sem framework. Como o serviço é construído está em [ARCHITECTURE.md](./ARCHITECTURE.md), e o motivo da escolha em [ARCHITECTURE.md, seção 9](./ARCHITECTURE.md#9-decisões-técnicas-adr). |
 | D39 | O endereço digitado (rua, avenida ou logradouro) é obrigatório no envio. É privado e não substitui o ponto marcado no mapa. |
 | D40 | O mapa público tem só três filtros: localidade, período e etapa. Origem, tipo, distrito, rua e área não fazem parte da V1, e as telas que os mostravam saem do Figma. |
 | D41 | O agente confere a denúncia falsa ou improcedente no painel e decide entre seguir com ela ou arquivá-la. Arquivar em Recebida ou Em análise leva a ocorrência a Encerrada, com motivo, não exige visita e tira a denúncia do mapa; ela segue o prazo da lixeira (D44). Em Atendida ou Encerrada, arquivar só tira do mapa (D49). |
@@ -258,9 +258,9 @@ Login individual, com a conta criada e liberada pela equipe do projeto no Supaba
 
 ### RF-DEN-01 · Preencher e revisar
 
-Da tela Início, a ação de denunciar abre um formulário completo em passos claros: localização do foco, identificação e evidências, dados do cidadão, confirmação do contato escolhido e revisão. A revisão mostra o conteúdo público e o privado antes do envio. A pessoa pode corrigir qualquer campo e remover ou trocar fotos; voltar um passo não apaga o que foi preenchido.
+Da tela Início, a ação de denunciar abre um formulário completo em passos claros: localização do foco, identificação e evidências, dados do cidadão, confirmação do contato escolhido e revisão. Na etapa dos dados do cidadão, um aviso, antes dos campos, informa que nome, e-mail e telefone não são divulgados: só os agentes que atendem a denúncia os veem, e no mapa público a denúncia aparece como anônima (D07, D50). A revisão mostra o conteúdo público e o privado antes do envio. A pessoa pode corrigir qualquer campo e remover ou trocar fotos; voltar um passo não apaga o que foi preenchido.
 
-**Aceite:** campo obrigatório vazio impede o envio e a mensagem de erro indica o campo; a revisão separa visualmente o que será público do que é privado; os valores são preservados entre os passos. A V1 não recupera o preenchimento depois que o navegador é fechado.
+**Aceite:** a etapa dos dados mostra o aviso de que nome, e-mail e telefone não são divulgados; campo obrigatório vazio impede o envio e a mensagem de erro indica o campo; a revisão separa visualmente o que será público do que é privado; os valores são preservados entre os passos. A V1 não recupera o preenchimento depois que o navegador é fechado.
 
 ### RF-DEN-02 · Escolher o local e validar o território
 
@@ -626,3 +626,4 @@ Em conflito com telas antigas ou recomendações anteriores, valem as decisões 
 | 2.6 | 15/11/2026 | D47: o mapa público usa prévia curta e não tem detalhe completo (RF-MAP-01) |
 | 2.7 | 15/11/2026 | Resumo e filtro "Sem acesso" só com ocorrências Em análise; Atendida e Encerrada sem ações de atendimento, mas com correção e publicação no menu; reenvio da visita guardada confere etapa e versão; período e regras de contagem do relatório. Sem papel nem tela de administrador: a equipe do projeto cria as contas e troca o contato confirmado direto no Supabase (D22, D42); o agente corrige os dados de qualquer denúncia (D20, D26, RF-COR-01, AC-14) |
 | 2.8 | 15/11/2026 | Jornada do agente revista: ocultar e arquivar viram uma ação só, válida em qualquer etapa, com volta ao mapa (D48, D49, RF-AGE-04, RF-AGE-06; RF-AGE-09 incorporado); origem da ocorrência, cidadão ou agente, visível também no mapa público sem o nome (D50, RF-MAP-01); registro de foco em local sem denúncia (D51, RF-AGE-10, AC-17); iniciar análise abre o registro da visita (D52); perguntas da visita na linguagem do cidadão, sem os códigos do PNCD (D53, seção 8.1); resumo que acompanha os filtros (D54); tela única de erro (D55); relatório em três grupos, por origem e por tipo de encerramento (D56, RF-AGE-08). Em 16/11/2026 confirmados o prazo da lixeira para qualquer etapa (D44), a ocorrência que fica Em análise quando o agente sai da visita sem gravar (D52) e a contagem da arquivada depois de atendida como Arquivada (RF-AGE-08). Também em 16/11/2026: respostas do formulário no detalhe e corrigíveis pelo agente, menos o tempo e a outra evidência (RF-AGE-01, RF-COR-01) |
+| 2.9 | 22/11/2026 | RF-DEN-01: a etapa dos dados do cidadão traz o aviso de que nome, e-mail e telefone não são divulgados. Confirmado: CPF fora do produto (D07) e identificação obrigatória, com denúncia anônima no mapa público (D50) |

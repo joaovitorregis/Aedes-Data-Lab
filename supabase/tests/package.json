@@ -1,0 +1,8 @@
+{
+  "name": "aedes-testes-banco",
+  "private": true,
+  "type": "module",
+  "description": "Testes das migrations e do RLS num Postgres em memória (sem Docker)",
+  "scripts": { "test": "node run.mjs" },
+  "dependencies": { "@electric-sql/pglite": "^0.3.0" }
+}

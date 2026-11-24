@@ -1,25 +1,3 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const faqQuestions = document.querySelectorAll('.faq-question');
-
-  faqQuestions.forEach((button) => {
-    button.addEventListener('click', () => {
-      const faqItem = button.parentElement;
-      const isExpanded = button.getAttribute('aria-expanded') === 'true';
-
-      // Alterna o estado da pergunta clicada
-      button.setAttribute('aria-expanded', !isExpanded);
-      faqItem.classList.toggle('active');
-    });
-  });
-
-  // Simulação de abertura do vídeo orientativo
-  const videoTrigger = document.getElementById('videoTrigger');
-  if (videoTrigger) {
-    videoTrigger.addEventListener('click', () => {
-      alert('Reproduzindo vídeo orientativo: Formas de uso e cuidados com repelentes.');
-    });
-  }
-})
 document.addEventListener("DOMContentLoaded", () => {
     const botoes = document.querySelectorAll(".menu-botao");
 

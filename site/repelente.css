@@ -26,24 +26,22 @@ body {
 }
 
 body {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 20px 12px 36px;
+  padding: 16px;
 }
 
 body.menu-aberto {
   overflow: hidden;
 }
 
-/* Cartão principal mobile */
+/* Container responsivo: adapta-se ao celular e ao computador */
 .mobile-container {
   width: 100%;
-  max-width: 390px;
+  max-width: 920px;
+  margin: 0 auto;
   background-color: var(--bg-card);
   border-radius: 16px;
-  padding: 20px 18px 24px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
   overflow: visible;
 }
 
@@ -64,28 +62,28 @@ body.menu-aberto {
 }
 
 .brand-group img {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 8px;
   object-fit: cover;
   flex-shrink: 0;
 }
 
 .brand-group h2 {
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--green-dark);
   line-height: 1.2;
 }
 
 .brand-group p {
-  font-size: 11px;
+  font-size: 11.5px;
   color: var(--text-secondary);
 }
 
 .menu-botao {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   background: transparent;
   border: none;
   border-radius: 8px;
@@ -104,7 +102,7 @@ body.menu-aberto {
 
 .menu-botao span {
   display: block;
-  width: 20px;
+  width: 21px;
   height: 2px;
   background-color: var(--green-dark);
   border-radius: 2px;
@@ -237,12 +235,12 @@ body.menu-aberto {
 
 /* Título da página */
 .page-header {
-  margin-top: 14px;
+  margin-top: 18px;
 }
 
 .back-link {
   display: inline-block;
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--green-medium);
   text-decoration: none;
@@ -254,27 +252,28 @@ body.menu-aberto {
 }
 
 .page-header h1 {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 700;
   color: var(--green-dark);
   line-height: 1.2;
 }
 
 .subtitle {
-  font-size: 12.5px;
+  font-size: 13.5px;
   color: var(--text-secondary);
-  margin-top: 4px;
+  margin-top: 5px;
 }
 
 /* Vídeo orientativo */
 .video-section {
-  margin-top: 14px;
+  margin-top: 18px;
 }
 
 .video-card {
   position: relative;
   width: 100%;
-  height: 162px;
+  aspect-ratio: 16 / 9;
+  max-height: 380px;
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
@@ -298,8 +297,8 @@ body.menu-aberto {
 }
 
 .play-circle {
-  width: 44px;
-  height: 44px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.65);
   border: 2px solid #ffffff;
@@ -311,29 +310,33 @@ body.menu-aberto {
 
 .caption {
   display: block;
-  font-size: 11px;
+  font-size: 11.5px;
   color: var(--text-secondary);
   margin-top: 6px;
 }
 
 /* Tipos apresentados no projeto */
 .types-section {
-  margin-top: 20px;
+  margin-top: 24px;
 }
 
 .types-section h2,
 .faq-section h2 {
-  font-size: 15.5px;
+  font-size: 17px;
   font-weight: 700;
   color: var(--green-dark);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .type-item {
   display: flex;
   align-items: center;
   gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
   margin-bottom: 12px;
+  background-color: #fcfdfb;
 }
 
 .type-item:last-child {
@@ -348,22 +351,22 @@ body.menu-aberto {
 }
 
 .type-thumb {
-  width: 86px;
-  height: 54px;
+  width: 88px;
+  height: 56px;
   border-radius: 8px;
   object-fit: cover;
   flex-shrink: 0;
 }
 
 .type-info h3 {
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 2px;
 }
 
 .type-info p {
-  font-size: 11.5px;
+  font-size: 12px;
   color: var(--text-secondary);
   line-height: 1.35;
 }
@@ -372,12 +375,12 @@ body.menu-aberto {
 .alert-banner {
   background-color: var(--alert-bg);
   color: var(--alert-text);
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 600;
-  line-height: 1.4;
-  padding: 12px 14px;
+  line-height: 1.45;
+  padding: 13px 16px;
   border-radius: 10px;
-  margin: 18px 0;
+  margin: 20px 0;
 }
 
 /* Dúvidas frequentes */
@@ -399,13 +402,13 @@ body.menu-aberto {
   width: 100%;
   background: transparent;
   border: none;
-  padding: 11px 0;
+  padding: 13px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   text-align: left;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 600;
   color: var(--text-primary);
   cursor: pointer;
@@ -427,7 +430,7 @@ body.menu-aberto {
 
 .faq-answer {
   display: none;
-  padding-bottom: 12px;
+  padding-bottom: 14px;
 }
 
 .faq-item.active .faq-answer {
@@ -435,22 +438,22 @@ body.menu-aberto {
 }
 
 .faq-answer p {
-  font-size: 12px;
-  line-height: 1.45;
+  font-size: 12.5px;
+  line-height: 1.5;
   color: var(--text-secondary);
 }
 
 /* Rodapé de links */
 .bottom-links {
-  margin-top: 18px;
-  padding-top: 12px;
+  margin-top: 20px;
+  padding-top: 14px;
   border-top: 1px solid var(--border-light);
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
-  gap: 8px;
-  font-size: 11.5px;
+  gap: 10px;
+  font-size: 12px;
 }
 
 .bottom-links a {
@@ -467,6 +470,31 @@ body.menu-aberto {
   color: #cbd5e1;
 }
 
+/* Ajustes para telas maiores (computador / tablet) */
+@media (min-width: 768px) {
+  body {
+    padding: 28px 24px 48px;
+  }
+
+  .mobile-container {
+    padding: 28px 32px;
+    border-radius: 20px;
+  }
+
+  .page-header h1 {
+    font-size: 30px;
+  }
+
+  .types-section .type-item {
+    margin-bottom: 0;
+  }
+
+  .types-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+}
 /* DESGRAÇA DO MENU */
 
 .menu-botao {

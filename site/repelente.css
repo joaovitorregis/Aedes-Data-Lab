@@ -1,5 +1,5 @@
 :root {
-  --bg-page: #eceae4;
+  --bg-page: #ffffff;
   --bg-card: #ffffff;
   --green-dark: #235334;
   --green-medium: #3b6e4c;
@@ -21,27 +21,28 @@
 html,
 body {
   min-height: 100%;
+  width: 100%;
   background-color: var(--bg-page);
   color: var(--text-primary);
 }
 
 body {
-  padding: 16px;
+  padding: 0;
 }
 
 body.menu-aberto {
   overflow: hidden;
 }
 
-/* Container responsivo: adapta-se ao celular e ao computador */
+/* Container em tela cheia, sem borda ou cartão separado */
 .mobile-container {
   width: 100%;
-  max-width: 920px;
-  margin: 0 auto;
+  max-width: 100%;
+  margin: 0;
   background-color: var(--bg-card);
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  border-radius: 0;
+  padding: 16px 20px 36px;
+  box-shadow: none;
   overflow: visible;
 }
 
@@ -233,6 +234,18 @@ body.menu-aberto {
   background-color: var(--green-medium);
 }
 
+/* Centraliza o conteúdo interno mantendo o fundo branco de ponta a ponta */
+.page-header,
+.video-section,
+.types-section,
+.alert-banner,
+.faq-section,
+.bottom-links {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* Título da página */
 .page-header {
   margin-top: 18px;
@@ -273,7 +286,7 @@ body.menu-aberto {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  max-height: 380px;
+  max-height: 400px;
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
@@ -380,7 +393,8 @@ body.menu-aberto {
   line-height: 1.45;
   padding: 13px 16px;
   border-radius: 10px;
-  margin: 20px 0;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 /* Dúvidas frequentes */
@@ -472,29 +486,15 @@ body.menu-aberto {
 
 /* Ajustes para telas maiores (computador / tablet) */
 @media (min-width: 768px) {
-  body {
-    padding: 28px 24px 48px;
-  }
-
   .mobile-container {
-    padding: 28px 32px;
-    border-radius: 20px;
+    padding: 20px 32px 48px;
   }
 
   .page-header h1 {
     font-size: 30px;
   }
-
-  .types-section .type-item {
-    margin-bottom: 0;
-  }
-
-  .types-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-  }
 }
+
 /* DESGRAÇA DO MENU */
 
 .menu-botao {

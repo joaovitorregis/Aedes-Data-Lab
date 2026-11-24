@@ -13,7 +13,7 @@ Lista de trabalho da V1, dividida em fases pequenas. Cada tarefa cita a tela e o
 
 Retrato do momento atual, atualizado a cada entrega. Quem concluir uma tarefa que altere o estado do projeto atualiza esta seção no mesmo PR. As escolhas permanentes ficam em [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#9-decisões-técnicas-adr).
 
-**Última atualização:** 22/11/2026
+**Última atualização:** 23/11/2026
 
 ### Situação atual
 
@@ -30,6 +30,7 @@ A documentação está alinhada ao [PRD 2.9](docs/PRD.md), e o fluxo da denúnci
 - Jornada do agente revista no PRD 2.8 e desenhada no Figma, na seção "Jornada do agente · telas e conexões" da página do fluxo: origem cidadão ou agente, arquivar como ação única, análise e visita num passo, foco em local sem denúncia, perguntas na linguagem do cidadão e relatório novo. É protótipo com dados de exemplo, ainda não validado com agentes
 - E-mail do código em produção de teste (22/11/2026): provedor escolhido por `EMAIL_PROVIDER`; hoje Google Apps Script (gratuito, sem domínio, limite de 100 destinatários por dia em Gmail comum), com Resend como troca quando houver domínio. Entrega real confirmada em Gmail (caixa de entrada); outros provedores ainda não testados. SMS e WhatsApp seguem "em breve" (D45)
 - Back-end Supabase (TASK-061, 062 e parte da 060a): tabelas públicas e privadas, RLS, buckets, funções `api_*`, Edge Functions de denúncia, código de confirmação por e-mail, correção por código, ações do agente, lixeira de 30 dias e rotina diária, com testes de acesso negado
+- Produção do Supabase (23/11/2026): projeto separado, 9 migrations, 6 funções e segredos próprios; teste real com denúncia e foto, leitura pública sem dado privado e correção por código. A denúncia de teste AED-2026-000001 ainda está lá e deve ser apagada antes de divulgar o site
 
 ### Em andamento
 
@@ -181,7 +182,7 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 ## Fase 10 · Lançamento
 
 - [ ] TASK-100 Resolver as dependências de lançamento DEP-01 a DEP-09 (PRD, seção 18)
-- [ ] TASK-101 Criar o ambiente de produção (Supabase e Vercel) com limites de custo e monitoramento
+- [ ] TASK-101 Criar o ambiente de produção (Supabase e Vercel) com limites de custo e monitoramento · Supabase de produção criado e provado em 23/11/2026; faltam Vercel de produção, limites de custo e monitoramento
 - [ ] TASK-102 Testar no endereço publicado antes de divulgar aos moradores
 
 ## Decisões pendentes

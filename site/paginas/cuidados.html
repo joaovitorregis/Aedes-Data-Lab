@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Limpeza de recipientes | Aedes Data Lab</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f4ef;
+    color: #333;
+}
+
+.container {
+    width: 100%;
+    max-width: 520px;
+    min-height: 100vh;
+    margin: auto;
+    padding: 18px 22px 45px;
+    background: #fffdf8;
+}
+
+/* CABEÇALHO */
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+}
+
+.logo-text h2 {
+    font-size: 19px;
+    color: #303030;
+}
+
+.logo-text p {
+    font-size: 13px;
+    color: #777;
+    margin-top: 3px;
+}
+
+.menu {
+    font-size: 30px;
+    color: #333;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+}
+
+.menu-popover {
+    display: none;
+    position: relative;
+    z-index: 10;
+    margin-top: 8px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #eef3e9;
+}
+
+.menu-popover.active {
+    display: grid;
+}
+
+.menu-popover a {
+    padding: 9px 8px;
+    color: #20552b;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* NAVEGAÇÃO */
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 17px 5px;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.navigation a {
+    color: #555;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* CONTEÚDO */
+
+main {
+    padding-top: 27px;
+}
+
+h1, h2, h3 {
+    color: #174d27;
+}
+
+.section-title {
+    font-size: 23px;
+    margin-bottom: 7px;
+}
+
+.description {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 13px;
+    line-height: 1.4;
+}
+
+/* VÍDEO */
+
+.video-box {
+    width: 100%;
+    height: 180px;
+    background: #e8eee5;
+    overflow: hidden;
+}
+
+.video-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-caption {
+    color: #888;
+    font-size: 13px;
+    padding: 12px 4px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* CUIDADOS */
+
+.care-section {
+    margin-top: 20px;
+}
+
+.care-section h2,
+.faq-section h2 {
+    font-size: 21px;
+    margin-bottom: 12px;
+}
+
+.care-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 5px;
+    border-bottom: 1px solid #ddd;
+    min-height: 83px;
+}
+
+.care-item img {
+    width: 38%;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 2px;
+    background: #edf3e8;
+}
+
+.care-item p {
+    font-size: 12px;
+    line-height: 1.4;
+    color: #777;
+}
+
+/* DÚVIDAS FREQUENTES */
+
+.faq-section {
+    margin-top: 22px;
+}
+
+.faq-item {
+    border-bottom: 1px solid #ddd;
+}
+
+.faq-question {
+    width: 100%;
+    padding: 12px 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    background: transparent;
+    color: #24552d;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+    cursor: pointer;
+}
+
+.arrow {
+    font-size: 17px;
+    color: #777;
+    transition: transform .2s;
+}
+
+.faq-answer {
+    display: none;
+    padding: 0 5px 12px;
+    font-size: 12px;
+    color: #777;
+    line-height: 1.5;
+}
+
+.faq-question:focus-visible,
+.menu:focus-visible,
+.bottom-links a:focus-visible,
+.navigation a:focus-visible {
+    outline: 3px solid #8bbf55;
+    outline-offset: 3px;
+}
+
+.faq-item.active .faq-answer {
+    display: block;
+}
+
+.faq-item.active .arrow {
+    transform: rotate(180deg);
+}
+
+/* LINKS FINAIS */
+
+.bottom-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 35px;
+    padding: 10px 0;
+}
+
+.bottom-links a {
+    color: #20552b;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
+
+.bottom-links span {
+    color: #aaa;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 380px) {
+    .container {
+        padding: 14px 15px 35px;
+    }
+
+    .logo-text h2 {
+        font-size: 17px;
+    }
+
+    .section-title {
+        font-size: 21px;
+    }
+
+    .care-item img {
+        height: 65px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- CABEÇALHO -->
+
+    <header>
+        <div class="logo-area">
+            <img src="../assets/imagens/logo-aedes-datalab.jpeg"
+                 alt="Logo Aedes Data Lab"
+                 class="logo">
+
+            <div class="logo-text">
+                <h2>Aedes Data Lab</h2>
+                <p>Itambé - PE</p>
+            </div>
+        </div>
+
+        <button class="menu" type="button" aria-label="Abrir menu"
+                aria-expanded="false">
+            ☰
+        </button>
+    </header>
+
+    <nav class="menu-popover" id="menu-popover" aria-label="Menu principal">
+        <a href="../inicio.html">Início</a>
+        <a href="registrar-foco.html">Registrar foco</a>
+        <a href="mapa.html">Mapa</a>
+        <a href="guia-aedes.html">Guia Aedes</a>
+        <a href="jogo.html">Jogo</a>
+        <a href="quem-somos.html">Quem somos</a>
+    </nav>
+
+    <!-- NAVEGAÇÃO -->
+
+    <nav class="navigation">
+        <a href="guia-aedes.html">← Voltar</a>
+        <strong>Guia Aedes</strong>
+    </nav>
+
+    <main>
+
+        <!-- LIMPEZA -->
+
+        <section>
+            <h1 class="section-title">
+                Limpeza de recipientes
+            </h1>
+
+            <p class="description">
+                Baldes, vasos, garrafas e outros locais de acúmulo.
+            </p>
+
+            <div class="video-box">
+                <img src="../assets/imagens/cuidados-limpeza.svg"
+                     alt="Ilustração de limpeza de recipiente com água e sabão">
+            </div>
+
+            <p class="video-caption">
+                Vídeo orientativo
+            </p>
+        </section>
+
+        <!-- CUIDADOS -->
+
+        <section class="care-section">
+
+            <h2>Cuidados no dia a dia</h2>
+
+            <div class="care-item">
+                <img src="../assets/imagens/cuidados-recipientes.svg"
+                     alt="Ilustração de vasos e recipientes que podem acumular água">
+
+                <p>
+                    Reconheça os locais de acúmulo.
+                </p>
+            </div>
+
+            <div class="care-item">
+                <img src="../assets/imagens/cuidados-agua.svg"
+                     alt="Ilustração de cuidado adequado ao limpar um recipiente">
+
+                <p>
+                    Use o cuidado adequado ao recipiente.
+                </p>
+            </div>
+
+            <div class="care-item">
+                <img src="../assets/imagens/cuidados-recinto-seco.svg"
+                     alt="Ilustração de recipientes guardados secos e cobertos">
+
+                <p>
+                    Guarde sem acumular água.
+                </p>
+            </div>
+
+        </section>
+
+        <!-- DÚVIDAS FREQUENTES -->
+
+        <section class="faq-section">
+
+            <h2>Dúvidas frequentes</h2>
+
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    E se eu encontrar larvas?
+                    <span class="arrow">⌄</span>
+                </button>
+
+                <p class="faq-answer">
+                    Elimine a água e limpe o recipiente, se for seguro.
+                    Se não puder cuidar do local, peça apoio à equipe.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    Só retirar a água é suficiente?
+                    <span class="arrow">⌄</span>
+                </button>
+
+                <p class="faq-answer">
+                    Não. Ovos podem ficar nas paredes. Esfregue as
+                    superfícies do recipiente com água e sabão.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    Quando verificar os recipientes?
+                    <span class="arrow">⌄</span>
+                </button>
+
+                <p class="faq-answer">
+                    Faça uma revisão semanal e observe novamente
+                    depois de chuvas.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    O cuidado é igual para todos?
+                    <span class="arrow">⌄</span>
+                </button>
+
+                <p class="faq-answer">
+                    Não. Reservatórios de água para consumo exigem
+                    orientação específica. Não improvise misturas.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    Como guardar recipientes sem uso?
+                    <span class="arrow">⌄</span>
+                </button>
+
+                <p class="faq-answer">
+                    Guarde secos, cobertos ou virados para baixo,
+                    em local protegido da chuva.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    Quando registrar um possível foco?
+                    <span class="arrow">⌄</span>
+                </button>
+
+                <p class="faq-answer">
+                    Quando não conseguir resolver com segurança
+                    ou precisar de avaliação da equipe.
+                </p>
+            </div>
+
+        </section>
+
+        <!-- LINKS FINAIS -->
+
+        <div class="bottom-links">
+
+            <a href="registrar-foco.html">
+                Registrar possível foco ←
+            </a>
+
+            <span>|</span>
+
+            <a href="repelentes.html">
+                Repelentes ←
+            </a>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+
+const botaoMenu = document.querySelector(".menu");
+const menuPopover = document.querySelector("#menu-popover");
+
+botaoMenu.addEventListener("click", function() {
+    const ativo = menuPopover.classList.toggle("active");
+    this.setAttribute("aria-expanded", String(ativo));
+});
+
+// FUNCIONAMENTO DAS PERGUNTAS
+
+const perguntas = document.querySelectorAll(".faq-question");
+
+perguntas.forEach(function(pergunta) {
+
+    pergunta.addEventListener("click", function() {
+
+        const item = this.parentElement;
+        const ativo = item.classList.toggle("active");
+
+        this.setAttribute("aria-expanded", String(ativo));
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>

@@ -71,7 +71,8 @@ function arquivar(o) {
     validar: () => mostrarErros(form, valorDe(form, "motivo").trim() ? {} : { motivo: "Informe o motivo." }),
     enviar: () => arquivarOcorrencia(o.id, valorDe(form, "motivo").trim()),
     recado: (r) => ({ tom: "arquivada", titulo: `${nomeDe(o) === "denúncia" ? "Denúncia arquivada" : "Ocorrência arquivada"}`,
-      texto: r?.remocao_pendente ? "Já saiu do mapa. A remoção das fotos públicas será concluída em seguida." : "Fora do mapa público." }),
+      texto: r?.remocao_pendente ? "Já está em Arquivadas. A remoção das fotos públicas será concluída em seguida."
+        : "Saiu do mapa público e foi para Arquivadas." }),
   });
 }
 
@@ -81,7 +82,7 @@ function voltar(o) {
     corpo: el("p", {}, `A ${nomeDe(o)} volta a aparecer no mapa público. A etapa não muda.`),
     confirmar: "Voltar ao mapa",
     enviar: () => voltarAoMapa(o.id),
-    recado: { titulo: "De volta ao mapa", texto: "A etapa continua a mesma." },
+    recado: { titulo: "De volta ao mapa", texto: "Voltou para Ocorrências. A etapa continua a mesma." },
   });
 }
 
@@ -281,12 +282,17 @@ async function iniciar() {
   const concluida = o.stage === "atendida" ? "Atendida não reabre nem aceita nova visita."
     : o.stage === "encerrada" ? "Encerrada não reabre nem aceita visita." : null;
 
+  const [origemDaLista, nomeDaLista] = arquivada(o)
+    ? [ROTAS.arquivadas, "Arquivadas"] : [ROTAS.ocorrencias, "Ocorrências"];
+
+  const coluna = (...blocos) => el("div", { class: "detalhe__coluna" }, blocos);
+
   principal.replaceChildren(...[
     el("div", { class: "barra-detalhe" },
-      el("a", { class: "voltar", href: ROTAS.ocorrencias, onclick: (e) => {
-        // Volta mantendo os filtros quando se veio da lista.
-        if (document.referrer.includes("/agentes/ocorrencias")) { e.preventDefault(); history.back(); }
-      } }, icone("voltar"), "Ocorrências"),
+      el("a", { class: "voltar", href: origemDaLista, onclick: (e) => {
+        // Volta mantendo a busca e os filtros quando se veio dessa lista.
+        if (document.referrer && new URL(document.referrer).pathname === origemDaLista) { e.preventDefault(); history.back(); }
+      } }, icone("voltar"), nomeDaLista),
       botao("Outras ações", { variante: "secundario", icone: "mais", classe: "botao-acoes", ao: () => outrasAcoes(o) })),
     faixaDaArquivada(o),
     el("h1", {}, o.protocol),
@@ -294,18 +300,22 @@ async function iniciar() {
     el("p", { class: "apoio" }, subtitulo(o)),
     concluida && el("p", { class: "apoio" }, concluida),
     el("div", { class: "acoes-principais" }, acoesPrincipais(o, principal)),
-    fotos(o),
-    secao("Relato", dados([
-      ["Categoria", categorias.find((c) => c.id === o.category_id)?.label ?? "Não informada"], ["Descrição", o.description],
-    ])),
-    respostas(o),
-    local(o, bairros.find((b) => b.id === o.neighborhood_id)?.name ?? ""),
-    quem(o, autores),
-    visitas.length > 0 && secao(visitas.length === 1 ? "Visita registrada" : "Visitas registradas",
-      visitas.map((v) => dados(resumoDaVisita(v)))),
-    proximas(perto),
-    secao("Histórico", el("ol", { class: "historico" }, passos.map((p) => el("li", {},
-      el("strong", {}, p.titulo), el("span", {}, p.detalhe), el("time", { datetime: p.quando }, formatarDataHora(p.quando)))))),
+    el("div", { class: "detalhe" },
+      coluna(
+        fotos(o),
+        secao("Relato", dados([
+          ["Categoria", categorias.find((c) => c.id === o.category_id)?.label ?? "Não informada"], ["Descrição", o.description],
+        ])),
+        respostas(o)),
+      coluna(
+        local(o, bairros.find((b) => b.id === o.neighborhood_id)?.name ?? ""),
+        quem(o, autores),
+        visitas.length > 0 && secao(visitas.length === 1 ? "Visita registrada" : "Visitas registradas",
+          visitas.map((v) => dados(resumoDaVisita(v)))),
+        proximas(perto),
+        secao("Histórico", el("ol", { class: "historico" }, passos.map((p) => el("li", {},
+          el("strong", {}, p.titulo), el("span", {}, p.detalhe),
+          el("time", { datetime: p.quando }, formatarDataHora(p.quando)))))))),
   ].filter(Boolean));
 }
 

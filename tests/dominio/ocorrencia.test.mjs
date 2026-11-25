@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  acoesDaOcorrencia, dataLocal, diasAberta, idValido, linhaDoTempo, prazoDaLixeira, rotuloRecipiente, visitasDoDetalhe,
+  acoesDaOcorrencia, dataLocal, diasAberta, idValido, linhaDoTempo, prazoDaLixeira, rotuloRecipiente, textoDoPrazo, visitasDoDetalhe,
 } from "../../site/js/dominio/ocorrencia.js";
 
 const oc = (extra) => ({
@@ -102,4 +102,12 @@ test("o detalhe mostra todas as visitas, também as sem acesso, da mais nova à 
   ];
   assert.deepEqual(visitasDoDetalhe(visitas).map((v) => v.id), ["c", "b", "a"]);
   assert.equal(visitas[0].id, "a", "não altera a lista recebida");
+});
+
+test("o cartão da arquivada diz quanto falta para apagar", () => {
+  const arquivadaEm = "2026-11-15T13:00:00Z";
+  assert.equal(textoDoPrazo(arquivadaEm, new Date("2026-11-17T13:00:00Z")), "Apaga em 28 dias");
+  assert.equal(textoDoPrazo(arquivadaEm, new Date("2026-12-14T13:00:00Z")), "Apaga em 1 dia");
+  assert.equal(textoDoPrazo(arquivadaEm, new Date("2026-12-15T12:00:00Z")), "Apaga hoje");
+  assert.equal(textoDoPrazo(arquivadaEm, new Date("2026-12-20T13:00:00Z")), "Prazo encerrado");
 });

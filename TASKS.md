@@ -19,6 +19,10 @@ Retrato do momento atual, atualizado a cada entrega. Quem concluir uma tarefa qu
 
 Implementadas, aguardando validação no ambiente de teste: TASK-025, 026, 050, 050a, 051, 051a, 052, 053, 053a, 053b, 053c, 053d, 053e, 054, 054a, 055, 056, 057, 080 e 080a.
 
+Tela Arquivadas (RF-AGE-11, D57), pedida em 25/11: implementada e testada no computador; aguarda publicação e atualização do Figma.
+
+Layout de computador da área dos agentes (RNF-01), pedido em 25/11: implementado, sem rolagem lateral em 320, 375, 768, 900, 1280 e 1440px no computador; falta publicar e conferir em aparelhos reais.
+
 **Falta na área dos agentes:**
 
 - Aplicar a migration `20261125120000_nomes_dos_agentes` em produção (docs/BACKEND.md).

@@ -75,6 +75,13 @@ export const rotuloRecipiente = (codigo) => RECIPIENTES[codigo] ?? maiuscula(Str
 
 export const idValido = (id) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id ?? "");
 
+export function textoDoPrazo(arquivadaEm, agora = new Date()) {
+  const { diasRestantes, vencido } = prazoDaLixeira(arquivadaEm, agora);
+  if (vencido) return "Prazo encerrado";
+  if (diasRestantes === 0) return "Apaga hoje";
+  return `Apaga em ${diasRestantes} ${diasRestantes === 1 ? "dia" : "dias"}`;
+}
+
 // Todas as visitas, também as sem acesso (é onde ficam as observações), da mais nova à mais antiga.
 export const visitasDoDetalhe = (visitas) => [...visitas].sort((a, b) =>
   b.visited_on.localeCompare(a.visited_on) || new Date(b.created_at) - new Date(a.created_at));

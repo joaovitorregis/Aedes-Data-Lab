@@ -12,6 +12,7 @@ Esta pasta tem a estrutura inicial de estudo do site. Ainda não há formulário
 | Pública | `paginas/guia-aedes.html`, `paginas/repelentes.html`, `paginas/quem-somos.html`, `paginas/jogo.html` | Complementares, em paralelo |
 | Agentes | `agentes/index.html` (`/agentes`, login) | V1, programada |
 | Agentes | `agentes/ocorrencias.html` (lista, mapa e filtros), `ocorrencia.html`, `visita.html`, `correcao.html`, `relatorio.html` | V1, programadas |
+| Agentes | `agentes/arquivadas.html` (fora do mapa, por 30 dias) | V1, programada |
 | Agentes | `agentes/meu-trabalho.html` | Reservada; fora do aceite da V1 |
 | Agentes | `agentes/dashboard.html` | Fase seguinte |
 

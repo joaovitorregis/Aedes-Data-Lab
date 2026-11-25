@@ -4,7 +4,7 @@ import { ErroApi } from "./api.js";
 import { baixarArquivoPrivado, contar, pedirComLogin, pedirPagina } from "./api-agente.js";
 import { sessaoAtual, tokenValido } from "./sessao.js";
 import { idValido } from "../dominio/ocorrencia.js";
-import { consultaDaLista, consultasDoResumo } from "../dominio/lista.js";
+import { consultaDaLista, consultaDasArquivadas, consultasDoResumo } from "../dominio/lista.js";
 import { montarRelatorio } from "../dominio/relatorio.js";
 
 export { listarBairros, listarCategorias } from "./denuncia.js";
@@ -39,15 +39,14 @@ async function lerTudo(consulta) {
 const agir = (corpo) => comLogin("/functions/v1/agente", { method: "POST", corpo });
 
 const COLUNAS_DA_LISTA =
-  "id,protocol,origin,stage,publication,neighborhood_id,received_at,failed_attempts,archived_at,location_lat,location_lng";
+  "id,protocol,origin,stage,neighborhood_id,received_at,failed_attempts";
 
 const consultaDeOcorrencias = (colunas, filtros, resto = []) =>
   `reports?${[`select=${colunas}`, ...filtros, ...resto].join("&")}`;
 
-// Uma página da lista, já filtrada e ordenada pelo banco (RNF-07).
-export async function listarOcorrencias(escolhidos = {}, { inicio = 0 } = {}) {
-  const { filtros, ordem } = consultaDaLista(escolhidos);
-  const consulta = consultaDeOcorrencias(COLUNAS_DA_LISTA, filtros,
+// Uma página de ocorrências, já filtrada e ordenada pelo banco (RNF-07).
+async function pagina(colunas, { filtros, ordem }, inicio) {
+  const consulta = consultaDeOcorrencias(colunas, filtros,
     [`order=${ordem}`, `limit=${OCORRENCIAS_POR_PAGINA}`, `offset=${inicio}`]);
   try {
     const { linhas, total } = await comToken((token) => pedirPagina(`/rest/v1/${consulta}`, token));
@@ -58,6 +57,12 @@ export async function listarOcorrencias(escolhidos = {}, { inicio = 0 } = {}) {
     throw e;
   }
 }
+
+export const listarOcorrencias = (escolhidos = {}, { inicio = 0 } = {}) =>
+  pagina(COLUNAS_DA_LISTA, consultaDaLista(escolhidos), inicio);
+
+export const listarArquivadas = (escolhidos = {}, { inicio = 0 } = {}) =>
+  pagina("id,protocol,neighborhood_id,archived_at,archive_reason", consultaDasArquivadas(escolhidos), inicio);
 
 // Resumo do mesmo recorte da lista (D54), só com contagens.
 export async function resumoDasOcorrencias(escolhidos = {}) {
@@ -74,8 +79,8 @@ export function pontosDoMapa(escolhidos = {}) {
     filtros, [`order=${ordem}`]));
 }
 
-export const ocorrenciasEmAnalise = () => lerTudo(consultaDeOcorrencias(
-  "id,protocol,neighborhood_id,failed_attempts", ["stage=eq.em_analise"], ["order=received_at.asc,id.asc"]));
+export const ocorrenciasEmAnalise = () => lerTudo(consultaDeOcorrencias("id,protocol,neighborhood_id,failed_attempts",
+  consultaDaLista({ etapas: ["em_analise"] }).filtros, ["order=received_at.asc,id.asc"]));
 
 const naoEncontrada = () => new ErroApi("denuncia_nao_encontrada", "Ocorrência não encontrada.", 404);
 

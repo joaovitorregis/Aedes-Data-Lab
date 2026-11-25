@@ -30,7 +30,7 @@ O Aedes Data Lab guarda nome, e-mail e telefone de moradores, além de fotos e d
 - Testes e demonstrações usam somente dados fictícios.
 - O resultado das visitas (acesso, onde está o foco, recipientes, larvas, o que foi feito e observações) é interno e nunca vai para a versão pública.
 - A versão pública mostra a origem da ocorrência só como "feita por cidadão" ou "feita por agente". O nome do agente que registrou nunca vai para a versão pública (D50).
-- O relatório do agente não contém nome, e-mail ou telefone do morador. O contrato `dadosRelatorio` não lê `report_private`, e o arquivo é gerado no navegador, sem passar por serviço de terceiros (RNF-12, ADR-012).
+- O relatório do agente não contém nome, e-mail ou telefone do morador. O contrato `dadosRelatorio` lê de `report_private` só o endereço, que o relatório mostra (RF-AGE-08), nunca nome, e-mail ou telefone, e o arquivo é gerado no navegador, sem passar por serviço de terceiros (RNF-12, ADR-012).
 - O formulário de visita guardado no aparelho após falha de envio contém só os campos da visita, nunca dados do morador, e é apagado quando o envio é confirmado ou descartado.
 - Adequação à LGPD (Lei nº 13.709/2018) concluída antes de coletar dados reais: base legal, controlador e encarregado, aviso de privacidade, direitos do titular e retenção por tipo de dado (DEP-06).
 

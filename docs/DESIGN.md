@@ -155,7 +155,7 @@ Na área do agente, erro de rede, de sessão ou de carregamento usa uma tela ún
 
 ## 8. Como aplicar no código
 
-Os tokens ficam declarados uma vez, no começo de `site/css/estilos.css`:
+A área dos agentes repete estes tokens em `site/css/agentes.css` (ARCHITECTURE, ADR-018). No site público, os tokens ficam declarados uma vez, no começo de `site/css/estilos.css`:
 
 ```css
 :root {

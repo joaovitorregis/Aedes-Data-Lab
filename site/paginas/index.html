@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia Aedes | Aedes Datalab</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f5f5;
+    color: #333;
+}
+
+.container {
+    width: 100%;
+    max-width: 650px;
+    min-height: 100vh;
+    margin: auto;
+    background: #fdfbf6;
+    padding: 25px 22px 60px;
+}
+
+/* CABEÇALHO */
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 5px 18px;
+    border-bottom: 1px solid #d8d8d8;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    width: 67px;
+    height: 67px;
+    border: 2px solid #31532b;
+    border-radius: 50%;
+    background: #fffdf4;
+    object-fit: contain;
+}
+
+.logo-text h2 {
+    font-size: 23px;
+    color: #292929;
+}
+
+.logo-text p {
+    font-size: 16px;
+    color: #777;
+    margin-top: 3px;
+}
+
+.menu-btn {
+    background: none;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 34px;
+    cursor: pointer;
+    color: #333;
+}
+
+/* MENU */
+
+.menu {
+    display: none;
+    background: #eef3e9;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.menu a {
+    display: block;
+    text-decoration: none;
+    color: #205324;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.menu.ativo {
+    display: block;
+}
+
+/* NAVEGAÇÃO */
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 5px;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+}
+
+.navigation a {
+    color: #666;
+    text-decoration: none;
+}
+
+/* CONTEÚDO */
+
+main {
+    padding: 78px 18px 20px;
+}
+
+h1 {
+    font-size: 31px;
+    color: #164d20;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #858585;
+    font-size: 17px;
+    margin-bottom: 12px;
+}
+
+/* IMAGEM PRINCIPAL */
+
+.hero-image {
+    width: 100%;
+    height: 175px;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 13px;
+}
+
+.feature h2 {
+    color: #174c20;
+    font-size: 29px;
+    margin-bottom: 7px;
+}
+
+.feature p {
+    color: #858585;
+    font-size: 17px;
+    margin: 0 6px 12px;
+}
+
+.main-button {
+    display: block;
+    width: 100%;
+    background: #075016;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    padding: 13px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 19px;
+}
+
+.main-button:hover {
+    background: #0d6822;
+}
+
+/* GUIA */
+
+.guide-title {
+    font-size: 29px;
+    color: #174c20;
+    margin: 18px 0 16px;
+}
+
+.guide-item {
+    border-top: 1px solid #d2d2d2;
+    padding: 17px 10px;
+}
+
+.guide-item:last-child {
+    border-bottom: 1px solid #d2d2d2;
+}
+
+.guide-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.guide-link h3 {
+    font-size: 19px;
+    color: #24572b;
+    margin-bottom: 6px;
+}
+
+.guide-link p {
+    color: #858585;
+    font-size: 17px;
+    line-height: 1.25;
+    max-width: 390px;
+}
+
+.arrow {
+    font-size: 32px;
+    color: #777;
+    padding-left: 10px;
+}
+
+.guide-content {
+    display: none;
+    color: #555;
+    font-size: 16px;
+    line-height: 1.5;
+    padding: 12px 5px 5px;
+}
+
+.guide-content.ativo {
+    display: block;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 480px) {
+    .container {
+        padding: 18px 15px 40px;
+    }
+
+    main {
+        padding: 65px 3px 20px;
+    }
+
+    .logo {
+        width: 62px;
+        height: 62px;
+    }
+
+    .logo-text h2 {
+        font-size: 21px;
+    }
+
+    .feature h2 {
+        font-size: 27px;
+    }
+
+    .guide-title {
+        font-size: 28px;
+    }
+
+    .guide-link h3 {
+        font-size: 18px;
+    }
+
+    .guide-link p {
+        font-size: 16px;
+    }
+}
+</style>
+<link rel="stylesheet" href="../css/estilos.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <div class="logo-area">
+            <img class="logo"
+                 src="../assets/imagens/logo.jpg"
+                 alt="Logo Aedes Data Lab">
+
+            <div class="logo-text">
+                <h2>Aedes Datalab</h2>
+                <p>Itambé - PE</p>
+            </div>
+        </div>
+
+        <button
+            class="menu-botao"
+            type="button"
+            aria-label="Abrir menu"
+            aria-expanded="false"
+            aria-controls="menu-lateral"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <div class="navigation">
+        <a href="#" onclick="history.back()">← Voltar</a>
+        <span>Guia Aedes</span>
+    </div>
+
+    <main>
+
+        <h1>Guia Aedes</h1>
+        <p class="subtitle">O que você quer saber?</p>
+
+        <section class="feature">
+
+            <img
+                class="hero-image"
+                src="../assets/imagens/balde.jpg"
+                alt="Balde usado como exemplo de recipiente"
+            >
+
+            <h2>Evite criadouros no dia a dia</h2>
+
+            <p>
+                Saiba como cuidar dos recipientes que podem
+                acumular água
+            </p>
+
+            <button class="main-button"
+                onclick="abrirTopico(0)">
+                ver cuidados com recipiente
+            </button>
+
+        </section>
+
+        <h2 class="guide-title">Explore o guia</h2>
+
+        <section class="guide">
+
+            <div class="guide-item">
+                <div class="guide-link" onclick="abrirTopico(1)">
+                    <div>
+                        <h3>identificar possíveis focos</h3>
+                        <p>aprenda a observar e reconhecer
+                        locais de acúmulo de água.</p>
+                    </div>
+                    <span class="arrow">›</span>
+                </div>
+
+                <div class="guide-content" id="topico1">
+                    Observe vasos de plantas, pneus, garrafas,
+                    caixas d'água e outros recipientes que possam
+                    acumular água parada. Mantenha esses locais
+                    limpos e protegidos.
+                </div>
+            </div>
+
+            <div class="guide-item">
+                <div class="guide-link" onclick="abrirTopico(2)">
+                    <div>
+                        <h3>cuidado com os sintomas</h3>
+                        <p>saiba quais sinais merecem
+                        atenção e como agir.</p>
+                    </div>
+                    <span class="arrow">›</span>
+                </div>
+
+                <div class="guide-content" id="topico2">
+                    Febre, dor de cabeça, dores no corpo,
+                    manchas na pele e cansaço podem ser sinais
+                    de dengue. Procure atendimento de saúde
+                    se apresentar sintomas.
+                </div>
+            </div>
+
+            <div class="guide-item">
+                <div class="guide-link" onclick="abrirTopico(3)">
+                    <div>
+                        <h3>evitar a automedicação</h3>
+                        <p>entenda porque não se deve usar
+                        remédios por conta própria</p>
+                    </div>
+                    <span class="arrow">›</span>
+                </div>
+
+                <div class="guide-content" id="topico3">
+                    Não tome medicamentos sem orientação
+                    profissional. Em caso de suspeita de dengue,
+                    procure uma unidade de saúde para receber
+                    a orientação adequada.
+                </div>
+            </div>
+
+            <div class="guide-item">
+                <div class="guide-link" onclick="abrirTopico(4)">
+                    <div>
+                        <h3>receber o agente</h3>
+                        <p>entenda a importância da visita e como
+                        colaborar.</p>
+                    </div>
+                    <span class="arrow">›</span>
+                </div>
+
+                <div class="guide-content" id="topico4">
+                    Permita a entrada do agente de combate
+                    às endemias, acompanhe as orientações
+                    e colabore com a identificação de possíveis
+                    focos do mosquito.
+                </div>
+            </div>
+
+            <div class="guide-item">
+                <div class="guide-link" onclick="abrirTopico(5)">
+                    <div>
+                        <h3>repelente</h3>
+                        <p>veja como o uso pode ajudar na
+                        prevenção</p>
+                    </div>
+                    <span class="arrow">›</span>
+                </div>
+
+                <div class="guide-content" id="topico5">
+                    Utilize repelentes registrados e siga
+                    as instruções do rótulo. O repelente é
+                    uma medida complementar e não substitui
+                    a eliminação dos criadouros.
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script>
+
+function abrirTopico(numero) {
+
+    let id = numero === 0 ? "topico1" : "topico" + numero;
+
+    let conteudo = document.getElementById(id);
+
+    if (conteudo) {
+        conteudo.classList.toggle("ativo");
+    }
+
+    if (numero === 0 && conteudo) {
+        conteudo.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+    }
+}
+
+</script>
+<script src="../js/compartilhado/menu.js" defer></script>
+
+</body>
+</html>

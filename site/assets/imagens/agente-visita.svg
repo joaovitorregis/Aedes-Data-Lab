@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Visita do agente</title>
+  <desc id="desc">Ilustracao de um agente conversando com um morador em frente a uma casa.</desc>
+  <rect width="640" height="360" fill="#eaf1e6"/>
+  <circle cx="520" cy="70" r="42" fill="#f4c960"/>
+  <path d="M0 292c150-30 280-20 378 8 93 27 180 24 262-7v67H0z" fill="#bdd1b1"/>
+  <rect x="58" y="112" width="220" height="188" rx="8" fill="#faf7eb"/>
+  <path d="M38 122l130-92 130 92z" fill="#a66e58"/>
+  <rect x="115" y="202" width="68" height="98" fill="#7d9a80"/>
+  <rect x="205" y="160" width="48" height="48" rx="4" fill="#8bb4ba"/>
+  <circle cx="376" cy="112" r="34" fill="#c89b73"/>
+  <path d="M340 112c4-36 30-55 58-43 16 7 25 21 24 39-26-13-53-12-82 4z" fill="#314c31"/>
+  <path d="M324 146c30-20 78-20 104 0l26 154H298z" fill="#2f6b54"/>
+  <rect x="350" y="174" width="52" height="42" rx="4" fill="#d3e4dd"/>
+  <path d="M328 300h96" stroke="#174d27" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="512" cy="126" r="32" fill="#d1a27a"/>
+  <path d="M480 126c5-30 24-46 48-40 16 4 26 17 27 34-24-10-49-8-75 6z" fill="#5a412f"/>
+  <path d="M466 158c26-18 66-18 92 0l18 142H448z" fill="#d79b62"/>
+  <path d="M508 300h54" stroke="#174d27" stroke-width="10" stroke-linecap="round"/>
+</svg>

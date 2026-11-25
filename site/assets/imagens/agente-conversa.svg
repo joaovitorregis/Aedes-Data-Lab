@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Conversa sobre cuidados</title>
+  <desc id="desc">Ilustracao de um agente e um morador conversando sobre cuidados preventivos.</desc>
+  <rect width="640" height="360" fill="#eef3e9"/>
+  <circle cx="530" cy="70" r="42" fill="#f4c960"/>
+  <path d="M0 286c120-26 248-16 352 12 106 28 201 24 288-8v70H0z" fill="#bdd1b1"/>
+  <circle cx="190" cy="116" r="34" fill="#d1a27a"/>
+  <path d="M154 116c6-34 27-52 55-44 17 5 26 19 27 38-28-13-55-11-82 6z" fill="#5a412f"/>
+  <path d="M136 148c28-18 72-18 108 0l28 152H108z" fill="#d79b62"/>
+  <circle cx="452" cy="116" r="34" fill="#c89b73"/>
+  <path d="M416 116c5-34 28-52 57-43 16 5 25 19 25 37-28-13-55-11-82 6z" fill="#314a31"/>
+  <path d="M398 148c28-18 74-18 108 0l30 152H368z" fill="#397b61"/>
+  <path d="M244 132c22-30 62-40 98-24" fill="none" stroke="#174d27" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="346" cy="108" r="12" fill="#174d27"/>
+  <path d="M252 196c28 14 52 14 78 0" fill="none" stroke="#174d27" stroke-width="8" stroke-linecap="round"/>
+  <rect x="246" y="56" width="150" height="58" rx="28" fill="#fff"/>
+  <text x="278" y="92" fill="#174d27" font-family="Arial, sans-serif" font-size="18" font-weight="700">Vamos cuidar!</text>
+</svg>

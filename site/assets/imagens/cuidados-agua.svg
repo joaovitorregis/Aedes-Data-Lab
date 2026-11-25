@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Uso seguro da agua</title>
+  <desc id="desc">Ilustracao de alguem usando agua com sabao em um recipiente.</desc>
+  <rect width="640" height="360" fill="#eef3e9"/>
+  <circle cx="520" cy="72" r="42" fill="#f3c65f"/>
+  <path d="M0 274c124-22 250-12 354 18 96 28 197 24 286-4v72H0z" fill="#bdd2b0"/>
+  <rect x="112" y="178" width="210" height="125" rx="18" fill="#407e83"/>
+  <ellipse cx="217" cy="178" rx="105" ry="28" fill="#92c1c4"/>
+  <ellipse cx="217" cy="178" rx="76" ry="17" fill="#d5ebed"/>
+  <path d="M474 112c58 0 93 46 93 102v87H360v-87c0-56 56-102 114-102z" fill="#5c8b64"/>
+  <circle cx="474" cy="94" r="36" fill="#c99a72"/>
+  <path d="M438 94c4-36 28-56 56-47 17 6 27 18 27 36-28-15-54-11-83 11z" fill="#2f4b30"/>
+  <path d="M414 188l-96 18 6 26 103-13" fill="#c99a72" stroke="#174d27" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M320 220l-17 48" fill="none" stroke="#c99a72" stroke-width="28" stroke-linecap="round"/>
+  <g fill="#fff">
+    <circle cx="292" cy="214" r="10"/><circle cx="278" cy="199" r="8"/><circle cx="270" cy="223" r="7"/>
+  </g>
+  <rect x="58" y="44" width="284" height="74" rx="14" fill="#fff" opacity=".94"/>
+  <text x="82" y="75" fill="#174d27" font-family="Arial, sans-serif" font-size="23" font-weight="700">Use o cuidado adequado</text>
+  <text x="82" y="102" fill="#606e61" font-family="Arial, sans-serif" font-size="17">No reservatorio certo</text>
+</svg>

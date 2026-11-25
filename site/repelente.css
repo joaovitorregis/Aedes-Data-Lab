@@ -1,6 +1,6 @@
 :root {
-  --bg-page: #ffffff;
-  --bg-card: #ffffff;
+  --bg-page: #FCF8F3;
+  --bg-card: #FCF8F3;
   --green-dark: #235334;
   --green-medium: #3b6e4c;
   --green-soft: #eef5f0;
@@ -39,7 +39,7 @@ body.menu-aberto {
   width: 100%;
   max-width: 100%;
   margin: 0;
-  background-color: var(--bg-card);
+  background-color: #FCF8F3;
   border-radius: 0;
   padding: 16px 20px 36px;
   box-shadow: none;
@@ -199,7 +199,7 @@ body.menu-aberto {
   height: 32px;
   border-radius: 50%;
   background-color: var(--green-soft);
-  color: var(--green-dark);
+  color: #09490d(--green-dark);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -223,7 +223,7 @@ body.menu-aberto {
   padding: 9px 12px;
   border: none;
   border-radius: 8px;
-  background-color: var(--green-dark);
+  background-color:#09490d(--green-dark);
   color: #ffffff;
   font-size: 12.5px;
   font-weight: 600;
@@ -255,7 +255,7 @@ body.menu-aberto {
   display: inline-block;
   font-size: 12px;
   font-weight: 600;
-  color: var(--green-medium);
+  color: #09490d;
   text-decoration: none;
   margin-bottom: 6px;
 }
@@ -328,6 +328,13 @@ body.menu-aberto {
   margin-top: 6px;
 }
 
+.video-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
 /* Tipos apresentados no projeto */
 .types-section {
   margin-top: 24px;
@@ -337,7 +344,7 @@ body.menu-aberto {
 .faq-section h2 {
   font-size: 17px;
   font-weight: 700;
-  color: var(--green-dark);
+  color: #09490d ;
   margin-bottom: 14px;
 }
 
@@ -349,7 +356,7 @@ body.menu-aberto {
   border: 1px solid var(--border-light);
   border-radius: 12px;
   margin-bottom: 12px;
-  background-color: #fcfdfb;
+  background-color: #FCF8F3;
 }
 
 .type-item:last-child {
@@ -359,7 +366,7 @@ body.menu-aberto {
 .type-number {
   font-size: 17px;
   font-weight: 700;
-  color: var(--green-dark);
+  color: #09490d(--green-dark);
   min-width: 24px;
 }
 
@@ -374,20 +381,20 @@ body.menu-aberto {
 .type-info h3 {
   font-size: 14px;
   font-weight: 700;
-  color: var(--green-dark);
+  color: #09490d(--green-dark);
   margin-bottom: 2px;
 }
 
 .type-info p {
   font-size: 12px;
-  color: var(--text-secondary);
+  color: #666d74;
   line-height: 1.35;
 }
 
 /* Banner de alerta */
 .alert-banner {
-  background-color: var(--alert-bg);
-  color: var(--alert-text);
+  background-color: #d9cbb0;
+  color: #09490D;
   font-size: 12.5px;
   font-weight: 600;
   line-height: 1.45;

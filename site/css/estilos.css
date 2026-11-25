@@ -1,31 +1,5 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-body{
-    font-family: Arial. Helvetica, sans-serif;
-    background-color: #eaf4ff
-}
-/*CABEÇALHO*/
-.CABEÇALHO{
-    width:100%;
-    min-height:75px;
-    padding:10px 25px:
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #dce5f5
+/* Aedes Data Lab — estilos compartilhados pelas 12 páginas. */
 
-}.CABEÇALHO-marca{
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-.logo{
-    width: 65px;
-    height: 50px;
-    object-fit: contain;
 /* Base: cores, fontes e espaçamentos (valores em docs/DESIGN.md) */
 :root {
   --cor-fundo: #F6F0E2;
@@ -59,54 +33,17 @@ body {
   color: var(--cor-texto);
 }
 
-}
-.marca-textos{
-    display: flex;
-    flex-direction: column;
-}
-.marca-titulo{
-    font-size: 17px;
-    font-weight: bold;
-    color: #253b65
-}.marca-subtitulo{
-    font-size: 14px;
-    color: #253b65
-}
-/*MENU*/
-.menu-toggle{
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-.linha{
-    width: 30px;
-    height: 4px
-    background-color: #344767;
-    border-radius: 5px;
-}
-/*ÁREA PRINCIPAL*/
-.pagina-jogo {
-    width: 100%;
-    height: calc(100vh - 75px);
+/* Componentes: botões e campos */
 
-    position: relative;
-    overflow: hidden;
+/* Menu público e menu técnico */
 
-    background-image: url("../assets/imagens/imagens/Paisagem Suburbana Colorida em Vetor.png");
-    background-size: cover;
-    background-position: center bottom;
-    background-repeat: no-repeat;
+html {
+  background: #f0f0f0;
 }
-/*CONTEÚDO*/
-.conteudo-principal {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
 
-    padding: 70px 30px 40px;
+/* Cidadão: início, denúncia, mapa, guia, repelentes, equipe e jogo */
+/* Delimitar estilos específicos com classes como .pagina-denuncia. */
+
 /* Página Início (tela 01): layout da Bia. Escopo: <body class="pagina-inicio"> */
 .pagina-inicio,
 .pagina-inicio * {
@@ -119,138 +56,159 @@ body {
   font-family: Arial, sans-serif;
   background: #f5f0e2;
   color: #304f3c;
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: #fbf8ef;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
 }
 
 .pagina-inicio header {
-  background: #fbfaf6;
-  padding: 15px 7%;
+  background: #fbf8ef;
+  padding: 14px 20px;
   display: flex;
   align-items: center;
   gap: 12px;
+  border-bottom: 1px solid #e6e1d5;
 }
 
 .pagina-inicio header img {
   width: 50px;
   height: 50px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.pagina-inicio header h2 {
+  color: #292e2a;
+  font-size: 19px;
 }
 
 .pagina-inicio header p {
-  color: #518064;
-}
-
-.pagina-inicio .menu {
-  margin-left: auto;
-  font-size: 30px;
+  color: #777d76;
+  margin-top: 3px;
+  font-size: 13px;
 }
 
 .pagina-inicio main {
-  max-width: 900px;
-  margin: auto;
-  padding: 80px 40px;
+  max-width: none;
+  margin: 0;
+  padding: 25px 18px 38px;
 }
 
 .pagina-inicio h1 {
-  font-size: 38px;
-  margin-bottom: 25px;
+  font-size: 28px;
+  margin-bottom: 14px;
+  color: #304f3c;
 }
 
 .pagina-inicio .intro {
-  font-size: 20px;
+  font-size: 15px;
+  line-height: 1.4;
   color: #518064;
-  max-width: 300px;
+  max-width: 250px;
 }
 
 .pagina-inicio .botao {
   display: block;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
   background: #4c8062;
   color: white;
   text-align: center;
-  padding: 15px;
-  margin-top: 20px;
+  padding: 12px 10px;
+  margin-top: 14px;
   border-radius: 7px;
   text-decoration: none;
   font-weight: bold;
+  font-size: 14px;
 }
 
 .pagina-inicio .principal {
   background: #304f3c;
-  padding: 28px;
-  margin: 65px auto 25px;
-  font-size: 23px;
+  padding: 17px;
+  margin: 27px 0 18px;
+  font-size: 16px;
 }
 
 .pagina-inicio .guia {
   background: #fbfaf6;
   border: 1px solid #ddcfb2;
   border-radius: 10px;
-  padding: 25px;
-  margin-bottom: 30px;
+  padding: 15px;
+  margin-bottom: 16px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
 }
 
 .pagina-inicio .guia h2 {
-  font-size: 27px;
-  margin-bottom: 15px;
+  font-size: 20px;
+  margin-bottom: 8px;
+  color: #304f3c;
 }
 
 .pagina-inicio .guia p {
   color: #518064;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 1.4;
 }
 
 .pagina-inicio .cards {
   display: flex;
-  gap: 20px;
+  gap: 10px;
 }
 
 .pagina-inicio .card {
   background: #fbfaf6;
   border: 1px solid #ddcfb2;
   border-radius: 7px;
-  padding: 15px;
+  padding: 10px;
   text-align: center;
   flex: 1;
+  min-width: 0;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
 }
 
 .pagina-inicio .card h2 {
-  font-size: 27px;
-  margin-bottom: 15px;
+  font-size: 16px;
+  min-height: 38px;
+  margin-bottom: 8px;
+  color: #304f3c;
 }
 
 .pagina-inicio .card img,
 .pagina-inicio .mapa {
   width: 100%;
-  height: 150px;
+  height: 92px;
   object-fit: contain;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
 
 .pagina-inicio .mapa {
   background: #aab99d;
   border-radius: 5px;
+  overflow: hidden;
+}
+
+.pagina-inicio .mapa img {
+  height: 100%;
+  object-fit: cover;
+  margin: 0;
+}
+
+.pagina-inicio .card .botao {
+  padding: 9px 5px;
+  margin-top: 5px;
+  font-size: 13px;
 }
 
 @media (max-width: 500px) {
   .pagina-inicio main {
-    padding: 35px 20px;
-  }
-
-  .pagina-inicio .cards {
-    gap: 15px;
-  }
-
-  .pagina-inicio .card {
-    padding: 10px;
-  }
-
-  .pagina-inicio .card h2 {
-    font-size: 17px;
+    padding: 24px 17px 32px;
   }
 
   .pagina-inicio .card img,
   .pagina-inicio .mapa {
-    height: 143px;
+    height: 92px;
   }
 }
 
@@ -438,313 +396,92 @@ body.menu-aberto {
   }
 }
 
+.pagina-menu {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background: #fbf8ef;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+}
+
+.pagina-menu .cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid #e6e1d5;
+}
+
+.pagina-menu .cabecalho-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: contain;
+}
+
+.pagina-menu .marca-textos h2 {
+  color: #292e2a;
+  font-size: 19px;
+}
+
+.pagina-menu .marca-textos p {
+  margin-top: 3px;
+  color: #777d76;
+  font-size: 13px;
+}
+
+.pagina-menu main {
+  padding: 25px 20px;
+}
+
+.pagina-menu main h1 {
+  margin-bottom: 12px;
+  color: #304f3c;
+  font-size: 28px;
+}
+
+.pagina-menu main p {
+  color: #518064;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.pagina-menu .atalhos-guia {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.pagina-menu .atalhos-guia a {
+  display: block;
+  padding: 14px;
+  border: 1px solid #ddcfb2;
+  border-radius: 10px;
+  background: #fbfaf6;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  color: #304f3c;
+  text-decoration: none;
+}
+
+.pagina-menu .atalhos-guia a strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+
+.pagina-menu .atalhos-guia a span {
+  color: #518064;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.pagina-menu .atalhos-guia a:hover,
+.pagina-menu .atalhos-guia a:focus-visible {
+  outline: 2px solid #315440;
+  outline-offset: 2px;
+}
+
 /* Agentes: acesso, meu trabalho, ocorrências, mapa e dashboard */
 
-    position: relative;
-    z-index: 2;
-}
-.texto-principal {
-    width: 60%;
-    max-width: 400px;
-}
-.texto-principal h1 {
-    font-size: 36px;
-    font-weight: bold;
-    color: #264b76;
-    margin-bottom: 25px;
-}
-
-.texto-principal h1 span {
-    display: block;
-    color: #e84959;
-}
-.texto-principal p {
-    font-size: 17px;
-    line-height: 1.5;
-    color: #345b82;
-    margin-bottom: 35px;
-}
-
-/* BOTÃO */
-
-.botao-jogar {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-
-    padding: 15px 35px;   
-    background-color: #e84959;
-    color: white;
-
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: bold;
-
-    border-radius: 40px;
-    transition: 0.3s;
-}.botao-jogar:hover {
-    background-color: #cf3445;
-    transform: scale(1.05);
-}
-
-.icone-jogo {
-    font-size: 22px;
-}
-/* MOSQUITO */
-
-.imagem-mosquito {
-    width: 40%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.imagem-mosquito img {
-    width: 100%;
-    max-width: 300px;
-    object-fit: contain;
-}
-/* PAISAGEM */
-
-.paisagem {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-.paisagem img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
-
-
-.conteudo-principal {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    width: 100%;
-    height: 100%;
-
-    padding: 30px;
-    position: relative;
-    z-index: 2;
-}
-.texto-principal {
-        width: 100%;
-    }
-
-.texto-principal h1 {
-        font-size: 34px;
-    }
-
-.texto-principal p {
-        font-size: 16px;
-        max-width: 300px;
-    }
-.imagem-mosquito {
-        position: absolute;
-        top: 150px;
-        right: 10px;
-
-        width: 48%;
-    }
-
-.imagem-mosquito img {
-        max-width: 230px;
-    }
-
-    .botao-jogar {
-        padding: 14px 30px;
-        font-size: 17px;
-    }
-/* DESGRAÇA DO MENU */
-
-.menu-botao {
-    width: 42px;
-    height: 42px;
-    border: none;
-    background: transparent;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-    cursor: pointer;
-    z-index: 10;
-    margin-left: auto;
-}
-
-.menu-botao span {
-    width: 27px;
-    height: 3px;
-    background: #587663;
-    border-radius: 5px;
-}
-
-.menu-fundo {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.20);
-    z-index: 1000;
-}
-
-.menu-fundo[hidden] {
-    display: none;
-}
-
-.menu-lateral {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: min(340px, 85vw);
-    height: 100vh;
-    height: 100dvh;
-    box-sizing: border-box;
-    background: #f5efdf;
-    z-index: 1001;
-    padding: 30px 24px;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-
-    transform: translateX(100%);
-    visibility: hidden;
-    transition: transform 0.3s ease, visibility 0.3s ease;
-}
-
-.menu-lateral.aberto {
-    transform: translateX(0);
-    visibility: visible;
-}
-
-.menu-topo {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-}
-
-.menu-topo h1 {
-    color: #315440;
-    font-size: 32px;
-    margin: 0;
-}
-
-.usuario-icone {
-    width: 42px;
-    height: 42px;
-    background: #315440;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 25px;
-    flex-shrink: 0;
-}
-
-.menu-lateral nav {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.menu-link {
-    min-height: 50px;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 12px;
-    background: #a9b99b;
-    border-radius: 6px;
-    color: #315440;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.menu-link span {
-    font-size: 25px;
-    width: 28px;
-    text-align: center;
-}
-
-.menu-link:hover,
-.menu-link:focus-visible {
-    background: #91a787;
-    outline: 2px solid #315440;
-    outline-offset: 2px;
-}
-
-.menu-rodape {
-    margin-top: auto;
-    padding-top: 30px;
-}
-
-.usuario-info {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 12px;
-    background: #fcfaf5;
-    border-radius: 8px;
-    color: #315440;
-    font-size: 13px;
-}
-
-.usuario-info p {
-    margin: 5px 0 0;
-    color: #49805e;
-}
-
-.botao-sair {
-    width: 100%;
-    padding: 14px;
-    margin-top: 35px;
-    border: none;
-    border-radius: 6px;
-    background: #49805e;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.botao-sair:hover,
-.botao-sair:focus-visible {
-    background: #315440;
-}
-
-body.menu-aberto {
-    overflow: hidden;
-}
-
-@media (max-width: 480px) {
-    .menu-lateral {
-        width: 85vw;
-        padding: 30px 20px;
-    }
-
-    .menu-lateral nav {
-        gap: 20px;
-    }
-
-    .menu-link {
-        font-size: 16px;
-        min-height: 50px;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .menu-lateral {
-        transition: none;
-    }
-}
+/* Responsividade */

@@ -91,6 +91,9 @@ Repetir o cenário três vezes, uma por canal: e-mail, telefone com SMS e telefo
 - [ ] Com um filtro aplicado, o resumo mostra os números do recorte
 - [ ] O filtro de origem mostra só as ocorrências de cidadãos ou só as de agentes
 - [ ] O detalhe mostra a linha do tempo com o nome de quem fez cada passo
+- [ ] Com duas contas de agente, cada uma vê o nome da outra no histórico
+- [ ] O detalhe mostra também a visita sem acesso, com a data e as observações
+- [ ] Com mais de 20 ocorrências, "Carregar mais" traz as seguintes sem repetir, e o resumo conta o recorte inteiro
 - [ ] Lista e mapa de Ocorrências mostram o mesmo recorte com os mesmos filtros
 - [ ] "Como chegar" abre o aplicativo de mapas no ponto exato
 - [ ] O aviso de ocorrências próximas aparece para uma denúncia a 100 m e não para uma a 200 m
@@ -117,6 +120,10 @@ Repetir o cenário três vezes, uma por canal: e-mail, telefone com SMS e telefo
 - [ ] O agente continua vendo o registro e o motivo
 - [ ] Uma retentativa antiga de publicação não traz a denúncia de volta
 - [ ] A denúncia arquivada mostra os dias que faltam para a remoção
+- [ ] Passados os 30 dias, o detalhe não oferece mais "Voltar ao mapa"
+- [ ] Depois de arquivar, a ocorrência some da lista, do mapa e do resumo de Ocorrências e aparece em Arquivadas, com motivo e prazo (RF-AGE-11)
+- [ ] Depois de voltar ao mapa, ela sai de Arquivadas e reaparece em Ocorrências
+- [ ] A busca por protocolo em Arquivadas encontra a ocorrência, e uma busca sem resultado tem mensagem própria
 - [ ] Com a data simulada 30 dias depois, a rotina remove registro, dados privados, visitas, histórico e fotos dos dois buckets; antes disso, nada é removido
 - [ ] Denúncia devolvida ao mapa dentro do prazo não é removida
 - [ ] Denúncia que nunca foi arquivada continua no banco, com as visitas, mesmo depois de muito tempo
@@ -147,7 +154,7 @@ Repetir o cenário três vezes, uma por canal: e-mail, telefone com SMS e telefo
 
 **AC-16 · Relatório** (RF-AGE-08, RNF-12)
 - [ ] Gerar PDF e Word do mês atual, para todos os bairros e para um bairro
-- [ ] As recebidas do relatório batem com a lista filtrada pelo mesmo período e bairro, e as pendentes com a lista filtrada por bairro e pelas etapas Recebida e Em análise
+- [ ] As recebidas do relatório batem com a lista filtrada pelo mesmo período e bairro somada às arquivadas desse recorte, e as pendentes com a lista filtrada por bairro e pelas etapas Recebida e Em análise
 - [ ] O resumo separa denúncias de cidadãos de registros de agentes, e Encerradas sem acesso de Arquivadas
 - [ ] Os recipientes com água aparecem pelos nomes do formulário, sem códigos
 - [ ] Buscar no texto do PDF e do Word pelo nome, e-mail e telefone de teste do morador: nenhum aparece

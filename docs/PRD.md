@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versão | 2.9 · 22/11/2026 |
+| Versão | 2.11 · 25/11/2026 |
 | Território | Itambé, Pernambuco |
 | Responsável pelo documento | Responsável pelo produto |
 | Público | Produto, design, desenvolvimento, testes e agentes participantes |
@@ -73,7 +73,7 @@ O Aedes Data Lab precisa reunir relatos com informação suficiente para o traba
 
 A experiência é pensada primeiro para o celular e precisa funcionar bem no computador. Quatro integrantes constroem HTML, CSS e JavaScript das telas. Banco de dados e integrações serão aprendidos em conjunto com a coordenação do projeto, e essa ordem de aprendizagem não altera os critérios de aceite.
 
-O andamento da implementação é registrado em a seção Estado do projeto de [TASKS.md](../TASKS.md), que é atualizada a cada entrega. As páginas Meu trabalho, Mapa técnico e Dashboard já existem no repositório como espaço reservado, fora do aceite da V1 (seção 6.1).
+O andamento da implementação é registrado em a seção Estado do projeto de [TASKS.md](../TASKS.md), que é atualizada a cada entrega. A área dos agentes da V1 está programada em `site/agentes/`. As páginas Meu trabalho e Dashboard continuam como espaço reservado, e o mapa técnico fica dentro de Ocorrências; os dois reservados estão fora do aceite da V1 (seção 6.1).
 
 **Design:** a referência visual é o [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13), página "Fluxo de telas · Jornada do Usuário". A denúncia segue o fluxo da seção 02 dessa página (D35, D36); a versão anterior fica arquivada fora da jornada, só para consulta. A área do agente segue a seção "Jornada do agente · telas e conexões" da mesma página. As telas simulam código, envio, protocolo e publicação e não comprovam serviço implementado. As exportações em `wireframes/` são anteriores a esse fluxo. O estado atual do arquivo fica na seção Estado do projeto de [TASKS.md](../TASKS.md).
 
@@ -137,6 +137,7 @@ O andamento da implementação é registrado em a seção Estado do projeto de [
 | D54 | O resumo no topo de Ocorrências acompanha os filtros aplicados. |
 | D55 | Erros de rede, de sessão e de carregamento na área do agente usam uma única tela, discreta, com a ação de tentar de novo. |
 | D56 | O relatório separa as denúncias de cidadãos dos registros de agentes e as ocorrências Encerradas sem acesso das Arquivadas, e conta os recipientes com água pelos nomes do formulário. |
+| D57 | As ocorrências arquivadas ficam numa tela própria, Arquivadas, e não aparecem na lista, no mapa nem no resumo de Ocorrências. Arquivar, voltar ao mapa, o prazo de 30 dias e a contagem no relatório não mudam (decidido em 25/11/2026). |
 
 ## 6. Objetivos e escopo da V1
 
@@ -300,7 +301,7 @@ Filtros por localidade, período de recebimento e etapa, e nenhum outro (D40). O
 
 ### RF-AGE-01 · Consultar a fila e o detalhe
 
-**Lista.** No topo, um resumo que acompanha os filtros aplicados (D54): quantas ocorrências do recorte estão Recebidas, Em análise e Em análise com tentativa sem acesso. Cada cartão mostra protocolo, etapa, origem (cidadão ou agente), bairro, data, há quantos dias está aberta e, quando houver, "Sem acesso (N tentativas)" e "Arquivada". Filtros por protocolo, bairro, período de recebimento, etapa, origem e "Sem acesso" (ocorrências Em análise com pelo menos uma tentativa sem acesso; as Encerradas sem acesso aparecem pelo filtro de etapa). A ordem padrão é mais antigas primeiro; também é possível ordenar por mais recentes. Um botão alterna entre Lista e Mapa: o mapa fica dentro de Ocorrências, usa os pontos exatos, colore os marcadores por etapa, mostra a origem do ponto selecionado e respeita os mesmos filtros. O menu do agente leva a Ocorrências, Registrar visita e Relatório. Não há tela de mapa técnico separada nem Meu trabalho e Dashboard.
+**Lista.** No topo, um resumo que acompanha os filtros aplicados (D54): quantas ocorrências do recorte estão Recebidas, Em análise e Em análise com tentativa sem acesso. Cada cartão mostra protocolo, etapa, origem (cidadão ou agente), bairro, data, há quantos dias está aberta e, quando houver, "Sem acesso (N tentativas)". Ocorrências arquivadas não entram na lista, no mapa nem no resumo: ficam na tela Arquivadas (RF-AGE-11, D57). Filtros por protocolo, bairro, período de recebimento, etapa, origem e "Sem acesso" (ocorrências Em análise com pelo menos uma tentativa sem acesso; as Encerradas sem acesso aparecem pelo filtro de etapa). A ordem padrão é mais antigas primeiro; também é possível ordenar por mais recentes. Um botão alterna entre Lista e Mapa: o mapa fica dentro de Ocorrências, usa os pontos exatos, colore os marcadores por etapa, mostra a origem do ponto selecionado e respeita os mesmos filtros. O menu do agente leva a Ocorrências, Arquivadas, Registrar visita e Relatório. Não há tela de mapa técnico separada nem Meu trabalho e Dashboard.
 
 **Detalhe.** Mostra tudo o que foi preenchido: fotos que ampliam ao toque, categoria, descrição, ponto exato com o botão "Como chegar" (abre o aplicativo de mapas do aparelho no ponto, sem rastrear o agente), bairro, endereço digitado e referência, as respostas do formulário (onde está o foco, água acumulada, recipiente ou estrutura, larvas ou pupas e, na denúncia de cidadão, há quanto tempo percebeu e a outra evidência, que só a equipe vê), e quem fez: nome, telefone com toque para ligar e e-mail do morador ou, na ocorrência feita por agente, o agente que registrou. Mostra também a visita registrada, se a ocorrência está arquivada (com os dias que faltam para a remoção) e uma linha do tempo com o nome de quem fez cada passo: a denúncia, o início da análise, cada visita, o arquivamento e a volta ao mapa. Os botões dependem da etapa: Recebida mostra só "Iniciar análise", que abre o registro da visita (RF-AGE-02); Em análise mostra "Registrar visita" e, a partir da terceira tentativa sem acesso, "Encerrar sem acesso"; Atendida e Encerrada não têm ações de atendimento. "Outras ações" reúne Corrigir dados (RF-COR-01) e Arquivar denúncia em qualquer etapa, Adicionar observação em Em análise e Voltar ao mapa na ocorrência arquivada.
 
@@ -367,7 +368,7 @@ Conteúdo do relatório:
 
 O relatório não traz nome, e-mail ou telefone do morador (D32). Denúncias já removidas da lixeira (D44) não entram nos totais. O arquivo Word é editável, para o supervisor anotar ou ajustar.
 
-**Aceite:** as recebidas batem com a lista filtrada pelo mesmo período e bairro, e as pendentes batem com a lista filtrada pelo bairro e pelas etapas Recebida e Em análise, quando o período termina hoje; nenhum dado de identificação do morador aparece no arquivo; período sem dados gera relatório com aviso "Nenhuma visita no período", sem erro; o PDF abre em leitores comuns e o Word abre no Microsoft Word e no LibreOffice; a geração funciona no celular e no computador.
+**Aceite:** as recebidas contam também as arquivadas, que não aparecem na lista de Ocorrências (D57), e batem com a lista somada às arquivadas do mesmo período e bairro, e as pendentes batem com a lista filtrada pelo bairro e pelas etapas Recebida e Em análise, quando o período termina hoje; nenhum dado de identificação do morador aparece no arquivo; período sem dados gera relatório com aviso "Nenhuma visita no período", sem erro; o PDF abre em leitores comuns e o Word abre no Microsoft Word e no LibreOffice; a geração funciona no celular e no computador.
 
 ### RF-AGE-09 · Incorporado ao RF-AGE-04
 
@@ -378,6 +379,12 @@ O arquivamento de denúncia improcedente passou a fazer parte do RF-AGE-04, que 
 Em "Registrar visita", no menu, o agente escolhe uma denúncia em análise ou "Local sem denúncia". Não existe cadastro de imóveis: toda visita sem denúncia é em um local novo. Na V1 o agente usa essa opção só quando encontra foco (D51). O formulário é o mesmo da visita, com as perguntas da denúncia do cidadão (D53), e pede também o local (bairro, rua, número, referência, onde está o foco e o ponto no mapa), a data da visita, o que foi encontrado (categoria), a descrição pública, de uma a três fotos, o que foi feito no local e observações internas. Não há pergunta de acesso nem nome, e-mail, telefone ou código de confirmação. Ao confirmar, o serviço cria uma ocorrência de origem "agente", já Atendida, com protocolo e com a visita registrada em nome do agente. Ela aparece no mapa público como as outras, com foto e descrição, marcada "feita por agente".
 
 **Aceite:** só conta com papel de agente cria esse registro, inclusive em chamada direta ao serviço; campos obrigatórios vazios impedem o envio e indicam o campo; o ponto passa pela validação de território; a ocorrência nasce Atendida, com origem agente e uma visita; o mapa público não mostra o nome do agente; clique repetido não cria duas ocorrências; o registro entra no relatório como registro de agente.
+
+### RF-AGE-11 · Consultar as arquivadas
+
+A tela Arquivadas, aberta pelo menu, reúne as ocorrências fora do mapa que ainda estão na lixeira, da arquivada mais recente para a mais antiga, 20 por vez. Cada cartão mostra o protocolo, o bairro, a data do arquivamento, o motivo e quanto falta para a remoção, sem a etiqueta de etapa. A busca é pelo protocolo. O cartão abre o detalhe, que mostra a etapa e oferece Voltar ao mapa dentro do prazo (RF-AGE-06); o botão de voltar do detalhe leva de novo a Arquivadas.
+
+**Aceite:** uma ocorrência arquivada sai de Ocorrências (lista, mapa e resumo) e aparece em Arquivadas; ao voltar ao mapa, faz o caminho contrário; o prazo mostrado confere com a data do arquivamento; sem arquivadas e busca sem resultado têm mensagens próprias.
 
 ### RF-COR-01 · Corrigir campos enviados
 
@@ -627,3 +634,5 @@ Em conflito com telas antigas ou recomendações anteriores, valem as decisões 
 | 2.7 | 15/11/2026 | Resumo e filtro "Sem acesso" só com ocorrências Em análise; Atendida e Encerrada sem ações de atendimento, mas com correção e publicação no menu; reenvio da visita guardada confere etapa e versão; período e regras de contagem do relatório. Sem papel nem tela de administrador: a equipe do projeto cria as contas e troca o contato confirmado direto no Supabase (D22, D42); o agente corrige os dados de qualquer denúncia (D20, D26, RF-COR-01, AC-14) |
 | 2.8 | 15/11/2026 | Jornada do agente revista: ocultar e arquivar viram uma ação só, válida em qualquer etapa, com volta ao mapa (D48, D49, RF-AGE-04, RF-AGE-06; RF-AGE-09 incorporado); origem da ocorrência, cidadão ou agente, visível também no mapa público sem o nome (D50, RF-MAP-01); registro de foco em local sem denúncia (D51, RF-AGE-10, AC-17); iniciar análise abre o registro da visita (D52); perguntas da visita na linguagem do cidadão, sem os códigos do PNCD (D53, seção 8.1); resumo que acompanha os filtros (D54); tela única de erro (D55); relatório em três grupos, por origem e por tipo de encerramento (D56, RF-AGE-08). Em 16/11/2026 confirmados o prazo da lixeira para qualquer etapa (D44), a ocorrência que fica Em análise quando o agente sai da visita sem gravar (D52) e a contagem da arquivada depois de atendida como Arquivada (RF-AGE-08). Também em 16/11/2026: respostas do formulário no detalhe e corrigíveis pelo agente, menos o tempo e a outra evidência (RF-AGE-01, RF-COR-01) |
 | 2.9 | 22/11/2026 | RF-DEN-01: a etapa dos dados do cidadão traz o aviso de que nome, e-mail e telefone não são divulgados. Confirmado: CPF fora do produto (D07) e identificação obrigatória, com denúncia anônima no mapa público (D50) |
+| 2.10 | 25/11/2026 | Estado atual (seção 4) atualizado com a área dos agentes programada. Nenhum requisito mudou. |
+| 2.11 | 25/11/2026 | D57 e RF-AGE-11: arquivadas em tela própria. RF-AGE-01 e o aceite do RF-AGE-08 ajustados. |

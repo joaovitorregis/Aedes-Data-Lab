@@ -1,7 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+.icone {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
 }
 
 body {
@@ -142,6 +151,58 @@ h1 {
         height: 143px;
     }
 }
+
+
+.apoio-institucional {
+    padding: 20px;
+    background-color: #f5f0df;
+}
+
+.apoio-institucional h2 {
+    font-size: 21px;
+    font-weight: 700;
+    color: #304f3c;
+    margin-bottom: 12px;
+}
+
+.apoio-container {
+    display: flex;
+    gap: 7px;
+    width: 100%;
+}
+
+.apoio-card {
+    flex: 1;
+    height: 83px;
+    background-color: #ffffff;
+    border: 1px solid #ddcdb0;
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.apoio-card img {
+    max-width: 100%;
+    max-height: 55px;
+    object-fit: contain;
+}
+
+.apoio-link {
+    display: inline-block;
+    margin-top: 16px;
+
+    color: #304f3c;
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: underline;
+}
+
 
 /* DESGRAÇA DO MENU */
 

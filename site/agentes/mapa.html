@@ -1,26 +1,381 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mapa técnico | Aedes Data Lab</title>
-  <link rel="stylesheet" href="../css/estilos.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mapa de ocorrências | Aedes Lab</title>
+
+    <link rel="stylesheet" href="../css/mapa_agentes.css">
 </head>
+
 <body>
-  <header>
-    <!-- Etapa HTML: construir o cabeçalho e a navegação desta área. -->
-  </header>
 
-  <main id="conteudo">
-    <h1>Mapa técnico</h1>
-    <p>Página de estudo em construção.</p>
-    <!-- Desenvolver aqui a estrutura desta tela a partir do Figma. -->
-  </main>
+    <header class="top-header">
+         <img src="" alt="Logo">
+    <div>
+        <h2>Aedes lab</h2>
+        <p>Itambé-PE</p>
+    </div>
+   
+<button
+    class="menu-botao"
+    type="button"
+    aria-label="Abrir menu"
+    aria-expanded="false"
+    aria-controls="menu-lateral"
+>
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
 
-  <footer>
-    <!-- Construir o rodapé quando necessário. -->
-  </footer>
+<div class="menu-fundo" hidden></div>
 
-  <script type="module" src="../js/agentes/mapa.js"></script>
+<aside
+    class="menu-lateral"
+    id="menu-lateral"
+    aria-label="Menu de navegação"
+    aria-hidden="true"
+    inert
+>
+    <div class="menu-topo">
+        <h1>Menu</h1>
+        <div class="usuario-icone">♙</div>
+    </div>
+
+    <nav>
+        <a href="C:\Users\BIA\Documents\aedes data lab\Aedes-Data-Lab\site\agentes\início.html" class="menu-link">
+            <span>⌂</span> Início
+        </a>
+
+        <a href="C:\Users\BIA\Documents\aedes data lab\Aedes-Data-Lab\site\paginas\registrar-foco.html" class="menu-link">
+            <span>⚑</span> Registrar foco
+        </a>
+
+        <a href="C:\Users\BIA\Documents\aedes data lab\Aedes-Data-Lab\site\paginas\mapa.html" class="menu-link">
+            <span>♧</span> Mapa
+        </a>
+
+        <a href="C:\Users\BIA\Documents\aedes data lab\Aedes-Data-Lab\site\paginas\guia-aedes.html" class="menu-link">
+            <span>▤</span> Guia Aedes
+        </a>
+
+        <a href="C:\Users\BIA\Documents\aedes data lab\Aedes-Data-Lab\site\paginas\jogo.html" class="menu-link">
+            <span>♟</span> Jogo
+        </a>
+
+        <a href="C:\Users\BIA\Documents\aedes data lab\Aedes-Data-Lab\site\paginas\quem-somos.html" class="menu-link">
+            <span>▣</span> Quem somos
+        </a>
+    </nav>
+
+    <div class="menu-rodape">
+        <div class="usuario-info">
+            <div class="usuario-icone">♙</div>
+            <div>
+                <strong>Nome do usuário</strong>
+                <p>Cidadão</p>
+            </div>
+        </div>
+
+        <button class="botao-sair" type="button">
+            Sair
+        </button>
+    </div>
+</aside>
+    </header>
+
+    <main class="container">
+
+        <section class="map-section">
+
+            <h1>Mapa de ocorrências</h1>
+
+            <p class="subtitle">
+                Relatos de possíveis criadouros em Itambé/PE
+            </p>
+
+            <div class="top-buttons">
+                <button id="openFilters" class="filter-button">
+                    Filtros
+                </button>
+
+                <button id="centerMap" class="center-button">
+                    Centralizar em mim
+                </button>
+            </div>
+
+            <!-- MAPA -->
+
+            <div class="map">
+
+                <div class="vertical-line line-v1"></div>
+                <div class="vertical-line line-v2"></div>
+                <div class="vertical-line line-v3"></div>
+
+                <div class="horizontal-line line-h1"></div>
+                <div class="horizontal-line line-h2"></div>
+                <div class="horizontal-line line-h3"></div>
+                <div class="horizontal-line line-h4"></div>
+                <div class="horizontal-line line-h5"></div>
+                <div class="horizontal-line line-h6"></div>
+
+                <div class="location location-1">
+                    <span></span>
+                </div>
+
+                <div class="location location-2">
+                    <span></span>
+                </div>
+
+                <div class="location location-3">
+                    <span></span>
+                </div>
+
+                <div class="location location-4">
+                    <span></span>
+                </div>
+
+                <div class="location location-5">
+                    <span></span>
+                </div>
+
+                <div class="map-legend">
+                    <span class="legend-dot"></span>
+                    <span>Localização aproximada dos relatos</span>
+                </div>
+
+            </div>
+
+            <p class="map-description">
+                Relatos de cidadãos e agentes; não são focos confirmados.
+            </p>
+
+            <p class="map-note">
+                Mapa ilustrativo · cartografia de Itambé/PE pendente
+            </p>
+
+            <button id="showOccurrences" class="list-button">
+                Ver lista de ocorrências
+            </button>
+
+        </section>
+
+
+        <!-- LISTA DE OCORRÊNCIAS -->
+
+        <section id="occurrencesSection" class="occurrences-section">
+
+            <h2>Ocorrências</h2>
+
+            <div class="statistics">
+                <p><span id="analysisCount">2</span> em análise</p>
+                <p><span id="finishedCount">3</span> finalizadas</p>
+                <p><span id="processingCount">1</span> em processamento</p>
+                <p><span id="unseenCount">2</span> não visualizadas</p>
+            </div>
+
+            <div id="occurrencesList" class="occurrences-list">
+
+                <article class="occurrence-card" data-status="Em análise">
+                    <button class="summary-button">
+                        Relato 1<br>
+                        ver resumo
+                    </button>
+                </article>
+
+                <article class="occurrence-card" data-status="Finalizada">
+                    <button class="summary-button">
+                        Relato 2<br>
+                        ver resumo
+                    </button>
+                </article>
+
+                <article class="occurrence-card" data-status="Em processamento">
+                    <button class="summary-button">
+                        Relato 3<br>
+                        ver resumo
+                    </button>
+                </article>
+
+                <article class="occurrence-card" data-status="Finalizada">
+                    <button class="summary-button">
+                        Relato 4<br>
+                        ver resumo
+                    </button>
+                </article>
+
+                <article class="occurrence-card" data-status="Não visualizada">
+                    <button class="summary-button">
+                        Relato 5<br>
+                        ver resumo
+                    </button>
+                </article>
+
+                <article class="occurrence-card" data-status="Em análise">
+                    <button class="summary-button">
+                        Relato 6<br>
+                        ver resumo
+                    </button>
+                </article>
+
+                <article class="occurrence-card" data-status="Finalizada">
+                    <button class="summary-button">
+                        Relato 7<br>
+                        ver resumo
+                    </button>
+                </article>
+
+                <article class="occurrence-card" data-status="Não visualizada">
+                    <button class="summary-button">
+                        Relato 8<br>
+                        ver resumo
+                    </button>
+                </article>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- POPUP DE FILTROS -->
+
+    <div id="filterOverlay" class="filter-overlay">
+
+        <div class="filter-modal">
+
+            <div class="modal-header">
+
+                <h2>Filtros</h2>
+
+                <button id="closeFilters" class="back-button">
+                    ←
+                </button>
+
+            </div>
+
+
+            <!-- PERÍODO -->
+
+            <div class="filter-category">
+
+                <button class="category-button">
+                    Período
+                    <span class="arrow">⌄</span>
+                </button>
+
+                <div class="category-options">
+
+                    <label>
+                        <input type="checkbox" name="period" value="Hoje">
+                        Hoje
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="period" value="Últimos 7 dias">
+                        Últimos 7 dias
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="period" value="Últimos 30 dias">
+                        Últimos 30 dias
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="period" value="Todos os períodos">
+                        Todos os períodos
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- LOCALIDADES -->
+
+            <div class="filter-category">
+
+                <button class="category-button">
+                    Localidades
+                    <span class="arrow">⌄</span>
+                </button>
+
+                <div class="category-options">
+
+                    <label>
+                        <input type="checkbox" name="locality" value="Centro">
+                        Centro
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="locality" value="Zona rural">
+                        Zona rural
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="locality" value="Bairros">
+                        Bairros
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div class="filter-category">
+
+                <button class="category-button">
+                    Status
+                    <span class="arrow">⌄</span>
+                </button>
+
+                <div class="category-options">
+
+                    <label>
+                        <input type="checkbox" name="status" value="Em análise">
+                        Em análise
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="status" value="Finalizada">
+                        Finalizada
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="status" value="Em processamento">
+                        Em processamento
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="status" value="Não visualizada">
+                        Não visualizada
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button id="applyFilters" class="conclude-button">
+                    concluir
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script type="module" src="../js/agentes/mapa.js"></script>
+
 </body>
 </html>

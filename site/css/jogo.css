@@ -7,8 +7,8 @@
 .logo-link { display: flex; }
 .cabecalho .logo { width: 65px; height: 50px; object-fit: contain; }
 .marca-textos { display: flex; flex-direction: column; }
-.marca-titulo { font-size: 17px; font-weight: bold; color: #253b65; }
-.marca-subtitulo { font-size: 14px; color: #253b65; }
+.marca-titulo { font-size: 17px; font-weight: bold; color: #245e31; }
+.marca-subtitulo { font-size: 14px; color: #245e31; }
 
 .menu-toggle { display: flex; flex-direction: column; gap: 6px; background: none; border: none; cursor: pointer; }
 .menu-toggle .linha { width: 30px; height: 4px; background-color: #344767; border-radius: 5px; }
@@ -21,7 +21,7 @@
 .texto-principal p { font-size: 17px; line-height: 1.5; color: #345b82; margin: 0 0 35px; }
 
 .botao-jogar { display: inline-flex; align-items: center; justify-content: center; gap: 12px; padding: 15px 35px; background-color: #e84959; color: white; text-decoration: none; font-size: 18px; font-weight: bold; border-radius: 40px; transition: 0.3s; }
-.botao-jogar:hover { background-color: #cf3445; transform: scale(1.05); }
+.botao-jogar:hover { background-color: #34cf3c; transform: scale(1.05); }
 .icone-jogo { font-size: 22px; }
 
 .imagem-mosquito { width: 40%; display: flex; justify-content: center; align-items: center; }

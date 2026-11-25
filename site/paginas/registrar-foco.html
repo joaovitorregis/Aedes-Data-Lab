@@ -3,23 +3,98 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Registrar foco | Aedes Data Lab</title>
-  <link rel="stylesheet" href="../css/estilos.css">
+  <title>Registrar Foco | Aedes Data Lab</title>
+  <link rel="stylesheet" href="../css/registrar-foco.css">
 </head>
-<body>
-   <div class="app">
 
-        <header class="header">
-            <div class="logo">
-                <span class="logo-icon">◉</span>
-                <div>
-                    <strong>Aedes DataLab</strong>
-                    <small>Itambé-PE</small>
-                </div>
+<body>
+
+<!-- CABEÇALHO -->
+    <header>
+
+        <a href="inicio.html" class="brand">
+             <img src="imagens/logo.jpeg" alt="Logo">
+
+            <div>
+                <h2>Aedes Datalab</h2>
+                <span>Itambé - PE</span>
             </div>
-    
-            <button class="menu">▤</button>
-         </header>
+        </a>
+
+        <button class="menu-toggle"
+            id="menuToggle"
+            aria-label="Abrir menu"
+            aria-expanded="false"
+            aria-controls="sidebar">
+            ☰
+        </button>
+
+    </header>
+
+
+    <!-- MENU RETRÁTIL -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-heading">
+            <h2>Menu</h2>
+
+            <button class="close-menu" id="closeMenu"
+                aria-label="Fechar menu">
+                ×
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="inicio.html" class="menu-item">
+                <span>⌂</span>
+                Início
+            </a>
+
+            <a href="registrar-foco.html" class="menu-item">
+                <span>⚑</span>
+                Registrar foco
+            </a>
+
+            <a href="mapa.html" class="menu-item">
+                <span>▧</span>
+                Mapa
+            </a>
+
+            <a href="guia-aedes.html" class="menu-item">
+                <span>▤</span>
+                Guia Aedes
+            </a>
+
+            <a href="quem-somos.html" class="menu-item active">
+                <span>♙</span>
+                Quem somos
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="user-card">
+
+                <div class="user-avatar">♙</div>
+
+                <div>
+                    <strong>Nome do usuário</strong>
+                    <span>Cidadão</span>
+                </div>
+
+            </div>
+
+            <button class="logout-button" type="button">
+                Sair
+            </button>
+
+        </div>
+
+    </aside>
 
          <main>
 

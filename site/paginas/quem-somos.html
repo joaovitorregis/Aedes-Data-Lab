@@ -4,22 +4,259 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Quem somos | Aedes Data Lab</title>
-  <link rel="stylesheet" href="../css/estilos.css">
+  <link rel="stylesheet" href="../css/quem-somos.css">
 </head>
 <body>
   <header>
-    <!-- Etapa HTML: construir o cabeçalho e a navegação desta área. -->
-  </header>
+   <!DOCTYPE html>
+<html lang="pt-BR">
 
-  <main id="conteudo">
-    <h1>Quem somos</h1>
-    <p>Página de estudo em construção.</p>
-    <!-- Desenvolver aqui a estrutura desta tela a partir do Figma. -->
-  </main>
+<!-- CABEÇALHO -->
+    <header>
 
-  <footer>
-    <!-- Construir o rodapé quando necessário. -->
-  </footer>
+        <a href="inicio.html" class="brand">
+             <img src="imagens/logo.jpeg" alt="Logo">
+
+            <div>
+                <h2>Aedes Datalab</h2>
+                <span>Itambé - PE</span>
+            </div>
+        </a>
+
+        <button class="menu-toggle"
+            id="menuToggle"
+            aria-label="Abrir menu"
+            aria-expanded="false"
+            aria-controls="sidebar">
+            ☰
+        </button>
+
+    </header>
+
+
+    <!-- MENU RETRÁTIL -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-heading">
+            <h2>Menu</h2>
+
+            <button class="close-menu" id="closeMenu"
+                aria-label="Fechar menu">
+                ×
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="inicio.html" class="menu-item">
+                <span>⌂</span>
+                Início
+            </a>
+
+            <a href="registrar-foco.html" class="menu-item">
+                <span>⚑</span>
+                Registrar foco
+            </a>
+
+            <a href="mapa.html" class="menu-item">
+                <span>▧</span>
+                Mapa
+            </a>
+
+            <a href="guia-aedes.html" class="menu-item">
+                <span>▤</span>
+                Guia Aedes
+            </a>
+
+            <a href="quem-somos.html" class="menu-item active">
+                <span>♙</span>
+                Quem somos
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="user-card">
+
+                <div class="user-avatar">♙</div>
+
+                <div>
+                    <strong>Nome do usuário</strong>
+                    <span>Cidadão</span>
+                </div>
+
+            </div>
+
+            <button class="logout-button" type="button">
+                Sair
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main>
+
+        <!-- TÍTULO DA PÁGINA -->
+        <div class="page-title">
+
+            <a href="inicio.html" class="back-button"
+                aria-label="Voltar">‹</a>
+
+            <h1>Quem somos</h1>
+
+        </div>
+
+
+        <!-- SOBRE O PROJETO -->
+        <section class="about-section">
+
+            <h2>Projeto 'Website Repelente'</h2>
+
+            <p class="description">
+                O Website Repelente é um projeto de caráter
+                científico e socioambiental que busca contribuir
+                para a prevenção das arboviroses transmitidas
+                pelo mosquito Aedes aegypti, responsável pela
+                disseminação de doenças como dengue, zika e
+                chikungunya. Para isso, reúne o desenvolvimento
+                de uma plataforma digital de coleta, organização
+                e visualização de informações, a colaboração de
+                profissionais da Vigilância em Saúde e a investigação
+                de produtos botânicos relacionados à temática da
+                prevenção.
+            </p>
+
+            <figure class="team-image">
+                <div class="image-placeholder">
+                    <span>♙ ♙</span>
+                </div>
+
+                <figcaption>Equipe Website Repelente</figcaption>
+            </figure>
+ 
+             <h3>Nossas propostas</h3>
+
+             <p class="description">
+
+                1. Monitoramento e mapeamento de áreas de risco
+                Desenvolvimento de uma plataforma digital destinada ao
+                registro e à organização de informações sobre a
+                presença de mosquitos em diferentes localidades. A
+                proposta é facilitar a identificação de possíveis pontos
+                críticos e contribuir para o acompanhamento dessas áreas,
+                em colaboração com os agentes de endemias. Utilização de
+                ferramentas digitais para aproximar informações,
+                profissionais e população. Por meio da organização dos
+                dados, buscamos oferecer um instrumento complementar às
+                atividades de vigilância e contribuir para o planejamento
+                de ações preventivas.
+            </p>
+
+            <!-- SEGUNDA APRESENTAÇÃO -->
+            <div class="about-grid">
+
+                <p>
+                    2. Investigação e produção de itens botânicos
+                    Desenvolvimento de produtos como hidratantes,
+                    difusores e velas, utilizando ingredientes de
+                    origem natural. Essa frente busca explorar
+                    possibilidades de aproveitamento de componentes
+                    vegetais e discutir suas aplicações, considerando
+                    critérios de segurança, pesquisa científica e
+                    sustentabilidade.
+                </p>
+
+                <div class="image-placeholder secondary-image">
+                    <span>♟</span>
+                </div>
+            </div>
+
+             <h3>Sobre nós</h3>
+
+                 <p class="description">
+                O Website Repelente é desenvolvido por estudantes
+                da Escola de Referência em Ensino Médio Frei
+                Orlando (EREM Frei Orlando), sob orientação docente
+                e com a colaboração da Secretaria Municipal
+                de Saúde de Itambé.
+                 </p>
+
+        </section>
+
+
+        <!-- INSTITUIÇÕES PARCEIRAS -->
+        <section class="partners-section">
+
+            <h2>Instituições parceiras</h2>
+
+            <div class="partners-grid">
+
+                <img src="imagens/itambe-saude.png"
+                    alt="Secretaria de Saúde de Itambé">
+
+                <img src="imagens/eremfo.png"
+                    alt="EREM Frei Orlando">
+
+                <img src="imagens/facepe.png"
+                    alt="FACEPE">
+
+                <img src="imagens/compet.png"
+                    alt="COMPET MÉDIO-TEC">
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- RODAPÉ -->
+    <footer class="footer">
+
+        <section class="footer-contact">
+
+            <h2>Conecte-se conosco:</h2>
+
+            <a href="https://www.instagram.com/website_repelente/">
+                ◎ &nbsp; @website_repelente
+            </a>
+
+            <a href="tel:+5581999999999">
+                ▯ &nbsp; +55 (81) 99999-9999
+            </a>
+
+            <a href="mailto:aedesdatalab@gmail.com">
+                ✉ &nbsp; aedesdatalab@gmail.com
+            </a>
+
+        </section>
+
+
+        <section class="footer-contribute">
+
+            <h2>Como contribuir?</h2>
+
+            <a href="registrar-foco.html">
+                ⚠ &nbsp; Denunciar focos
+            </a>
+
+            <a href="repelentes.html">
+                🛒 &nbsp; Nossos produtos
+            </a>
+
+            <a href="guia-aedes.html">
+                ⚲ &nbsp; Guia Aedes
+            </a>
+
+        </section>
+
+    </footer>
 
   <script type="module" src="../js/cidadao/quem-somos.js"></script>
 </body>

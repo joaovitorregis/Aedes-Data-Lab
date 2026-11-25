@@ -13,6 +13,23 @@
     --gray: #75808a;
 }
 
+header {
+    background: #fbfaf6;
+    padding: 15px 7%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+header img {
+    width: 50px;
+    height: 50px;
+}
+
+header p {
+    color: #518064;
+}
+
 /* DESGRAÇA DO MENU */
 
 .menu-botao {

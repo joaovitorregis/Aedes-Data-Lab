@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Limpeza de recipiente</title>
+  <desc id="desc">Ilustracao de uma pessoa limpando um balde com agua e sabao.</desc>
+  <rect width="640" height="360" fill="#eaf1e6"/>
+  <circle cx="520" cy="78" r="48" fill="#f7ca63"/>
+  <path d="M0 280c120-38 225-22 318 4 96 27 213 20 322-16v92H0z" fill="#bfd7b2"/>
+  <ellipse cx="330" cy="312" rx="190" ry="18" fill="#9fb88f" opacity=".55"/>
+  <rect x="388" y="122" width="82" height="154" rx="12" fill="#4e91aa"/>
+  <path d="M388 122h82l-8-20h-66z" fill="#d0e4e8"/>
+  <path d="M405 124c0 40 9 74 25 97 16-23 25-57 25-97z" fill="#80bdd0"/>
+  <rect x="126" y="202" width="196" height="108" rx="18" fill="#316d75"/>
+  <ellipse cx="224" cy="202" rx="98" ry="24" fill="#91c3cc"/>
+  <ellipse cx="224" cy="202" rx="72" ry="15" fill="#c9e6e9"/>
+  <path d="M164 246c24-16 52-16 78 0 22 13 45 13 68 0" fill="none" stroke="#d9eef0" stroke-width="7" stroke-linecap="round"/>
+  <g fill="none" stroke="#174d27" stroke-width="13" stroke-linecap="round">
+    <path d="M454 103c28-14 48-10 63 12"/>
+    <path d="M501 119l-26 38"/>
+  </g>
+  <circle cx="522" cy="107" r="27" fill="#d9ad82"/>
+  <path d="M492 110c6-31 31-45 57-31" fill="none" stroke="#174d27" stroke-width="14" stroke-linecap="round"/>
+  <path d="M336 188l56-29 13 27-61 28z" fill="#d9ad82"/>
+  <path d="M388 158l35-18" fill="none" stroke="#174d27" stroke-width="13" stroke-linecap="round"/>
+  <rect x="78" y="48" width="238" height="74" rx="14" fill="#fff" opacity=".92"/>
+  <text x="104" y="78" fill="#174d27" font-family="Arial, sans-serif" font-size="24" font-weight="700">Limpe com agua e sabao</text>
+  <text x="104" y="106" fill="#606e61" font-family="Arial, sans-serif" font-size="18">Esfregue todas as paredes</text>
+</svg>

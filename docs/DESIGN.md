@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versão | 1.4 · 16/11/2026 |
+| Versão | 1.7 · 25/11/2026 |
 | Fonte | Página "Fluxo de telas · Jornada do Usuário" no [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13) |
 | Telas exportadas | [wireframes/](../wireframes/README.md), anteriores ao fluxo novo da denúncia (TASK-013a) |
 
@@ -122,10 +122,15 @@ Para o mapa, RF-MAP-02 exige estados distintos para ausência de denúncias, fil
 
 ### Área do agente
 
-As telas do agente seguem a mesma estrutura das do cidadão: cabeçalho com o logotipo, "Aedes Lab · Área do agente" e o botão de três barras, que abre o menu com Ocorrências, Registrar visita, Relatório e Sair. A referência é a seção [Jornada do agente · telas e conexões](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y?node-id=3081-1236) da página "Fluxo de telas · Jornada do Usuário".
+As telas do agente seguem a mesma estrutura das do cidadão: cabeçalho com o logotipo, "Aedes Lab · Área do agente" e o botão de três barras, que abre o menu com Ocorrências, Arquivadas, Registrar visita, Relatório e Sair. A referência é a seção [Jornada do agente · telas e conexões](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y?node-id=3081-1236) da página "Fluxo de telas · Jornada do Usuário".
 
 - **Ocorrências:** resumo que acompanha os filtros (PRD D54), busca por protocolo, filtros, alternância Lista/Mapa, seletor de origem e cartões com protocolo, etapa, origem, bairro, data e dias em aberto.
 - **Detalhe:** ação da etapa no topo, fotos, relato, local com o ponto exato, quem fez, visita registrada, ocorrência próxima e linha do tempo com o nome de quem fez cada passo.
+- **Outras ações:** botão com texto e três pontos, ao lado do voltar. Só os três pontos, como no Figma, passavam despercebidos (25/11/2026).
+- **Toque:** opções, abas e o botão de remover foto têm pelo menos 44px de altura (RNF-11), acima dos 40px e 36px desenhados no Figma.
+- **Visitas no detalhe:** todas aparecem, também as sem acesso, com data e observações.
+- **Arquivadas:** tela própria, não desenhada no Figma. Título, frase "Fora do mapa público. Podem voltar em até 30 dias.", busca por protocolo e cartões com protocolo, prazo para apagar, bairro, data do arquivamento e motivo, sem a etiqueta de etapa (D57).
+- **Computador (a partir de 900px):** o Figma só desenha o celular. No computador, o cabeçalho mostra Ocorrências, Arquivadas, Registrar visita, Relatório e Sair no lugar dos três traços. A largura vai até 1160px em Ocorrências, Arquivadas, detalhe e relatório, e 760px nos formulários. Cartões em duas colunas (três a partir de 1200px); mapa com o ponto escolhido ao lado; detalhe em duas colunas; relatório com as escolhas à esquerda e a prévia à direita; listas de marcar em duas colunas; caixas no centro da tela. Abaixo de 900px nada muda, e a ordem dos blocos é a mesma.
 - **Registrar visita:** um formulário só, para denúncia existente ou para "Local sem denúncia" (PRD D51), com as opções de toque descritas acima.
 - **Relatório:** a tela do agente mostra resumo em três grupos, tabela por bairro, visitas do período, recipientes com água e pendentes; o arquivo gerado tem duas páginas A4, com os 15 bairros e as assinaturas (PRD D56).
 
@@ -155,7 +160,7 @@ Na área do agente, erro de rede, de sessão ou de carregamento usa uma tela ún
 
 ## 8. Como aplicar no código
 
-Os tokens ficam declarados uma vez, no começo de `site/css/estilos.css`:
+A área dos agentes repete estes tokens em `site/css/agentes.css` (ARCHITECTURE, ADR-018). No site público, os tokens ficam declarados uma vez, no começo de `site/css/estilos.css`:
 
 ```css
 :root {

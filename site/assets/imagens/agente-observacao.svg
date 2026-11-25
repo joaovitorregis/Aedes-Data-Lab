@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Observacao dos locais</title>
+  <desc id="desc">Ilustracao de um agente observando recipientes no ambiente.</desc>
+  <rect width="640" height="360" fill="#edf3e8"/>
+  <circle cx="530" cy="70" r="42" fill="#f4c960"/>
+  <path d="M0 286c140-28 240-18 350 10 100 25 193 21 290-9v73H0z" fill="#bdd1b1"/>
+  <circle cx="420" cy="106" r="32" fill="#c89b73"/>
+  <path d="M388 106c5-32 26-48 52-40 16 5 25 18 25 34-26-10-51-8-77 6z" fill="#314a31"/>
+  <path d="M366 138c25-16 67-16 92 0l30 162H336z" fill="#397b61"/>
+  <path d="M364 202l-72 58" fill="none" stroke="#c89b73" stroke-width="26" stroke-linecap="round"/>
+  <circle cx="285" cy="266" r="14" fill="#c89b73"/>
+  <g>
+    <rect x="84" y="204" width="150" height="96" rx="18" fill="#4a91a1"/>
+    <ellipse cx="159" cy="204" rx="75" ry="20" fill="#afcfd3"/>
+    <ellipse cx="159" cy="204" rx="52" ry="11" fill="#e5f2f2"/>
+  </g>
+  <rect x="86" y="42" width="290" height="82" rx="14" fill="#fff" opacity=".94"/>
+  <text x="112" y="76" fill="#174d27" font-family="Arial, sans-serif" font-size="23" font-weight="700">Observe os locais</text>
+  <text x="112" y="104" fill="#606e61" font-family="Arial, sans-serif" font-size="17">Procure agua acumulada</text>
+</svg>

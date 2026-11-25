@@ -216,6 +216,7 @@ input[readonly] { background: var(--cor-trilho); color: var(--cor-texto-suave); 
 .ocorrencia:hover { border-color: var(--cor-borda); }
 .ocorrencia__topo { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .ocorrencia__topo strong { color: var(--cor-primaria-escura); }
+.ocorrencia__motivo { font-size: 13px; color: var(--cor-texto); overflow-wrap: anywhere; }
 .ocorrencia__meta, .ocorrencia__extras { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 13px; color: var(--cor-texto-suave); }
 
 /* ---------- mapa ---------- */
@@ -286,12 +287,70 @@ tbody tr:last-child > * { border-bottom: 0; }
 .barras progress::-webkit-progress-value { background: var(--cor-acento); }
 .barras progress::-moz-progress-bar { background: var(--cor-acento); }
 
-/* ---------- telas maiores ---------- */
+/* ---------- estrutura que muda no computador ---------- */
+.topo__nav { display: none; }
+.controles, .detalhe, .detalhe__coluna { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+
+/* ---------- computador ---------- */
 @media (min-width: 900px) {
-  .pagina-ocorrencias main { max-width: 920px; }
-  .pagina-ocorrencias .topo { padding-inline: max(16px, calc((100% - 888px) / 2)); }
-  .pagina-ocorrencias .pendentes { max-width: 920px; }
-  .ocorrencias { display: grid; grid-template-columns: 1fr 1fr; }
-  .ocorrencias .ocorrencia { height: 100%; }
+  body { --largura: 760px; }
+  .pagina-ocorrencias, .pagina-arquivadas, .pagina-ocorrencia, .pagina-relatorio { --largura: 1160px; }
+  main { max-width: var(--largura); padding: 28px 24px 56px; gap: 16px; }
+  h1 { font-size: 30px; }
+  .pendentes { max-width: var(--largura); padding-inline: 24px; }
   .folha { margin: auto; border-radius: 18px; }
+
+  .topo { padding-inline: max(24px, calc((100% - var(--largura)) / 2 + 24px)); }
+  .botao-menu { display: none; }
+  .topo__nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 4px; }
+  .topo__nav a { display: inline-flex; align-items: center; min-height: var(--altura-controle); padding: 0 12px; border-radius: var(--raio-pequeno); font-size: 14px; font-weight: 500; text-decoration: none; color: var(--cor-primaria-escura); }
+  .topo__nav a:hover { background: var(--cor-trilho); }
+  .topo__nav a[aria-current="page"] { background: var(--cor-selecao); font-weight: 700; }
+  .topo__nav .botao { margin-left: 8px; padding-inline: 12px; }
+
+  .pagina-acesso main { max-width: 440px; min-height: 100dvh; justify-content: center; }
+  .titulo-com-acao .ligacao { display: none; } /* "Relatório" já está no cabeçalho */
+
+  /* Ocorrências e Arquivadas */
+  .resumo > div { padding-inline: 8px; }
+  .resumo > div + div { border-left: 1px solid var(--cor-borda-suave); }
+  .controles { display: grid; grid-template-columns: minmax(0, 1fr) 280px; column-gap: 16px; align-items: center; }
+  .controles > .campo[data-campo="origem"] { grid-column: 1 / -1; }
+  .pagina-arquivadas .busca-linha { max-width: 480px; }
+  .ocorrencias { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .ocorrencias .ocorrencia { height: 100%; }
+  .area--mapa { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 16px; align-items: start; }
+  .mapa--lista { height: min(68dvh, 640px); min-height: 360px; }
+  .area--mapa .ponto-escolhido { flex-direction: column !important; align-items: stretch; margin-top: 0; }
+
+  /* detalhe */
+  .detalhe { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
+  .acoes-principais { flex-direction: row; flex-wrap: wrap; }
+  .acoes-principais .botao--largo { width: auto; min-width: 280px; }
+  .mapa--detalhe { height: 260px; }
+
+  /* formulários */
+  .opcoes--lista { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
+  .opcoes--lista .opcao:nth-child(-n + 2) { border-top: 0; }
+  .opcoes--lista .opcao:nth-child(2n) { border-top-color: var(--cor-borda-suave); }
+  .opcoes--lista .opcao:nth-child(2) { border-top: 0; }
+  .mapa--escolha { height: 340px; }
+  .folha .mapa--escolha { height: 300px; }
+  .formulario > .botao--largo { width: auto; min-width: 280px; align-self: flex-end; }
+  .pagina-correcao .formulario { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+  .pagina-correcao .formulario > :is(.lado-a-lado, p, button, [data-campo="descricao"], [data-campo="recipientes"], [data-campo="ponto"], [data-campo="motivo"]) { grid-column: 1 / -1; }
+  .pagina-correcao .formulario > button { justify-self: end; }
+
+  /* relatório: escolhas à esquerda, prévia à direita */
+  .pagina-relatorio main { display: grid; grid-template-columns: 340px minmax(0, 1fr); grid-template-rows: repeat(5, auto) 1fr; column-gap: 28px; align-content: start; }
+  .pagina-relatorio main > * { grid-column: 1 / -1; }
+  .pagina-relatorio main > .formulario { grid-column: 1; grid-row: 4; }
+  .pagina-relatorio main > .erro-geral { grid-column: 1; grid-row: 5; }
+  .pagina-relatorio main > .botao { grid-column: 1; grid-row: 6; align-self: start; }
+  .pagina-relatorio main > .previas { grid-column: 2; grid-row: 4 / span 3; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+  .previas > :not(.previa) { grid-column: 1 / -1; }
+}
+
+@media (min-width: 1200px) {
+  .ocorrencias { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }

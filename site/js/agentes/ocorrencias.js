@@ -1,12 +1,13 @@
 // Tela: Ocorrências (lista, mapa e filtros). Os filtros ficam no endereço, para o "voltar" mantê-los.
 import {
-  botao, carregando, comEnvio, el, etiqueta, etiquetaDaEtapa, etiquetaDaOrigem, folha, icone, telaDeErro, vazio,
+  botao, carregando, el, etiqueta, etiquetaDaEtapa, etiquetaDaOrigem, folha, icone, telaDeErro, vazio,
 } from "./comum/ui.js";
 import { campoSelecao, campoTexto, grupoDeOpcoes, valorDe, valoresDe } from "./comum/campos.js";
 import { ROTAS, montarPagina, tratarErroDeSessao } from "./comum/moldura.js";
 import { criarMapa, marcador } from "./comum/mapa.js";
+import { desenharPaginas } from "./comum/paginacao.js";
 import { listarBairros, listarOcorrencias, pontosDoMapa, resumoDasOcorrencias } from "../servicos/agente.js";
-import { ETAPAS, arquivada, dataLocal, diasAberta, formatarDiaMes } from "../dominio/ocorrencia.js";
+import { ETAPAS, dataLocal, diasAberta, formatarDiaMes } from "../dominio/ocorrencia.js";
 import { temFiltro } from "../dominio/lista.js";
 
 const ESPERA_DA_BUSCA_MS = 350;
@@ -47,10 +48,8 @@ function cartao(o, bairros) {
     el("div", { class: "ocorrencia__topo" }, el("strong", {}, o.protocol), etiquetaDaEtapa(o)),
     el("div", { class: "ocorrencia__meta" }, etiquetaDaOrigem(o),
       el("span", {}, [bairros.get(o.neighborhood_id), formatarDiaMes(dataLocal(o.received_at)), quando].filter(Boolean).join(" · "))),
-    (o.stage === "em_analise" && o.failed_attempts > 0 || arquivada(o)) && el("div", { class: "ocorrencia__extras" },
-      o.stage === "em_analise" && o.failed_attempts > 0
-        && etiqueta(`Sem acesso · ${o.failed_attempts} ${o.failed_attempts === 1 ? "tentativa" : "tentativas"}`, "sem-acesso"),
-      arquivada(o) && etiqueta("Arquivada", "arquivada", "caixa"))));
+    o.stage === "em_analise" && o.failed_attempts > 0 && el("div", { class: "ocorrencia__extras" },
+      etiqueta(`Sem acesso · ${o.failed_attempts} ${o.failed_attempts === 1 ? "tentativa" : "tentativas"}`, "sem-acesso"))));
 }
 
 async function iniciar() {
@@ -142,6 +141,7 @@ async function iniciar() {
   async function desenharMapa(itens, vez) {
     const caixaDoMapa = el("div", { class: "mapa mapa--lista" });
     const selecionada = el("div", { "aria-live": "polite" });
+    area.classList.add("area--mapa");
     area.replaceChildren(caixaDoMapa, selecionada);
     try {
       const { L, mapa: novo } = await criarMapa(caixaDoMapa);
@@ -168,6 +168,7 @@ async function iniciar() {
       }
     } catch {
       if (vez !== desenho) return;
+      area.classList.remove("area--mapa");
       area.replaceChildren(vazio("O mapa não carregou", "Confira a internet. A lista continua disponível.",
         botao("Tentar de novo", { variante: "secundario", ao: desenhar })));
     }
@@ -184,33 +185,11 @@ async function iniciar() {
       botao("Limpar filtros", { variante: "secundario", ao: limpar }))
     : vazio("Nenhuma ocorrência ainda", "As denúncias enviadas pelo site aparecem aqui."));
 
-  function desenharLista(itens, total, vez) {
-    const mais = total > itens.length && botao(`Carregar mais (${total - itens.length})`,
-      { variante: "secundario", classe: "botao--largo", ao: () => comEnvio(mais, async () => {
-        falha.hidden = true;
-        try {
-          const proxima = await listarOcorrencias(filtros, { inicio: itens.length });
-          if (vez !== desenho) return;
-          const vistas = new Set(itens.map((o) => o.id));
-          const novas = proxima.itens.filter((o) => !vistas.has(o.id));
-          // Sem novidade, o total recebido encerra o botão.
-          desenharLista([...itens, ...novas], novas.length ? proxima.total : itens.length, vez);
-        } catch (e) {
-          if (tratarErroDeSessao(e)) return;
-          falha.hidden = false;
-        }
-      }, "Carregando…") });
-    const falha = el("p", { class: "erro-geral", role: "alert", hidden: true },
-      "Não foi possível carregar mais. Confira a internet e tente de novo.");
-    area.replaceChildren(...[
-      el("ul", { class: "ocorrencias" }, itens.map((o) => cartao(o, bairros))), falha, mais,
-    ].filter(Boolean));
-  }
-
   async function desenhar() {
     const vez = ++desenho;
     mapa?.remove();
     mapa = null;
+    area.classList.remove("area--mapa");
     area.replaceChildren(carregando("Carregando ocorrências…"));
     const noMapa = filtros.vista === "mapa";
     let resumo;
@@ -235,16 +214,23 @@ async function iniciar() {
     selo.hidden = !quantosFiltros(filtros);
     if (!total) area.replaceChildren(semNada());
     else if (noMapa) desenharMapa(resultado, vez);
-    else desenharLista(resultado.itens, total, vez);
+    else {
+      desenharPaginas(area, {
+        itens: resultado.itens, total, cartao: (o) => cartao(o, bairros),
+        buscar: (inicio) => listarOcorrencias(filtros, { inicio }), vigente: () => vez === desenho,
+      });
+    }
   }
 
   principal.replaceChildren(
     el("div", { class: "titulo-com-acao" }, el("h1", {}, "Ocorrências"), el("a", { class: "ligacao", href: ROTAS.relatorio }, "Relatório")),
     resumoNaTela,
-    el("div", { class: "busca-linha" },
-      el("div", { class: "busca" }, icone("busca"), busca),
-      el("button", { type: "button", class: "botao-filtros", "aria-label": "Filtros", onclick: abrirFiltros }, icone("filtros"), selo)),
-    vista, origem, contagem, area);
+    el("div", { class: "controles" },
+      el("div", { class: "busca-linha" },
+        el("div", { class: "busca" }, icone("busca"), busca),
+        el("button", { type: "button", class: "botao-filtros", "aria-label": "Filtros", onclick: abrirFiltros }, icone("filtros"), selo)),
+      vista, origem),
+    contagem, area);
   desenhar();
 }
 

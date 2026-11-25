@@ -6,6 +6,7 @@ import { descartarPendente, listarPendentes, reenviarPendentes } from "../../ser
 export const ROTAS = {
   login: "/agentes",
   ocorrencias: "/agentes/ocorrencias",
+  arquivadas: "/agentes/arquivadas",
   detalhe: (id) => `/agentes/ocorrencia?id=${encodeURIComponent(id)}`,
   visita: (id) => (id ? `/agentes/visita?id=${encodeURIComponent(id)}` : "/agentes/visita"),
   localNovo: "/agentes/visita?local=novo",
@@ -50,6 +51,7 @@ function abrirMenu(sessao) {
       el("div", {}, el("strong", {}, sessao.nome), el("small", {}, "Agente de endemias · Itambé-PE"))),
     el("nav", { class: "cartao menu__lista" },
       itemDoMenu(ROTAS.ocorrencias, "lista", "Ocorrências", "Lista e mapa"),
+      itemDoMenu(ROTAS.arquivadas, "caixa", "Arquivadas", "Fora do mapa, por 30 dias"),
       itemDoMenu(ROTAS.visita(), "prancheta", "Registrar visita", "Em denúncia ou em local com foco"),
       itemDoMenu(ROTAS.relatorio, "documento", "Relatório", "Para o supervisor")),
     botao("Sair", { variante: "sair", icone: "sair", ao: () => { menu.close(); encerrar(); } }),
@@ -60,11 +62,25 @@ function abrirMenu(sessao) {
   menu.showModal();
 }
 
+// No computador o menu fica à vista no cabeçalho; no celular, atrás dos três traços.
+function navegacao() {
+  const aqui = location.pathname.replace(/\.html$/, "");
+  const item = (rota, texto, ...tambem) => el("a",
+    { href: rota, "aria-current": [rota, ...tambem].includes(aqui) && "page" }, texto);
+  return el("nav", { class: "topo__nav", "aria-label": "Área do agente" },
+    item(ROTAS.ocorrencias, "Ocorrências", "/agentes/ocorrencia", "/agentes/correcao"),
+    item(ROTAS.arquivadas, "Arquivadas"),
+    item(ROTAS.visita(), "Registrar visita"),
+    item(ROTAS.relatorio, "Relatório"),
+    botao("Sair", { variante: "sair", icone: "sair", ao: encerrar }));
+}
+
 function cabecalho(sessao) {
   return el("header", { class: "topo" },
     el("a", { class: "topo__marca", href: ROTAS.ocorrencias },
       el("img", { src: "/assets/imagens/logo-aedes-datalab.jpeg", alt: "", width: "40", height: "40" }),
       el("span", {}, el("strong", {}, "Aedes Lab"), el("small", {}, "Área do agente"))),
+    navegacao(),
     el("button", { type: "button", class: "botao-menu", "aria-label": "Abrir menu", onclick: () => abrirMenu(sessao) }, icone("menu")));
 }
 

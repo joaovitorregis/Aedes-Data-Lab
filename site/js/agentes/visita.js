@@ -4,7 +4,7 @@ import { campoLongo, campoSelecao, campoTexto, grupoDeOpcoes, mostrarErros, valo
 import { ROTAS, montarPagina, tratarErroDeSessao } from "./comum/moldura.js";
 import { mapaDeEscolha } from "./comum/mapa.js";
 import { prepararFoto } from "./comum/fotos.js";
-import { listarBairros, listarCategorias, obterOcorrencia, todasAsOcorrencias } from "../servicos/agente.js";
+import { listarBairros, listarCategorias, obterOcorrencia, ocorrenciasEmAnalise } from "../servicos/agente.js";
 import { descartarPendente, enviarPendente, guardarPendente } from "../servicos/fila.js";
 import { sessaoAtual } from "../servicos/sessao.js";
 import { vaiTentarDeNovo } from "../dominio/envio.js";
@@ -122,8 +122,7 @@ function conferir(principal, { linhas, efeito, pendente, aoEnviar }) {
 }
 
 async function ondeFoi(principal) {
-  const [todas, bairros] = await Promise.all([todasAsOcorrencias(), listarBairros()]);
-  const emAnalise = todas.filter((o) => o.stage === "em_analise");
+  const [emAnalise, bairros] = await Promise.all([ocorrenciasEmAnalise(), listarBairros()]);
   const nomes = new Map(bairros.map((b) => [b.id, b.name]));
   principal.replaceChildren(
     voltar(ROTAS.ocorrencias, "Ocorrências"),

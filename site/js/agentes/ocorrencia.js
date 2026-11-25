@@ -14,7 +14,7 @@ import { campoTravado } from "../dominio/correcao.js";
 import { resumoDaVisita } from "../dominio/visita.js";
 import {
   ETAPAS, LARVAS, LOCAIS_DO_FOCO, acoesDaOcorrencia, arquivada, dataLocal, diasAberta, formatarData, formatarDataHora,
-  formatarTelefone, linhaDoTempo, prazoDaLixeira, rotuloRecipiente,
+  formatarTelefone, linhaDoTempo, prazoDaLixeira, rotuloRecipiente, visitasDoDetalhe,
 } from "../dominio/ocorrencia.js";
 
 const id = new URLSearchParams(location.search).get("id");
@@ -258,9 +258,10 @@ async function iniciar() {
   let perto;
   let bairros;
   let categorias;
+  let autores;
   try {
-    [o, perto, bairros, categorias] = await Promise.all([
-      obterOcorrencia(id), listarOcorrenciasProximas(id), listarBairros(), listarCategorias(),
+    [o, perto, bairros, categorias, autores] = await Promise.all([
+      obterOcorrencia(id), listarOcorrenciasProximas(id), listarBairros(), listarCategorias(), nomesDosAutores(),
     ]);
   } catch (e) {
     if (tratarErroDeSessao(e)) return;
@@ -275,9 +276,8 @@ async function iniciar() {
   }
 
   document.title = `${o.protocol} | Aedes Lab · Agente`;
-  const autores = nomesDosAutores();
   const passos = linhaDoTempo(o.eventos, { autores, nomeDoCidadao: o.privado?.name, origem: o.origin });
-  const visitas = [...o.visitas].reverse().filter((v) => v.access === "com_acesso");
+  const visitas = visitasDoDetalhe(o.visitas);
   const concluida = o.stage === "atendida" ? "Atendida não reabre nem aceita nova visita."
     : o.stage === "encerrada" ? "Encerrada não reabre nem aceita visita." : null;
 
@@ -287,7 +287,7 @@ async function iniciar() {
         // Volta mantendo os filtros quando se veio da lista.
         if (document.referrer.includes("/agentes/ocorrencias")) { e.preventDefault(); history.back(); }
       } }, icone("voltar"), "Ocorrências"),
-      el("button", { type: "button", class: "botao-icone", "aria-label": "Outras ações", onclick: () => outrasAcoes(o) }, icone("mais"))),
+      botao("Outras ações", { variante: "secundario", icone: "mais", classe: "botao-acoes", ao: () => outrasAcoes(o) })),
     faixaDaArquivada(o),
     el("h1", {}, o.protocol),
     el("div", { class: "etiquetas" }, etiquetasDaOcorrencia(o)),

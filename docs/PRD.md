@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versão | 2.9 · 22/11/2026 |
+| Versão | 2.10 · 25/11/2026 |
 | Território | Itambé, Pernambuco |
 | Responsável pelo documento | Responsável pelo produto |
 | Público | Produto, design, desenvolvimento, testes e agentes participantes |
@@ -73,7 +73,7 @@ O Aedes Data Lab precisa reunir relatos com informação suficiente para o traba
 
 A experiência é pensada primeiro para o celular e precisa funcionar bem no computador. Quatro integrantes constroem HTML, CSS e JavaScript das telas. Banco de dados e integrações serão aprendidos em conjunto com a coordenação do projeto, e essa ordem de aprendizagem não altera os critérios de aceite.
 
-O andamento da implementação é registrado em a seção Estado do projeto de [TASKS.md](../TASKS.md), que é atualizada a cada entrega. As páginas Meu trabalho, Mapa técnico e Dashboard já existem no repositório como espaço reservado, fora do aceite da V1 (seção 6.1).
+O andamento da implementação é registrado em a seção Estado do projeto de [TASKS.md](../TASKS.md), que é atualizada a cada entrega. A área dos agentes da V1 está programada em `site/agentes/`. As páginas Meu trabalho e Dashboard continuam como espaço reservado, e o mapa técnico fica dentro de Ocorrências; os dois reservados estão fora do aceite da V1 (seção 6.1).
 
 **Design:** a referência visual é o [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13), página "Fluxo de telas · Jornada do Usuário". A denúncia segue o fluxo da seção 02 dessa página (D35, D36); a versão anterior fica arquivada fora da jornada, só para consulta. A área do agente segue a seção "Jornada do agente · telas e conexões" da mesma página. As telas simulam código, envio, protocolo e publicação e não comprovam serviço implementado. As exportações em `wireframes/` são anteriores a esse fluxo. O estado atual do arquivo fica na seção Estado do projeto de [TASKS.md](../TASKS.md).
 
@@ -627,3 +627,4 @@ Em conflito com telas antigas ou recomendações anteriores, valem as decisões 
 | 2.7 | 15/11/2026 | Resumo e filtro "Sem acesso" só com ocorrências Em análise; Atendida e Encerrada sem ações de atendimento, mas com correção e publicação no menu; reenvio da visita guardada confere etapa e versão; período e regras de contagem do relatório. Sem papel nem tela de administrador: a equipe do projeto cria as contas e troca o contato confirmado direto no Supabase (D22, D42); o agente corrige os dados de qualquer denúncia (D20, D26, RF-COR-01, AC-14) |
 | 2.8 | 15/11/2026 | Jornada do agente revista: ocultar e arquivar viram uma ação só, válida em qualquer etapa, com volta ao mapa (D48, D49, RF-AGE-04, RF-AGE-06; RF-AGE-09 incorporado); origem da ocorrência, cidadão ou agente, visível também no mapa público sem o nome (D50, RF-MAP-01); registro de foco em local sem denúncia (D51, RF-AGE-10, AC-17); iniciar análise abre o registro da visita (D52); perguntas da visita na linguagem do cidadão, sem os códigos do PNCD (D53, seção 8.1); resumo que acompanha os filtros (D54); tela única de erro (D55); relatório em três grupos, por origem e por tipo de encerramento (D56, RF-AGE-08). Em 16/11/2026 confirmados o prazo da lixeira para qualquer etapa (D44), a ocorrência que fica Em análise quando o agente sai da visita sem gravar (D52) e a contagem da arquivada depois de atendida como Arquivada (RF-AGE-08). Também em 16/11/2026: respostas do formulário no detalhe e corrigíveis pelo agente, menos o tempo e a outra evidência (RF-AGE-01, RF-COR-01) |
 | 2.9 | 22/11/2026 | RF-DEN-01: a etapa dos dados do cidadão traz o aviso de que nome, e-mail e telefone não são divulgados. Confirmado: CPF fora do produto (D07) e identificação obrigatória, com denúncia anônima no mapa público (D50) |
+| 2.10 | 25/11/2026 | Estado atual (seção 4) atualizado com a área dos agentes programada. Nenhum requisito mudou. |

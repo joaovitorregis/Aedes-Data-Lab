@@ -57,35 +57,14 @@ export function prazoDaLixeira(arquivadaEm, agora = new Date()) {
   return { ate, diasRestantes: Math.max(0, restam), vencido };
 }
 
-export function filtrar(lista, f = {}) {
-  const numero = (f.protocolo ?? "").trim().toLowerCase();
-  const passa = (o) => {
-    const recebida = dataLocal(o.received_at);
-    return (!numero || o.protocol.toLowerCase().includes(numero))
-      && (!f.bairro || o.neighborhood_id === Number(f.bairro))
-      && (!f.etapas?.length || f.etapas.includes(o.stage))
-      && (!f.origem || o.origin === f.origem)
-      && (!f.de || recebida >= f.de)
-      && (!f.ate || recebida <= f.ate)
-      && (!f.semAcesso || (o.stage === "em_analise" && o.failed_attempts > 0));
-  };
-  const sentido = f.ordem === "recentes" ? -1 : 1;
-  return lista.filter(passa).sort((a, b) => sentido * (new Date(a.received_at) - new Date(b.received_at)));
-}
-
-export const resumo = (lista) => ({
-  recebidas: lista.filter((o) => o.stage === "recebida").length,
-  emAnalise: lista.filter((o) => o.stage === "em_analise").length,
-  semAcesso: lista.filter((o) => o.stage === "em_analise" && o.failed_attempts > 0).length,
-});
-
 // O que o detalhe oferece em cada situação (RF-AGE-01).
-export function acoesDaOcorrencia(o) {
+export function acoesDaOcorrencia(o, agora = new Date()) {
   const principal = o.stage === "recebida" ? "iniciar_analise" : o.stage === "em_analise" ? "registrar_visita" : null;
   const outras = [
     ...(o.stage === "em_analise" ? ["observacao"] : []),
     "corrigir",
-    arquivada(o) ? "voltar_ao_mapa" : "arquivar",
+    // Depois dos 30 dias da lixeira não há mais volta: o servidor recusaria.
+    ...(!arquivada(o) ? ["arquivar"] : prazoDaLixeira(o.archived_at, agora).vencido ? [] : ["voltar_ao_mapa"]),
   ];
   return { principal, podeEncerrar: o.stage === "em_analise" && o.failed_attempts >= 3, outras };
 }
@@ -95,6 +74,10 @@ const maiuscula = (t) => t.charAt(0).toUpperCase() + t.slice(1);
 export const rotuloRecipiente = (codigo) => RECIPIENTES[codigo] ?? maiuscula(String(codigo));
 
 export const idValido = (id) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id ?? "");
+
+// Todas as visitas, também as sem acesso (é onde ficam as observações), da mais nova à mais antiga.
+export const visitasDoDetalhe = (visitas) => [...visitas].sort((a, b) =>
+  b.visited_on.localeCompare(a.visited_on) || new Date(b.created_at) - new Date(a.created_at));
 
 // Passos do histórico, do mais novo ao mais antigo. `autores` liga id de usuário a nome.
 export function linhaDoTempo(eventos, { autores = {}, nomeDoCidadao = "", origem = "cidadao" } = {}) {

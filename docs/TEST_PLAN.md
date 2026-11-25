@@ -91,6 +91,9 @@ Repetir o cenário três vezes, uma por canal: e-mail, telefone com SMS e telefo
 - [ ] Com um filtro aplicado, o resumo mostra os números do recorte
 - [ ] O filtro de origem mostra só as ocorrências de cidadãos ou só as de agentes
 - [ ] O detalhe mostra a linha do tempo com o nome de quem fez cada passo
+- [ ] Com duas contas de agente, cada uma vê o nome da outra no histórico
+- [ ] O detalhe mostra também a visita sem acesso, com a data e as observações
+- [ ] Com mais de 20 ocorrências, "Carregar mais" traz as seguintes sem repetir, e o resumo conta o recorte inteiro
 - [ ] Lista e mapa de Ocorrências mostram o mesmo recorte com os mesmos filtros
 - [ ] "Como chegar" abre o aplicativo de mapas no ponto exato
 - [ ] O aviso de ocorrências próximas aparece para uma denúncia a 100 m e não para uma a 200 m
@@ -117,6 +120,7 @@ Repetir o cenário três vezes, uma por canal: e-mail, telefone com SMS e telefo
 - [ ] O agente continua vendo o registro e o motivo
 - [ ] Uma retentativa antiga de publicação não traz a denúncia de volta
 - [ ] A denúncia arquivada mostra os dias que faltam para a remoção
+- [ ] Passados os 30 dias, o detalhe não oferece mais "Voltar ao mapa"
 - [ ] Com a data simulada 30 dias depois, a rotina remove registro, dados privados, visitas, histórico e fotos dos dois buckets; antes disso, nada é removido
 - [ ] Denúncia devolvida ao mapa dentro do prazo não é removida
 - [ ] Denúncia que nunca foi arquivada continua no banco, com as visitas, mesmo depois de muito tempo

@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versão | 1.4 · 16/11/2026 |
+| Versão | 1.5 · 25/11/2026 |
 | Fonte | Página "Fluxo de telas · Jornada do Usuário" no [Figma](https://www.figma.com/design/l2jRvkAj2tgcaD4RqnZD4Y/Aedes-Data-Lab-%C2%B7-Wireframes-por-p%C3%A1gina?node-id=2014-13) |
 | Telas exportadas | [wireframes/](../wireframes/README.md), anteriores ao fluxo novo da denúncia (TASK-013a) |
 
@@ -126,6 +126,9 @@ As telas do agente seguem a mesma estrutura das do cidadão: cabeçalho com o lo
 
 - **Ocorrências:** resumo que acompanha os filtros (PRD D54), busca por protocolo, filtros, alternância Lista/Mapa, seletor de origem e cartões com protocolo, etapa, origem, bairro, data e dias em aberto.
 - **Detalhe:** ação da etapa no topo, fotos, relato, local com o ponto exato, quem fez, visita registrada, ocorrência próxima e linha do tempo com o nome de quem fez cada passo.
+- **Outras ações:** botão com texto e três pontos, ao lado do voltar. Só os três pontos, como no Figma, passavam despercebidos (25/11/2026).
+- **Toque:** opções, abas e o botão de remover foto têm pelo menos 44px de altura (RNF-11), acima dos 40px e 36px desenhados no Figma.
+- **Visitas no detalhe:** todas aparecem, também as sem acesso, com data e observações.
 - **Registrar visita:** um formulário só, para denúncia existente ou para "Local sem denúncia" (PRD D51), com as opções de toque descritas acima.
 - **Relatório:** a tela do agente mostra resumo em três grupos, tabela por bairro, visitas do período, recipientes com água e pendentes; o arquivo gerado tem duas páginas A4, com os 15 bairros e as assinaturas (PRD D56).
 

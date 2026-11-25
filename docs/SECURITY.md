@@ -41,6 +41,7 @@ O Aedes Data Lab guarda nome, e-mail e telefone de moradores, além de fotos e d
 - `public_reports` é a única tabela de denúncias com leitura pública. O catálogo de bairros (`neighborhoods`) também é público, porque não contém dados pessoais.
 - `report_visits` segue as mesmas regras de `report_events`: leitura só por agentes autorizados, escrita só por Edge Function.
 - O papel do usuário (agente) é lido da tabela `profiles` no servidor, nunca de um dado que o próprio usuário consiga editar.
+- Cada pessoa lê só a própria linha de `profiles`. A função `agent_profile_names` entrega a um agente ativo apenas o identificador e o nome dos agentes (inclusive desativados, que seguem no histórico); visitante, conta sem papel e agente desativado são recusados.
 - No Storage, as fotos originais ficam no bucket privado, lido só por agentes autorizados; o bucket público recebe só a versão tratada.
 - Arquivar uma denúncia retira também o acesso público às fotos dela.
 - A ocorrência criada por agente (RF-AGE-10) segue as mesmas regras: só Edge Function grava, com o papel conferido no servidor, e as fotos passam pelo mesmo tratamento das do cidadão.

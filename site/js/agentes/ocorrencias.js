@@ -1,12 +1,15 @@
 // Tela: Ocorrências (lista, mapa e filtros). Os filtros ficam no endereço, para o "voltar" mantê-los.
-import { botao, carregando, el, etiqueta, etiquetaDaEtapa, etiquetaDaOrigem, folha, icone, telaDeErro, vazio } from "./comum/ui.js";
+import {
+  botao, carregando, comEnvio, el, etiqueta, etiquetaDaEtapa, etiquetaDaOrigem, folha, icone, telaDeErro, vazio,
+} from "./comum/ui.js";
 import { campoSelecao, campoTexto, grupoDeOpcoes, valorDe, valoresDe } from "./comum/campos.js";
 import { ROTAS, montarPagina, tratarErroDeSessao } from "./comum/moldura.js";
 import { criarMapa, marcador } from "./comum/mapa.js";
-import { listarBairros, listarOcorrencias } from "../servicos/agente.js";
+import { listarBairros, listarOcorrencias, pontosDoMapa, resumoDasOcorrencias } from "../servicos/agente.js";
 import { ETAPAS, arquivada, dataLocal, diasAberta, formatarDiaMes } from "../dominio/ocorrencia.js";
+import { temFiltro } from "../dominio/lista.js";
 
-const POR_PAGINA = 20;
+const ESPERA_DA_BUSCA_MS = 350;
 
 function lerFiltros() {
   const q = new URLSearchParams(location.search);
@@ -54,10 +57,9 @@ async function iniciar() {
   const principal = montarPagina();
   if (!principal) return;
   principal.replaceChildren(carregando("Carregando ocorrências…"));
-  let todas;
   let listaDeBairros;
   try {
-    [{ todas }, listaDeBairros] = await Promise.all([listarOcorrencias(), listarBairros()]);
+    listaDeBairros = await listarBairros();
   } catch (e) {
     if (tratarErroDeSessao(e)) return;
     principal.replaceChildren();
@@ -67,7 +69,7 @@ async function iniciar() {
 
   const bairros = new Map(listaDeBairros.map((b) => [b.id, b.name]));
   let filtros = lerFiltros();
-  let visiveis = POR_PAGINA;
+  let espera = null;
   let mapa = null;
   let desenho = 0;
 
@@ -77,7 +79,11 @@ async function iniciar() {
   const selo = el("span", { class: "botao-filtros__selo", hidden: true });
   const busca = el("input", {
     type: "search", value: filtros.protocolo, placeholder: "Buscar protocolo", "aria-label": "Buscar protocolo",
-    oninput: (e) => mudar({ protocolo: e.target.value }),
+    oninput: (e) => {
+      // Espera a pessoa parar de digitar para não pedir a cada letra.
+      clearTimeout(espera);
+      espera = setTimeout(() => mudar({ protocolo: e.target.value }), ESPERA_DA_BUSCA_MS);
+    },
   });
 
   const alternancia = (nome, rotulo, opcoes, estilo) => {
@@ -90,12 +96,12 @@ async function iniciar() {
 
   function mudar(parte) {
     filtros = { ...filtros, ...parte };
-    visiveis = POR_PAGINA;
     gravarFiltros(filtros);
     desenhar();
   }
 
   function limpar() {
+    clearTimeout(espera);
     busca.value = "";
     origem.querySelector('input[value=""]').checked = true;
     mudar({ protocolo: "", bairro: "", etapas: [], origem: "", de: "", ate: "", semAcesso: false, ordem: "antigas" });
@@ -133,8 +139,7 @@ async function iniciar() {
     });
   }
 
-  async function desenharMapa(itens) {
-    const vez = ++desenho;
+  async function desenharMapa(itens, vez) {
     const caixaDoMapa = el("div", { class: "mapa mapa--lista" });
     const selecionada = el("div", { "aria-live": "polite" });
     area.replaceChildren(caixaDoMapa, selecionada);
@@ -168,28 +173,69 @@ async function iniciar() {
     }
   }
 
+  function mostrarResumo(resumo) {
+    resumoNaTela.replaceChildren(...[["recebidas", "Recebidas"], ["emAnalise", "Em análise"], ["semAcesso", "Sem acesso"]]
+      .map(([chave, rotulo]) => el("div", {}, el("dt", {}, rotulo),
+        el("dd", {}, Number.isFinite(resumo?.[chave]) ? String(resumo[chave]) : "–"))));
+  }
+
+  const semNada = () => (temFiltro(filtros)
+    ? vazio("Nada com esses filtros", "Mude a busca ou os filtros.",
+      botao("Limpar filtros", { variante: "secundario", ao: limpar }))
+    : vazio("Nenhuma ocorrência ainda", "As denúncias enviadas pelo site aparecem aqui."));
+
+  function desenharLista(itens, total, vez) {
+    const mais = total > itens.length && botao(`Carregar mais (${total - itens.length})`,
+      { variante: "secundario", classe: "botao--largo", ao: () => comEnvio(mais, async () => {
+        falha.hidden = true;
+        try {
+          const proxima = await listarOcorrencias(filtros, { inicio: itens.length });
+          if (vez !== desenho) return;
+          const vistas = new Set(itens.map((o) => o.id));
+          const novas = proxima.itens.filter((o) => !vistas.has(o.id));
+          // Sem novidade, o total recebido encerra o botão.
+          desenharLista([...itens, ...novas], novas.length ? proxima.total : itens.length, vez);
+        } catch (e) {
+          if (tratarErroDeSessao(e)) return;
+          falha.hidden = false;
+        }
+      }, "Carregando…") });
+    const falha = el("p", { class: "erro-geral", role: "alert", hidden: true },
+      "Não foi possível carregar mais. Confira a internet e tente de novo.");
+    area.replaceChildren(...[
+      el("ul", { class: "ocorrencias" }, itens.map((o) => cartao(o, bairros))), falha, mais,
+    ].filter(Boolean));
+  }
+
   async function desenhar() {
-    const { itens, resumo } = await listarOcorrencias(filtros, todas);
-    resumoNaTela.replaceChildren(...[[resumo.recebidas, "Recebidas"], [resumo.emAnalise, "Em análise"], [resumo.semAcesso, "Sem acesso"]]
-      .map(([n, rotulo]) => el("div", {}, el("dt", {}, rotulo), el("dd", {}, String(n)))));
-    contagem.textContent = `${itens.length} ocorrências`;
-    selo.textContent = quantosFiltros(filtros);
-    selo.hidden = !quantosFiltros(filtros);
-    desenho++;
+    const vez = ++desenho;
     mapa?.remove();
     mapa = null;
-    if (!todas.length) {
-      area.replaceChildren(vazio("Nenhuma ocorrência ainda", "As denúncias enviadas pelo site aparecem aqui."));
-    } else if (!itens.length) {
-      area.replaceChildren(vazio("Nada com esses filtros", "Mude a busca ou os filtros.",
-        botao("Limpar filtros", { variante: "secundario", ao: limpar })));
-    } else if (filtros.vista === "mapa") {
-      desenharMapa(itens);
-    } else {
-      area.replaceChildren(el("ul", { class: "ocorrencias" }, itens.slice(0, visiveis).map((o) => cartao(o, bairros))),
-        ...(itens.length > visiveis ? [botao(`Carregar mais (${itens.length - visiveis})`,
-          { variante: "secundario", classe: "botao--largo", ao: () => { visiveis += POR_PAGINA; desenhar(); } })] : []));
+    area.replaceChildren(carregando("Carregando ocorrências…"));
+    const noMapa = filtros.vista === "mapa";
+    let resumo;
+    let resultado;
+    try {
+      [resumo, resultado] = await Promise.all([
+        resumoDasOcorrencias(filtros), noMapa ? pontosDoMapa(filtros) : listarOcorrencias(filtros),
+      ]);
+    } catch (e) {
+      if (vez !== desenho || tratarErroDeSessao(e)) return;
+      // Erro nunca aparece como zero.
+      mostrarResumo(null);
+      area.replaceChildren();
+      telaDeErro(area, { aoTentar: desenhar });
+      return;
     }
+    if (vez !== desenho) return; // os filtros mudaram enquanto carregava
+    const total = noMapa ? resultado.length : resultado.total;
+    mostrarResumo(resumo);
+    contagem.textContent = `${total} ${total === 1 ? "ocorrência" : "ocorrências"}`;
+    selo.textContent = quantosFiltros(filtros);
+    selo.hidden = !quantosFiltros(filtros);
+    if (!total) area.replaceChildren(semNada());
+    else if (noMapa) desenharMapa(resultado, vez);
+    else desenharLista(resultado.itens, total, vez);
   }
 
   principal.replaceChildren(

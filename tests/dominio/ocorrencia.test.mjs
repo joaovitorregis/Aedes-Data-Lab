@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  acoesDaOcorrencia, dataLocal, diasAberta, filtrar, idValido, linhaDoTempo, prazoDaLixeira, resumo, rotuloRecipiente,
+  acoesDaOcorrencia, dataLocal, diasAberta, idValido, linhaDoTempo, prazoDaLixeira, rotuloRecipiente, visitasDoDetalhe,
 } from "../../site/js/dominio/ocorrencia.js";
 
 const oc = (extra) => ({
@@ -16,43 +16,6 @@ test("a data usa o fuso de Itambé, não o do aparelho", () => {
 
 test("dias em aberto contam dias do calendário até hoje", () => {
   assert.equal(diasAberta(oc(), "2026-11-15"), 7);
-});
-
-test("filtra por protocolo, aceitando só o final do número", () => {
-  const lista = [oc({ id: "a", protocol: "AED-2026-000098" }), oc({ id: "b", protocol: "AED-2026-000112" })];
-  assert.deepEqual(filtrar(lista, { protocolo: "112" }).map((o) => o.id), ["b"]);
-});
-
-test("filtra por bairro, etapas, origem e período de recebimento ao mesmo tempo", () => {
-  const lista = [
-    oc({ id: "a", neighborhood_id: 7, stage: "recebida" }),
-    oc({ id: "b", neighborhood_id: 7, stage: "atendida" }),
-    oc({ id: "c", neighborhood_id: 7, stage: "em_analise", origin: "agente" }),
-    oc({ id: "d", neighborhood_id: 2 }),
-    oc({ id: "e", neighborhood_id: 7, received_at: "2026-10-01T12:00:00Z" }),
-  ];
-  const f = { bairro: 7, etapas: ["recebida", "em_analise"], origem: "cidadao", de: "2026-11-01", ate: "2026-11-15" };
-  assert.deepEqual(filtrar(lista, f).map((o) => o.id), ["a"]);
-});
-
-test("sem acesso mostra só Em análise com pelo menos uma tentativa", () => {
-  const lista = [
-    oc({ id: "a", stage: "em_analise", failed_attempts: 1 }),
-    oc({ id: "b", stage: "em_analise" }),
-    oc({ id: "c", stage: "encerrada", failed_attempts: 3 }),
-  ];
-  assert.deepEqual(filtrar(lista, { semAcesso: true }).map((o) => o.id), ["a"]);
-});
-
-test("ordem padrão é a mais antiga primeiro, com opção de mais recentes", () => {
-  const lista = [oc({ id: "nova", received_at: "2026-11-10T12:00:00Z" }), oc({ id: "velha", received_at: "2026-11-02T12:00:00Z" })];
-  assert.deepEqual(filtrar(lista, {}).map((o) => o.id), ["velha", "nova"]);
-  assert.deepEqual(filtrar(lista, { ordem: "recentes" }).map((o) => o.id), ["nova", "velha"]);
-});
-
-test("o resumo conta o recorte recebido", () => {
-  const r = resumo([oc(), oc({ stage: "em_analise", failed_attempts: 2 }), oc({ stage: "em_analise" }), oc({ stage: "atendida" })]);
-  assert.deepEqual(r, { recebidas: 1, emAnalise: 2, semAcesso: 1 });
 });
 
 test("Recebida só oferece iniciar a análise", () => {
@@ -77,7 +40,8 @@ test("ocorrência concluída não tem ação de atendimento", () => {
 });
 
 test("arquivada troca Arquivar por Voltar ao mapa", () => {
-  const a = acoesDaOcorrencia(oc({ stage: "encerrada", publication: "arquivada", archived_at: "2026-11-15T13:00:00Z" }));
+  const a = acoesDaOcorrencia(oc({ stage: "encerrada", publication: "arquivada", archived_at: "2026-11-15T13:00:00Z" }),
+    new Date("2026-11-20T13:00:00Z"));
   assert.deepEqual(a.outras, ["corrigir", "voltar_ao_mapa"]);
 });
 
@@ -123,4 +87,19 @@ test("só um identificador no formato do banco é aceito", () => {
   for (const ruim of ["", null, "qualquer", "8317f8f5", "8317f8f5-db7e-4267-809e-ae4d25023a40&x=1"]) {
     assert.equal(idValido(ruim), false, String(ruim));
   }
+});
+
+test("depois dos 30 dias da lixeira não oferece mais voltar ao mapa", () => {
+  const velha = oc({ stage: "encerrada", publication: "arquivada", archived_at: "2026-10-01T13:00:00Z" });
+  assert.deepEqual(acoesDaOcorrencia(velha, new Date("2026-11-20T13:00:00Z")).outras, ["corrigir"]);
+});
+
+test("o detalhe mostra todas as visitas, também as sem acesso, da mais nova à mais antiga", () => {
+  const visitas = [
+    { id: "a", visited_on: "2026-11-04", access: "fechado", notes: "Portão trancado.", created_at: "2026-11-04T17:00:00Z" },
+    { id: "c", visited_on: "2026-11-07", access: "com_acesso", created_at: "2026-11-07T17:00:00Z" },
+    { id: "b", visited_on: "2026-11-07", access: "recusado", created_at: "2026-11-07T12:00:00Z" },
+  ];
+  assert.deepEqual(visitasDoDetalhe(visitas).map((v) => v.id), ["c", "b", "a"]);
+  assert.equal(visitas[0].id, "a", "não altera a lista recebida");
 });

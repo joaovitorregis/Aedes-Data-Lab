@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versão | 3.7 · 16/11/2026 |
+| Versão | 3.8 · 25/11/2026 |
 | Documentos relacionados | [PRD](./PRD.md) · [Segurança](./SECURITY.md) · [Tarefas](../TASKS.md) |
 
 Este documento descreve **como** o Aedes Data Lab será construído. O que o produto faz e as regras de aceite estão no [PRD](./PRD.md); se os dois divergirem sobre comportamento, vale o PRD. As escolhas técnicas e seus motivos ficam registrados na seção 9, [Decisões técnicas](#9-decisões-técnicas-adr).
@@ -92,7 +92,10 @@ As pastas `js/dominio/`, `supabase/` e `tests/` ainda não existem; elas são cr
 | `confirmarCodigo` | Qualquer pessoa; liga o contato confirmado àquela tentativa de envio, sem criar conta |
 | `salvarDenuncia` | Pessoa com o contato confirmado para aquela tentativa |
 | `listarDenunciasPublicas` | Qualquer pessoa; lê só a versão pública |
-| `listarOcorrencias` | Agente autorizado; aceita os filtros da lista, inclusive origem, e devolve também o resumo do recorte (D54), a origem, os dias em aberto e as tentativas sem acesso |
+| `listarOcorrencias` | Agente autorizado; aceita os filtros da lista, inclusive origem. O banco filtra, ordena e devolve 20 por vez com o total (RNF-07). Os filtros viram consulta em `js/dominio/lista.js` |
+| `resumoDasOcorrencias` | Agente autorizado; contagens de Recebidas, Em análise e sem acesso do mesmo recorte da lista, sem trazer linhas (D54) |
+| `pontosDoMapa` | Agente autorizado; todos os pontos do recorte, em lotes e só com as colunas do mapa |
+| `nomesDosAutores` | Agente ativo; identificador e nome dos agentes, para o histórico, pela função `agent_profile_names` |
 | `listarOcorrenciasProximas` | Agente autorizado; ocorrências num raio de 150 m do ponto exato (D34) |
 | `obterOcorrencia` | Agente autorizado; devolve uma ocorrência com `reports`, `report_private`, `report_visits`, `report_events` e endereços temporários das fotos do bucket privado |
 | `iniciarAnalise`, `registrarObservacao` | Agente autorizado. Na tela, "Iniciar análise" chama `iniciarAnalise` e abre o registro da visita em seguida (D52) |
@@ -320,3 +323,4 @@ Uma ADR não é reescrita para mudar de ideia. A nova escolha entra como outra A
 | 3.5 | 15/11/2026 | CPF retirado do modelo (D07); SMS e WhatsApp condicionados (D45); módulo de regras compartilhado entre navegador e servidor (ADR-015); hospedagem na Vercel (ADR-016) |
 | 3.6 | 15/11/2026 | Alinhada ao PRD 2.7: sem papel de administrador; contas e troca do contato confirmado pela equipe do projeto no Supabase; `corrigirCamposDenuncia` passa ao agente; contrato `obterOcorrencia` para o detalhe |
 | 3.7 | 16/11/2026 | Alinhada ao PRD 2.8: origem em `reports` e `public_reports`; contrato `registrarFocoSemDenuncia`; `arquivarOcorrencia` em qualquer etapa e `voltarAoMapa` no lugar de `ocultarPublicacao` e `republicarOcorrencia` (ADR-017); `report_visits` com as perguntas na linguagem do cidadão, sem códigos do PNCD; resumo do recorte em `listarOcorrencias`; relatório por origem e por tipo de encerramento |
+| 3.8 | 25/11/2026 | Área dos agentes programada (ADR-018). Lista paginada no banco, com resumo por contagem, e função `agent_profile_names` para o nome de quem fez cada passo. |

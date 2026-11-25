@@ -17,6 +17,10 @@ async function enviar(url, opcoes) {
 
 // As funções respondem { erro: { codigo, mensagem } }; o Auth e o banco usam outros formatos.
 async function pedir(url, opcoes) {
+  return (await pedirComResposta(url, opcoes)).corpo;
+}
+
+async function pedirComResposta(url, opcoes) {
   const resposta = await enviar(url, opcoes);
   let corpo = null;
   try { corpo = await resposta.json(); } catch { /* resposta sem JSON */ }
@@ -24,7 +28,28 @@ async function pedir(url, opcoes) {
     const codigo = corpo?.erro?.codigo ?? "erro_desconhecido";
     throw new ErroApi(codigo, corpo?.erro?.mensagem ?? MENSAGEM_PADRAO, resposta.status);
   }
-  return corpo;
+  return { corpo, resposta };
+}
+
+const comCredencial = (token) => ({ apikey: CHAVE_PUBLICA, Authorization: `Bearer ${token}` });
+
+// O banco informa o total do recorte no cabeçalho Content-Range: "0-19/42" ou "*/0".
+const totalDe = (resposta) => Number(resposta.headers.get("content-range")?.split("/")[1] ?? NaN);
+
+// Uma página de resultados e quantos existem ao todo.
+export async function pedirPagina(caminho, token) {
+  const { corpo, resposta } = await pedirComResposta(`${SUPABASE_URL}${caminho}`, {
+    headers: { ...comCredencial(token), Prefer: "count=exact" },
+  });
+  return { linhas: corpo, total: totalDe(resposta) };
+}
+
+// Só a contagem, sem trazer linhas.
+export async function contar(caminho, token) {
+  const { resposta } = await pedirComResposta(`${SUPABASE_URL}${caminho}`, {
+    method: "HEAD", headers: { ...comCredencial(token), Prefer: "count=exact" },
+  });
+  return totalDe(resposta);
 }
 
 // Troca e-mail e senha (ou o refresh_token) por uma sessão no Supabase Auth.
@@ -42,8 +67,7 @@ export function pedirComLogin(caminho, token, { method = "GET", corpo } = {}) {
   return pedir(`${SUPABASE_URL}${caminho}`, {
     method,
     headers: {
-      apikey: CHAVE_PUBLICA,
-      Authorization: `Bearer ${token}`,
+      ...comCredencial(token),
       ...(corpo === undefined || ehForm ? {} : { "Content-Type": "application/json" }),
     },
     body: corpo === undefined || ehForm ? corpo : JSON.stringify(corpo),
@@ -53,7 +77,7 @@ export function pedirComLogin(caminho, token, { method = "GET", corpo } = {}) {
 // Baixa um arquivo do bucket privado (as fotos originais, que só o agente lê).
 export async function baixarArquivoPrivado(bucket, caminho, token) {
   const resposta = await enviar(`${SUPABASE_URL}/storage/v1/object/authenticated/${bucket}/${caminho}`, {
-    headers: { apikey: CHAVE_PUBLICA, Authorization: `Bearer ${token}` },
+    headers: comCredencial(token),
   });
   if (!resposta.ok) throw new ErroApi("foto_indisponivel", "Não foi possível abrir a foto.", resposta.status);
   return resposta.blob();

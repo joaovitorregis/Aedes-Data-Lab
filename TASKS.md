@@ -13,7 +13,9 @@ Lista de trabalho da V1, dividida em fases pequenas. Cada tarefa cita a tela e o
 
 Retrato do momento atual, atualizado a cada entrega. Quem concluir uma tarefa que altere o estado do projeto atualiza esta seção no mesmo PR. As escolhas permanentes ficam em [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#9-decisões-técnicas-adr).
 
-**Última atualização:** 23/11/2026
+**Última atualização:** 24/11/2026
+
+**Área dos agentes (24/11/2026):** telas da V1 programadas em `site/agentes/`, testadas num Supabase simulado no computador, ainda sem teste com conta real e sem publicação. As tarefas abaixo ainda não foram marcadas uma a uma.
 
 ### Situação atual
 

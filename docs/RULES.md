@@ -23,11 +23,11 @@ Estas regras valem para todas as pessoas da equipe e para qualquer ferramenta de
 - Páginas públicas em `site/inicio.html` e `site/paginas/`; páginas dos agentes em `site/agentes/`.
 - Use a estrutura semântica: `header`, `nav`, `main`, `section`, `footer`, um `h1` por página.
 - Todo campo tem `label`. Toda imagem tem `alt`.
-- Cada página carrega `css/estilos.css` e o próprio módulo em `js/`.
+- Cada página pública carrega `css/estilos.css` e as dos agentes `css/agentes.css`, sempre com o próprio módulo em `js/`.
 
 ## 4. CSS
 
-- Existe um único arquivo de estilos: `site/css/estilos.css` (ADR-002).
+- O site público usa `site/css/estilos.css` (ADR-002) e a área dos agentes usa `site/css/agentes.css` (ADR-018). Não crie outros.
 - Use os tokens de [DESIGN.md](./DESIGN.md) (`var(--cor-primaria)`), nunca cores e tamanhos soltos.
 - Estilos de uma página ficam na seção dela, presos à classe da página (`.pagina-mapa`).
 - Combine com a equipe antes de mudar estilos compartilhados.

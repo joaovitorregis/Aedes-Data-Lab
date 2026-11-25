@@ -154,7 +154,7 @@ Quem inicia a análise fica registrado como autor, sem exclusividade. Denúncias
 
 ### 7.3.1 Relatório
 
-A tela do relatório chama `dadosRelatorio` com período e bairro, mostra a prévia e gera o arquivo no navegador: PDF com jsPDF e AutoTable, Word (`.docx`) com a biblioteca `docx` (ADR-012). As bibliotecas só são carregadas quando o agente abre essa tela. O serviço não devolve campos de `report_private`, então o relatório não tem como incluir dados do morador. Os totais vêm separados por origem (cidadãos e agentes) e por tipo de encerramento (Atendidas, Encerradas sem acesso e Arquivadas), e os recipientes com água pelos nomes do formulário (D56). Nenhum arquivo é guardado no servidor.
+A tela do relatório chama `dadosRelatorio` com período e bairro, mostra a prévia e gera o arquivo no navegador: PDF com jsPDF e AutoTable, Word (`.docx`) com a biblioteca `docx` (ADR-012). As bibliotecas só são carregadas quando o agente abre essa tela. De `report_private` o serviço pede só a coluna do endereço, que o relatório mostra (PRD, RF-AGE-08); nome, e-mail e telefone não são lidos. Os totais vêm separados por origem (cidadãos e agentes) e por tipo de encerramento (Atendidas, Encerradas sem acesso e Arquivadas), e os recipientes com água pelos nomes do formulário (D56). Nenhum arquivo é guardado no servidor.
 
 O agente arquiva por `arquivarOcorrencia`, em qualquer etapa: o serviço confere a etapa e a versão atuais, grava o motivo em `report_events`, tira a denúncia do mapa e, se ela estiver Recebida ou Em análise, leva a ocorrência a Encerrada, tudo numa única transação (PRD, RF-AGE-04 e seção 10.3).
 
@@ -288,6 +288,12 @@ Uma ADR não é reescrita para mudar de ideia. A nova escolha entra como outra A
 - **Decisão:** arquivar leva a denúncia a uma lixeira, em qualquer etapa; depois de 30 dias sem volta ao mapa, uma rotina diária a remove definitivamente do banco de dados e do armazenamento (D44, D48, D49).
 - **Motivo:** ocultar e arquivar passaram a ser a mesma ação (D48). O restante do motivo da ADR-014 continua valendo: tira o conteúdo do ar na hora, deixa o erro do agente reversível por um prazo e evita guardar para sempre o que foi retirado.
 - **Consequência:** o estado de publicação `oculta` passa a se chamar `arquivada`; `ocultarPublicacao` é incorporado a `arquivarOcorrencia`, e `republicarOcorrencia` vira `voltarAoMapa`. Arquivar em Recebida ou Em análise também encerra a ocorrência; em Atendida ou Encerrada, a etapa não muda. Onde a ADR-008 cita ocultação, leia arquivamento. **Em aberto:** como arquivar agora vale para ocorrências já atendidas, a remoção em 30 dias apagaria visitas feitas; o prazo e o que é removido ainda precisam ser rediscutidos (PRD D44).
+
+### ADR-018 · Área dos agentes em /agentes, com estilos próprios
+
+- **Decisão:** o site continua um só, com a área dos agentes no caminho `/agentes` (endereços sem `.html`, definidos em `site/vercel.json`) e estilos em `site/css/agentes.css`. Exceção à ADR-002.
+- **Motivo:** um deploy só e a mesma conexão com o Supabase, sem que a mudança de uma área quebre a outra. Pedido do usuário em 24/11/2026.
+- **Consequência:** a proteção continua no login e no RLS, não no endereço. As páginas usam caminhos a partir da raiz, por isso precisam de um servidor local (`npm run servir`). A área pública não tem link para `/agentes`, e a área pede para não ser indexada.
 
 ### Modelo para uma nova decisão
 

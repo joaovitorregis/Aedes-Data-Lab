@@ -485,3 +485,56 @@ body.menu-aberto {
 /* Agentes: acesso, meu trabalho, ocorrências, mapa e dashboard */
 
 /* Responsividade */
+
+
+.apoio-institucional {
+    background: #f5efdf;
+    padding: 12px 6px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.apoio-institucional h3 {
+    font-size: 20px;
+    color: #365c45;
+    margin: 0 0 10px;
+    font-weight: 700;
+    padding-bottom: 3px;
+}
+
+.logos-apoio {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.logo-card {
+    background: #fff;
+    border: 1px solid #e0d4bd;
+    border-radius: 9px;
+    height: 64px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.logo-card img {
+    max-width: 100%;
+    max-height: 48px;
+    object-fit: contain;
+}
+
+.link-apoio {
+    color: #365c45;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.link-apoio:hover {
+    color: #16834b;
+}

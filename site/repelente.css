@@ -267,7 +267,7 @@ body.menu-aberto {
 .page-header h1 {
   font-size: 20px;
   font-weight: 700;
-  color: var(--green-dark);
+  color: #09490d;
   line-height: 1.2;
 }
 
@@ -366,7 +366,7 @@ body.menu-aberto {
 .type-number {
   font-size: 17px;
   font-weight: 700;
-  color: #09490d(--green-dark);
+  color: #09490d;
   min-width: 24px;
 }
 
@@ -381,7 +381,7 @@ body.menu-aberto {
 .type-info h3 {
   font-size: 12px;
   font-weight: 700;
-  color: #09490d(--green-dark);
+  color: #09490d;
   margin-bottom: 2px;
 }
 
@@ -431,16 +431,16 @@ body.menu-aberto {
   text-align: left;
   font-size: 13.5px;
   font-weight: 600;
-  color: var(--green-dark);
+  color: #09490d;
   cursor: pointer;
 }
 
 .faq-question:hover {
-  color: var(--green-dark);
+  color: #09490d;
 }
 
 .chevron {
-  color: var(--green-dark);
+  color: #09490d;
   flex-shrink: 0;
   transition: transform 0.2s ease;
 }
@@ -478,7 +478,7 @@ body.menu-aberto {
 }
 
 .bottom-links a {
-  color: var(--green-dark);
+  color: #09490d;
   font-weight: 600;
   text-decoration: none;
 }

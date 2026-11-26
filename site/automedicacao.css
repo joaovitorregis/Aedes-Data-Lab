@@ -472,7 +472,7 @@ body.menu-aberto {
 }
 
 .bottom-links a {
-  color: var(--green-dark);
+  color: #09490d;
   font-weight: 600;
   text-decoration: none;
 }

@@ -1,550 +1,131 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Receber o agente | Aedes Data Lab</title>
-<link rel="icon" href="../assets/imagens/logo.webp" type="image/webp">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: "Inter", system-ui, sans-serif;
-    background: #f5f4ef;
-    color: #333;
-}
-
-.container {
-    width: 100%;
-    max-width: 520px;
-    min-height: 100vh;
-    margin: auto;
-    padding: 18px 22px 45px;
-    background: #fffdf8;
-}
-
-/* CABEÇALHO */
-
-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid #ddd;
-}
-
-.logo-area {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.logo {
-    width: 50px;
-    height: 50px;
-    object-fit: contain;
-}
-
-.logo-text h2 {
-    font-size: 19px;
-    color: #303030;
-}
-
-.logo-text p {
-    font-size: 13px;
-    color: #777;
-    margin-top: 3px;
-}
-
-.menu {
-    font-size: 30px;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    color: #333;
-}
-
-.menu-popover {
-    display: none;
-    margin-top: 8px;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background: #eef3e9;
-}
-
-.menu-popover.active {
-    display: grid;
-}
-
-.menu-popover a {
-    padding: 9px 8px;
-    color: #20552b;
-    font-size: 14px;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-/* NAVEGAÇÃO */
-
-.navigation {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 17px 5px;
-    border-bottom: 1px solid #ddd;
-    font-size: 14px;
-}
-
-.navigation a {
-    text-decoration: none;
-    color: #555;
-    font-weight: bold;
-}
-
-/* CONTEÚDO */
-
-main {
-    padding-top: 27px;
-}
-
-h1, h2 {
-    color: #174d27;
-}
-
-.page-title {
-    font-size: 23px;
-    margin-bottom: 5px;
-}
-
-.description {
-    font-size: 14px;
-    color: #777;
-    margin-bottom: 13px;
-}
-
-/* IMAGEM PRINCIPAL */
-
-.video-box {
-    width: 100%;
-    height: 180px;
-    position: relative;
-    overflow: hidden;
-    background: #e8eee5;
-}
-
-.video-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.play-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: rgba(0,0,0,.55);
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 23px;
-}
-
-.video-caption {
-    font-size: 13px;
-    color: #777;
-    padding: 12px 0;
-    border-bottom: 1px solid #ddd;
-}
-
-/* ORIENTAÇÕES */
-
-.care-section {
-    margin-top: 20px;
-}
-
-.care-section h2,
-.faq-section h2 {
-    font-size: 21px;
-    margin-bottom: 12px;
-}
-
-.care-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 5px;
-    min-height: 83px;
-    border-bottom: 1px solid #ddd;
-}
-
-.care-item img {
-    width: 38%;
-    height: 75px;
-    object-fit: cover;
-    border-radius: 5px;
-    background: #edf3e8;
-}
-
-.care-item p {
-    font-size: 12px;
-    line-height: 1.4;
-    color: #777;
-}
-
-/* PERGUNTAS */
-
-.faq-section {
-    margin-top: 23px;
-}
-
-.faq-item {
-    border-bottom: 1px solid #ddd;
-}
-
-.faq-question {
-    width: 100%;
-    padding: 12px 5px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: none;
-    background: transparent;
-    color: #24552d;
-    font-size: 14px;
-    font-weight: bold;
-    text-align: left;
-    cursor: pointer;
-}
-
-.arrow {
-    font-size: 18px;
-    color: #777;
-    transition: transform .2s;
-}
-
-.faq-answer {
-    display: none;
-    padding: 0 5px 12px;
-    color: #777;
-    font-size: 12px;
-    line-height: 1.5;
-}
-
-.faq-item.active .faq-answer {
-    display: block;
-}
-
-.faq-item.active .arrow {
-    transform: rotate(180deg);
-}
-
-.faq-question:focus-visible,
-.menu:focus-visible,
-.bottom-links a:focus-visible,
-.navigation a:focus-visible {
-    outline: 3px solid #8bbf55;
-    outline-offset: 3px;
-}
-
-/* LINK FINAL */
-
-.bottom-links {
-    margin-top: 27px;
-    padding: 10px 5px;
-}
-
-.bottom-links a {
-    color: #20552b;
-    font-size: 13px;
-    font-weight: bold;
-    text-decoration: underline;
-    text-underline-offset: 5px;
-}
-
-@media (max-width: 380px) {
-    .container {
-        padding: 14px 15px 35px;
-    }
-
-    .page-title {
-        font-size: 21px;
-    }
-
-    .care-item img {
-        height: 65px;
-    }
-}
-
-button, input, select, textarea {
-  font-family: inherit;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Receber o agente | Aedes Data Lab</title>
+  <link rel="icon" href="../assets/imagens/logo.webp" type="image/webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="../css/estilos.css">
+  <link rel="stylesheet" href="../css/guia.css">
 </head>
+<body class="pagina-guia">
 
-<body>
+  <header>
+    <img class="guia-logo" src="../assets/imagens/logo.webp" alt="Logo Aedes Data Lab">
+    <div>
+      <p class="guia-nome">Aedes Lab</p>
+      <p class="guia-cidade">Itambé · PE</p>
+    </div>
+    <button class="menu-botao" type="button" aria-label="Abrir menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
 
-<div class="container">
+  <main>
+    <a class="guia-voltar" href="guia-aedes.html">← Guia Aedes</a>
 
-    <!-- CABEÇALHO -->
+    <h1>Receber o agente</h1>
+    <p class="guia-subtitulo">Conheça a visita e tire suas dúvidas.</p>
 
-    <header>
+    <figure class="guia-midia">
+      <img src="../assets/imagens/guia-agente.webp" alt="Agente de endemias conversando com uma moradora na porta de casa">
+      <figcaption>Imagem orientativa</figcaption>
+    </figure>
 
-        <div class="logo-area">
+    <section>
+      <h2>O que fazer?</h2>
 
-            <img src="../assets/imagens/logo.webp"
-                 alt="Logo Aedes Data Lab"
-                 class="logo">
+      <ul class="guia-orientacoes">
+        <li>
+          <img class="guia-miniatura" src="../assets/imagens/guia-agente-1.webp" alt="Crachá no uniforme de um agente de endemias">
+          <p>Confira a identificação.</p>
+        </li>
+        <li>
+          <img class="guia-miniatura" src="../assets/imagens/guia-agente-2.webp" alt="Agente inspecionando um recipiente com água usando lanterna">
+          <p>Acompanhe a observação dos locais.</p>
+        </li>
+        <li>
+          <img class="guia-miniatura" src="../assets/imagens/guia-agente.webp" alt="Agente e moradora conversando">
+          <p>Converse sobre os cuidados.</p>
+        </li>
+      </ul>
+    </section>
 
-            <div class="logo-text">
-                <h2>Aedes Data Lab</h2>
-                <p>Itambé - PE</p>
-            </div>
+    <section>
+      <h2>Dúvidas frequentes</h2>
 
-        </div>
-
-        <button class="menu" type="button"
-                aria-label="Abrir menu"
-                aria-expanded="false">
-            ☰
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false" aria-controls="resposta-1">
+          Como confirmar a identificação?
+          <span class="faq-seta" aria-hidden="true"></span>
         </button>
-
-    </header>
-
-    <nav class="menu-popover" id="menu-popover" aria-label="Menu principal">
-        <a href="../inicio.html">Início</a>
-        <a href="registrar-foco.html">Registrar foco</a>
-        <a href="mapa.html">Mapa</a>
-        <a href="guia-aedes.html">Guia Aedes</a>
-        <a href="jogo.html">Jogo</a>
-        <a href="quem-somos.html">Quem somos</a>
-    </nav>
-
-    <!-- NAVEGAÇÃO -->
-
-    <nav class="navigation">
-        <a href="guia-aedes.html">←</a>
-        <strong>Guia Aedes</strong>
-    </nav>
-
-    <main>
-
-        <!-- RECEBER O AGENTE -->
-
-        <section>
-
-            <h1 class="page-title">
-                Receber o agente
-            </h1>
-
-            <p class="description">
-                Conheça a visita e tire suas dúvidas.
-            </p>
-
-            <div class="video-box">
-
-                <img src="../assets/imagens/agente-visita.svg"
-                     alt="Agente de endemias realizando uma visita">
-
-                <div class="play-button">▶</div>
-
-            </div>
-
-            <p class="video-caption">
-                Vídeo orientativo
-            </p>
-
-        </section>
-
-        <!-- O QUE FAZER -->
-
-        <section class="care-section">
-
-            <h2>O que fazer?</h2>
-
-            <div class="care-item">
-
-                <img src="../assets/imagens/agente-identificacao.svg"
-                     alt="Identificação do agente">
-
-                <p>
-                    Confira a identificação.
-                </p>
-
-            </div>
-
-            <div class="care-item">
-
-                <img src="../assets/imagens/agente-observacao.svg"
-                     alt="Agente observando o ambiente">
-
-                <p>
-                    Acompanhe a observação dos locais.
-                </p>
-
-            </div>
-
-            <div class="care-item">
-
-                <img src="../assets/imagens/agente-conversa.svg"
-                     alt="Conversa entre morador e agente">
-
-                <p>
-                    Converse sobre os cuidados.
-                </p>
-
-            </div>
-
-        </section>
-
-        <!-- DÚVIDAS FREQUENTES -->
-
-        <section class="faq-section">
-
-            <h2>Dúvidas frequentes</h2>
-
-            <div class="faq-item">
-
-                <button class="faq-question" type="button" aria-expanded="false">
-                    Como confirmar a identificação?
-                    <span class="arrow">⌄</span>
-                </button>
-
-                <p class="faq-answer">
-                    Peça a identificação funcional. Em caso de dúvida,
-                    confirme com o serviço municipal por um canal oficial.
-                </p>
-
-            </div>
-
-            <div class="faq-item">
-
-                <button class="faq-question" type="button" aria-expanded="false">
-                    O que o agente verifica?
-                    <span class="arrow">⌄</span>
-                </button>
-
-                <p class="faq-answer">
-                    Locais que podem acumular água e condições
-                    favoráveis ao mosquito, conforme a rotina do serviço.
-                </p>
-
-            </div>
-
-            <div class="faq-item">
-
-                <button class="faq-question" type="button" aria-expanded="false">
-                    Posso acompanhar?
-                    <span class="arrow">⌄</span>
-                </button>
-
-                <p class="faq-answer">
-                    Peça para acompanhar a visita e aproveite para
-                    esclarecer os cuidados indicados.
-                </p>
-
-            </div>
-
-            <div class="faq-item">
-
-                <button class="faq-question" type="button" aria-expanded="false">
-                    E se eu não estiver em casa?
-                    <span class="arrow">⌄</span>
-                </button>
-
-                <p class="faq-answer">
-                    Consulte o serviço municipal sobre como proceder
-                    e sobre a possibilidade de uma nova visita.
-                </p>
-
-            </div>
-
-            <div class="faq-item">
-
-                <button class="faq-question" type="button" aria-expanded="false">
-                    Onde esclarecer dúvidas?
-                    <span class="arrow">⌄</span>
-                </button>
-
-                <p class="faq-answer">
-                    Procure o serviço municipal responsável pelo
-                    controle de endemias ou sua unidade de saúde.
-                </p>
-
-            </div>
-
-            <div class="faq-item">
-
-                <button class="faq-question" type="button" aria-expanded="false">
-                    Como me preparar?
-                    <span class="arrow">⌄</span>
-                </button>
-
-                <p class="faq-answer">
-                    Separe suas dúvidas e facilite o acesso seguro
-                    aos locais que precisam ser observados.
-                </p>
-
-            </div>
-
-        </section>
-
-        <!-- LINK FINAL -->
-
-        <div class="bottom-links">
-
-            <a href="registrar-foco.html">
-                Identificar possíveis focos →
-            </a>
-
+        <div class="faq-answer" id="resposta-1">
+          <p>Peça a identificação funcional. Em caso de dúvida, confirme com o serviço municipal por um canal oficial.</p>
         </div>
+      </div>
 
-    </main>
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false" aria-controls="resposta-2">
+          O que o agente verifica?
+          <span class="faq-seta" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer" id="resposta-2">
+          <p>Locais que podem acumular água e condições favoráveis ao mosquito, conforme a rotina do serviço.</p>
+        </div>
+      </div>
 
-</div>
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false" aria-controls="resposta-3">
+          Posso acompanhar?
+          <span class="faq-seta" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer" id="resposta-3">
+          <p>Peça para acompanhar a visita e aproveite para esclarecer os cuidados indicados.</p>
+        </div>
+      </div>
 
-<script>
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false" aria-controls="resposta-4">
+          E se eu não estiver em casa?
+          <span class="faq-seta" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer" id="resposta-4">
+          <p>Consulte o serviço municipal sobre como proceder e sobre a possibilidade de uma nova visita.</p>
+        </div>
+      </div>
 
-const botaoMenu = document.querySelector(".menu");
-const menuPopover = document.querySelector("#menu-popover");
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false" aria-controls="resposta-5">
+          Onde esclarecer dúvidas?
+          <span class="faq-seta" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer" id="resposta-5">
+          <p>Procure o serviço municipal responsável pelo controle de endemias ou sua unidade de saúde.</p>
+        </div>
+      </div>
 
-botaoMenu.addEventListener("click", function() {
-    const ativo = menuPopover.classList.toggle("active");
-    this.setAttribute("aria-expanded", String(ativo));
-});
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false" aria-controls="resposta-6">
+          Como me preparar?
+          <span class="faq-seta" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer" id="resposta-6">
+          <p>Separe suas dúvidas e facilite o acesso seguro aos locais que precisam ser observados.</p>
+        </div>
+      </div>
+    </section>
 
-// FUNCIONAMENTO DAS PERGUNTAS
+    <nav class="guia-links" aria-label="Continue no guia">
+      <a href="identificar-focos.html">Identificar possíveis focos →</a>
+    </nav>
+  </main>
 
-const perguntas = document.querySelectorAll(".faq-question");
-
-perguntas.forEach(function(pergunta) {
-
-    pergunta.addEventListener("click", function() {
-
-        const item = this.parentElement;
-        const ativo = item.classList.toggle("active");
-
-        this.setAttribute("aria-expanded", String(ativo));
-
-    });
-
-});
-
-</script>
-
+  <script src="../js/compartilhado/menu.js" defer></script>
+  <script src="../js/compartilhado/perguntas.js" defer></script>
 </body>
 </html>

@@ -13,13 +13,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const raiz = new URL("../../", urlScript);
     const itens = [
-        { href: "inicio.html", icone: "⌂", texto: "Início" },
-        { href: "paginas/registrar-foco.html", icone: "⚑", texto: "Registrar foco" },
-        { href: "paginas/mapa.html", icone: "♧", texto: "Mapa" },
-        { href: "paginas/guia-aedes.html", icone: "▤", texto: "Guia Aedes" },
-        { href: "paginas/questionario.html", icone: "☷", texto: "Questionário" },
-        { href: "paginas/quem-somos.html", icone: "▣", texto: "Quem somos" }
+        { href: "inicio.html", icone: "início.ico", texto: "Início" },
+        { href: "paginas/registrar-foco.html", icone: "registrar-foco.ico", texto: "Registrar foco" },
+        { href: "paginas/mapa.html", icone: "mapa.ico", texto: "Mapa" },
+        { href: "paginas/guia-aedes.html", icone: "guia-aedes.ico", texto: "Guia Aedes" },
+        { href: "paginas/quem-somos.html", icone: "quem-somos.ico", texto: "Quem somos" },
+        { href: "paginas/jogo.html", icone: "controle.ico", texto: "Jogo" }
     ];
+
+    function criarIcone(arquivo) {
+        const imagem = document.createElement("img");
+        imagem.src = new URL(`assets/imagens/${arquivo}`, raiz).href;
+        imagem.alt = "";
+        return imagem;
+    }
 
     const fundo = document.createElement("div");
     fundo.className = "menu-fundo";
@@ -50,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         link.href = url.href;
         link.append(icone, document.createTextNode(` ${item.texto}`));
 
-        icone.textContent = item.icone;
+        icone.append(criarIcone(item.icone));
 
         if (url.pathname === window.location.pathname) {
             link.setAttribute("aria-current", "page");
@@ -59,7 +66,22 @@ document.addEventListener("DOMContentLoaded", () => {
         navegacao.append(link);
     });
 
-    menu.append(topo, navegacao);
+    // O cidadão não tem conta: o nome é o texto do Figma e "Sair" só fecha o menu.
+    const rodape = document.createElement("div");
+    rodape.className = "menu-rodape";
+    rodape.innerHTML = `
+        <div class="usuario-info">
+            <div class="usuario-icone"></div>
+            <div>
+                <strong>Nome do usuário</strong>
+                <p>Cidadão</p>
+            </div>
+        </div>
+        <button class="botao-sair" type="button">Sair</button>
+    `;
+    rodape.querySelector(".usuario-icone").append(criarIcone("perfil-icon.ico"));
+
+    menu.append(topo, navegacao, rodape);
 
     const cabecalho = botao.closest("header");
 
@@ -110,6 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     fundo.addEventListener("click", fecharMenu);
+    rodape.querySelector(".botao-sair").addEventListener("click", fecharMenu);
 
     links.forEach((link) => {
         link.addEventListener("click", fecharMenu);

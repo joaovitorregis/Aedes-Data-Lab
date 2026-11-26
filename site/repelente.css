@@ -614,6 +614,13 @@ body.menu-aberto {
     text-align: center;
 }
 
+.menu-lateral img {
+    display: block;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+}
+
 .menu-link:hover,
 .menu-link:focus-visible {
     background: #91a787;

@@ -13,7 +13,23 @@ Lista de trabalho da V1, dividida em fases pequenas. Cada tarefa cita a tela e o
 
 Retrato do momento atual, atualizado a cada entrega. Quem concluir uma tarefa que altere o estado do projeto atualiza esta seção no mesmo PR. As escolhas permanentes ficam em [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#9-decisões-técnicas-adr).
 
-**Última atualização:** 22/11/2026
+**Última atualização:** 25/11/2026
+
+**Área dos agentes (25/11/2026):** publicada em `aedes-data-lab-site.vercel.app/agentes` em 24/11 (PR #34). Em 25/11, com conta real, foram conferidos login, lista, mapa, detalhe, formulário de visita e prévia do relatório, e um registro em local sem denúncia já constava na lista. As correções de 25/11 (visitas sem acesso no detalhe, alvos de toque de 44px, "Voltar ao mapa" só dentro do prazo, botão "Outras ações", nomes no histórico e lista paginada no banco) estão testadas no computador e aguardam publicação.
+
+Implementadas, aguardando validação no ambiente de teste: TASK-025, 026, 050, 050a, 051, 051a, 052, 053, 053a, 053b, 053c, 053d, 053e, 054, 054a, 055, 056, 057, 080 e 080a.
+
+Tela Arquivadas (RF-AGE-11, D57), pedida em 25/11: implementada e testada no computador; aguarda publicação e atualização do Figma.
+
+Layout de computador da área dos agentes (RNF-01), pedido em 25/11: implementado, sem rolagem lateral em 320, 375, 768, 900, 1280 e 1440px no computador; falta publicar e conferir em aparelhos reais.
+
+**Falta na área dos agentes:**
+
+- Aplicar a migration `20261125120000_nomes_dos_agentes` em produção (docs/BACKEND.md).
+- Confirmar o agendamento da rotina diária; sem ele as arquivadas não são apagadas (TASK-081a).
+- Testar com conta real: iniciar análise, corrigir, arquivar, voltar ao mapa e baixar o relatório.
+- Testar em celular, com GPS, só pelo teclado e o Word no LibreOffice.
+- Decidir sobre apagar uma ocorrência arquivada na hora, pedido em 25/11: hoje o PRD (D44) só prevê a exclusão automática.
 
 ### Situação atual
 
@@ -30,6 +46,7 @@ A documentação está alinhada ao [PRD 2.9](docs/PRD.md), e o fluxo da denúnci
 - Jornada do agente revista no PRD 2.8 e desenhada no Figma, na seção "Jornada do agente · telas e conexões" da página do fluxo: origem cidadão ou agente, arquivar como ação única, análise e visita num passo, foco em local sem denúncia, perguntas na linguagem do cidadão e relatório novo. É protótipo com dados de exemplo, ainda não validado com agentes
 - E-mail do código em produção de teste (22/11/2026): provedor escolhido por `EMAIL_PROVIDER`; hoje Google Apps Script (gratuito, sem domínio, limite de 100 destinatários por dia em Gmail comum), com Resend como troca quando houver domínio. Entrega real confirmada em Gmail (caixa de entrada); outros provedores ainda não testados. SMS e WhatsApp seguem "em breve" (D45)
 - Back-end Supabase (TASK-061, 062 e parte da 060a): tabelas públicas e privadas, RLS, buckets, funções `api_*`, Edge Functions de denúncia, código de confirmação por e-mail, correção por código, ações do agente, lixeira de 30 dias e rotina diária, com testes de acesso negado
+- Produção do Supabase (23/11/2026): projeto separado, 9 migrations, 6 funções e segredos próprios; teste real com denúncia e foto, leitura pública sem dado privado e correção por código. Em 25/11 a denúncia de teste AED-2026-000001 já não aparecia na lista do agente
 
 ### Em andamento
 
@@ -52,8 +69,8 @@ As branches `Laura-Galdino`, `Rhillary` e `sky` estão atrás do `main`. Antes d
 - O CSS compartilhado já declara os tokens (`:root` em `site/css/estilos.css`), mas os componentes base ainda faltam (TASK-020).
 - O Figma não tem estilos nem variáveis cadastrados (TASK-010).
 - A etiqueta Em análise tem dois estilos no Figma. As etiquetas da área do agente foram desenhadas na jornada nova, mas as cores ainda não viraram tokens do DESIGN.md (TASK-012a).
-- A página de login dos agentes se chama `agentes/Login.html`, com inicial maiúscula, fora do padrão de nomes do RULES.md. Renomear junto com a TASK-025.
-- As páginas `agentes/mapa.html`, `agentes/meu-trabalho.html` e `agentes/dashboard.html` continuam como espaço reservado, fora da V1.
+- O formulário Registrar foco do site publicado ainda não tem código: denúncias de cidadãos não chegam à área dos agentes.
+- As páginas `agentes/meu-trabalho.html` e `agentes/dashboard.html` continuam como espaço reservado, fora da V1, e levam a Ocorrências no site publicado.
 
 ### Decisões pendentes
 
@@ -181,7 +198,7 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 ## Fase 10 · Lançamento
 
 - [ ] TASK-100 Resolver as dependências de lançamento DEP-01 a DEP-09 (PRD, seção 18)
-- [ ] TASK-101 Criar o ambiente de produção (Supabase e Vercel) com limites de custo e monitoramento
+- [ ] TASK-101 Criar o ambiente de produção (Supabase e Vercel) com limites de custo e monitoramento · Supabase de produção criado e provado em 23/11/2026; faltam Vercel de produção, limites de custo e monitoramento
 - [ ] TASK-102 Testar no endereço publicado antes de divulgar aos moradores
 
 ## Decisões pendentes

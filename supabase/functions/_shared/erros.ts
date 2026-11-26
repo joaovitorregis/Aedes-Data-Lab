@@ -42,6 +42,7 @@ const TABELA: Record<string, [number, string]> = {
   json_invalido: [400, "Pedido mal formado."],
   metodo_invalido: [405, "Método não permitido."],
   nao_autenticado: [401, "Entre com sua conta de agente."],
+  rotina_nao_autorizada: [401, "Pedido não autorizado."],
   limite_excedido: [429, "Muitas tentativas. Aguarde um pouco e tente de novo."],
   envio_falhou: [502, "Não foi possível enviar o código agora. Tente de novo em instantes."],
   canal_indisponivel: [503, "Este canal de envio ainda não está disponível. Use o e-mail."],

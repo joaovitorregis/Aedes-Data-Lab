@@ -10,12 +10,21 @@ Esta pasta tem a estrutura inicial de estudo do site. Ainda não há formulário
 | Pública | `paginas/registrar-foco.html` | V1 |
 | Pública | `paginas/mapa.html` | V1 |
 | Pública | `paginas/guia-aedes.html`, `paginas/repelentes.html`, `paginas/quem-somos.html`, `paginas/jogo.html` | Complementares, em paralelo |
-| Agentes | `agentes/Login.html` (Acesso dos agentes) | V1 |
-| Agentes | `agentes/ocorrencias.html` | V1 |
-| Agentes | `agentes/mapa.html`, `agentes/meu-trabalho.html` | Reservadas; fora do aceite da V1 |
+| Agentes | `agentes/index.html` (`/agentes`, login) | V1, programada |
+| Agentes | `agentes/ocorrencias.html` (lista, mapa e filtros), `ocorrencia.html`, `visita.html`, `correcao.html`, `relatorio.html` | V1, programadas |
+| Agentes | `agentes/arquivadas.html` (fora do mapa, por 30 dias) | V1, programada |
+| Agentes | `agentes/meu-trabalho.html` | Reservada; fora do aceite da V1 |
 | Agentes | `agentes/dashboard.html` | Fase seguinte |
 
-A área pública não tem link para a área dos agentes. As duas vão se ligar pelos dados no Supabase. As páginas dos agentes ainda não têm dados privados, e separar pastas não protege nada: autenticação e autorização serão construídas antes de qualquer dado real.
+A área pública não tem link para a área dos agentes. As duas se ligam pelos dados no Supabase. Separar pastas não protege nada: quem protege é o login do agente e o RLS do banco.
+
+## Área dos agentes (já programada)
+
+- Estrutura em `agentes/`, estilos em `css/agentes.css`, telas em `js/agentes/`, regras em `js/dominio/` e chamadas ao Supabase em `js/servicos/`.
+- Para abrir no computador, na raiz do repositório: `npm run servir` e acesse `http://localhost:5500/agentes`. O Live Server não conhece os endereços sem `.html`.
+- Esse servidor usa o Supabase configurado em `js/servicos/config.js`. É preciso uma conta de agente criada pela equipe (docs/BACKEND.md, seção 5), e o Supabase só aceita o endereço local se ele estiver em `ALLOWED_ORIGINS`.
+- Testes das regras: `npm test`.
+- `vercel.json` guarda os endereços de `/agentes`, leva as páginas reservadas (`dashboard`, `meu-trabalho`) para Ocorrências enquanto não são feitas e define a política de segurança da área. Se o projeto do Supabase mudar, atualize o endereço também nessa política.
 
 ## Ordem das atividades
 

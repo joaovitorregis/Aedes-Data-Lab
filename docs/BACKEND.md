@@ -47,6 +47,7 @@ Migration é um arquivo SQL que muda o banco e fica guardado no Git. Elas rodam 
 | `20261122100400_funcoes_denuncia` | `api_save_report` e `api_publish_report`. |
 | `20261122100500_funcoes_agente` | Ações do agente (analisar, visita, observação, encerrar, arquivar, voltar ao mapa, criar ocorrência). |
 | `20261122100600_funcoes_consulta` | Correção, lixeira, limpeza e as leituras do agente. |
+| `20261125120000_nomes_dos_agentes` | Função `agent_profile_names`: entrega a um agente ativo o identificador e o nome dos agentes, para o histórico. |
 
 ### As tabelas
 
@@ -71,7 +72,7 @@ Todas são `security definer` (rodam com o poder do dono, não de quem chama) co
 - **Cidadão:** `api_start_verification`, `api_confirm_verification`, `api_save_report`, `api_publish_report`, `api_find_report_for_correction`, `api_get_report_for_citizen`, `api_correct_fields_citizen`.
 - **Agente:** `api_start_analysis`, `api_register_visit`, `api_add_note`, `api_close_without_access`, `api_archive_report`, `api_restore_to_map`, `api_create_agent_report`, `api_correct_fields_agent`. Cada uma começa com `internal.require_agent(p_agent)`, que confere na tabela `profiles` se o usuário é agente.
 - **Rotina:** `api_trash_due`, `api_purge_report`, `api_pending_public_cleanup`, `api_clear_public_photo_paths`, `api_pending_publication`, `api_get_original_paths`, `api_check_restore`, `api_hit_rate_limit`.
-- **Leitura do agente (pelo navegador, logado):** `agent_nearby_reports` (denúncias num raio de 150 m) e `agent_queue_summary`.
+- **Leitura do agente (pelo navegador, logado):** `agent_nearby_reports` (denúncias num raio de 150 m), `agent_profile_names` (nomes para o histórico) e `agent_queue_summary`. A lista e o resumo da tela de Ocorrências consultam a tabela `reports` direto, com filtros, páginas e contagem, sob o RLS.
 
 Duas ideias que aparecem várias vezes:
 
@@ -148,7 +149,7 @@ Sem Docker e sem internet para o Supabase.
 ```
 cd supabase/tests
 npm install
-npm test        # 96 testes
+npm test        # 102 testes
 ```
 O arquivo `stubs_supabase.sql` só **simula** o que o Supabase já tem (papéis, `auth.users`, `auth.uid()`, esquema `storage`). Não é migration.
 
@@ -162,9 +163,9 @@ Dica: o que os testes provam de privacidade: foto pública sem EXIF, XMP, coment
 
 **O que os testes NÃO provam:** o comportamento no Supabase hospedado (criação de buckets e políticas por migration, Storage real, envio real de e-mail). Isso se confere no projeto de teste (seção 5).
 
-## 5. Colocando no ar (projeto de TESTE)
+## 5. Colocando no ar (teste e produção)
 
-> Nunca aplique nada no projeto de produção sem decisão da equipe (TASK-101).
+> Os mesmos passos valem para teste e produção; só muda o `--project-ref`. Antes de qualquer comando, confira o "Target" (nome do projeto). Produção só com decisão da equipe (TASK-101).
 
 1. **Entrar e ligar ao projeto de teste**
    ```
@@ -177,7 +178,7 @@ Dica: o que os testes provam de privacidade: foto pública sem EXIF, XMP, coment
    npx supabase db push --remote   # pede a senha do banco
    ```
    O `seed.sql` **não** vai junto (é só para ambiente local).
-3. **Definir os segredos** (valores longos e aleatórios; guarde no gerenciador de senhas):
+3. **Definir os segredos** (valores longos e aleatórios, **diferentes entre si e entre os ambientes**; guarde no gerenciador de senhas). No PowerShell, `function Novo { $b = New-Object byte[] 32; (New-Object Security.Cryptography.RNGCryptoServiceProvider).GetBytes($b); [Convert]::ToBase64String($b) }` gera um valor; use `"$(Novo)"` em cada segredo. Cole os comandos já com os valores reais: se um `<...>` de exemplo for colado, o valor vira esse texto (na produção isso gerou URL inválida e três segredos iguais; no painel, resumos iguais indicam valores repetidos):
    ```
    npx supabase secrets set CODE_PEPPER=... CORRECTION_TOKEN_SECRET=... CRON_SECRET=... \
      ALLOWED_ORIGINS="https://seu-site.vercel.app,http://localhost:5500"
@@ -215,6 +216,16 @@ Dica: o que os testes provam de privacidade: foto pública sem EXIF, XMP, coment
    ```
 8. **Teste de fumaça:** pelo front (ou com `curl`) envie uma denúncia de teste, confirme o protocolo, veja as fotos nos dois buckets (a pública sem EXIF) e confira que `anon` não lê `reports` (deve voltar vazio ou erro de permissão).
 
+### Conferir a rotina diária
+
+A exclusão das arquivadas há mais de 30 dias (D44) só acontece se a `rotina-diaria` estiver agendada (passo 7). Nenhum arquivo do repositório faz esse agendamento. Se ele foi feito pelo Supabase Cron, aparece aqui:
+
+```sql
+select jobname, schedule, active from cron.job;
+```
+
+Em 25/11/2026 o agendamento do projeto de produção ainda não tinha sido confirmado.
+
 ## 6. Limitações conhecidas e pendências
 
 - **E-mail:** só e-mail está implementado. SMS e WhatsApp respondem `canal_indisponivel` até a decisão de custo (DEP-03). Com `appscript` o remetente é um Gmail, não um domínio do projeto: entrega confirmada no Gmail; outros provedores (Outlook, Yahoo) ainda sem teste e podem mandar para spam. Se a cota diária acabar, o script devolve `cota_diaria_esgotada` e o envio falha.
@@ -222,4 +233,6 @@ Dica: o que os testes provam de privacidade: foto pública sem EXIF, XMP, coment
 - **Fotos:** só JPEG e PNG (WebP/HEIC são recusados). A cópia pública não é redimensionada (tem o mesmo tamanho do original, até 10 MB): reduzir a foto no navegador antes de enviar economiza banda e deixa o mapa mais rápido.
 - **Migrations de Storage** (buckets e políticas) foram testadas só no simulador; confira no projeto real ao aplicar.
 - **Funções ainda não reutilizam `js/dominio/`** (TASK-060a, ADR-015): as regras estão duplicadas no SQL e em `_shared/`.
+- **Produção (23/11/2026):** projeto criado em West US (Oregon); a região não muda depois de criado. As 9 migrations, as 6 funções e os segredos estão aplicados. Teste real: denúncia com foto (AED-2026-000001, publicada), leitura pública só com os 12 campos, bloqueio de origem fora do `ALLOWED_ORIGINS` e `acesso-correcao` completo. A denúncia AED-2026-000001 é de teste e ainda está lá: apague a linha no banco e as pastas dela nos dois buckets antes de divulgar o site.
+- **Pendente em produção (25/11/2026):** aplicar a migration `20261125120000_nomes_dos_agentes`. Sem ela o histórico mostra "Agente" no lugar do nome dos outros agentes; o resto funciona.
 - **Front-end:** trocar o serviço fictício pelas chamadas acima é a TASK-063.

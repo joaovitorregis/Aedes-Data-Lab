@@ -1,6 +1,6 @@
 :root {
-  --bg-page: #ffffff;
-  --bg-card: #ffffff;
+  --bg-page: #fcf8f3;
+  --bg-card: #fcf8f3;
   --green-dark: #235334;
   --green-medium: #3b6e4c;
   --green-soft: #eef5f0;
@@ -22,7 +22,7 @@ html,
 body {
   min-height: 100%;
   width: 100%;
-  background-color: var(--bg-page);
+  background-color: #fcf8f3;
   color: var(--text-primary);
 }
 
@@ -39,7 +39,7 @@ body.menu-aberto {
   width: 100%;
   max-width: 100%;
   margin: 0;
-  background-color: var(--bg-card);
+  background-color: #fcf8f3(--bg-card);
   border-radius: 0;
   padding: 16px 20px 36px;
   box-shadow: none;
@@ -349,7 +349,7 @@ body.menu-aberto {
   border: 1px solid var(--border-light);
   border-radius: 12px;
   margin-bottom: 12px;
-  background-color: #fcfdfb;
+  background-color: #fcf8f3;
 }
 
 .type-item:last-child {

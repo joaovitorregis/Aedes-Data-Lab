@@ -1,121 +1,191 @@
 
+document.addEventListener("DOMContentLoaded", () => {
 
-const openFilters = document.getElementById("openFilters");
-const closeFilters = document.getElementById("closeFilters");
-const filterOverlay = document.getElementById("filterOverlay");
-const applyFilters = document.getElementById("applyFilters");
+    // ELEMENTOS PRINCIPAIS
 
-const showOccurrences = document.getElementById("showOccurrences");
-const occurrencesSection = document.getElementById("occurrencesSection");
-const occurrencesList = document.getElementById("occurrencesList");
+    const showOccurrences = document.getElementById("showOccurrences");
+    const occurrencesSection = document.getElementById("occurrencesSection");
 
+    // INICIALIZAÇÃO DO MAPA
 
-// OPEN FILTERS
+    const mapa = L.map("mapa").setView([-7.414, -35.104], 15);
 
-openFilters.addEventListener("click", () => {
-    filterOverlay.classList.add("active");
-});
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: "© OpenStreetMap"
+    }).addTo(mapa);
 
+    // OCORRÊNCIAS DE EXEMPLO
 
-// CLOSE FILTERS
+    const ocorrencias = [
+        {
+            nome: "Relato 1",
+            latitude: -7.414,
+            longitude: -35.104,
+            status: "Em análise"
+        },
+        {
+            nome: "Relato 2",
+            latitude: -7.416,
+            longitude: -35.108,
+            status: "Finalizada"
+        },
+        {
+            nome: "Relato 3",
+            latitude: -7.410,
+            longitude: -35.100,
+            status: "Em processamento"
+        },
+        {
+            nome: "Relato 4",
+            latitude: -7.418,
+            longitude: -35.102,
+            status: "Não visualizada"
+        }
+    ];
 
-closeFilters.addEventListener("click", () => {
-    filterOverlay.classList.remove("active");
-});
+    // ADICIONAR MARCADORES
 
+    ocorrencias.forEach(ocorrencia => {
+        L.marker([ocorrencia.latitude, ocorrencia.longitude])
+            .addTo(mapa)
+            .bindPopup(`
+                <strong>${ocorrencia.nome}</strong><br>
+                Status: ${ocorrencia.status}
+            `);
+    });
 
-// CLOSE WHEN CLICKING OUTSIDE THE MODAL
+    // CENTRALIZAR MAPA
 
-filterOverlay.addEventListener("click", (event) => {
-    if (event.target === filterOverlay) {
-        filterOverlay.classList.remove("active");
+    const centerButton = document.getElementById("centerMap");
+
+    centerButton.addEventListener("click", () => {
+
+        if (!navigator.geolocation) {
+            alert("Seu navegador não suporta geolocalização.");
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            position => {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+
+                mapa.setView([latitude, longitude], 17);
+
+                L.marker([latitude, longitude])
+                    .addTo(mapa)
+                    .bindPopup("Você está aqui!")
+                    .openPopup();
+            },
+            () => {
+                alert("Não foi possível obter sua localização.");
+            }
+        );
+    });
+
+    // FILTROS
+
+    const filtros = document.getElementById("filtros");
+    const formFiltros = filtros.querySelector("form");
+    const filterCount = document.getElementById("filterCount");
+
+    // ABRIR FILTROS
+
+    document.getElementById("openFilters").addEventListener("click", () => {
+        filtros.showModal();
+    });
+
+    // FECHAR AO CLICAR FORA
+
+    filtros.addEventListener("click", event => {
+        if (event.target === filtros) {
+            filtros.close();
+        }
+    });
+
+    // FILTRAR OCORRÊNCIAS
+
+    function filtrar() {
+
+        const dados = new FormData(formFiltros);
+        const status = dados.getAll("status");
+
+        document.querySelectorAll(".occurrence-card").forEach(card => {
+
+            card.hidden =
+                status.length > 0 &&
+                !status.includes(card.dataset.status);
+
+        });
+
+        // CONTADOR DE FILTROS ATIVOS
+
+        const total = [
+            dados.get("period"),
+            dados.get("locality"),
+            status.length > 0 ? status.length : null
+        ].filter(Boolean).length;
+
+        filterCount.textContent = total;
+        filterCount.hidden = total === 0;
     }
-});
 
+    // ATUALIZAR AO ALTERAR FILTROS
 
-// EXPAND FILTER CATEGORIES
+    formFiltros.addEventListener("change", filtrar);
 
-const categoryButtons = document.querySelectorAll(".category-button");
+    // ATUALIZAR AO LIMPAR
 
-categoryButtons.forEach(button => {
+    formFiltros.addEventListener("reset", () => {
+        setTimeout(filtrar, 0);
+    });
 
-    button.addEventListener("click", () => {
+    filtrar();
 
-        const category = button.parentElement;
+    // CONCLUIR FILTROS
 
-        category.classList.toggle("expanded");
+    document.getElementById("applyFilters").addEventListener("click", () => {
+
+        filtrar();
+
+        occurrencesSection.classList.add("visible");
+
+        filtros.close();
+
+        setTimeout(() => {
+            occurrencesSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }, 200);
 
     });
 
-});
+    // MOSTRAR OCORRÊNCIAS
 
+    showOccurrences.addEventListener("click", () => {
 
-// APPLY FILTERS
+        occurrencesSection.classList.add("visible");
 
-applyFilters.addEventListener("click", () => {
-
-    const selectedPeriods = getSelected("period");
-    const selectedLocalities = getSelected("locality");
-    const selectedStatuses = getSelected("status");
-
-    console.log("Períodos:", selectedPeriods);
-    console.log("Localidades:", selectedLocalities);
-    console.log("Status:", selectedStatuses);
-
-    // Show occurrences section
-    occurrencesSection.classList.add("visible");
-
-    // Apply status filtering
-    filterOccurrences(selectedStatuses);
-
-    // Close popup
-    filterOverlay.classList.remove("active");
-
-    // Scroll to occurrences
-    setTimeout(() => {
         occurrencesSection.scrollIntoView({
             behavior: "smooth",
             block: "start"
         });
-    }, 200);
-
-});
-
-
-// GET SELECTED CHECKBOXES
-
-function getSelected(name) {
-
-    return Array.from(
-        document.querySelectorAll(`input[name="${name}"]:checked`)
-    ).map(input => input.value);
-
-}
-
-
-// FILTER OCCURRENCES
-
-function filterOccurrences(selectedStatuses) {
-
-    const cards = document.querySelectorAll(".occurrence-card");
-
-    cards.forEach(card => {
-
-        const status = card.dataset.status;
-
-        if (
-            selectedStatuses.length === 0 ||
-            selectedStatuses.includes(status)
-        ) {
-            card.style.display = "block";
-        } else {
-            card.style.display = "none";
-        }
 
     });
 
-}
+    // BOTÕES DE RESUMO
 
+    document.querySelectorAll(".summary-button").forEach(button => {
+
+        button.addEventListener("click", () => {
+            console.log("Resumo selecionado:", button.innerText);
+        });
+
+    });
+
+});
 
 // SHOW OCCURRENCES BUTTON
 

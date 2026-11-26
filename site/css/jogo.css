@@ -33,7 +33,7 @@ header p {
 /* TÍTULO PRINCIPAL */
 .texto-principal h1 {
     font-family: inherit;
-    font-size: 36px;
+    font-size: 20px;
     font-weight: bold;
     line-height: 1.2;
     letter-spacing: -1.1px;
@@ -50,9 +50,9 @@ header p {
 /* TEXTO EXPLICATIVO */
 .texto-principal p {
     font-family: 'Arial', sans-serif;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 400;
-    line-height: 1.65;
+    line-height: 1.55;
     letter-spacing: 0.1px;
     color: #345b82;
     margin: 0 0 30px;
@@ -62,8 +62,8 @@ header p {
 .botao-jogar:hover { background-color: #34cf3c; transform: scale(1.05); }
 .icone-jogo { font-size: 22px; }
 
-.imagem-mosquito { width: 40%; display: flex; justify-content: center; align-items: center; }
-.imagem-mosquito img { width: 100%; max-width: 300px; object-fit: contain; }
+
+.imagem-mosquito img { width: 100%; max-width: 500px; object-fit: contain; }
 
 .paisagem { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
 .paisagem img { width: 100%; height: 100%; object-fit: cover; object-position: center; }

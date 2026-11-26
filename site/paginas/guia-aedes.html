@@ -163,6 +163,8 @@ h1 {
     font-weight: bold;
     cursor: pointer;
     margin-bottom: 19px;
+    text-align: center;
+    text-decoration: none;
 }
 
 .main-button:hover {
@@ -324,10 +326,9 @@ button, input, select, textarea {
                 acumular água
             </p>
 
-            <button class="main-button"
-                onclick="abrirTopico(0)">
+            <a class="main-button" href="cuidados.html">
                 ver cuidados com recipiente
-            </button>
+            </a>
 
         </section>
 
@@ -354,75 +355,47 @@ button, input, select, textarea {
             </div>
 
             <div class="guide-item">
-                <div class="guide-link" onclick="abrirTopico(2)">
+                <a class="guide-link" href="sintomas.html">
                     <div>
                         <h3>Cuidado com os sintomas</h3>
                         <p>Saiba quais sinais merecem
                         atenção e como agir.</p>
                     </div>
                     <span class="arrow">›</span>
-                </div>
-
-                <div class="guide-content" id="topico2">
-                    Febre, dor de cabeça, dores no corpo,
-                    manchas na pele e cansaço podem ser sinais
-                    de dengue. Procure atendimento de saúde
-                    se apresentar sintomas.
-                </div>
+                </a>
             </div>
 
             <div class="guide-item">
-                <div class="guide-link" onclick="abrirTopico(3)">
+                <a class="guide-link" href="automedicacao.html">
                     <div>
                         <h3>Evitar a automedicação</h3>
                         <p>Entenda porque não se deve usar
                         remédios por conta própria</p>
                     </div>
                     <span class="arrow">›</span>
-                </div>
-
-                <div class="guide-content" id="topico3">
-                    Não tome medicamentos sem orientação
-                    profissional. Em caso de suspeita de dengue,
-                    procure uma unidade de saúde para receber
-                    a orientação adequada.
-                </div>
+                </a>
             </div>
 
             <div class="guide-item">
-                <div class="guide-link" onclick="abrirTopico(4)">
+                <a class="guide-link" href="agente.html">
                     <div>
                         <h3>Receber o agente</h3>
                         <p>Entenda a importância da visita e como
                         colaborar.</p>
                     </div>
                     <span class="arrow">›</span>
-                </div>
-
-                <div class="guide-content" id="topico4">
-                    Permita a entrada do agente de combate
-                    às endemias, acompanhe as orientações
-                    e colabore com a identificação de possíveis
-                    focos do mosquito.
-                </div>
+                </a>
             </div>
 
             <div class="guide-item">
-                <div class="guide-link" onclick="abrirTopico(5)">
+                <a class="guide-link" href="repelentes.html">
                     <div>
                         <h3>Repelente</h3>
                         <p>Veja como o uso pode ajudar na
                         prevenção</p>
                     </div>
                     <span class="arrow">›</span>
-                </div>
-
-                <div class="guide-content" id="topico5">
-                    Utilize repelentes registrados e siga
-                    as instruções do rótulo. O repelente é
-                    uma medida complementar e não substitui
-                    a eliminação dos criadouros.
-                </div>
+                </a>
             </div>
 
         </section>
@@ -434,21 +407,7 @@ button, input, select, textarea {
 <script>
 
 function abrirTopico(numero) {
-
-    let id = numero === 0 ? "topico1" : "topico" + numero;
-
-    let conteudo = document.getElementById(id);
-
-    if (conteudo) {
-        conteudo.classList.toggle("ativo");
-    }
-
-    if (numero === 0 && conteudo) {
-        conteudo.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
-    }
+    document.getElementById("topico" + numero)?.classList.toggle("ativo");
 }
 
 </script>

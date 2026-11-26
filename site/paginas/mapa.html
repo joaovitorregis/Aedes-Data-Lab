@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Mapa de ocorrências | Aedes Lab</title>
-
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
     <link rel="stylesheet" href="../css/mapa.css">
 </head>
 
@@ -98,8 +101,8 @@
             </p>
 
             <div class="top-buttons">
-                <button id="openFilters" class="filter-button">
-                    Filtros
+                <button id="openFilters" class="filter-button" type="button">
+                     Filtros <span id="filterCount" class="filter-count" hidden></span>
                 </button>
 
                 <button id="centerMap" class="center-button">
@@ -109,45 +112,14 @@
 
             <!-- MAPA -->
 
-            <div class="map">
+            <div id="mapa" class="map">
 
-                <div class="vertical-line line-v1"></div>
-                <div class="vertical-line line-v2"></div>
-                <div class="vertical-line line-v3"></div>
+    <div class="map-legend">
+        <span class="legend-dot"></span>
+        <span>Localização aproximada dos relatos</span>
+    </div>
 
-                <div class="horizontal-line line-h1"></div>
-                <div class="horizontal-line line-h2"></div>
-                <div class="horizontal-line line-h3"></div>
-                <div class="horizontal-line line-h4"></div>
-                <div class="horizontal-line line-h5"></div>
-                <div class="horizontal-line line-h6"></div>
-
-                <div class="location location-1">
-                    <span></span>
-                </div>
-
-                <div class="location location-2">
-                    <span></span>
-                </div>
-
-                <div class="location location-3">
-                    <span></span>
-                </div>
-
-                <div class="location location-4">
-                    <span></span>
-                </div>
-
-                <div class="location location-5">
-                    <span></span>
-                </div>
-
-                <div class="map-legend">
-                    <span class="legend-dot"></span>
-                    <span>Localização aproximada dos relatos</span>
-                </div>
-
-            </div>
+</div>
 
             <p class="map-description">
                 Relatos de cidadãos e agentes; não são focos confirmados.
@@ -241,141 +213,56 @@
 
     </main>
 
+<!-- FILTROS -->
+<dialog id="filtros" class="filtros">
+    <form method="dialog">
 
-    <!-- POPUP DE FILTROS -->
-
-    <div id="filterOverlay" class="filter-overlay">
-
-        <div class="filter-modal">
-
-            <div class="modal-header">
-
-                <h2>Filtros</h2>
-
-                <button id="closeFilters" class="back-button">
-                    ←
-                </button>
-
-            </div>
-
-
-            <!-- PERÍODO -->
-
-            <div class="filter-category">
-
-                <button class="category-button">
-                    Período
-                    <span class="arrow">⌄</span>
-                </button>
-
-                <div class="category-options">
-
-                    <label>
-                        <input type="checkbox" name="period" value="Hoje">
-                        Hoje
-                    </label>
-
-                    <label>
-                        <input type="checkbox" name="period" value="Últimos 7 dias">
-                        Últimos 7 dias
-                    </label>
-
-                    <label>
-                        <input type="checkbox" name="period" value="Últimos 30 dias">
-                        Últimos 30 dias
-                    </label>
-
-                    <label>
-                        <input type="checkbox" name="period" value="Todos os períodos">
-                        Todos os períodos
-                    </label>
-
-                </div>
-
-            </div>
-
-
-            <!-- LOCALIDADES -->
-
-            <div class="filter-category">
-
-                <button class="category-button">
-                    Localidades
-                    <span class="arrow">⌄</span>
-                </button>
-
-                <div class="category-options">
-
-                    <label>
-                        <input type="checkbox" name="locality" value="Centro">
-                        Centro
-                    </label>
-
-                    <label>
-                        <input type="checkbox" name="locality" value="Zona rural">
-                        Zona rural
-                    </label>
-
-                    <label>
-                        <input type="checkbox" name="locality" value="Bairros">
-                        Bairros
-                    </label>
-
-                </div>
-
-            </div>
-
-
-            <!-- STATUS -->
-
-            <div class="filter-category">
-
-                <button class="category-button">
-                    Status
-                    <span class="arrow">⌄</span>
-                </button>
-
-                <div class="category-options">
-
-                    <label>
-                        <input type="checkbox" name="status" value="Em análise">
-                        Em análise
-                    </label>
-
-                    <label>
-                        <input type="checkbox" name="status" value="Finalizada">
-                        Finalizada
-                    </label>
-
-                    <label>
-                        <input type="checkbox" name="status" value="Em processamento">
-                        Em processamento
-                    </label>
-
-                    <label>
-                        <input type="checkbox" name="status" value="Não visualizada">
-                        Não visualizada
-                    </label>
-
-                </div>
-
-            </div>
-
-
-            <div class="modal-footer">
-
-                <button id="applyFilters" class="conclude-button">
-                    concluir
-                </button>
-
-            </div>
-
+        <div class="filtros-topo">
+            <h2>Filtros</h2>
+            <button class="filtros-fechar" aria-label="Fechar">×</button>
         </div>
 
-    </div>
+        <fieldset>
+            <legend>Período</legend>
+            <div class="chips">
+                <label><input type="radio" name="period" value="" checked><span>Todos</span></label>
+                <label><input type="radio" name="period" value="Hoje"><span>Hoje</span></label>
+                <label><input type="radio" name="period" value="Últimos 7 dias"><span>7 dias</span></label>
+                <label><input type="radio" name="period" value="Últimos 30 dias"><span>30 dias</span></label>
+            </div>
+        </fieldset>
 
+        <label class="campo">
+            Localidade
+            <select name="locality">
+                <option value="">Todas as localidades</option>
+                <option>Centro</option>
+                <option>Zona rural</option>
+                <option>Bairros</option>
+            </select>
+        </label>
 
-    <script type="module" src="../js/cidadao/mapa.js"></script>
+        <fieldset>
+            <legend>Status</legend>
+            <div class="chips">
+                <label><input type="checkbox" name="status" value="Em análise"><span>Em análise</span></label>
+                <label><input type="checkbox" name="status" value="Finalizada"><span>Finalizada</span></label>
+                <label><input type="checkbox" name="status" value="Em processamento"><span>Em processamento</span></label>
+                <label><input type="checkbox" name="status" value="Não visualizada"><span>Não visualizada</span></label>
+            </div>
+        </fieldset>
+
+        <div class="filtros-acoes">
+            <button type="reset" class="limpar">Limpar</button>
+            <button id="applyFilters" class="aplicar">Concluir</button>
+        </div>
+
+    </form>
+</dialog>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script type="module" src="../js/cidadao/mapa.js"></script>
 
 </body>
 </html>

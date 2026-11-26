@@ -1,8 +1,8 @@
 /* Tela do jogo (trabalho da Laura). Carregado só em jogo.html. */
-.pagina-jogo-corpo { margin: 0; font-family: Arial, Helvetica, sans-serif; background-color: #eaf4ff; }
+.pagina-jogo-corpo { margin: 0; font-family: Arial, Helvetica, sans-serif; background-color: #fcf8f3; }
 .pagina-jogo-corpo * { box-sizing: border-box; }
 
-.cabecalho { width: 100%; min-height: 75px; padding: 10px 25px; display: flex; align-items: center; justify-content: space-between; background-color: #dce5f5; }
+.cabecalho { width: 100%; min-height: 75px; padding: 10px 25px; display: flex; align-items: center; justify-content: space-between; background-color: #fcf8f3; }
 .cabecalho-marca { display: flex; align-items: center; gap: 12px; }
 .logo-link { display: flex; }
 .cabecalho .logo { width: 65px; height: 50px; object-fit: contain; }
@@ -15,10 +15,34 @@
 
 .pagina-jogo { width: 100%; height: calc(100vh - 75px); position: relative; overflow: hidden; }
 .conteudo-principal { display: flex; align-items: center; justify-content: space-between; padding: 70px 30px 40px; position: relative; z-index: 2; }
-.texto-principal { width: 60%; max-width: 400px; }
-.texto-principal h1 { font-size: 36px; font-weight: bold; color: #264b76; margin: 0 0 25px; }
-.texto-principal h1 span { display: block; color: #e84959; }
-.texto-principal p { font-size: 17px; line-height: 1.5; color: #345b82; margin: 0 0 35px; }
+/* TÍTULO PRINCIPAL */
+.texto-principal h1 {
+    font-family: 'Arial', sans-serif;
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.18;
+    letter-spacing: -0.8px;
+    color: #264b76;
+    margin: 0 0 22px;
+}
+
+/* DESTAQUE DENGUE */
+.texto-principal h1 span {
+    display: inline;
+    color: #e84959;
+}
+
+/* TEXTO EXPLICATIVO */
+.texto-principal p {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.65;
+    letter-spacing: 0.1px;
+    color: #345b82;
+    margin: 0 0 30px;
+}
+
 
 .botao-jogar { display: inline-flex; align-items: center; justify-content: center; gap: 12px; padding: 15px 35px; background-color: #e84959; color: white; text-decoration: none; font-size: 18px; font-weight: bold; border-radius: 40px; transition: 0.3s; }
 .botao-jogar:hover { background-color: #cf3445; transform: scale(1.05); }

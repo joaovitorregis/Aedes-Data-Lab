@@ -1,0 +1,829 @@
+/* 1. CONFIGURAÇÕES GERAIS */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --verde-escuro: #315c46;
+    --verde: #64866b;
+    --verde-medio: #829b7d;
+    --verde-claro: #b4c4a9;
+    --verde-fundo: #e8eee3;
+
+    --bege: #f5f0df;
+    --bege-claro: #faf8f0;
+    --bege-escuro: #e4dcc8;
+
+    --texto: #526454;
+    --cinza: #888f86;
+    --branco: #ffffff;
+
+    --sombra: 0 3px 12px rgba(49, 92, 70, 0.10);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--bege);
+    color: var(--verde-escuro);
+}
+
+
+/* 2. CABEÇALHO */
+
+header {
+    width: 100%;
+    min-height: 82px;
+    padding: 12px 5%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: var(--bege-claro);
+    border-bottom: 1px solid var(--bege-escuro);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    color: var(--verde-escuro);
+    text-decoration: none;
+}
+
+.brand img {
+    width: 58px;
+    height: 58px;
+    object-fit: contain;
+}
+
+.brand h2 {
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.brand span {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--verde);
+}
+
+.menu-toggle {
+    border: none;
+    background: transparent;
+
+    color: var(--verde-escuro);
+    font-size: 32px;
+
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+
+/* 3. MENU RETRÁTIL */
+
+.sidebar {
+    position: fixed;
+    z-index: 1001;
+
+    top: 0;
+    right: 0;
+
+    width: min(85%, 340px);
+    height: 100vh;
+    height: 100dvh;
+
+    padding: 25px 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--bege);
+
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.12);
+
+    transform: translateX(100%);
+    visibility: hidden;
+
+    transition:
+        transform 0.3s ease,
+        visibility 0.3s ease;
+}
+
+.sidebar.open {
+    transform: translateX(0);
+    visibility: visible;
+}
+
+.sidebar-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 30px;
+}
+
+.sidebar-heading h2 {
+    font-size: 29px;
+}
+
+.close-menu {
+    border: none;
+    background: transparent;
+
+    color: var(--verde-escuro);
+    font-size: 32px;
+
+    cursor: pointer;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    padding: 15px;
+
+    border-radius: 9px;
+
+    background-color: var(--verde-claro);
+
+    color: var(--verde-escuro);
+    text-decoration: none;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    transition: background 0.2s;
+}
+
+.menu-item span {
+    width: 28px;
+    text-align: center;
+    font-size: 24px;
+}
+
+.menu-item:hover,
+.menu-item.active {
+    background-color: var(--verde-medio);
+    color: var(--branco);
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+}
+
+.user-card {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    padding: 15px;
+    margin-bottom: 15px;
+
+    background-color: var(--branco);
+    border-radius: 10px;
+}
+
+.user-avatar {
+    width: 48px;
+    height: 48px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+    background-color: var(--verde-escuro);
+    color: var(--branco);
+
+    font-size: 25px;
+}
+
+.user-card strong {
+    display: block;
+    font-size: 14px;
+}
+
+.user-card span {
+    display: block;
+    margin-top: 5px;
+
+    color: var(--cinza);
+    font-size: 12px;
+}
+
+.logout-button {
+    width: 100%;
+    padding: 14px;
+
+    border: none;
+    border-radius: 9px;
+
+    background-color: var(--verde-escuro);
+    color: var(--branco);
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    background-color: rgba(0, 0, 0, 0.4);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: 0.3s;
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* 4. CONTEÚDO PRINCIPAL */
+
+main {
+    width: 100%;
+    max-width: 950px;
+
+    margin: 0 auto;
+    padding: 25px 18px 45px;
+}
+
+.back {
+    display: inline-block;
+    margin-bottom: 28px;
+
+    color: var(--verde-escuro);
+    text-decoration: none;
+
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.back:hover {
+    text-decoration: underline;
+}
+
+.subtitle {
+    margin-bottom: 8px;
+
+    color: var(--verde);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+main > h1 {
+    max-width: 700px;
+    margin-bottom: 28px;
+
+    color: var(--verde-escuro);
+    font-size: clamp(25px, 5vw, 36px);
+    line-height: 1.2;
+}
+
+
+/* 5. BARRA DE PROGRESSO */
+
+.progress {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    max-width: 480px;
+    margin: 0 auto 30px;
+
+    position: relative;
+}
+
+.progress::before {
+    content: "";
+
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    right: 10%;
+
+    height: 3px;
+
+    background-color: var(--bege-escuro);
+
+    transform: translateY(-50%);
+}
+
+.progress .step {
+    position: relative;
+    z-index: 1;
+
+    width: 38px;
+    height: 38px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background-color: var(--bege-escuro);
+    color: var(--texto);
+
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.progress .step.active {
+    background-color: var(--verde-escuro);
+    color: var(--branco);
+}
+
+
+/* 6. FORMULÁRIO E ETAPAS */
+
+#denunciaForm {
+    width: 100%;
+}
+
+#denunciaForm > .step {
+    display: none;
+
+    padding: 25px 20px;
+
+    background-color: var(--bege-claro);
+    border: 1px solid var(--bege-escuro);
+    border-radius: 14px;
+
+    box-shadow: var(--sombra);
+}
+
+#denunciaForm > .step.active {
+    display: block;
+}
+
+.step h2 {
+    margin-bottom: 12px;
+
+    font-size: 23px;
+    color: var(--verde-escuro);
+}
+
+.step > p {
+    margin-bottom: 23px;
+
+    color: var(--texto);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.step h3 {
+    margin: 24px 0 12px;
+    font-size: 17px;
+}
+
+
+/* =========================================
+   7. CAMPOS DO FORMULÁRIO
+========================================= */
+
+.step > label:not(.option):not(.checkbox) {
+    display: block;
+
+    margin: 20px 0 8px;
+
+    color: var(--verde-escuro);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.step input:not([type="checkbox"]):not([type="file"]),
+.step select,
+.step textarea {
+    width: 100%;
+    min-height: 47px;
+
+    padding: 12px 14px;
+
+    border: 1px solid #c9d2c2;
+    border-radius: 8px;
+
+    outline: none;
+
+    background-color: var(--branco);
+    color: #435448;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.step input:focus,
+.step select:focus,
+.step textarea:focus {
+    border-color: var(--verde);
+    box-shadow: 0 0 0 3px rgba(100, 134, 107, 0.13);
+}
+
+.step input::placeholder,
+.step textarea::placeholder {
+    color: #a1a99f;
+}
+
+.step textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.step select {
+    cursor: pointer;
+}
+
+
+/* =========================================
+   8. CAMPO NÚMERO E CHECKBOX
+========================================= */
+
+.number-field {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--texto);
+    font-size: 13px;
+}
+
+.checkbox input,
+.option input {
+    width: 17px;
+    height: 17px;
+    accent-color: var(--verde-escuro);
+    cursor: pointer;
+}
+
+
+/* =========================================
+   9. MAPA
+========================================= */
+
+.map-container {
+    width: 100%;
+    min-height: 240px;
+
+    overflow: hidden;
+
+    background-color: #e2e5dc;
+    border: 1px solid #cbd4c4;
+    border-radius: 10px;
+}
+
+#map {
+    width: 100%;
+    min-height: 240px;
+}
+
+.map-instructions {
+    margin-top: 10px !important;
+
+    color: var(--cinza) !important;
+    font-size: 12px !important;
+}
+
+
+/* =========================================
+   10. OPÇÕES E FIELDSET
+========================================= */
+
+fieldset {
+    margin: 22px 0;
+    padding: 17px;
+
+    border: 1px solid var(--bege-escuro);
+    border-radius: 9px;
+}
+
+legend {
+    padding: 0 6px;
+
+    color: var(--verde-escuro);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    margin: 13px 0;
+
+    color: var(--texto);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.option input {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.hint {
+    margin: 8px 0 12px !important;
+
+    color: var(--cinza) !important;
+    font-size: 12px !important;
+}
+
+
+/* =========================================
+   11. UPLOAD DE IMAGENS
+========================================= */
+
+.upload {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+
+    padding: 20px;
+
+    border: 2px dashed #aab99f;
+    border-radius: 10px;
+
+    background-color: var(--verde-fundo);
+}
+
+.upload strong {
+    color: var(--verde-escuro);
+    font-size: 15px;
+}
+
+.upload input[type="file"] {
+    max-width: 100%;
+    font-size: 12px;
+    color: var(--texto);
+}
+
+.upload small {
+    color: var(--cinza);
+}
+
+
+/* =========================================
+   12. BOTÕES DE NAVEGAÇÃO
+========================================= */
+
+.navigation-buttons {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 12px;
+
+    margin-top: 30px;
+}
+
+.next-btn,
+.back-btn,
+.submit-btn,
+.cancel-btn {
+    min-height: 47px;
+    padding: 12px 22px;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.next-btn,
+.submit-btn {
+    background-color: var(--verde-escuro);
+    color: var(--branco);
+}
+
+.next-btn:hover,
+.submit-btn:hover {
+    background-color: #244533;
+}
+
+.back-btn {
+    background-color: var(--bege-escuro);
+    color: var(--verde-escuro);
+}
+
+.back-btn:hover {
+    background-color: #d7cbb1;
+}
+
+.cancel-btn {
+    display: block;
+    width: 100%;
+    margin-top: 15px;
+
+    background-color: transparent;
+    color: #a65d54;
+
+    border: 1px solid #d6aaa2;
+}
+
+.cancel-btn:hover {
+    background-color: #f8e9e6;
+}
+
+
+/* =========================================
+   13. REVISÃO DA DENÚNCIA
+========================================= */
+
+.review-section {
+    margin: 20px 0;
+    padding: 20px;
+
+    background-color: var(--verde-fundo);
+    border: 1px solid #d2ddcb;
+    border-radius: 10px;
+}
+
+.review-section h3 {
+    margin: 0 0 17px;
+    color: var(--verde-escuro);
+}
+
+.review-section p {
+    margin: 12px 0;
+
+    color: var(--texto);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.review-section strong {
+    color: var(--verde-escuro);
+}
+
+
+/* =========================================
+   14. MENSAGENS DE RESULTADO
+========================================= */
+
+.result {
+    padding: 30px 20px;
+
+    text-align: center;
+
+    background-color: var(--bege-claro);
+    border: 1px solid var(--bege-escuro);
+    border-radius: 14px;
+
+    box-shadow: var(--sombra);
+}
+
+.result h1 {
+    margin-bottom: 20px;
+    font-size: 25px;
+}
+
+.result h2 {
+    margin: 15px 0;
+    font-size: 19px;
+}
+
+.result > p {
+    margin: 12px 0;
+
+    color: var(--texto);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.success-icon,
+.error-icon {
+    width: 65px;
+    height: 65px;
+
+    display: grid;
+    place-items: center;
+
+    margin: 20px auto;
+
+    border-radius: 50%;
+
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.success-icon {
+    background-color: #dcebd8;
+    color: #397448;
+}
+
+.error-icon {
+    background-color: #f5dfdc;
+    color: #b34e43;
+}
+
+.error-title {
+    color: #a9443b;
+}
+
+.protocol {
+    margin: 25px 0;
+    padding: 20px;
+
+    background-color: var(--verde-fundo);
+    border-radius: 10px;
+}
+
+.protocol h3 {
+    margin-bottom: 12px;
+}
+
+.protocol p {
+    margin: 8px 0;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.result button {
+    width: 100%;
+    min-height: 46px;
+
+    margin: 8px 0;
+    padding: 12px;
+
+    border: none;
+    border-radius: 8px;
+
+    background-color: var(--verde-escuro);
+    color: var(--branco);
+
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+/* =========================================
+   15. RODAPÉ
+========================================= */
+
+footer {
+    padding: 20px;
+
+    background-color: var(--verde-escuro);
+    color: var(--branco);
+
+    text-align: center;
+}
+
+footer p {
+    font-size: 12px;
+}
+
+/* =========================================
+   16. ACESSIBILIDADE
+========================================= */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #89a982;
+    outline-offset: 3px;
+}
+
+[hidden] {
+    display: none !important;
+}

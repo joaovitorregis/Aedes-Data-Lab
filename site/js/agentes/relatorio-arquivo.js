@@ -44,8 +44,18 @@ const paraPdf = (v) => String(v).replace(/[’‘]/g, "'").replace(/[“”]/g, 
 
 async function logo() {
   try {
-    const blob = await (await fetch("/assets/imagens/logo-aedes-datalab.jpeg")).blob();
-    return await new Promise((ok) => { const l = new FileReader(); l.onload = () => ok(l.result); l.readAsDataURL(blob); });
+    const blob = await (await fetch("/assets/imagens/logo.webp")).blob();
+    const imagem = await createImageBitmap(blob);
+    // O PDF recebe JPEG: desenha a logo sobre fundo branco, sem distorcer.
+    const tela = document.createElement("canvas");
+    tela.width = tela.height = 300;
+    const pincel = tela.getContext("2d");
+    pincel.fillStyle = "#fff";
+    pincel.fillRect(0, 0, 300, 300);
+    const escala = 300 / Math.max(imagem.width, imagem.height);
+    const largura = imagem.width * escala, altura = imagem.height * escala;
+    pincel.drawImage(imagem, (300 - largura) / 2, (300 - altura) / 2, largura, altura);
+    return tela.toDataURL("image/jpeg", 0.92);
   } catch {
     return null; // sem a logo o relatório continua válido
   }

@@ -1,49 +1,153 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Entrada do jogo | Aedes Data Lab</title>
-  <link rel="stylesheet" href="../css/estilos.css">
-  <link rel="stylesheet" href="../css/jogo.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Entrada do jogo | Aedes Data Lab</title>
+    <link rel="icon" href="../assets/imagens/logo.webp" type="image/webp">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/jogo.css">
 </head>
+
 <body class="pagina-jogo-corpo">
-  <header class="cabecalho">
-    <div class="cabecalho-marca">
-      <a href="../inicio.html" class="logo-link">
-        <img src="../assets/imagens/jogo/logo.png" alt="Logo Aedes Datalab" class="logo">
-      </a>
-      <div class="marca-textos">
-        <span class="marca-titulo">Aedes Datalab</span>
-        <span class="marca-subtitulo">Itambé-PE</span>
-      </div>
+
+    <header class="cabecalho">
+<img src="../assets/imagens/logo.webp" alt="Logo Aedes Data Lab">
+
+
+        <div class="cabecalho-marca">
+
+            
+            </a>
+
+            <div class="marca-textos">
+                <span class="marca-titulo">Aedes Datalab</span>
+                <span class="marca-subtitulo">Itambé-PE</span>
+            </div>
+
+        </div>
+
+       <button
+    class="menu-botao"
+    type="button"
+    aria-label="Abrir menu"
+    aria-expanded="false"
+    aria-controls="menu-lateral"
+>
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
+
+<div class="menu-fundo" hidden></div>
+
+<aside
+    class="menu-lateral"
+    id="menu-lateral"
+    aria-label="Menu de navegação"
+    aria-hidden="true"
+    inert
+>
+    <div class="menu-topo">
+        <h1>Menu</h1>
     </div>
-    <button type="button" class="menu-toggle" aria-label="Abrir menu de navegação">
-      <span class="linha"></span>
-      <span class="linha"></span>
-      <span class="linha"></span>
-    </button>
-  </header>
 
-  <footer>
-    <!-- Construir o rodapé quando necessário. -->
-  </footer>
+    <nav>
+        <a href="../inicio.html" class="menu-link">
+            <span><img src="../assets/imagens/início.ico" alt=""></span> Início
+        </a>
 
-  <script type="module" src="../js/cidadao/jogo.js"></script>
-  <main class="pagina-jogo">
-    <section class="conteudo-principal">
-      <div class="texto-principal">
-        <h1>Vamos combater a <span>dengue?</span></h1>
-        <p>Aprenda de forma divertida como prevenir a dengue e faça a diferença na sua comunidade!</p>
-        <a href="#" class="botao-jogar"><span class="icone-jogo">🎮</span> Jogue aqui!</a>
-      </div>
-      <div class="imagem-mosquito">
-        <img src="../assets/imagens/jogo/sinal-nao-mosquitos.png" alt="Sinal de proibido mosquitos">
-      </div>
-    </section>
-    <section class="paisagem">
-      <img src="../assets/imagens/jogo/paisagem.png" alt="Paisagem de uma comunidade">
-    </section>
-  </main>
+        <a href="registrar-foco.html" class="menu-link">
+            <span><img src="../assets/imagens/registrar-foco.ico" alt=""></span> Registrar foco
+        </a>
+
+        <a href="mapa.html" class="menu-link">
+            <span><img src="../assets/imagens/mapa.ico" alt=""></span> Mapa
+        </a>
+
+        <a href="guia-aedes.html" class="menu-link">
+            <span><img src="../assets/imagens/guia-aedes.ico" alt=""></span> Guia Aedes
+        </a>
+
+        <a href="quem-somos.html" class="menu-link">
+            <span><img src="../assets/imagens/quem-somos.ico" alt=""></span> Quem somos
+        </a>
+
+        <a href="jogo.html" class="menu-link">
+            <span><img src="../assets/imagens/controle.ico" alt=""></span> Jogo
+        </a>
+    </nav>
+
+    <div class="menu-rodape">
+        <div class="usuario-info">
+            <div class="usuario-icone"><img src="../assets/imagens/perfil-icon.ico" alt=""></div>
+            <div>
+                <strong>Nome do usuário</strong>
+                <p>Cidadão</p>
+            </div>
+        </div>
+
+        <button class="botao-sair" type="button">
+            Sair
+        </button>
+    </div>
+</aside>
+
+    </header>
+
+    <main class="pagina-jogo">
+
+        <section class="conteudo-principal">
+
+            <div class="texto-principal">
+
+                <h1>
+                    Vamos combater a
+                    <span>dengue?</span>
+                </h1>
+
+                <p>
+                    Aprenda de forma divertida como prevenir a dengue
+                    e faça a diferença na sua comunidade!
+                </p>
+
+                <a href="https://play.google.com/store/apps/details?id=com.icepi.jogodengue" class="botao-jogar" target="_blank">
+    <span class="icone-jogo">🎮</span>
+    Jogue aqui!
+</a>
+
+            </div>
+
+            <div class="imagem-mosquito">
+
+           <img src="../assets/imagens/sinal-nao-mosquitos.webp" alt="nao mosquito">
+             
+
+            </div>
+
+        </section>
+
+        <section class="paisagem">
+
+           <img src="../assets/imagens/paisagem.webp" alt="Descrição">
+            <img src="../assets/imagens/paisagem.webp"
+                 alt="Paisagem de uma comunidade">
+
+        </section>
+
+    </main>
+
+    <footer>
+    </footer>
+
+    <script src="../js/compartilhado/menu-estatico.js" defer></script>
+   
 </body>
 </html>

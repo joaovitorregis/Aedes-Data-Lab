@@ -1,5 +1,17 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+body {
+    font-family: "Inter", system-ui, sans-serif;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+/* O Leaflet define fontes próprias; o mapa usa a mesma do site. */
+.leaflet-container,
+.leaflet-container .leaflet-control-zoom a {
+    font-family: "Inter", system-ui, sans-serif;
+}
 
 :root {
     --background: #f5f0e2;
@@ -24,6 +36,7 @@ header {
 header img {
     width: 50px;
     height: 50px;
+    object-fit: contain;
 }
 
 header p {
@@ -143,6 +156,13 @@ header p {
     text-align: center;
 }
 
+.menu-lateral img {
+    display: block;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+}
+
 .menu-link:hover,
 .menu-link:focus-visible {
     background: #91a787;
@@ -202,7 +222,7 @@ body.menu-aberto {
 
 body {
     background: var(--background);
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", system-ui, sans-serif;
     color: #20392e;
 }
 
@@ -306,7 +326,7 @@ body {
 .filtros legend, .filtros .campo { font-size: 13px; font-weight: 600; color: var(--dark-green); }
 .filtros legend { margin-bottom: 8px; }
 .filtros .campo { display: flex; flex-direction: column; gap: 6px; }
-.filtros select { min-height: 44px; padding: 0 12px; border: 1px solid var(--border); border-radius: 8px; background: #fff; font: 400 14px 'Inter', sans-serif; }
+.filtros select { min-height: 44px; padding: 0 12px; border: 1px solid var(--border); border-radius: 8px; background: #fff; font: 400 14px "Inter", system-ui, sans-serif; }
 
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chips label { position: relative; cursor: pointer; }

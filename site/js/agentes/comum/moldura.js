@@ -78,7 +78,7 @@ function navegacao() {
 function cabecalho(sessao) {
   return el("header", { class: "topo" },
     el("a", { class: "topo__marca", href: ROTAS.ocorrencias },
-      el("img", { src: "/assets/imagens/logo-aedes-datalab.jpeg", alt: "", width: "40", height: "40" }),
+      el("img", { src: "/assets/imagens/logo.webp", alt: "", width: "50", height: "50" }),
       el("span", {}, el("strong", {}, "Aedes Lab"), el("small", {}, "Área do agente"))),
     navegacao(),
     el("button", { type: "button", class: "botao-menu", "aria-label": "Abrir menu", onclick: () => abrirMenu(sessao) }, icone("menu")));

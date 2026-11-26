@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guia Aedes | Aedes Data Lab</title>
+<link rel="icon" href="../assets/imagens/logo.webp" type="image/webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 
 <style>
 * {
@@ -13,7 +17,7 @@
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Inter", system-ui, sans-serif;
     background: #f6f0e2;
     color: #2a2e32;
 }
@@ -46,9 +50,6 @@ header {
 .logo {
     width: 50px;
     height: 50px;
-    border: 2px solid #31532b;
-    border-radius: 50%;
-    background: #fffdf4;
     object-fit: contain;
 }
 
@@ -238,6 +239,7 @@ h1 {
     .logo {
         width: 50px;
         height: 50px;
+        object-fit: contain;
     }
 
     .logo-text h2 {
@@ -260,6 +262,10 @@ h1 {
         font-size: 14px;
     }
 }
+
+button, input, select, textarea {
+  font-family: inherit;
+}
 </style>
 <link rel="stylesheet" href="../css/estilos.css">
 </head>
@@ -271,7 +277,7 @@ h1 {
     <header>
         <div class="logo-area">
             <img class="logo"
-                 src="../assets/imagens/logo.jpg"
+                 src="../assets/imagens/logo.webp"
                  alt="Logo Aedes Data Lab">
 
             <div class="logo-text">

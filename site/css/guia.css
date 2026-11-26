@@ -108,20 +108,22 @@
   object-fit: cover;
 }
 
-/* A foto do agente é mais alta no Figma */
-.pagina-guia .guia-midia img[src$="guia-agente.webp"] {
-  aspect-ratio: 325 / 159;
-}
-
 /* Recorte mais baixo para mostrar o balde e o prato */
 .pagina-guia .guia-midia img[src$="balde.jpg"] {
   object-position: center 85%;
 }
 
-.pagina-guia .guia-midia figcaption {
-  padding: 8px 0 10px;
-  border-bottom: 1px solid #D9CBB0;
-  font-size: 12px;
+/* Player do YouTube, com a prévia do vídeo */
+.pagina-guia .guia-video {
+  margin-top: 14px;
+}
+
+.pagina-guia .guia-video iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 8px;
 }
 
 /* Orientações */

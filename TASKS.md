@@ -126,7 +126,7 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 - [ ] TASK-015g Desenhar a tela única de erro da área do agente (D55) · desenhado no Figma em 15/11/2026, a validar
 - [ ] TASK-016 Retirar "Programar visita", a caixa "Conclusão" e o botão "Salvar conclusão e marcar atendimento" da tela 46; a conclusão passa a ser feita em Registrar visita (D28)
 - [ ] TASK-016a Retirar a tela 42 (mapa do agente), que passa a ficar dentro de Ocorrências (RF-AGE-01)
-- [ ] TASK-016b Trocar os bairros fictícios das telas (Centro, São José, Torre, Bongi) pelos 15 bairros de Itambé (D33)
+- [ ] TASK-016b Trocar os bairros fictícios das telas (São José, Torre, Bongi) pelos 16 bairros de Itambé (D33)
 - [ ] TASK-018 Corrigir, nas telas antigas, o endereço da barra do navegador e os textos de Quem somos que ainda citam outro projeto (telas 01 a 06 e outras)
 - [ ] TASK-019 Colocar as camadas do Portal técnico dentro do frame e exportar de novo (tela 45)
 
@@ -145,7 +145,7 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 
 - [ ] TASK-030 Definir o formato de uma denúncia (público, privado, eventos e visitas) em `js/servicos/`
 - [ ] TASK-031 Serviço fictício que atende os contratos da ARCHITECTURE, seção 5, incluindo `enviarCodigo` e `confirmarCodigo` (código simulado), `registrarVisita`, `registrarFocoSemDenuncia`, `encerrarSemAcesso`, `arquivarOcorrencia`, `voltarAoMapa`, `solicitarAcessoCorrecao`, `confirmarAcessoCorrecao`, `listarOcorrenciasProximas`, `obterOcorrencia`, `corrigirCamposDenuncia` e `dadosRelatorio`
-- [ ] TASK-032 Criar `js/dominio/` com etapas (incluindo Encerrada), regra de território provisória, cálculo da célula de 200 m (D43), catálogo dos 15 bairros e opções da visita na linguagem do cidadão (onde está o foco, recipientes, o que foi feito; D53)
+- [ ] TASK-032 Criar `js/dominio/` com etapas (incluindo Encerrada), regra de território provisória, cálculo da célula de 200 m (D43), catálogo dos 16 bairros e opções da visita na linguagem do cidadão (onde está o foco, recipientes, o que foi feito; D53)
 - [ ] TASK-033 Dados fictícios com ocorrências em todas as etapas, visitas com e sem acesso, uma ocorrência com três tentativas, duas denúncias a menos de 150 m, uma arquivada há 25 dias e outra arquivada há 31 dias (lixeira, D44) e uma ocorrência feita por agente (D51)
 
 ## Fase 4 · Fatia vertical 1: da denúncia ao mapa (dados fictícios)

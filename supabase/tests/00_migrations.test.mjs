@@ -4,5 +4,5 @@ const db = await criarBanco();
 
 await teste('todas as migrations aplicam sem erro', async () => {
   const r = await db.query("select count(*)::int n from public.neighborhoods");
-  igual(r.rows[0].n, 15);
+  igual(r.rows[0].n, 16);
 });

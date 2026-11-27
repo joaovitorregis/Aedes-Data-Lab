@@ -277,32 +277,6 @@ function updateReview() {
 
     addItem("Onde está o foco", selects1[1]?.selectedOptions[0]?.text);
 
-    // Centro inicial: Itambé - PE
-const map = L.map('map').setView([-7.414, -35.104], 14);
-
-// Carregar mapa
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap'
-}).addTo(map);
-
-// Localização do usuário
-map.locate({
-    setView: true,
-    maxZoom: 16
-});
-
-// Criar pin
-map.on('locationfound', function(e) {
-    L.marker(e.latlng)
-        .addTo(map)
-        .bindPopup('Você está aqui!')
-        .openPopup();
-});
-
-// Erro de localização
-map.on('locationerror', function() {
-    console.log('Não foi possível acessar sua localização.');
-});
     addItem(
         "Localização no mapa",
         "Consulte a marcação realizada no mapa."
@@ -573,3 +547,40 @@ window.goToEmailVerification = goToEmailVerification;
 window.backToPersonalData = backToPersonalData;
 window.confirmEmailCode = confirmEmailCode;
 window.resendCode = resendCode;
+
+
+// ==========================================
+// MAPA
+// ==========================================
+
+// Só inicia quando a página carregar o Leaflet
+if (window.L) {
+
+    // Centro inicial: Itambé - PE
+    const map = L.map('map').setView([-7.414, -35.104], 14);
+
+    // Carregar mapa
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+
+    // Localização do usuário
+    map.locate({
+        setView: true,
+        maxZoom: 16
+    });
+
+    // Criar pin
+    map.on('locationfound', function(e) {
+        L.marker(e.latlng)
+            .addTo(map)
+            .bindPopup('Você está aqui!')
+            .openPopup();
+    });
+
+    // Erro de localização
+    map.on('locationerror', function() {
+        console.log('Não foi possível acessar sua localização.');
+    });
+
+}

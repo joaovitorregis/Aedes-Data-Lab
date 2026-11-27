@@ -367,6 +367,11 @@ header {
     font-size: 65px;
 }
 
+.image-placeholder img {
+    max-width: 100%;
+    height: auto;
+}
+
 .team-image figcaption {
     margin-top: 6px;
     font-size: 12px;

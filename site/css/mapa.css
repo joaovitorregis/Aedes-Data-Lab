@@ -25,195 +25,6 @@ button, input, select, textarea {
     --gray: #75808a;
 }
 
-header {
-    background: #fbfaf6;
-    padding: 15px 7%;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-header img {
-    width: 50px;
-    height: 50px;
-    object-fit: contain;
-}
-
-header p {
-    color: #518064;
-}
-
-/* DESGRAÇA DO MENU */
-
-.menu-botao {
-    width: 42px;
-    height: 42px;
-    border: none;
-    background: transparent;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-    cursor: pointer;
-    z-index: 10;
-    margin-left: auto;
-}
-
-.menu-botao span {
-    width: 27px;
-    height: 3px;
-    background: #587663;
-    border-radius: 5px;
-}
-
-.menu-fundo {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.20);
-    z-index: 1000;
-}
-
-.menu-fundo[hidden] {
-    display: none;
-}
-
-.menu-lateral {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: min(340px, 85vw);
-    height: 100vh;
-    height: 100dvh;
-    box-sizing: border-box;
-    background: #f5efdf;
-    z-index: 1001;
-    padding: 30px 24px;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-
-    transform: translateX(100%);
-    visibility: hidden;
-    transition: transform 0.3s ease, visibility 0.3s ease;
-}
-
-.menu-lateral.aberto {
-    transform: translateX(0);
-    visibility: visible;
-}
-
-.menu-topo {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-}
-
-.menu-topo h1 {
-    color: #315440;
-    font-size: 32px;
-    margin: 0;
-}
-
-.usuario-icone {
-    width: 42px;
-    height: 42px;
-    background: #315440;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 25px;
-    flex-shrink: 0;
-}
-
-.menu-lateral nav {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.menu-link {
-    min-height: 50px;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 12px;
-    background: #a9b99b;
-    border-radius: 6px;
-    color: #315440;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.menu-link span {
-    font-size: 25px;
-    width: 28px;
-    text-align: center;
-}
-
-.menu-lateral img {
-    display: block;
-    width: auto;
-    height: auto;
-    margin: 0 auto;
-}
-
-.menu-link:hover,
-.menu-link:focus-visible {
-    background: #91a787;
-    outline: 2px solid #315440;
-    outline-offset: 2px;
-}
-
-.menu-rodape {
-    margin-top: auto;
-    padding-top: 30px;
-}
-
-.usuario-info {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 12px;
-    background: #fcfaf5;
-    border-radius: 8px;
-    color: #315440;
-    font-size: 13px;
-}
-
-.usuario-info p {
-    margin: 5px 0 0;
-    color: #49805e;
-}
-
-.botao-sair {
-    width: 100%;
-    padding: 14px;
-    margin-top: 35px;
-    border: none;
-    border-radius: 6px;
-    background: #49805e;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.botao-sair:hover,
-.botao-sair:focus-visible {
-    background: #315440;
-}
-
-body.menu-aberto {
-    overflow: hidden;
-}
-
-
 * {
     margin: 0;
     padding: 0;
@@ -227,42 +38,6 @@ body {
 }
 
 /* HEADER */
-
-.top-header {
-    background: #fbfaf6;
-    padding: 15px 7%;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.logo-icon {
-    width: 48px;
-    height: 48px;
-    background: #edf0df;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 25px;
-}
-
-.logo h3 {
-    font-size: 17px;
-    color: #30343a;
-}
-
-.logo p {
-    color: var(--green);
-    font-size: 13px;
-    margin-top: 2px;
-}
 
 /* MAIN */
 
@@ -492,73 +267,6 @@ button:active {
     transform: scale(0.99);
 }
 
-/* OCCURRENCES SECTION */
-
-.occurrences-section {
-    display: none;
-    background: #fbfaf6;
-    border-radius: 30px;
-    padding: 18px 22px 25px;
-    margin: 60px auto 0;
-    width: 96%;
-}
-
-.occurrences-section.visible {
-    display: block;
-    animation: appear 0.35s ease;
-}
-
-@keyframes appear {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.occurrences-section h2 {
-    font-size: 36px;
-    font-weight: 800;
-    color: var(--dark-green);
-}
-
-.statistics {
-    margin-top: 14px;
-    margin-bottom: 25px;
-}
-
-.statistics p {
-    font-size: 20px;
-    color: var(--green);
-    line-height: 1.2;
-}
-
-.occurrences-list {
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-}
-
-.occurrence-card {
-    width: 100%;
-}
-
-.summary-button {
-    width: 100%;
-    min-height: 44px;
-    background: var(--background);
-    border: none;
-    border-radius: 8px;
-    color: var(--dark-green);
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
 /* FILTER OVERLAY */
 
 .filter-overlay {
@@ -707,22 +415,9 @@ button:active {
         font-size: 25px;
     }
 
-    .occurrences-section {
-        margin-top: 60px;
-        padding: 15px 22px 25px;
-    }
 
-    .occurrences-section h2 {
-        font-size: 36px;
-    }
 
-    .statistics p {
-        font-size: 20px;
-    }
 
-    .summary-button {
-        font-size: 19px;
-    }
 
     .filter-overlay {
         padding-top: 46px;
@@ -756,11 +451,53 @@ button:active {
 
 .situacao { margin-top: 12px; font-size: 13px; font-weight: 600; }
 
+/* Prévia da denúncia no balão do mapa */
+
+.previa .foto {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #dce8dd;
+}
+.previa .foto img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.mais-fotos {
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+    padding: 2px 6px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.65);
+    color: #fff;
+    font-size: 11px;
+}
+
+.previa .texto { display: grid; gap: 5px; align-content: start; }
+.previa h3 { font-size: 15px; line-height: 1.25; color: var(--dark-green); }
+.previa .onde { font-size: 12px; color: #666D74; }
+.previa .descricao {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.etiquetas { display: flex; flex-wrap: wrap; gap: 6px; }
+.etiqueta { padding: 3px 10px; border-radius: 16px; background: #f1ede2; font-size: 11px; font-weight: 600; color: #2F4F3A; }
+.etiqueta:empty { display: none; }
+.etapa-recebida { background: #fff; box-shadow: inset 0 0 0 1px #2F4F3A; }
+.etapa-em_analise { background: #D9CBB0; }
+.etapa-atendida { background: #2F4F3A; color: #fff; }
+.etapa-encerrada { background: #666D74; color: #fff; }
+
+/* Balão do mapa */
+
 .previas { display: grid; gap: 14px; }
-
-.previa { display: grid; gap: 4px; font-size: 13px; }
-.previa img { width: 100%; height: 130px; object-fit: cover; border-radius: 8px; }
+.previas .previa { display: grid; gap: 8px; width: 220px; }
+.previas .foto { height: 120px; }
+.previas .foto:empty { display: none; }
 .leaflet-popup-content .previa p { margin: 0; }
-
-.occurrence-card { padding: 12px; background: #fff; border: 1px solid var(--border); border-radius: 12px; }
-
+.leaflet-container path.leaflet-interactive:focus-visible { outline: none; stroke: #1f5a7a; stroke-width: 7; }

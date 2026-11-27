@@ -23,18 +23,15 @@
     --transicao: 0.25s ease;
 }
 
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-
 html {
     scroll-behavior: smooth;
 }
-
 
 body {
     min-height: 100vh;
@@ -49,7 +46,6 @@ body {
     line-height: 1.6;
 }
 
-
 button,
 input,
 select,
@@ -57,300 +53,13 @@ textarea {
     font: inherit;
 }
 
-
 button {
     cursor: pointer;
 }
 
-
 [hidden] {
     display: none !important;
 }
-
-
-/* ==================================================
-   2. CABEÇALHO
-   ================================================== */
-
-header {
-    width: 100%;
-    min-height: 85px;
-
-    padding: 15px 6%;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    background: var(--bege-card);
-
-    border-bottom: 1px solid var(--bege-borda);
-}
-
-
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    text-decoration: none;
-    color: var(--verde-escuro);
-}
-
-
-.brand img {
-    width: 52px;
-    height: 52px;
-
-    object-fit: contain;
-}
-
-
-.brand h2 {
-    font-size: 20px;
-    font-weight: 700;
-}
-
-
-.brand span {
-    display: block;
-
-    color: var(--texto-secundario);
-
-    font-size: 13px;
-}
-
-
-.menu-toggle {
-    width: 45px;
-    height: 45px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: none;
-    border-radius: 10px;
-
-    background: var(--verde-escuro);
-    color: var(--branco);
-
-    font-size: 25px;
-
-    transition: var(--transicao);
-}
-
-
-.menu-toggle:hover {
-    background: var(--verde);
-}
-
-
-/* ==================================================
-   3. MENU RETRÁTIL
-   ================================================== */
-
-.sidebar {
-    position: fixed;
-
-    top: 0;
-    right: -320px;
-
-    width: 290px;
-    height: 100vh;
-
-    padding: 25px 20px;
-
-    display: flex;
-    flex-direction: column;
-
-    background: var(--bege-card);
-
-    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.12);
-
-    z-index: 1001;
-
-    transition: right var(--transicao);
-}
-
-
-.sidebar.open {
-    right: 0;
-}
-
-
-.sidebar-heading {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding-bottom: 22px;
-
-    border-bottom: 1px solid var(--bege-borda);
-}
-
-
-.sidebar-heading h2 {
-    color: var(--verde-escuro);
-}
-
-
-.close-menu {
-    width: 35px;
-    height: 35px;
-
-    border: none;
-    border-radius: 8px;
-
-    background: transparent;
-
-    color: var(--verde-escuro);
-
-    font-size: 28px;
-}
-
-
-.close-menu:hover {
-    background: var(--bege-fundo);
-}
-
-
-.sidebar-nav {
-    display: flex;
-    flex-direction: column;
-
-    gap: 8px;
-
-    margin-top: 25px;
-}
-
-
-.menu-item {
-    display: flex;
-    align-items: center;
-
-    gap: 12px;
-
-    padding: 13px 15px;
-
-    border-radius: 10px;
-
-    text-decoration: none;
-
-    color: var(--texto);
-
-    transition: var(--transicao);
-}
-
-
-.menu-item span {
-    font-size: 20px;
-}
-
-
-.menu-item:hover,
-.menu-item.active {
-    background: #e7ebdf;
-
-    color: var(--verde-escuro);
-
-    font-weight: 700;
-}
-
-
-.sidebar-bottom {
-    margin-top: auto;
-}
-
-
-.user-card {
-    display: flex;
-    align-items: center;
-
-    gap: 12px;
-
-    padding: 15px 5px;
-
-    border-top: 1px solid var(--bege-borda);
-}
-
-
-.user-avatar {
-    width: 40px;
-    height: 40px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background: #e5eadd;
-
-    color: var(--verde-escuro);
-
-    font-size: 20px;
-}
-
-
-.user-card strong,
-.user-card span {
-    display: block;
-}
-
-
-.user-card strong {
-    font-size: 14px;
-}
-
-
-.user-card span {
-    color: var(--texto-secundario);
-
-    font-size: 12px;
-}
-
-
-.logout-button {
-    width: 100%;
-
-    padding: 11px;
-
-    border: 1px solid var(--bege-borda);
-    border-radius: 9px;
-
-    background: transparent;
-
-    color: var(--verde-escuro);
-}
-
-
-.logout-button:hover {
-    background: var(--bege-fundo);
-}
-
-
-.menu-overlay {
-    position: fixed;
-
-    inset: 0;
-
-    background: rgba(0, 0, 0, 0.35);
-
-    opacity: 0;
-    visibility: hidden;
-
-    z-index: 1000;
-
-    transition: var(--transicao);
-}
-
-
-.menu-overlay.active {
-    opacity: 1;
-    visibility: visible;
-}
-
 
 /* ==================================================
    4. CONTEÚDO PRINCIPAL
@@ -367,7 +76,6 @@ main {
     flex: 1;
 }
 
-
 .back {
     display: inline-block;
 
@@ -380,11 +88,9 @@ main {
     text-decoration: none;
 }
 
-
 .back:hover {
     text-decoration: underline;
 }
-
 
 .subtitle {
     margin-bottom: 8px;
@@ -397,7 +103,6 @@ main {
     letter-spacing: 1.5px;
 }
 
-
 main > h1 {
     margin-bottom: 30px;
 
@@ -407,7 +112,6 @@ main > h1 {
     line-height: 1.2;
 }
 
-
 h2 {
     color: var(--verde-escuro);
 
@@ -415,18 +119,15 @@ h2 {
     line-height: 1.3;
 }
 
-
 h3 {
     color: var(--verde-escuro);
 
     font-size: 18px;
 }
 
-
 main p {
     color: var(--texto-secundario);
 }
-
 
 /* ==================================================
    5. BARRA DE PROGRESSO
@@ -443,7 +144,6 @@ main p {
 
     margin: 35px 0;
 }
-
 
 .progress .step {
     position: relative;
@@ -469,7 +169,6 @@ main p {
     transition: var(--transicao);
 }
 
-
 .progress .step:not(:last-child)::after {
     content: "";
 
@@ -486,7 +185,6 @@ main p {
     transform: translateY(-50%);
 }
 
-
 .progress .step.active {
     border-color: var(--verde-escuro);
 
@@ -495,11 +193,9 @@ main p {
     color: var(--branco);
 }
 
-
 .progress .step.active:not(:last-child)::after {
     background: var(--verde-escuro);
 }
-
 
 /* ==================================================
    6. ETAPAS DO FORMULÁRIO
@@ -508,7 +204,6 @@ main p {
 #denunciaForm {
     width: 100%;
 }
-
 
 #denunciaForm > .step {
     display: none;
@@ -525,23 +220,19 @@ main p {
     animation: aparecer 0.3s ease;
 }
 
-
 #denunciaForm > .step.active {
     display: block;
 }
 
-
 #denunciaForm > .step > h2 {
     margin-bottom: 12px;
 }
-
 
 #denunciaForm > .step > p {
     margin-bottom: 25px;
 
     line-height: 1.7;
 }
-
 
 @keyframes aparecer {
     from {
@@ -554,7 +245,6 @@ main p {
         transform: translateY(0);
     }
 }
-
 
 /* ==================================================
    7. CAMPOS E FORMULÁRIOS
@@ -570,7 +260,6 @@ main p {
     font-size: 15px;
     font-weight: 700;
 }
-
 
 #denunciaForm input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
 #denunciaForm select,
@@ -594,12 +283,10 @@ main p {
     transition: var(--transicao);
 }
 
-
 #denunciaForm input::placeholder,
 #denunciaForm textarea::placeholder {
     color: #a0a39e;
 }
-
 
 #denunciaForm input:focus,
 #denunciaForm select:focus,
@@ -609,18 +296,15 @@ main p {
     box-shadow: 0 0 0 3px rgba(49, 93, 69, 0.10);
 }
 
-
 #denunciaForm select {
     cursor: pointer;
 }
-
 
 #denunciaForm textarea {
     min-height: 120px;
 
     resize: vertical;
 }
-
 
 #denunciaForm fieldset {
     margin: 25px 0;
@@ -631,7 +315,6 @@ main p {
     border-radius: 12px;
 }
 
-
 #denunciaForm legend {
     padding: 0 8px;
 
@@ -639,7 +322,6 @@ main p {
 
     font-weight: 700;
 }
-
 
 /* ==================================================
    8. CHECKBOX E OPÇÕES
@@ -661,7 +343,6 @@ main p {
     cursor: pointer;
 }
 
-
 #denunciaForm input[type="checkbox"] {
     width: 18px;
     height: 18px;
@@ -675,7 +356,6 @@ main p {
     cursor: pointer;
 }
 
-
 .number-field {
     display: flex;
     align-items: center;
@@ -683,12 +363,10 @@ main p {
     gap: 15px;
 }
 
-
 .number-field > input {
     flex: 1;
     min-width: 0;
 }
-
 
 .number-field label.checkbox {
     display: flex;
@@ -702,7 +380,6 @@ main p {
 
     font-size: 13px;
 }
-
 
 /* ==================================================
    9. MAPA
@@ -722,13 +399,11 @@ main p {
     background: #e7e9df;
 }
 
-
 #map {
     width: 100%;
     height: 350px;
     border-radius: 12px
 }
-
 
 .map-instructions {
     margin-bottom: 25px;
@@ -736,12 +411,10 @@ main p {
     font-size: 13px;
 }
 
-
 #denunciaForm h3 {
     margin-top: 25px;
     margin-bottom: 10px;
 }
-
 
 /* ==================================================
    10. UPLOAD DE FOTOGRAFIAS
@@ -755,47 +428,52 @@ main p {
     font-size: 13px;
 }
 
+/* Fotos: tirar na hora ou escolher do aparelho */
+#denunciaForm .rotulo-fotos {
+    margin: 20px 0 8px;
+    color: var(--verde-escuro);
+    font-size: 15px;
+    font-weight: 700;
+}
 
-.upload {
-    width: 100%;
+.escolher-foto {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+}
 
-    padding: 25px;
-
+.botao-foto {
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    gap: 12px;
-
-    border: 2px dashed var(--bege-borda);
+    justify-content: center;
+    gap: 8px;
+    min-height: 96px;
+    padding: 12px;
+    border: 2px solid #315c46;
     border-radius: 12px;
-
-    background: #f7f4ed;
-
+    background: #fff;
+    color: #315c46;
+    font-size: 14px;
+    font-weight: 600;
     text-align: center;
+    cursor: pointer;
 }
 
-
-.upload strong {
-    color: var(--verde-escuro);
+.botao-camera {
+    background: #315c46;
+    color: #fff;
 }
 
-
-.upload input[type="file"] {
-    width: 100%;
-
-    padding: 10px;
-
-    color: var(--texto);
-
-    font-size: 13px;
+.botao-foto svg {
+    width: 30px;
+    height: 30px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linejoin: round;
 }
-
-
-.upload small {
-    color: var(--texto-secundario);
-}
-
 
 /* ==================================================
    11. CARTÕES DO PASSO 3
@@ -805,11 +483,9 @@ main p {
     margin-bottom: 12px;
 }
 
-
 #step3 > div > p {
     margin-bottom: 25px;
 }
-
 
 .form-card {
     width: 100%;
@@ -822,16 +498,13 @@ main p {
     background: #f9f5f0;
 }
 
-
 .form-card label {
     margin-top: 25px !important;
 }
 
-
 .form-card label:first-child {
     margin-top: 0 !important;
 }
-
 
 .privacy-text {
     margin: 25px 0;
@@ -842,7 +515,6 @@ main p {
     line-height: 1.7;
 }
 
-
 /* ==================================================
    12. CONFIRMAÇÃO DO E-MAIL
    ================================================== */
@@ -851,16 +523,13 @@ main p {
     animation: aparecer 0.3s ease;
 }
 
-
 #confirmacaoEmail > .back-btn {
     margin-bottom: 30px;
 }
 
-
 #confirmacaoEmail .subtitle {
     margin-bottom: 10px;
 }
-
 
 #confirmacaoEmail h2 {
     margin-bottom: 15px;
@@ -868,13 +537,11 @@ main p {
     font-size: clamp(25px, 4vw, 38px);
 }
 
-
 #confirmacaoEmail > p {
     margin-bottom: 30px;
 
     font-size: 17px;
 }
-
 
 #emailExibido {
     color: var(--verde-escuro);
@@ -884,7 +551,6 @@ main p {
     overflow-wrap: anywhere;
 }
 
-
 #confirmacaoEmail .form-card {
     min-height: 390px;
 
@@ -893,7 +559,6 @@ main p {
     justify-content: center;
 }
 
-
 #codigoEmail {
     font-size: 20px !important;
 
@@ -901,7 +566,6 @@ main p {
 
     text-align: center;
 }
-
 
 #mensagemCodigo {
     min-height: 25px;
@@ -913,7 +577,6 @@ main p {
     font-size: 14px;
     font-weight: 700;
 }
-
 
 /* ==================================================
    13. BOTÕES
@@ -930,7 +593,6 @@ main p {
 
     margin-top: 30px;
 }
-
 
 .next-btn,
 .submit-btn {
@@ -950,14 +612,12 @@ main p {
     transition: var(--transicao);
 }
 
-
 .next-btn:hover,
 .submit-btn:hover {
     background: var(--verde);
 
     border-color: var(--verde);
 }
-
 
 .back-btn {
     min-height: 52px;
@@ -976,11 +636,9 @@ main p {
     transition: var(--transicao);
 }
 
-
 .back-btn:hover {
     background: #e9eee7;
 }
-
 
 .cancel-btn {
     width: 100%;
@@ -999,11 +657,9 @@ main p {
     font-weight: 700;
 }
 
-
 .cancel-btn:hover {
     background: #f8eaea;
 }
-
 
 /* ==================================================
    14. REVISÃO DA DENÚNCIA
@@ -1022,7 +678,6 @@ main p {
     background: #f9f5f0;
 }
 
-
 .review-section h3 {
     margin: 25px 0 15px;
 
@@ -1031,11 +686,9 @@ main p {
     border-bottom: 1px solid var(--bege-borda);
 }
 
-
 .review-section h3:first-child {
     margin-top: 0;
 }
-
 
 .review-section p {
     margin: 12px 0;
@@ -1045,11 +698,9 @@ main p {
     font-size: 14px;
 }
 
-
 .review-section strong {
     color: var(--verde-escuro);
 }
-
 
 #step4 label.consent {
     margin: 25px 0;
@@ -1062,7 +713,6 @@ main p {
 
     line-height: 1.5;
 }
-
 
 /* ==================================================
    15. TELA DE PROTOCOLO
@@ -1084,7 +734,6 @@ main p {
     animation: aparecer 0.4s ease;
 }
 
-
 .result h1 {
     margin: 15px 0 35px;
 
@@ -1093,7 +742,6 @@ main p {
     font-size: clamp(30px, 5vw, 42px);
     line-height: 1.2;
 }
-
 
 .success-icon {
     width: 75px;
@@ -1111,11 +759,9 @@ main p {
     font-weight: 700;
 }
 
-
 .result h2 {
     margin-bottom: 20px;
 }
-
 
 .result > p {
     margin: 15px 0 25px;
@@ -1123,7 +769,6 @@ main p {
     font-size: 16px;
     line-height: 1.7;
 }
-
 
 .protocol {
     width: 100%;
@@ -1139,7 +784,6 @@ main p {
     box-shadow: var(--sombra);
 }
 
-
 .protocol h3 {
     margin-bottom: 15px;
 
@@ -1149,7 +793,6 @@ main p {
 
     letter-spacing: 1px;
 }
-
 
 #protocolNumber {
     margin-bottom: 8px;
@@ -1162,7 +805,6 @@ main p {
     overflow-wrap: anywhere;
 }
 
-
 #status {
     color: var(--verde-escuro);
 
@@ -1170,11 +812,9 @@ main p {
     font-weight: 700;
 }
 
-
 .result .hint {
     margin: 30px 0;
 }
-
 
 .result > button {
     width: 100%;
@@ -1193,13 +833,11 @@ main p {
     transition: var(--transicao);
 }
 
-
 .result > button.submit-btn {
     background: var(--verde-escuro);
 
     color: var(--branco);
 }
-
 
 .result > button.back-btn {
     background: var(--branco);
@@ -1209,11 +847,9 @@ main p {
     border: none;
 }
 
-
 .result > button:hover {
     opacity: 0.85;
 }
-
 
 /* ==================================================
    16. TELA DE ERRO
@@ -1223,13 +859,11 @@ main p {
     color: var(--erro) !important;
 }
 
-
 .error-icon {
     color: var(--erro);
 
     font-size: 55px;
 }
-
 
 /* ==================================================
    17. RODAPÉ
@@ -1247,13 +881,11 @@ footer {
     text-align: center;
 }
 
-
 footer p {
     color: var(--texto-secundario);
 
     font-size: 13px;
 }
-
 
 /* ==================================================
    18. RESPONSIVIDADE - TABLETS
@@ -1261,37 +893,27 @@ footer p {
 
 @media (max-width: 768px) {
 
-    header {
-        min-height: 75px;
-
-        padding: 12px 5%;
-    }
-
+    
 
     main {
         padding: 30px 20px 45px;
     }
 
-
     #denunciaForm > .step {
         padding: 28px 22px;
     }
-
 
     .form-card {
         padding: 25px 20px;
     }
 
-
     .review-section {
         padding: 20px;
     }
 
-
     .result {
         padding: 25px;
     }
-
 
     .map-container {
         height: 300px;
@@ -1299,58 +921,39 @@ footer p {
 
 }
 
-
 /* ==================================================
    19. RESPONSIVIDADE - CELULARES
    ================================================== */
 
 @media (max-width: 480px) {
 
-    header {
-        padding: 12px 18px;
-    }
+    
 
+    
 
-    .brand img {
-        width: 43px;
-        height: 43px;
-    }
+    
 
-
-    .brand h2 {
-        font-size: 17px;
-    }
-
-
-    .brand span {
-        font-size: 11px;
-    }
-
+    
 
     main {
         padding: 25px 15px 40px;
     }
 
-
     main > h1 {
         font-size: 28px;
     }
-
 
     h2 {
         font-size: 22px;
     }
 
-
     #denunciaForm > .step {
         padding: 23px 17px;
     }
 
-
     .progress {
         margin: 25px 0;
     }
-
 
     .progress .step {
         width: 34px;
@@ -1359,11 +962,9 @@ footer p {
         font-size: 13px;
     }
 
-
     .progress .step:not(:last-child)::after {
         width: 25px;
     }
-
 
     #denunciaForm input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
     #denunciaForm select,
@@ -1373,32 +974,26 @@ footer p {
         font-size: 14px;
     }
 
-
     .number-field {
         align-items: flex-start;
         flex-direction: column;
     }
 
-
     .number-field > input {
         width: 100%;
     }
-
 
     .map-container {
         height: 250px;
     }
 
-
     .form-card {
         padding: 22px 17px;
     }
 
-
     .navigation-buttons {
         gap: 10px;
     }
-
 
     .navigation-buttons button {
         flex: 1;
@@ -1410,58 +1005,47 @@ footer p {
         font-size: 13px;
     }
 
-
     .privacy-text {
         font-size: 13px;
     }
-
 
     #confirmacaoEmail > p {
         font-size: 15px;
     }
 
-
     #codigoEmail {
         letter-spacing: 3px;
     }
-
 
     .review-section {
         padding: 17px;
     }
 
-
     .review-section p {
         font-size: 13px;
     }
-
 
     .result {
         padding: 22px 17px;
     }
 
-
     .result h1 {
         font-size: 30px;
     }
-
 
     .protocol {
         padding: 23px 18px;
     }
 
-
     #protocolNumber {
         font-size: 24px;
     }
-
 
     footer {
         padding: 18px 12px;
     }
 
 }
-
 
 /* ==================================================
    20. ACESSIBILIDADE
@@ -1476,7 +1060,6 @@ textarea:focus-visible {
 
     outline-offset: 3px;
 }
-
 
 @media (prefers-reduced-motion: reduce) {
 

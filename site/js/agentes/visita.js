@@ -200,7 +200,9 @@ function seletorDeFotos() {
   const fotos = [];
   const grade = el("div", { class: "fotos-escolhidas" });
   const aviso = el("p", { class: "campo__erro", role: "status", hidden: true });
+  const camera = el("input", { type: "file", accept: "image/*", capture: "environment", class: "so-leitor", id: "c-camera" });
   const entrada = el("input", { type: "file", accept: "image/*", multiple: true, class: "so-leitor", id: "c-fotos" });
+  const opcao = (para, desenho, texto) => el("label", { class: "adicionar-foto", for: para }, icone(desenho), texto);
   const desenhar = () => {
     grade.replaceChildren(
       ...fotos.map((f, i) => el("div", { class: "foto-escolhida" }, el("img", { src: f.url, alt: `Foto ${i + 1}` }),
@@ -209,11 +211,11 @@ function seletorDeFotos() {
           fotos.splice(i, 1);
           desenhar();
         } }, icone("fechar")))),
-      ...(fotos.length < 3 ? [el("label", { class: "adicionar-foto", for: "c-fotos" }, icone("adicionar"), "Adicionar")] : []));
+      ...(fotos.length < 3 ? [opcao("c-camera", "camera", "Tirar foto"), opcao("c-fotos", "galeria", "Escolher")] : []));
   };
-  entrada.addEventListener("change", async () => {
+  const receber = async ({ target }) => {
     aviso.hidden = true;
-    for (const arquivo of [...entrada.files].slice(0, 3 - fotos.length)) {
+    for (const arquivo of [...target.files].slice(0, 3 - fotos.length)) {
       try {
         const blob = await prepararFoto(arquivo);
         fotos.push({ blob, url: URL.createObjectURL(blob) });
@@ -222,12 +224,14 @@ function seletorDeFotos() {
         aviso.hidden = false;
       }
     }
-    entrada.value = "";
+    target.value = "";
     desenhar();
-  });
+  };
+  camera.addEventListener("change", receber);
+  entrada.addEventListener("change", receber);
   desenhar();
   const campo = el("div", { class: "campo", "data-campo": "fotos" },
-    el("span", { class: "campo__rotulo" }, "Fotos do foco (1 a 3)"), entrada, grade, aviso,
+    el("span", { class: "campo__rotulo" }, "Fotos do foco (1 a 3)"), camera, entrada, grade, aviso,
     el("p", { class: "campo__erro", id: "erro-fotos", hidden: true }));
   return { campo, fotos: () => fotos.map((f) => f.blob) };
 }

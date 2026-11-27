@@ -36,6 +36,12 @@ export function validarFotos(arquivos) {
   return "";
 }
 
+// Fotos de celular são grandes demais: o lado maior fica com até 1600 pixels.
+export function tamanhoDaFoto(largura, altura, maximo = 1600) {
+  const escala = Math.min(1, maximo / Math.max(largura, altura));
+  return { largura: Math.round(largura * escala), altura: Math.round(altura * escala) };
+}
+
 // ---------- traduções entre o formulário e o banco ----------
 // "Onde está o foco?": o banco só conhece 4 valores; o resto vira "outro" + o texto escolhido.
 const LOCAL_DO_FOCO = {

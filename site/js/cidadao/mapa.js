@@ -17,7 +17,6 @@ let categorias = new Map();
 let mapa = null;
 let camada = null;
 let voce = null;
-const circulos = new Map();
 
 function elemento(tag, texto, classe) {
   const novo = document.createElement(tag);
@@ -26,22 +25,37 @@ function elemento(tag, texto, classe) {
   return novo;
 }
 
-// prévia curta de uma denúncia (PRD, RF-MAP-01)
-function previa(d) {
-  const caixa = elemento("article", "", "previa");
+// primeira foto, ou um quadro neutro se não houver ou não carregar
+function foto(d) {
+  const quadro = elemento("div", "", "foto");
   if (d.fotos[0]) {
-    const foto = elemento("img");
-    foto.src = d.fotos[0];
-    foto.alt = "Foto da denúncia";
-    foto.loading = "lazy";
-    caixa.append(foto);
+    const imagem = elemento("img");
+    imagem.src = d.fotos[0];
+    imagem.alt = "Foto da denúncia";
+    imagem.loading = "lazy";
+    imagem.addEventListener("error", () => imagem.remove());
+    quadro.append(imagem);
   }
-  caixa.append(
-    elemento("strong", categorias.get(d.categoriaId) ?? "Ocorrência"),
-    elemento("span", `${bairros.get(d.bairroId) ?? "Itambé"} · ${formatarData(dataLocal(d.recebidaEm))}`),
-    elemento("span", `${ETAPAS[d.etapa]} · ${ORIGEM[d.origem] ?? ""}`),
-    elemento("p", d.descricao),
+  if (d.fotos.length > 1) quadro.append(elemento("span", `+${d.fotos.length - 1}`, "mais-fotos"));
+  return quadro;
+}
+
+// prévia curta de uma denúncia, mostrada no balão do mapa (PRD, RF-MAP-01)
+function previa(d) {
+  const etiquetas = elemento("div", "", "etiquetas");
+  etiquetas.append(
+    elemento("span", ETAPAS[d.etapa], `etiqueta etapa-${d.etapa}`),
+    elemento("span", ORIGEM[d.origem] ?? "", "etiqueta"),
   );
+  const texto = elemento("div", "", "texto");
+  texto.append(
+    elemento("h3", categorias.get(d.categoriaId) ?? "Ocorrência"),
+    elemento("p", `${bairros.get(d.bairroId) ?? "Itambé"} · ${formatarData(dataLocal(d.recebidaEm))}`, "onde"),
+    etiquetas,
+    elemento("p", d.descricao, "descricao"),
+  );
+  const caixa = elemento("article", "", "previa");
+  caixa.append(foto(d), texto);
   return caixa;
 }
 
@@ -50,39 +64,41 @@ function lerFiltros() {
   return { periodo: dados.get("periodo"), bairroId: dados.get("bairro"), etapas: dados.getAll("etapa") };
 }
 
+// o ponto do mapa também abre pelo teclado; Esc fecha e devolve o foco
+function ligarTeclado(circulo, conteudo, rotulo) {
+  const ponto = circulo.getElement();
+  ponto.setAttribute("tabindex", "0");
+  ponto.setAttribute("role", "button");
+  ponto.setAttribute("aria-label", rotulo);
+  ponto.addEventListener("keydown", (evento) => {
+    if (evento.key !== "Enter" && evento.key !== " ") return;
+    evento.preventDefault();
+    circulo.openPopup();
+    conteudo.focus({ preventScroll: true });
+  });
+  conteudo.tabIndex = -1;
+  conteudo.addEventListener("keydown", (evento) => {
+    if (evento.key !== "Escape") return;
+    circulo.closePopup();
+    ponto.focus({ preventScroll: true });
+  });
+}
+
 function desenharMapa(lista) {
   if (!mapa) return;
   camada.clearLayers();
-  circulos.clear();
   for (const area of agruparPorArea(lista)) {
     const conteudo = elemento("div", "", "previas");
     conteudo.append(...area.denuncias.map(previa));
     const circulo = window.L.circle([area.lat, area.lng], { radius: 100, color: "#ff0000", fillOpacity: 0.35 })
       .bindPopup(conteudo, { maxWidth: 260, maxHeight: 280 })
       .addTo(camada);
-    area.denuncias.forEach((d) => circulos.set(d.id, circulo));
+    const [primeira] = area.denuncias;
+    const local = bairros.get(primeira.bairroId) ?? "Itambé";
+    ligarTeclado(circulo, conteudo, area.denuncias.length === 1
+      ? `Abrir denúncia: ${categorias.get(primeira.categoriaId) ?? "Ocorrência"}, ${local}`
+      : `Abrir ${area.denuncias.length} denúncias em ${local}`);
   }
-}
-
-function desenharLista(lista) {
-  $("resumo").replaceChildren(...Object.entries(ETAPAS).map(([etapa, rotulo]) =>
-    elemento("p", `${rotulo}: ${lista.filter((d) => d.etapa === etapa).length}`)));
-
-  $("occurrencesList").replaceChildren(...lista.map((d) => {
-    const cartao = previa(d);
-    cartao.classList.add("occurrence-card");
-    if (mapa) {
-      const ver = elemento("button", "Ver no mapa", "summary-button");
-      ver.type = "button";
-      ver.addEventListener("click", () => {
-        $("mapa").scrollIntoView({ block: "center" });
-        mapa.setView([d.lat, d.lng], 17);
-        circulos.get(d.id)?.openPopup();
-      });
-      cartao.append(ver);
-    }
-    return cartao;
-  }));
 }
 
 function atualizar() {
@@ -94,17 +110,17 @@ function atualizar() {
 
   const lista = filtrarPublicas(denuncias, escolha);
   desenharMapa(lista);
-  desenharLista(lista);
-  if (!denuncias.length) $("situacao").textContent = "Ainda não há denúncias publicadas.";
-  else if (!lista.length) $("situacao").textContent = "Nenhuma denúncia para estes filtros.";
-  else $("situacao").textContent = lista.length === 1 ? "1 denúncia no mapa." : `${lista.length} denúncias no mapa.`;
+
+  let aviso = lista.length === 1 ? "1 denúncia no mapa." : `${lista.length} denúncias no mapa.`;
+  if (!denuncias.length) aviso = "Ainda não há denúncias publicadas.";
+  else if (!lista.length) aviso = "Nenhuma denúncia para estes filtros.";
+  $("situacao").textContent = aviso;
 }
 
 async function carregar() {
   carregado = false;
   $("situacao").textContent = "Carregando denúncias...";
   $("tentarDeNovo").hidden = true;
-  $("resumo").replaceChildren();
   try {
     const [lista, listaBairros, listaCategorias] = await Promise.all(
       [listarDenunciasPublicas(), listarBairros(), listarCategorias()]);
@@ -124,7 +140,7 @@ async function carregar() {
 
 function iniciarMapa() {
   if (!window.L) {
-    $("avisoLocal").textContent = "O mapa não carregou. A lista continua disponível.";
+    $("avisoLocal").textContent = "O mapa não carregou. Confira a internet e recarregue a página.";
     return;
   }
   mapa = window.L.map("mapa").setView(CENTRO_DO_MAPA, 14);
@@ -148,11 +164,6 @@ function centralizar() {
   }, falha, { timeout: 10000 });
 }
 
-function mostrarLista() {
-  $("occurrencesSection").classList.add("visible");
-  $("occurrencesSection").scrollIntoView({ block: "start" });
-}
-
 for (const [etapa, rotulo] of Object.entries(ETAPAS)) {
   const label = elemento("label");
   const caixa = elemento("input");
@@ -167,7 +178,6 @@ $("openFilters").addEventListener("click", () => filtros.showModal());
 filtros.addEventListener("click", (evento) => { if (evento.target === filtros) filtros.close(); });
 formFiltros.addEventListener("change", atualizar);
 formFiltros.addEventListener("reset", () => setTimeout(atualizar, 0));
-$("showOccurrences").addEventListener("click", mostrarLista);
 $("centerMap").addEventListener("click", centralizar);
 $("tentarDeNovo").addEventListener("click", carregar);
 

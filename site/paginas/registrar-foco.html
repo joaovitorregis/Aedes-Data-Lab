@@ -10,42 +10,23 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="../css/registrar-foco.css">
+  <link rel="stylesheet" href="../css/menu.css">
 </head>
 
 <body>
 
-  <!-- CABEÇALHO -->
-  <header>
-    <a href="../inicio.html" class="brand">
-      <img src="../assets/imagens/logo.webp" alt="Logo Aedes Data Lab">
-      <div>
-        <h2>Aedes Lab</h2>
-        <span>Itambé · PE</span>
-      </div>
-    </a>
-
-    <button class="menu-toggle" id="menuToggle" type="button"
-      aria-label="Abrir menu" aria-expanded="false" aria-controls="sidebar">☰</button>
-  </header>
-
-  <!-- MENU RETRÁTIL -->
-  <div class="menu-overlay" id="menuOverlay"></div>
-
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-heading">
-      <h2>Menu</h2>
-      <button class="close-menu" id="closeMenu" type="button" aria-label="Fechar menu">×</button>
+  <header class="cabecalho-site">
+    <img src="../assets/imagens/logo.webp" alt="Logo Aedes Data Lab">
+    <div>
+      <p class="cabecalho-nome">Aedes Lab</p>
+      <p class="cabecalho-cidade">Itambé · PE</p>
     </div>
-
-    <nav class="sidebar-nav">
-      <a href="../inicio.html" class="menu-item"><span>⌂</span> Início</a>
-      <a href="registrar-foco.html" class="menu-item active" aria-current="page"><span>⚑</span> Registrar foco</a>
-      <a href="mapa.html" class="menu-item"><span>▧</span> Mapa</a>
-      <a href="guia-aedes.html" class="menu-item"><span>▤</span> Guia Aedes</a>
-      <a href="quem-somos.html" class="menu-item"><span>♙</span> Quem somos</a>
-      <a href="jogo.html" class="menu-item"><span>◈</span> Jogo</a>
-    </nav>
-  </aside>
+    <button class="menu-botao" type="button" aria-label="Abrir menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
 
   <main>
     <a href="../inicio.html" class="back" id="voltarTopo">← Voltar</a>
@@ -165,12 +146,20 @@
         <textarea id="descricao" maxlength="1000" required></textarea>
         <p class="hint">Este texto será público. Não inclua nomes, placas nem dados pessoais.</p>
 
-        <label for="fotos">Fotos do foco * (1 a 3)</label>
+        <p class="rotulo-fotos">Fotos do foco * (1 a 3)</p>
         <p class="hint">Se for seguro, fotografe a água parada. As fotos serão públicas: evite rostos e placas.</p>
-        <div class="upload">
-          <input type="file" id="fotos" accept="image/jpeg, image/png" multiple>
-          <small>JPG ou PNG, até 10 MB cada.</small>
+        <div class="escolher-foto">
+          <button type="button" class="botao-foto botao-camera" id="botaoCamera">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+            Tirar foto
+          </button>
+          <button type="button" class="botao-foto" id="botaoGaleria">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="m4 16 5-5 4 4 3-3 4 4"/></svg>
+            Escolher do aparelho
+          </button>
         </div>
+        <input type="file" id="camera" accept="image/*" capture="environment" hidden>
+        <input type="file" id="fotos" accept="image/*" multiple hidden>
         <ul class="lista-fotos" id="listaFotos"></ul>
         <p class="erro-campo" id="erroFotos" role="alert"></p>
 
@@ -298,5 +287,6 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script type="module" src="../js/cidadao/registrar-foco.js"></script>
+  <script src="../js/compartilhado/menu.js" defer></script>
 </body>
 </html>

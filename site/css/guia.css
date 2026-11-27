@@ -9,34 +9,6 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
 }
 
-/* Cabeçalho */
-.pagina-guia > header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 24px;
-  border-bottom: 1px solid #D9CBB0;
-}
-
-.pagina-guia .guia-logo {
-  width: 44px;
-  height: 44px;
-  object-fit: contain;
-}
-
-.pagina-guia .guia-nome {
-  margin: 0;
-  color: #20352B;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.pagina-guia .guia-cidade {
-  margin: 2px 0 0;
-  color: #487959;
-  font-size: 12px;
-}
-
 /* Conteúdo e títulos */
 .pagina-guia main {
   padding: 12px 24px 40px;
@@ -260,8 +232,7 @@
 
 /* Foco por teclado, sem alterar os links do menu lateral */
 .pagina-guia main a:focus-visible,
-.pagina-guia main button:focus-visible,
-.pagina-guia > header .menu-botao:focus-visible {
+.pagina-guia main button:focus-visible {
   outline: 2px solid #09490D;
   outline-offset: 2px;
 }

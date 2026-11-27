@@ -10,42 +10,23 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="../css/registrar-foco.css">
+  <link rel="stylesheet" href="../css/menu.css">
 </head>
 
 <body>
 
-  <!-- CABEÇALHO -->
-  <header>
-    <a href="../inicio.html" class="brand">
-      <img src="../assets/imagens/logo.webp" alt="Logo Aedes Data Lab">
-      <div>
-        <h2>Aedes Lab</h2>
-        <span>Itambé · PE</span>
-      </div>
-    </a>
-
-    <button class="menu-toggle" id="menuToggle" type="button"
-      aria-label="Abrir menu" aria-expanded="false" aria-controls="sidebar">☰</button>
-  </header>
-
-  <!-- MENU RETRÁTIL -->
-  <div class="menu-overlay" id="menuOverlay"></div>
-
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-heading">
-      <h2>Menu</h2>
-      <button class="close-menu" id="closeMenu" type="button" aria-label="Fechar menu">×</button>
+  <header class="cabecalho-site">
+    <img src="../assets/imagens/logo.webp" alt="Logo Aedes Data Lab">
+    <div>
+      <p class="cabecalho-nome">Aedes Lab</p>
+      <p class="cabecalho-cidade">Itambé · PE</p>
     </div>
-
-    <nav class="sidebar-nav">
-      <a href="../inicio.html" class="menu-item"><span>⌂</span> Início</a>
-      <a href="registrar-foco.html" class="menu-item"><span>⚑</span> Registrar foco</a>
-      <a href="mapa.html" class="menu-item"><span>▧</span> Mapa</a>
-      <a href="guia-aedes.html" class="menu-item"><span>▤</span> Guia Aedes</a>
-      <a href="quem-somos.html" class="menu-item"><span>♙</span> Quem somos</a>
-      <a href="jogo.html" class="menu-item"><span>◈</span> Jogo</a>
-    </nav>
-  </aside>
+    <button class="menu-botao" type="button" aria-label="Abrir menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
 
   <main>
     <a href="registrar-foco.html" class="back">← Voltar</a>
@@ -188,5 +169,6 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script type="module" src="../js/cidadao/corrigir-denuncia.js"></script>
+  <script src="../js/compartilhado/menu.js" defer></script>
 </body>
 </html>

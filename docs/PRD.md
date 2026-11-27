@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versão | 2.11 · 25/11/2026 |
+| Versão | 2.12 · 27/11/2026 |
 | Território | Itambé, Pernambuco |
 | Responsável pelo documento | Responsável pelo produto |
 | Público | Produto, design, desenvolvimento, testes e agentes participantes |
@@ -289,7 +289,7 @@ Recebimento e publicação são resultados distintos. A denúncia gravada fica d
 
 ### RF-MAP-01 · Consultar denúncias públicas
 
-Mapa sem login, com a área aproximada (célula de uma grade fixa de cerca de 200 m, D43), bairro ou localidade, categoria, data de recebimento, etapa atual, foto e descrição. Ao tocar no ponto ou no cartão da lista, abre-se uma prévia curta com categoria, bairro, data, etapa, a primeira foto, a descrição pública e a origem, escrita como "feita por cidadão" ou "feita por agente", sem o nome de ninguém (D47, D50); não há página de detalhe completo. Denúncias atendidas e encerradas continuam no mapa, a menos que estejam arquivadas. O resultado da visita (recipientes, larvas, o que foi feito e observações) não é público.
+Mapa sem login, com a área aproximada (célula de uma grade fixa de cerca de 200 m, D43), bairro ou localidade, categoria, data de recebimento, etapa atual, foto e descrição. Ao tocar no ponto, ou escolhê-lo pelo teclado, abre-se uma prévia curta com categoria, bairro, data, etapa, a primeira foto, a descrição pública e a origem, escrita como "feita por cidadão" ou "feita por agente", sem o nome de ninguém (D47, D50); não há página de detalhe completo. Denúncias atendidas e encerradas continuam no mapa, a menos que estejam arquivadas. O resultado da visita (recipientes, larvas, o que foi feito e observações) não é público.
 
 **Aceite:** o visitante encontra a denúncia publicada e abre a prévia curta, sem página de detalhe; a prévia mostra a origem, nunca o nome de quem fez; nenhuma resposta de rede, URL de mídia ou metadado entrega campo privado, referência do local ou ponto exato. O limite sobre conteúdo incidental em texto e foto segue a seção 8.
 
@@ -636,3 +636,4 @@ Em conflito com telas antigas ou recomendações anteriores, valem as decisões 
 | 2.9 | 22/11/2026 | RF-DEN-01: a etapa dos dados do cidadão traz o aviso de que nome, e-mail e telefone não são divulgados. Confirmado: CPF fora do produto (D07) e identificação obrigatória, com denúncia anônima no mapa público (D50) |
 | 2.10 | 25/11/2026 | Estado atual (seção 4) atualizado com a área dos agentes programada. Nenhum requisito mudou. |
 | 2.11 | 25/11/2026 | D57 e RF-AGE-11: arquivadas em tela própria. RF-AGE-01 e o aceite do RF-AGE-08 ajustados. |
+| 2.12 | 27/11/2026 | RF-MAP-01: o mapa público não tem lista de ocorrências; a prévia abre pelo ponto, por toque ou teclado. |

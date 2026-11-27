@@ -21,6 +21,8 @@ const TRACOS = {
   baixo: "m6 9 6 6 6-6",
   mais: "M12 5v.01M12 12v.01M12 19v.01",
   adicionar: "M12 5v14M5 12h14",
+  camera: "M4 8h3l2-3h6l2 3h3v11H4zM12 16.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z",
+  galeria: "M4 5h16v14H4zM4 16l5-5 4 4 3-3 4 4",
   busca: "M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm10 2-4.3-4.3",
   filtros: "M4 6h16M7 12h10M10 18h4",
   lista: "M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01",

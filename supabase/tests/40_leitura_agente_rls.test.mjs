@@ -46,7 +46,7 @@ await teste('perfil: usuário só lê o PRÓPRIO perfil', async () => {
 });
 
 await teste('bairros e categorias: leitura pública; escrita negada', async () => {
-  igual((await como(db, 'anon', null, 'select count(*)::int n from public.neighborhoods')).rows[0].n, 15);
+  igual((await como(db, 'anon', null, 'select count(*)::int n from public.neighborhoods')).rows[0].n, 16);
   verdade((await como(db, 'anon', null, 'select count(*)::int n from public.categories')).rows[0].n > 0);
   const msg = await esperaErro(db, 'anon', null, "insert into public.neighborhoods (name) values ('Invasão')");
   verdade(/permission denied/i.test(msg), msg);

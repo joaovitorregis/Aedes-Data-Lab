@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versão | 2.12 · 27/11/2026 |
+| Versão | 2.13 · 27/11/2026 |
 | Território | Itambé, Pernambuco |
 | Responsável pelo documento | Responsável pelo produto |
 | Público | Produto, design, desenvolvimento, testes e agentes participantes |
@@ -113,7 +113,7 @@ O andamento da implementação é registrado em a seção Estado do projeto de [
 | D30 | Sobre tratamento, a V1 registra apenas se houve larvicida aplicado. Tipo de produto, quantidade em gramas e depósitos tratados ficam fora. |
 | D31 | A V1 opera com uma única conta de agente, individual. Todo evento continua gravando o autor, para que novas contas possam ser liberadas sem mudar o modelo. O supervisor não usa o sistema. |
 | D32 | O agente gera um relatório do período em PDF ou Word para enviar ao supervisor. O relatório não traz nome, e-mail ou telefone do morador. |
-| D33 | As localidades da V1 são os 15 bairros informados pela coordenação: Altiplano, Boa Vista, Gildo Andrade, Jardim Bela Vista, Loteamento Figueiredo, Luís Gonzaga, Maracujá, Novo Itambé, Novo Itambé II, Parque das Palmeiras, Pedra Bela, Planalto, Salgadeira, Santa Maria e Vila Cohab. Não há bairro "Centro". |
+| D33 | As localidades da V1 são 16 bairros: os 15 informados pela coordenação e o Centro, acrescentado em 27/11/2026. São eles: Altiplano, Boa Vista, Centro, Gildo Andrade, Jardim Bela Vista, Loteamento Figueiredo, Luís Gonzaga, Maracujá, Novo Itambé, Novo Itambé II, Parque das Palmeiras, Pedra Bela, Planalto, Salgadeira, Santa Maria e Vila Cohab. |
 | D34 | O detalhe da ocorrência avisa quando há outras denúncias num raio de 150 metros do ponto exato, distância em linha reta que corresponde ao alcance médio de voo do mosquito (100 a 150 m). O aviso não funde nem descarta ocorrências. |
 | D35 | A jornada de denúncia começa na tela Início: o cidadão escolhe denunciar, informa localização, descreve o foco e anexa fotos, preenche seus dados, confirma o contato escolhido, revisa o que será público e privado, envia e recebe o resultado. Estados de erro e publicação pendente pertencem à mesma jornada. |
 | D36 | O fluxo visual atualizado substitui a versão antiga como referência de implementação. Usa telas inteiras, conteúdo sem cortes, textos e ações alinhados, navegação em posição consistente e barra de URL simulada uniforme. Estados alternativos ficam próximos da etapa a que pertencem; as telas antigas servem apenas como histórico. |
@@ -207,7 +207,7 @@ Os agentes autorizados enxergam o município inteiro, sem divisão por equipe ou
 | Telefone | Sim, com DDD | Privado. É confirmado se o cidadão escolher código por SMS ou WhatsApp, canais que só entram se forem viáveis (D45); informar o número não valida a identidade civil |
 | Canal de confirmação | Um por denúncia | Privado. E-mail, SMS ou WhatsApp; registra qual contato foi confirmado, sem tornar o outro confirmado |
 | Ponto do foco | Sim | Exato na área dos agentes; aproximado no mapa público |
-| Bairro ou localidade | Sim | Público, escolhido entre os 15 bairros de D33 |
+| Bairro ou localidade | Sim | Público, escolhido entre os 16 bairros de D33 |
 | Categoria | Sim | Pública, a partir de catálogo versionado para preservar registros antigos |
 | Descrição | Sim | Publicada automaticamente após o recebimento |
 | Fotos | De uma a três | Publicadas após tratamento técnico, sem aprovação humana prévia |
@@ -360,7 +360,7 @@ Conteúdo do relatório:
 
 1. Cabeçalho: Aedes Data Lab · Itambé-PE, nome do agente, período, bairro escolhido e data de geração.
 2. Resumo em três grupos: o que entrou no período (de cidadãos, de agentes e visitas feitas), como terminou (Atendidas, Encerradas sem acesso e Arquivadas) e o que ficou em aberto (tentativas sem acesso, pendentes e visitas com larvas).
-3. Por bairro: entradas, visitas, Atendidas, Encerradas ou Arquivadas e pendentes para cada um dos 15 bairros.
+3. Por bairro: entradas, visitas, Atendidas, Encerradas ou Arquivadas e pendentes para cada um dos 16 bairros.
 4. Recipientes com água: contagem pelos nomes do formulário (pneus, baldes, vasos, lixo ou entulho e os demais), nas visitas com acesso.
 5. Visitas: data, protocolo, bairro, endereço, onde está o foco, acesso, larvas, recipientes, o que foi feito e observações.
 6. Pendentes: ocorrências ainda Recebidas ou Em análise, com etapa, origem, dias em aberto e tentativas.
@@ -637,3 +637,4 @@ Em conflito com telas antigas ou recomendações anteriores, valem as decisões 
 | 2.10 | 25/11/2026 | Estado atual (seção 4) atualizado com a área dos agentes programada. Nenhum requisito mudou. |
 | 2.11 | 25/11/2026 | D57 e RF-AGE-11: arquivadas em tela própria. RF-AGE-01 e o aceite do RF-AGE-08 ajustados. |
 | 2.12 | 27/11/2026 | RF-MAP-01: o mapa público não tem lista de ocorrências; a prévia abre pelo ponto, por toque ou teclado. |
+| 2.13 | 27/11/2026 | D33: o Centro entra nas localidades, que passam a ser 16. |

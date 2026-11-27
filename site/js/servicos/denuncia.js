@@ -3,7 +3,7 @@
 // =====================================================================
 import { chamarFuncao, lerTabela } from "./api.js";
 
-// Os 15 bairros e as categorias vêm do banco, para a tela não ficar com listas fixas.
+// Os bairros e as categorias vêm do banco, para a tela não ficar com listas fixas.
 export const listarBairros = () => lerTabela("neighborhoods?select=id,name&order=name");
 export const listarCategorias = () => lerTabela("categories?select=id,code,label&order=id");
 

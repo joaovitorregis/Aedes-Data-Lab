@@ -48,6 +48,7 @@ Migration é um arquivo SQL que muda o banco e fica guardado no Git. Elas rodam 
 | `20261122100500_funcoes_agente` | Ações do agente (analisar, visita, observação, encerrar, arquivar, voltar ao mapa, criar ocorrência). |
 | `20261122100600_funcoes_consulta` | Correção, lixeira, limpeza e as leituras do agente. |
 | `20261125120000_nomes_dos_agentes` | Função `agent_profile_names`: entrega a um agente ativo o identificador e o nome dos agentes, para o histórico. |
+| `20261127120000_bairro_centro` | Acrescenta o Centro aos bairros. |
 
 ### As tabelas
 
@@ -235,4 +236,5 @@ Em 25/11/2026 o agendamento do projeto de produção ainda não tinha sido confi
 - **Funções ainda não reutilizam `js/dominio/`** (TASK-060a, ADR-015): as regras estão duplicadas no SQL e em `_shared/`.
 - **Produção (23/11/2026):** projeto criado em West US (Oregon); a região não muda depois de criado. As 9 migrations, as 6 funções e os segredos estão aplicados. Teste real: denúncia com foto (AED-2026-000001, publicada), leitura pública só com os 12 campos, bloqueio de origem fora do `ALLOWED_ORIGINS` e `acesso-correcao` completo. A denúncia AED-2026-000001 é de teste e ainda está lá: apague a linha no banco e as pastas dela nos dois buckets antes de divulgar o site.
 - **Pendente em produção (25/11/2026):** aplicar a migration `20261125120000_nomes_dos_agentes`. Sem ela o histórico mostra "Agente" no lugar do nome dos outros agentes; o resto funciona.
+- **Produção (27/11/2026):** o Centro foi incluído pelo SQL Editor, com o mesmo comando da migration `20261127120000_bairro_centro`. Um `db push` posterior roda a migration de novo sem duplicar.
 - **Front-end:** trocar o serviço fictício pelas chamadas acima é a TASK-063.

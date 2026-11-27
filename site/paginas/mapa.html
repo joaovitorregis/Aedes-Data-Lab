@@ -1,96 +1,87 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Mapa de ocorrências | Aedes Lab</title>
+    <title>Mapa de ocorrências | Aedes Data Lab</title>
     <link rel="icon" href="../assets/imagens/logo.webp" type="image/webp">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-<link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <link rel="stylesheet" href="../css/mapa.css">
 </head>
 
 <body>
 
     <header class="top-header">
-       <img src="../assets/imagens/logo.webp" alt="Logo Aedes Data Lab">
-    <div>
-        <h2>Aedes Data Lab</h2>
-        <p>Itambé-PE</p>
-    </div>
-   
-<button
-    class="menu-botao"
-    type="button"
-    aria-label="Abrir menu"
-    aria-expanded="false"
-    aria-controls="menu-lateral"
->
-    <span></span>
-    <span></span>
-    <span></span>
-</button>
-
-<div class="menu-fundo" hidden></div>
-
-<aside
-    class="menu-lateral"
-    id="menu-lateral"
-    aria-label="Menu de navegação"
-    aria-hidden="true"
-    inert
->
-    <div class="menu-topo">
-        <h1>Menu</h1>
-    </div>
-
-    <nav>
-        <a href="../inicio.html" class="menu-link">
-            <span><img src="../assets/imagens/início.ico" alt=""></span> Início
-        </a>
-
-        <a href="registrar-foco.html" class="menu-link">
-            <span><img src="../assets/imagens/registrar-foco.ico" alt=""></span> Registrar foco
-        </a>
-
-        <a href="mapa.html" class="menu-link">
-            <span><img src="../assets/imagens/mapa.ico" alt=""></span> Mapa
-        </a>
-
-        <a href="guia-aedes.html" class="menu-link">
-            <span><img src="../assets/imagens/guia-aedes.ico" alt=""></span> Guia Aedes
-        </a>
-
-        <a href="quem-somos.html" class="menu-link">
-            <span><img src="../assets/imagens/quem-somos.ico" alt=""></span> Quem somos
-        </a>
-
-        <a href="jogo.html" class="menu-link">
-            <span><img src="../assets/imagens/controle.ico" alt=""></span> Jogo
-        </a>
-    </nav>
-
-    <div class="menu-rodape">
-        <div class="usuario-info">
-            <div class="usuario-icone"><img src="../assets/imagens/perfil-icon.ico" alt=""></div>
-            <div>
-                <strong>Nome do usuário</strong>
-                <p>Cidadão</p>
-            </div>
+        <img src="../assets/imagens/logo.webp" alt="Logo Aedes Data Lab">
+        <div>
+            <h2>Aedes Lab</h2>
+            <p>Itambé · PE</p>
         </div>
 
-        <button class="botao-sair" type="button">
-            Sair
+        <button
+            class="menu-botao"
+            type="button"
+            aria-label="Abrir menu"
+            aria-expanded="false"
+            aria-controls="menu-lateral"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
         </button>
-    </div>
-</aside>
+
+        <div class="menu-fundo" hidden></div>
+
+        <aside
+            class="menu-lateral"
+            id="menu-lateral"
+            aria-label="Menu de navegação"
+            aria-hidden="true"
+            inert
+        >
+            <div class="menu-topo">
+                <h1>Menu</h1>
+            </div>
+
+            <nav>
+                <a href="../inicio.html" class="menu-link">
+                    <span><img src="../assets/imagens/início.ico" alt=""></span> Início
+                </a>
+                <a href="registrar-foco.html" class="menu-link">
+                    <span><img src="../assets/imagens/registrar-foco.ico" alt=""></span> Registrar foco
+                </a>
+                <a href="mapa.html" class="menu-link">
+                    <span><img src="../assets/imagens/mapa.ico" alt=""></span> Mapa
+                </a>
+                <a href="guia-aedes.html" class="menu-link">
+                    <span><img src="../assets/imagens/guia-aedes.ico" alt=""></span> Guia Aedes
+                </a>
+                <a href="quem-somos.html" class="menu-link">
+                    <span><img src="../assets/imagens/quem-somos.ico" alt=""></span> Quem somos
+                </a>
+                <a href="jogo.html" class="menu-link">
+                    <span><img src="../assets/imagens/controle.ico" alt=""></span> Jogo
+                </a>
+            </nav>
+
+            <div class="menu-rodape">
+                <div class="usuario-info">
+                    <div class="usuario-icone"><img src="../assets/imagens/perfil-icon.ico" alt=""></div>
+                    <div>
+                        <strong>Nome do usuário</strong>
+                        <p>Cidadão</p>
+                    </div>
+                </div>
+
+                <button class="botao-sair" type="button">
+                    Sair
+                </button>
+            </div>
+        </aside>
     </header>
 
     <main class="container">
@@ -105,167 +96,91 @@
 
             <div class="top-buttons">
                 <button id="openFilters" class="filter-button" type="button">
-                     Filtros <span id="filterCount" class="filter-count" hidden></span>
+                    Filtros <span id="filterCount" class="filter-count" hidden></span>
                 </button>
 
-                <button id="centerMap" class="center-button">
+                <button id="centerMap" class="center-button" type="button">
                     Centralizar em mim
                 </button>
             </div>
 
-            <!-- MAPA -->
+            <p id="avisoLocal" class="aviso" role="status"></p>
 
-            <div id="mapa" class="map">
+            <div class="map-area">
+                <div id="mapa" class="map"></div>
+                <div class="map-legend">
+                    <span class="legend-dot"></span>
+                    <span>Localização aproximada dos relatos</span>
+                </div>
+            </div>
 
-    <div class="map-legend">
-        <span class="legend-dot"></span>
-        <span>Localização aproximada dos relatos</span>
-    </div>
-
-</div>
+            <p id="situacao" class="situacao" role="status">Carregando denúncias...</p>
+            <button id="tentarDeNovo" class="list-button" type="button" hidden>Tentar de novo</button>
 
             <p class="map-description">
                 Relatos de cidadãos e agentes; não são focos confirmados.
             </p>
 
-            <p class="map-note">
-                Mapa ilustrativo · cartografia de Itambé/PE pendente
-            </p>
-
-            <button id="showOccurrences" class="list-button">
+            <button id="showOccurrences" class="list-button" type="button">
                 Ver lista de ocorrências
             </button>
 
         </section>
 
-
-        <!-- LISTA DE OCORRÊNCIAS -->
-
         <section id="occurrencesSection" class="occurrences-section">
 
             <h2>Ocorrências</h2>
 
-            <div class="statistics">
-                <p><span id="analysisCount">2</span> em análise</p>
-                <p><span id="finishedCount">3</span> finalizadas</p>
-                <p><span id="processingCount">1</span> em processamento</p>
-                <p><span id="unseenCount">2</span> não visualizadas</p>
-            </div>
+            <div id="resumo" class="statistics"></div>
 
-            <div id="occurrencesList" class="occurrences-list">
-
-                <article class="occurrence-card" data-status="Em análise">
-                    <button class="summary-button">
-                        Relato 1<br>
-                        ver resumo
-                    </button>
-                </article>
-
-                <article class="occurrence-card" data-status="Finalizada">
-                    <button class="summary-button">
-                        Relato 2<br>
-                        ver resumo
-                    </button>
-                </article>
-
-                <article class="occurrence-card" data-status="Em processamento">
-                    <button class="summary-button">
-                        Relato 3<br>
-                        ver resumo
-                    </button>
-                </article>
-
-                <article class="occurrence-card" data-status="Finalizada">
-                    <button class="summary-button">
-                        Relato 4<br>
-                        ver resumo
-                    </button>
-                </article>
-
-                <article class="occurrence-card" data-status="Não visualizada">
-                    <button class="summary-button">
-                        Relato 5<br>
-                        ver resumo
-                    </button>
-                </article>
-
-                <article class="occurrence-card" data-status="Em análise">
-                    <button class="summary-button">
-                        Relato 6<br>
-                        ver resumo
-                    </button>
-                </article>
-
-                <article class="occurrence-card" data-status="Finalizada">
-                    <button class="summary-button">
-                        Relato 7<br>
-                        ver resumo
-                    </button>
-                </article>
-
-                <article class="occurrence-card" data-status="Não visualizada">
-                    <button class="summary-button">
-                        Relato 8<br>
-                        ver resumo
-                    </button>
-                </article>
-
-            </div>
+            <div id="occurrencesList" class="occurrences-list"></div>
 
         </section>
 
     </main>
 
-<!-- FILTROS -->
-<dialog id="filtros" class="filtros">
-    <form method="dialog">
+    <!-- FILTROS -->
+    <dialog id="filtros" class="filtros">
+        <form method="dialog">
 
-        <div class="filtros-topo">
-            <h2>Filtros</h2>
-            <button class="filtros-fechar" aria-label="Fechar">×</button>
-        </div>
-
-        <fieldset>
-            <legend>Período</legend>
-            <div class="chips">
-                <label><input type="radio" name="period" value="" checked><span>Todos</span></label>
-                <label><input type="radio" name="period" value="Hoje"><span>Hoje</span></label>
-                <label><input type="radio" name="period" value="Últimos 7 dias"><span>7 dias</span></label>
-                <label><input type="radio" name="period" value="Últimos 30 dias"><span>30 dias</span></label>
+            <div class="filtros-topo">
+                <h2>Filtros</h2>
+                <button class="filtros-fechar" aria-label="Fechar">×</button>
             </div>
-        </fieldset>
 
-        <label class="campo">
-            Localidade
-            <select name="locality">
-                <option value="">Todas as localidades</option>
-                <option>Centro</option>
-                <option>Zona rural</option>
-                <option>Bairros</option>
-            </select>
-        </label>
+            <fieldset>
+                <legend>Período de recebimento</legend>
+                <div class="chips">
+                    <label><input type="radio" name="periodo" value="" checked><span>Todos</span></label>
+                    <label><input type="radio" name="periodo" value="hoje"><span>Hoje</span></label>
+                    <label><input type="radio" name="periodo" value="7"><span>7 dias</span></label>
+                    <label><input type="radio" name="periodo" value="30"><span>30 dias</span></label>
+                </div>
+            </fieldset>
 
-        <fieldset>
-            <legend>Status</legend>
-            <div class="chips">
-                <label><input type="checkbox" name="status" value="Em análise"><span>Em análise</span></label>
-                <label><input type="checkbox" name="status" value="Finalizada"><span>Finalizada</span></label>
-                <label><input type="checkbox" name="status" value="Em processamento"><span>Em processamento</span></label>
-                <label><input type="checkbox" name="status" value="Não visualizada"><span>Não visualizada</span></label>
+            <label class="campo">
+                Localidade
+                <select name="bairro" id="filtroBairro">
+                    <option value="">Todas as localidades</option>
+                </select>
+            </label>
+
+            <fieldset>
+                <legend>Etapa</legend>
+                <div class="chips" id="filtroEtapas"></div>
+            </fieldset>
+
+            <div class="filtros-acoes">
+                <button type="reset" class="limpar">Limpar</button>
+                <button id="applyFilters" class="aplicar">Concluir</button>
             </div>
-        </fieldset>
 
-        <div class="filtros-acoes">
-            <button type="reset" class="limpar">Limpar</button>
-            <button id="applyFilters" class="aplicar">Concluir</button>
-        </div>
-
-    </form>
-</dialog>
+        </form>
+    </dialog>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<script type="module" src="../js/cidadao/mapa.js"></script>
+    <script src="../js/compartilhado/menu-estatico.js"></script>
+    <script type="module" src="../js/cidadao/mapa.js"></script>
 
 </body>
 </html>

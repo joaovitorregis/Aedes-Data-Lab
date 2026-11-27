@@ -1,586 +1,397 @@
-// ==========================================
-// AEDES DATA LAB - REGISTRAR FOCO
-// ==========================================
+// Registrar foco: a denúncia vai para o Supabase e aparece na área dos agentes.
+import {
+  confirmarCodigo, enviarCodigo, listarBairros, listarCategorias, salvarDenuncia,
+} from "../servicos/denuncia.js";
+import {
+  CENTRO_DO_MAPA, dentroDoTerritorio, emailValido, montarDados, telefoneValido, validarFotos,
+} from "../dominio/denuncia.js";
+import { LARVAS, RECIPIENTES } from "../dominio/ocorrencia.js";
 
-const form = document.getElementById("denunciaForm");
+const $ = (id) => document.getElementById(id);
+const form = $("denunciaForm");
+const etapas = form.querySelectorAll(":scope > .step");
+const marcas = document.querySelectorAll(".progress .step");
 
-const steps = document.querySelectorAll(
-    "#denunciaForm > .step"
-);
+let etapaAtual = 0;
+let envioId = crypto.randomUUID(); // o mesmo id nas novas tentativas não duplica a denúncia
+let emailConfirmado = "";
+let ponto = null;
+let fotos = [];
+let mapa = null;
+let marcador = null;
 
-const progressSteps = document.querySelectorAll(
-    ".progress .step"
-);
+// ---------- etapas ----------
 
-const successMessage = document.getElementById("successMessage");
+function mostrarTela(tela) {
+  form.hidden = tela !== "formulario";
+  $("progresso").hidden = tela !== "formulario";
+  $("voltarTopo").hidden = tela !== "formulario";
+  $("successMessage").hidden = tela !== "sucesso";
+  $("errorMessage").hidden = tela !== "erro";
+  window.scrollTo({ top: 0 });
+}
 
-const errorMessage = document.getElementById("errorMessage");
+function mostrarEtapa(numero) {
+  etapaAtual = numero;
+  etapas.forEach((etapa, i) => etapa.classList.toggle("active", i === numero));
+  marcas.forEach((marca, i) => marca.classList.toggle("active", i <= numero));
+  $("etapaTexto").textContent = `Etapa ${numero + 1} de 4`;
+  mostrarTela("formulario");
+  if (numero === 0) mapa?.invalidateSize();
+}
 
-let currentStep = 0;
-let emailConfirmed = false;
+function mostrarParte(id) {
+  for (const parte of ["dadosPessoais", "escolhaCanal", "confirmacaoEmail"]) $(parte).hidden = parte !== id;
+  window.scrollTo({ top: 0 });
+}
 
+function camposValidos(area) {
+  for (const campo of area.querySelectorAll("input:not([type=file]), select, textarea")) {
+    // só espaços conta como vazio
+    if (campo.required && campo.type !== "checkbox" && !campo.value.trim()) campo.value = "";
+    if (!campo.checkValidity()) {
+      campo.reportValidity();
+      return false;
+    }
+  }
+  return true;
+}
 
-// ==========================================
-// MOSTRAR ETAPAS
-// ==========================================
+function avancar() {
+  if (etapaAtual === 0) {
+    if (!camposValidos(etapas[0])) return;
+    if (!ponto) {
+      $("erroMapa").textContent = "Marque no mapa o local do foco.";
+      return;
+    }
+    mostrarEtapa(1);
+  } else if (etapaAtual === 1) {
+    if (!camposValidos(etapas[1])) return;
+    $("erroFotos").textContent = validarFotos(fotos);
+    if (!$("erroFotos").textContent) mostrarEtapa(2);
+  } else if (etapaAtual === 2) {
+    conferirDados();
+  }
+}
 
-function showStep(index) {
+function voltar() {
+  if (etapaAtual === 0) return;
+  if (etapaAtual === 3) mostrarParte("dadosPessoais");
+  mostrarEtapa(etapaAtual - 1);
+}
 
-    if (index < 0 || index >= steps.length) return;
+// ---------- listas ----------
 
-    currentStep = index;
+function preencherLista(select, itens, texto) {
+  select.replaceChildren(new Option("Selecione...", ""));
+  itens.forEach((item) => select.add(new Option(texto(item), item.id)));
+}
 
-    steps.forEach((step, i) => {
-        step.classList.toggle("active", i === index);
+async function carregarListas() {
+  $("erroListas").hidden = true;
+  try {
+    const [bairros, categorias] = await Promise.all([listarBairros(), listarCategorias()]);
+    preencherLista($("bairro"), bairros, (b) => b.name);
+    preencherLista($("categoria"), categorias, (c) => c.label);
+  } catch {
+    $("erroListas").hidden = false;
+  }
+}
+
+function criarRecipientes() {
+  for (const [codigo, rotulo] of Object.entries(RECIPIENTES)) {
+    const label = document.createElement("label");
+    label.className = "option";
+    const caixa = document.createElement("input");
+    caixa.type = "checkbox";
+    caixa.name = "recipiente";
+    caixa.value = codigo;
+    label.append(caixa, ` ${rotulo}`);
+    $("recipientes").append(label);
+  }
+}
+
+// ---------- mapa ----------
+
+function marcarPonto(lat, lng) {
+  if (!dentroDoTerritorio(lat, lng)) {
+    $("erroMapa").textContent = "Este ponto está fora de Itambé. Marque um local dentro do município.";
+    if (marcador && ponto) marcador.setLatLng(ponto);
+    return false;
+  }
+  ponto = { lat, lng };
+  $("erroMapa").textContent = "";
+  if (marcador) {
+    marcador.setLatLng(ponto);
+  } else {
+    marcador = window.L.marker(ponto, { draggable: true, alt: "Local do foco" }).addTo(mapa);
+    marcador.on("dragend", () => {
+      const novo = marcador.getLatLng();
+      marcarPonto(novo.lat, novo.lng);
     });
+  }
+  return true;
+}
 
-    progressSteps.forEach((step, i) => {
-        step.classList.toggle("active", i <= index);
+function iniciarMapa() {
+  if (!window.L) {
+    $("erroMapa").textContent = "O mapa não carregou. Confira a internet e recarregue a página.";
+    return;
+  }
+  mapa = window.L.map("map").setView(CENTRO_DO_MAPA, 14);
+  window.L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "&copy; OpenStreetMap",
+  }).addTo(mapa);
+  mapa.on("click", (evento) => marcarPonto(evento.latlng.lat, evento.latlng.lng));
+}
+
+// a localização só é pedida quando a pessoa toca no botão
+function usarLocalizacao() {
+  const falha = () => {
+    $("erroMapa").textContent = "Não foi possível obter a localização. Marque o local no mapa.";
+  };
+  if (!mapa || !navigator.geolocation) return falha();
+  navigator.geolocation.getCurrentPosition(({ coords }) => {
+    if (marcarPonto(coords.latitude, coords.longitude)) mapa.setView(ponto, 17);
+  }, falha, { enableHighAccuracy: true, timeout: 10000 });
+}
+
+// ---------- fotos ----------
+
+function desenharFotos() {
+  $("listaFotos").replaceChildren(...fotos.map((foto, i) => {
+    const item = document.createElement("li");
+    const imagem = document.createElement("img");
+    imagem.src = URL.createObjectURL(foto);
+    imagem.alt = `Foto ${i + 1}`;
+    imagem.onload = () => URL.revokeObjectURL(imagem.src);
+    const remover = document.createElement("button");
+    remover.type = "button";
+    remover.className = "back-btn";
+    remover.textContent = "Remover";
+    remover.addEventListener("click", () => {
+      fotos.splice(i, 1);
+      $("erroFotos").textContent = "";
+      desenharFotos();
     });
-
-    successMessage.hidden = true;
-    errorMessage.hidden = true;
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    item.append(imagem, remover);
+    return item;
+  }));
 }
 
-
-// ==========================================
-// VALIDAR CAMPOS
-// ==========================================
-
-function validateSection(section) {
-
-    const fields = section.querySelectorAll(
-        "input:not([type='checkbox']):not([type='file']), select, textarea"
-    );
-
-    for (const field of fields) {
-
-        if (!field.checkValidity()) {
-
-            field.reportValidity();
-            field.focus();
-
-            return false;
-        }
-    }
-
-    return true;
+function adicionarFotos() {
+  const novas = [...fotos, ...$("fotos").files];
+  const erro = validarFotos(novas);
+  $("erroFotos").textContent = erro;
+  if (!erro) fotos = novas;
+  $("fotos").value = "";
+  desenharFotos();
 }
 
+// ---------- contato e código ----------
 
-function validateCurrentStep() {
+const emailDigitado = () => $("email").value.trim().toLowerCase();
 
-    return validateSection(steps[currentStep]);
+function conferirDados() {
+  $("email").setCustomValidity(emailValido($("email").value) ? "" : "Informe um e-mail válido.");
+  $("telefone").setCustomValidity(telefoneValido($("telefone").value) ? "" : "Informe o telefone com DDD.");
+  if (!camposValidos($("dadosPessoais"))) return;
+  if (emailConfirmado === emailDigitado()) return abrirRevisao();
+  $("emailCanal").textContent = emailDigitado();
+  $("erroCanal").textContent = "";
+  mostrarParte("escolhaCanal");
 }
 
-
-// ==========================================
-// AVANÇAR E VOLTAR
-// ==========================================
-
-function nextStep() {
-
-    if (!validateCurrentStep()) return;
-
-    if (currentStep < 2) {
-
-        showStep(currentStep + 1);
-
-    } else if (currentStep === 2 && emailConfirmed) {
-
-        showStep(3);
-        updateReview();
-
-    }
+async function pedirCodigo(botao, aviso) {
+  botao.disabled = true;
+  aviso.textContent = "Enviando o código...";
+  try {
+    await enviarCodigo(envioId, emailDigitado());
+    aviso.textContent = "";
+    $("emailExibido").textContent = emailDigitado();
+    $("codigoEmail").value = "";
+    $("mensagemCodigo").textContent = "Código enviado. Ele vale por 10 minutos.";
+    mostrarParte("confirmacaoEmail");
+  } catch (erro) {
+    aviso.textContent = erro.message;
+  } finally {
+    botao.disabled = false;
+  }
 }
 
-
-function previousStep() {
-
-    if (currentStep > 0) {
-
-        showStep(currentStep - 1);
-
+async function conferirCodigo() {
+  const codigo = $("codigoEmail").value.trim();
+  if (!/^\d{6}$/.test(codigo)) {
+    $("mensagemCodigo").textContent = "Digite os seis números do código.";
+    return;
+  }
+  $("confirmarCodigo").disabled = true;
+  try {
+    const { confirmed } = await confirmarCodigo(envioId, emailDigitado(), codigo);
+    if (!confirmed) {
+      $("mensagemCodigo").textContent = "Código incorreto ou vencido. Confira ou peça outro.";
+      return;
     }
+    emailConfirmado = emailDigitado();
+    abrirRevisao();
+  } catch (erro) {
+    $("mensagemCodigo").textContent = erro.message;
+  } finally {
+    $("confirmarCodigo").disabled = false;
+  }
 }
 
+// ---------- revisão e envio ----------
 
-// ==========================================
-// PASSO 3 - DADOS PESSOAIS
-// ==========================================
+const escolhido = (id) => $(id).selectedOptions[0]?.text ?? "";
+const marcados = () => [...form.querySelectorAll("input[name=recipiente]:checked")].map((c) => c.value);
 
-function goToEmailVerification() {
-
-    const dados = document.getElementById("dadosPessoais");
-
-    if (!validateSection(dados)) return;
-
-    const email = document.getElementById("email").value;
-
-    document.getElementById("emailExibido").textContent = email;
-
-    document.getElementById("dadosPessoais").hidden = true;
-
-    document.getElementById("confirmacaoEmail").hidden = false;
-
-    document.getElementById("codigoEmail").value = "";
-
-    document.getElementById("mensagemCodigo").textContent = "";
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+function escreverLinhas(destino, itens) {
+  $(destino).replaceChildren(...itens.map(([rotulo, valor]) => {
+    const linha = document.createElement("p");
+    const nome = document.createElement("strong");
+    nome.textContent = `${rotulo}: `;
+    linha.append(nome, valor || "Não informado");
+    return linha;
+  }));
 }
 
-
-function backToPersonalData() {
-
-    document.getElementById("confirmacaoEmail").hidden = true;
-
-    document.getElementById("dadosPessoais").hidden = false;
-
+function abrirRevisao() {
+  mostrarParte("dadosPessoais");
+  escreverLinhas("revisaoPublica", [
+    ["Bairro ou localidade", escolhido("bairro")],
+    ["Categoria", escolhido("categoria")],
+    ["Descrição", $("descricao").value.trim()],
+    ["Fotos", String(fotos.length)],
+    ["Localização", "Área aproximada"],
+  ]);
+  escreverLinhas("revisaoPrivada", [
+    ["Nome", $("nome").value.trim()],
+    ["E-mail (confirmado)", emailDigitado()],
+    ["Telefone", $("telefone").value.trim()],
+    ["Rua", $("logradouro").value.trim()],
+    ["Número", $("semNumero").checked ? "Sem número" : $("numero").value.trim()],
+    ["Referência", $("referencia").value.trim()],
+    ["Tipo de local", escolhido("localFoco")],
+    ["Tempo observado", $("tempo").value],
+    ["Água acumulada", escolhido("agua")],
+    ["Recipientes ou estruturas", marcados().map((codigo) => RECIPIENTES[codigo]).join(", ")],
+    ["Larvas ou pupas", LARVAS[$("larvas").value]],
+    ["Outra evidência", $("outraEvidencia").value.trim()],
+    ["Ponto do foco", "Local exato marcado no mapa"],
+  ]);
+  mostrarEtapa(3);
 }
 
-
-// ==========================================
-// CONFIRMAÇÃO DO E-MAIL
-// ==========================================
-
-// CÓDIGO DEMONSTRATIVO PARA TESTES.
-// Não utilizar esta lógica em produção.
-
-const codigoDemonstracao = "123456";
-
-
-function confirmEmailCode() {
-
-    const codigo = document.getElementById("codigoEmail").value;
-
-    const mensagem = document.getElementById("mensagemCodigo");
-
-    if (!/^\d{6}$/.test(codigo)) {
-
-        mensagem.textContent = "Digite um código de seis dígitos.";
-
-        return;
-    }
-
-    if (codigo !== codigoDemonstracao) {
-
-        mensagem.textContent = "Código incorreto. Tente novamente.";
-
-        return;
-    }
-
-    emailConfirmed = true;
-
-    mensagem.textContent = "E-mail confirmado com sucesso!";
-
-    setTimeout(() => {
-
-        showStep(3);
-
-        updateReview();
-
-    }, 700);
-
+function lerFormulario() {
+  return montarDados({
+    submissionId: envioId, lat: ponto.lat, lng: ponto.lng,
+    bairroId: $("bairro").value, categoriaId: $("categoria").value, descricao: $("descricao").value,
+    localFoco: $("localFoco").value, localFocoRotulo: escolhido("localFoco"),
+    agua: $("agua").value, recipientes: marcados(), larvas: $("larvas").value,
+    tempo: $("tempo").value, outraEvidencia: $("outraEvidencia").value,
+    nome: $("nome").value, email: $("email").value, telefone: $("telefone").value,
+    logradouro: $("logradouro").value, semNumero: $("semNumero").checked,
+    numero: $("numero").value, referencia: $("referencia").value,
+  });
 }
 
+async function enviar(evento) {
+  evento.preventDefault();
+  if (etapaAtual !== 3 || $("enviar").disabled || !camposValidos(etapas[3])) return;
 
-function resendCode() {
-
-    alert(
-        "Esta é uma demonstração. O envio real do código depende da integração com um serviço de e-mail."
-    );
-
+  $("enviar").disabled = true;
+  $("enviar").textContent = "Enviando...";
+  try {
+    const resposta = await salvarDenuncia(lerFormulario(), fotos);
+    limpar();
+    $("protocolNumber").textContent = resposta.protocol;
+    $("publicacao").textContent = resposta.publication === "publicada"
+      ? "Denúncia recebida e publicada no mapa."
+      : "Denúncia recebida; publicação no mapa pendente. Não é preciso enviar de novo.";
+    mostrarTela("sucesso");
+  } catch (erro) {
+    if (erro.codigo === "contato_nao_confirmado") {
+      emailConfirmado = "";
+      mostrarEtapa(2);
+      mostrarParte("escolhaCanal");
+      $("erroCanal").textContent = erro.message;
+      return;
+    }
+    $("motivoErro").textContent = erro.message;
+    mostrarTela("erro");
+  } finally {
+    $("enviar").disabled = false;
+    $("enviar").textContent = "Enviar denúncia";
+  }
 }
 
-
-// ==========================================
-// PASSO 4 - RESUMO DAS INFORMAÇÕES
-// ==========================================
-
-function updateReview() {
-
-    const review = document.getElementById("reviewContent");
-
-    review.innerHTML = "";
-
-    function addSection(title) {
-
-        const heading = document.createElement("h3");
-
-        heading.textContent = title;
-
-        review.appendChild(heading);
-    }
-
-
-    function addItem(label, value) {
-
-        const paragraph = document.createElement("p");
-
-        const strong = document.createElement("strong");
-
-        strong.textContent = label + ": ";
-
-        const span = document.createElement("span");
-
-        span.textContent = value || "Não informado";
-
-        paragraph.appendChild(strong);
-
-        paragraph.appendChild(span);
-
-        review.appendChild(paragraph);
-    }
-
-
-    function getValue(section, selector) {
-
-        const field = section.querySelector(selector);
-
-        return field ? field.value : "";
-    }
-
-
-    // LOCALIZAÇÃO
-
-    const step1 = document.getElementById("step1");
-
-    addSection("Localização do foco");
-
-    const selects1 = step1.querySelectorAll("select");
-
-    const inputs1 = step1.querySelectorAll("input[type='text'], input[type='number']");
-
-    addItem("Bairro ou comunidade", selects1[0]?.selectedOptions[0]?.text);
-
-    addItem("Rua ou logradouro", inputs1[0]?.value);
-
-    const semNumero = step1.querySelector(
-        ".number-field input[type='checkbox']"
-    );
-
-    addItem(
-        "Número do imóvel",
-        semNumero?.checked ? "Sem número" : inputs1[1]?.value
-    );
-
-    addItem("Ponto de referência", inputs1[2]?.value);
-
-    addItem("Onde está o foco", selects1[1]?.selectedOptions[0]?.text);
-
-    addItem(
-        "Localização no mapa",
-        "Consulte a marcação realizada no mapa."
-    );
-
-
-    // IDENTIFICAÇÃO DO FOCO
-
-    const step2 = document.getElementById("step2");
-
-    addSection("Identificação do foco");
-
-    const selects2 = step2.querySelectorAll("select");
-
-    addItem("Tipo de ocorrência", selects2[0]?.selectedOptions[0]?.text);
-
-    addItem("Tempo da ocorrência", selects2[1]?.selectedOptions[0]?.text);
-
-    addItem("Água acumulada", selects2[2]?.selectedOptions[0]?.text);
-
-    const recipientes = [
-        ...step2.querySelectorAll(
-            'input[name="recipiente"]:checked'
-        )
-    ].map(input => input.value);
-
-    addItem(
-        "Recipientes ou estruturas",
-        recipientes.length ? recipientes.join(", ") : "Não informado"
-    );
-
-    addItem("Presença de larvas ou pupas", selects2[3]?.selectedOptions[0]?.text);
-
-    const fotos = step2.querySelector('input[type="file"]');
-
-    addItem(
-        "Fotografias",
-        fotos?.files.length
-            ? [...fotos.files].map(file => file.name).join(", ")
-            : "Nenhuma fotografia anexada"
-    );
-
-    const observacoes = step2.querySelector("textarea");
-
-    addItem("Observações adicionais", observacoes?.value);
-
-
-    // DADOS PESSOAIS
-
-    addSection("Dados de identificação");
-
-    addItem(
-        "Nome completo",
-        document.getElementById("nomeCompleto").value
-    );
-
-    addItem(
-        "CPF",
-        document.getElementById("cpf").value
-    );
-
-    addItem(
-        "E-mail",
-        document.getElementById("email").value
-    );
-
-    addItem(
-        "Telefone",
-        document.getElementById("telefone").value
-    );
-
-    addItem(
-        "Confirmação do e-mail",
-        emailConfirmed ? "Confirmado" : "Não confirmado"
-    );
-
+function limpar() {
+  form.reset();
+  fotos = [];
+  ponto = null;
+  marcador?.remove();
+  marcador = null;
+  emailConfirmado = "";
+  envioId = crypto.randomUUID();
+  $("numero").disabled = false;
+  $("erroFotos").textContent = "";
+  desenharFotos();
+  mostrarParte("dadosPessoais");
 }
 
+// ---------- menu ----------
 
-// ==========================================
-// FINALIZAR DENÚNCIA
-// ==========================================
+function abrirMenu(aberto) {
+  $("sidebar").classList.toggle("open", aberto);
+  $("menuOverlay").classList.toggle("active", aberto);
+  $("menuToggle").setAttribute("aria-expanded", String(aberto));
+}
 
-form.addEventListener("submit", function(event) {
+// ---------- botões ----------
 
-    event.preventDefault();
-
-    if (currentStep !== 3) return;
-
-    if (!validateCurrentStep()) return;
-
-    if (!emailConfirmed) {
-
-        alert("Confirme seu e-mail antes de enviar a denúncia.");
-
-        return;
-    }
-
-    updateReview();
-
-    const confirmacao = document.getElementById(
-        "confirmarInformacoes"
-    );
-
-    if (!confirmacao.checked) {
-
-        confirmacao.reportValidity();
-
-        return;
-    }
-
-    generateProtocol();
-
-    form.hidden = true;
-
-    successMessage.hidden = false;
-
-    errorMessage.hidden = true;
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
+form.addEventListener("click", (evento) => {
+  const acao = evento.target.closest("[data-acao]")?.dataset.acao;
+  if (acao === "avancar") avancar();
+  if (acao === "voltar") voltar();
 });
-
-
-// ==========================================
-// GERAR PROTOCOLO
-// ==========================================
-
-function generateProtocol() {
-
-    const year = new Date().getFullYear();
-
-    const randomNumber = Math.floor(
-        100000 + Math.random() * 900000
-    );
-
-    const protocol = `ADL-${year}-${randomNumber}`;
-
-    document.getElementById("protocolNumber").textContent = protocol;
-
-    document.getElementById("status").textContent = "Status: Em análise";
-
-}
-
-
-// ==========================================
-// CANCELAR
-// ==========================================
-
-function cancelForm() {
-
-    const confirmation = confirm(
-        "Tem certeza de que deseja cancelar a denúncia?"
-    );
-
-    if (confirmation) {
-
-        form.reset();
-
-        emailConfirmed = false;
-
-        document.getElementById("dadosPessoais").hidden = false;
-
-        document.getElementById("confirmacaoEmail").hidden = true;
-
-        showStep(0);
-
-    }
-
-}
-
-
-// ==========================================
-// TELA DE ERRO
-// ==========================================
-
-function retrySubmission() {
-
-    errorMessage.hidden = true;
-
-    form.hidden = false;
-
-    showStep(3);
-
-}
-
-
-// ==========================================
-// NAVEGAÇÃO
-// ==========================================
-
-function viewIncidentOnMap() {
-
-    window.location.href = "mapa.html";
-
-}
-
-
-function goToHome() {
-
-    window.location.href = "../inicio.html";
-
-}
-
-
-// ==========================================
-// MENU RETRÁTIL
-// ==========================================
-
-const menuToggle = document.getElementById("menuToggle");
-
-const closeMenu = document.getElementById("closeMenu");
-
-const sidebar = document.getElementById("sidebar");
-
-const menuOverlay = document.getElementById("menuOverlay");
-
-
-function openMenu() {
-
-    sidebar.classList.add("open");
-
-    menuOverlay.classList.add("active");
-
-    menuToggle.setAttribute("aria-expanded", "true");
-
-}
-
-
-function closeSidebar() {
-
-    sidebar.classList.remove("open");
-
-    menuOverlay.classList.remove("active");
-
-    menuToggle.setAttribute("aria-expanded", "false");
-
-}
-
-
-menuToggle?.addEventListener("click", openMenu);
-
-closeMenu?.addEventListener("click", closeSidebar);
-
-menuOverlay?.addEventListener("click", closeSidebar);
-
-
-// ==========================================
-// INICIALIZAÇÃO
-// ==========================================
-
-showStep(0);
-
-
-// FUNÇÕES ACESSÍVEIS PELO HTML
-
-window.nextStep = nextStep;
-window.previousStep = previousStep;
-window.showStep = showStep;
-window.cancelForm = cancelForm;
-window.retrySubmission = retrySubmission;
-window.viewIncidentOnMap = viewIncidentOnMap;
-window.goToHome = goToHome;
-window.goToEmailVerification = goToEmailVerification;
-window.backToPersonalData = backToPersonalData;
-window.confirmEmailCode = confirmEmailCode;
-window.resendCode = resendCode;
-
-
-// ==========================================
-// MAPA
-// ==========================================
-
-// Só inicia quando a página carregar o Leaflet
-if (window.L) {
-
-    // Centro inicial: Itambé - PE
-    const map = L.map('map').setView([-7.414, -35.104], 14);
-
-    // Carregar mapa
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap'
-    }).addTo(map);
-
-    // Localização do usuário
-    map.locate({
-        setView: true,
-        maxZoom: 16
-    });
-
-    // Criar pin
-    map.on('locationfound', function(e) {
-        L.marker(e.latlng)
-            .addTo(map)
-            .bindPopup('Você está aqui!')
-            .openPopup();
-    });
-
-    // Erro de localização
-    map.on('locationerror', function() {
-        console.log('Não foi possível acessar sua localização.');
-    });
-
-}
+// Enter nos campos avança em vez de enviar
+form.addEventListener("keydown", (evento) => {
+  if (evento.key !== "Enter" || evento.target.tagName !== "INPUT") return;
+  evento.preventDefault();
+  if (evento.target.id === "codigoEmail") conferirCodigo();
+  else avancar();
+});
+form.addEventListener("submit", enviar);
+
+$("voltarTopo").addEventListener("click", (evento) => {
+  if (etapaAtual === 0) return;
+  evento.preventDefault();
+  voltar();
+});
+$("recarregarListas").addEventListener("click", carregarListas);
+$("usarLocalizacao").addEventListener("click", usarLocalizacao);
+$("semNumero").addEventListener("change", () => { $("numero").disabled = $("semNumero").checked; });
+$("fotos").addEventListener("change", adicionarFotos);
+$("receberEmail").addEventListener("click", () => pedirCodigo($("receberEmail"), $("erroCanal")));
+$("reenviarCodigo").addEventListener("click", () => pedirCodigo($("reenviarCodigo"), $("mensagemCodigo")));
+$("confirmarCodigo").addEventListener("click", conferirCodigo);
+$("voltarDados").addEventListener("click", () => mostrarParte("dadosPessoais"));
+$("trocarCanal").addEventListener("click", () => mostrarParte("escolhaCanal"));
+$("tentarNovamente").addEventListener("click", () => {
+  mostrarEtapa(3);
+  form.requestSubmit($("enviar"));
+});
+$("voltarRevisao").addEventListener("click", () => mostrarEtapa(3));
+$("cancelar").addEventListener("click", () => {
+  if (!confirm("Tem certeza de que deseja cancelar a denúncia?")) return;
+  limpar();
+  mostrarEtapa(0);
+});
+$("menuToggle").addEventListener("click", () => abrirMenu(true));
+$("closeMenu").addEventListener("click", () => abrirMenu(false));
+$("menuOverlay").addEventListener("click", () => abrirMenu(false));
+
+criarRecipientes();
+iniciarMapa();
+carregarListas();

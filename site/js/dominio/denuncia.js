@@ -10,7 +10,7 @@ export const TERRITORIO = { latMin: -7.56, latMax: -7.26, lngMin: -35.25, lngMax
 export const CENTRO_DO_MAPA = { lat: -7.41, lng: -35.1 };
 
 export const LIMITES = { fotos: 3, bytesPorFoto: 10 * 1024 * 1024, descricao: 1000, tempo: 120 };
-export const TIPOS_DE_FOTO = ["image/jpeg", "image/png", "image/webp"];
+export const TIPOS_DE_FOTO = ["image/jpeg", "image/png"];
 
 export function dentroDoTerritorio(lat, lng) {
   return lat >= TERRITORIO.latMin && lat <= TERRITORIO.latMax && lng >= TERRITORIO.lngMin && lng <= TERRITORIO.lngMax;
@@ -25,12 +25,12 @@ export function telefoneValido(t) {
   return d.length === 10 || d.length === 11;
 }
 
-// Devolve uma mensagem de erro, ou "" se as fotos estão ok (1 a 3, JPEG/PNG/WebP, até 10 MiB cada).
+// Devolve uma mensagem de erro, ou "" se as fotos estão ok (1 a 3, JPEG/PNG, até 10 MiB cada).
 export function validarFotos(arquivos) {
   if (arquivos.length < 1) return "Anexe pelo menos uma foto do foco.";
   if (arquivos.length > LIMITES.fotos) return `Envie no máximo ${LIMITES.fotos} fotos.`;
   for (const f of arquivos) {
-    if (!TIPOS_DE_FOTO.includes(f.type)) return `A foto "${f.name}" não é JPEG, PNG ou WebP.`;
+    if (!TIPOS_DE_FOTO.includes(f.type)) return `A foto "${f.name}" não é JPEG ou PNG.`;
     if (f.size > LIMITES.bytesPorFoto) return `A foto "${f.name}" passa de 10 MB.`;
   }
   return "";
@@ -66,6 +66,7 @@ export function montarDados(c) {
     containers: recipientesParaBanco(c.recipientes),
     larvae: c.larvas || null,
     noticed_since: c.tempo ? c.tempo.slice(0, LIMITES.tempo) : null,
+    other_evidence: c.outraEvidencia?.trim().slice(0, 500) || null,
     name: c.nome.trim(),
     email: c.email.trim().toLowerCase(),
     phone: soDigitos(c.telefone),

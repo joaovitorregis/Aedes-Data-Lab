@@ -1491,3 +1491,114 @@ textarea:focus-visible {
     }
 
 }
+/* Envio da denúncia */
+
+.etapa-texto {
+    text-align: center;
+    font-size: 14px;
+}
+
+.erro-campo {
+    color: #9B2C23;
+    font-weight: 600;
+}
+
+.erro-campo:empty {
+    margin: 0;
+}
+
+.aviso {
+    margin-bottom: 20px;
+}
+
+.lista-fotos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    list-style: none;
+}
+
+.lista-fotos li {
+    display: grid;
+    gap: 6px;
+}
+
+.lista-fotos img {
+    width: 96px;
+    height: 96px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.canais {
+    display: grid;
+    gap: 12px;
+}
+
+.canais button {
+    overflow-wrap: anywhere;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.result .acao {
+    display: block;
+    width: 100%;
+    margin-top: 12px;
+    padding: 14px;
+    border: 1px solid #315c46;
+    border-radius: 8px;
+    color: #315c46;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+}
+
+.result .acao-principal {
+    background: #315c46;
+    color: #fff;
+}
+
+/* Corrigir denúncia */
+
+.link-corrigir {
+    margin-bottom: 16px;
+}
+
+.link-corrigir a {
+    color: #315c46;
+    font-weight: 600;
+}
+
+form.form-card input,
+form.form-card select,
+form.form-card textarea {
+    width: 100%;
+    min-height: 44px;
+    margin-bottom: 14px;
+    padding: 10px 12px;
+    border: 1px solid var(--bege-borda);
+    border-radius: 8px;
+    font: inherit;
+}
+
+form.form-card label.option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 36px;
+}
+
+form.form-card input[type="checkbox"] {
+    width: 20px;
+    min-height: 20px;
+    margin: 0;
+}
+
+form.form-card fieldset {
+    margin-bottom: 14px;
+    border: 0;
+}

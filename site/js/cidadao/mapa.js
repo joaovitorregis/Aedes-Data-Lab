@@ -1,316 +1,175 @@
+// Mapa público: lê só os dados publicados e mostra a área aproximada.
+import { listarDenunciasPublicas } from "../servicos/mapa.js";
+import { listarBairros, listarCategorias } from "../servicos/denuncia.js";
+import { agruparPorArea, filtrarPublicas } from "../dominio/mapa.js";
+import { CENTRO_DO_MAPA, dentroDoTerritorio } from "../dominio/denuncia.js";
+import { ETAPAS, dataLocal, formatarData } from "../dominio/ocorrencia.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+const ORIGEM = { cidadao: "Feita por cidadão", agente: "Feita por agente" };
+const $ = (id) => document.getElementById(id);
+const filtros = $("filtros");
+const formFiltros = filtros.querySelector("form");
 
-    // ELEMENTOS PRINCIPAIS
+let denuncias = [];
+let carregado = false;
+let bairros = new Map();
+let categorias = new Map();
+let mapa = null;
+let camada = null;
+let voce = null;
+const circulos = new Map();
 
-    const showOccurrences = document.getElementById("showOccurrences");
-    const occurrencesSection = document.getElementById("occurrencesSection");
+function elemento(tag, texto, classe) {
+  const novo = document.createElement(tag);
+  if (texto) novo.textContent = texto;
+  if (classe) novo.className = classe;
+  return novo;
+}
 
-    // INICIALIZAÇÃO DO MAPA
+// prévia curta de uma denúncia (PRD, RF-MAP-01)
+function previa(d) {
+  const caixa = elemento("article", "", "previa");
+  if (d.fotos[0]) {
+    const foto = elemento("img");
+    foto.src = d.fotos[0];
+    foto.alt = "Foto da denúncia";
+    foto.loading = "lazy";
+    caixa.append(foto);
+  }
+  caixa.append(
+    elemento("strong", categorias.get(d.categoriaId) ?? "Ocorrência"),
+    elemento("span", `${bairros.get(d.bairroId) ?? "Itambé"} · ${formatarData(dataLocal(d.recebidaEm))}`),
+    elemento("span", `${ETAPAS[d.etapa]} · ${ORIGEM[d.origem] ?? ""}`),
+    elemento("p", d.descricao),
+  );
+  return caixa;
+}
 
-    const mapa = L.map("mapa").setView([-7.414, -35.104], 15);
+function lerFiltros() {
+  const dados = new FormData(formFiltros);
+  return { periodo: dados.get("periodo"), bairroId: dados.get("bairro"), etapas: dados.getAll("etapa") };
+}
 
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 19,
-        attribution: "© OpenStreetMap"
-    }).addTo(mapa);
+function desenharMapa(lista) {
+  if (!mapa) return;
+  camada.clearLayers();
+  circulos.clear();
+  for (const area of agruparPorArea(lista)) {
+    const conteudo = elemento("div", "", "previas");
+    conteudo.append(...area.denuncias.map(previa));
+    const circulo = window.L.circle([area.lat, area.lng], { radius: 100, color: "#ff0000", fillOpacity: 0.35 })
+      .bindPopup(conteudo, { maxWidth: 260, maxHeight: 280 })
+      .addTo(camada);
+    area.denuncias.forEach((d) => circulos.set(d.id, circulo));
+  }
+}
 
-    // OCORRÊNCIAS DE EXEMPLO
+function desenharLista(lista) {
+  $("resumo").replaceChildren(...Object.entries(ETAPAS).map(([etapa, rotulo]) =>
+    elemento("p", `${rotulo}: ${lista.filter((d) => d.etapa === etapa).length}`)));
 
-    const ocorrencias = [
-        {
-            nome: "Relato 1",
-            latitude: -7.414,
-            longitude: -35.104,
-            status: "Em análise"
-        },
-        {
-            nome: "Relato 2",
-            latitude: -7.416,
-            longitude: -35.108,
-            status: "Finalizada"
-        },
-        {
-            nome: "Relato 3",
-            latitude: -7.410,
-            longitude: -35.100,
-            status: "Em processamento"
-        },
-        {
-            nome: "Relato 4",
-            latitude: -7.418,
-            longitude: -35.102,
-            status: "Não visualizada"
-        }
-    ];
-
-    // ADICIONAR MARCADORES
-
-    ocorrencias.forEach(ocorrencia => {
-        L.marker([ocorrencia.latitude, ocorrencia.longitude])
-            .addTo(mapa)
-            .bindPopup(`
-                <strong>${ocorrencia.nome}</strong><br>
-                Status: ${ocorrencia.status}
-            `);
-    });
-
-    // CENTRALIZAR MAPA
-
-    const centerButton = document.getElementById("centerMap");
-
-    centerButton.addEventListener("click", () => {
-
-        if (!navigator.geolocation) {
-            alert("Seu navegador não suporta geolocalização.");
-            return;
-        }
-
-        navigator.geolocation.getCurrentPosition(
-            position => {
-                const latitude = position.coords.latitude;
-                const longitude = position.coords.longitude;
-
-                mapa.setView([latitude, longitude], 17);
-
-                L.marker([latitude, longitude])
-                    .addTo(mapa)
-                    .bindPopup("Você está aqui!")
-                    .openPopup();
-            },
-            () => {
-                alert("Não foi possível obter sua localização.");
-            }
-        );
-    });
-
-    // FILTROS
-
-    const filtros = document.getElementById("filtros");
-    const formFiltros = filtros.querySelector("form");
-    const filterCount = document.getElementById("filterCount");
-
-    // ABRIR FILTROS
-
-    document.getElementById("openFilters").addEventListener("click", () => {
-        filtros.showModal();
-    });
-
-    // FECHAR AO CLICAR FORA
-
-    filtros.addEventListener("click", event => {
-        if (event.target === filtros) {
-            filtros.close();
-        }
-    });
-
-    // FILTRAR OCORRÊNCIAS
-
-    function filtrar() {
-
-        const dados = new FormData(formFiltros);
-        const status = dados.getAll("status");
-
-        document.querySelectorAll(".occurrence-card").forEach(card => {
-
-            card.hidden =
-                status.length > 0 &&
-                !status.includes(card.dataset.status);
-
-        });
-
-        // CONTADOR DE FILTROS ATIVOS
-
-        const total = [
-            dados.get("period"),
-            dados.get("locality"),
-            status.length > 0 ? status.length : null
-        ].filter(Boolean).length;
-
-        filterCount.textContent = total;
-        filterCount.hidden = total === 0;
+  $("occurrencesList").replaceChildren(...lista.map((d) => {
+    const cartao = previa(d);
+    cartao.classList.add("occurrence-card");
+    if (mapa) {
+      const ver = elemento("button", "Ver no mapa", "summary-button");
+      ver.type = "button";
+      ver.addEventListener("click", () => {
+        $("mapa").scrollIntoView({ block: "center" });
+        mapa.setView([d.lat, d.lng], 17);
+        circulos.get(d.id)?.openPopup();
+      });
+      cartao.append(ver);
     }
-
-    // ATUALIZAR AO ALTERAR FILTROS
-
-    formFiltros.addEventListener("change", filtrar);
-
-    // ATUALIZAR AO LIMPAR
-
-    formFiltros.addEventListener("reset", () => {
-        setTimeout(filtrar, 0);
-    });
-
-    filtrar();
-
-    // CONCLUIR FILTROS
-
-    document.getElementById("applyFilters").addEventListener("click", () => {
-
-        filtrar();
-
-        occurrencesSection.classList.add("visible");
-
-        filtros.close();
-
-        setTimeout(() => {
-            occurrencesSection.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
-        }, 200);
-
-    });
-
-    // MOSTRAR OCORRÊNCIAS
-
-    showOccurrences.addEventListener("click", () => {
-
-        occurrencesSection.classList.add("visible");
-
-        occurrencesSection.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
-
-    });
-
-    // BOTÕES DE RESUMO
-
-    document.querySelectorAll(".summary-button").forEach(button => {
-
-        button.addEventListener("click", () => {
-            console.log("Resumo selecionado:", button.innerText);
-        });
-
-    });
-
-});
-
-// SHOW OCCURRENCES BUTTON
-
-showOccurrences.addEventListener("click", () => {
-
-    occurrencesSection.classList.add("visible");
-
-    occurrencesSection.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
-
-});
-
-
-// CENTRALIZE MAP BUTTON
-
-document.getElementById("centerMap").addEventListener("click", () => {
-
-    if (!navigator.geolocation) {
-        alert("Seu navegador não suporta geolocalização.");
-        return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-
-        (position) => {
-
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-
-            console.log("Latitude:", latitude);
-            console.log("Longitude:", longitude);
-
-            alert("Sua localização foi identificada!");
-
-        },
-
-        () => {
-            alert("Não foi possível acessar sua localização.");
-        }
-
-    );
-
-});
-
-
-// SUMMARY BUTTONS
-
-document.querySelectorAll(".summary-button").forEach(button => {
-
-    button.addEventListener("click", () => {
-
-        // The summary page will be implemented later.
-
-        console.log("Resumo selecionado:", button.innerText);
-
-    });
-
-});
-document.addEventListener("DOMContentLoaded", () => {
-    const botoes = document.querySelectorAll(".menu-botao");
-
-    botoes.forEach((botao) => {
-        const menu = document.getElementById(
-            botao.getAttribute("aria-controls")
-        );
-
-        if (!menu) return;
-
-        const fundo = document.querySelector(".menu-fundo");
-        const links = menu.querySelectorAll("a");
-
-        function abrirMenu() {
-            menu.classList.add("aberto");
-            menu.removeAttribute("inert");
-            menu.setAttribute("aria-hidden", "false");
-
-            fundo.hidden = false;
-            botao.setAttribute("aria-expanded", "true");
-            botao.setAttribute("aria-label", "Fechar menu");
-
-            document.body.classList.add("menu-aberto");
-
-            links[0]?.focus();
-        }
-
-        function fecharMenu() {
-            menu.classList.remove("aberto");
-            menu.setAttribute("inert", "");
-            menu.setAttribute("aria-hidden", "true");
-
-            fundo.hidden = true;
-            botao.setAttribute("aria-expanded", "false");
-            botao.setAttribute("aria-label", "Abrir menu");
-
-            document.body.classList.remove("menu-aberto");
-
-            botao.focus();
-        }
-
-        botao.addEventListener("click", () => {
-            const aberto =
-                botao.getAttribute("aria-expanded") === "true";
-
-            if (aberto) {
-                fecharMenu();
-            } else {
-                abrirMenu();
-            }
-        });
-
-        fundo.addEventListener("click", fecharMenu);
-
-        links.forEach((link) => {
-            link.addEventListener("click", fecharMenu);
-        });
-
-        document.addEventListener("keydown", (evento) => {
-            if (
-                evento.key === "Escape" &&
-                botao.getAttribute("aria-expanded") === "true"
-            ) {
-                fecharMenu();
-            }
-        });
-    });
-});
+    return cartao;
+  }));
+}
+
+function atualizar() {
+  const escolha = lerFiltros();
+  const total = [escolha.periodo, escolha.bairroId, escolha.etapas.length].filter(Boolean).length;
+  $("filterCount").textContent = total;
+  $("filterCount").hidden = total === 0;
+  if (!carregado) return;
+
+  const lista = filtrarPublicas(denuncias, escolha);
+  desenharMapa(lista);
+  desenharLista(lista);
+  if (!denuncias.length) $("situacao").textContent = "Ainda não há denúncias publicadas.";
+  else if (!lista.length) $("situacao").textContent = "Nenhuma denúncia para estes filtros.";
+  else $("situacao").textContent = lista.length === 1 ? "1 denúncia no mapa." : `${lista.length} denúncias no mapa.`;
+}
+
+async function carregar() {
+  carregado = false;
+  $("situacao").textContent = "Carregando denúncias...";
+  $("tentarDeNovo").hidden = true;
+  $("resumo").replaceChildren();
+  try {
+    const [lista, listaBairros, listaCategorias] = await Promise.all(
+      [listarDenunciasPublicas(), listarBairros(), listarCategorias()]);
+    denuncias = lista;
+    bairros = new Map(listaBairros.map((b) => [b.id, b.name]));
+    categorias = new Map(listaCategorias.map((c) => [c.id, c.label]));
+    $("filtroBairro").replaceChildren(new Option("Todas as localidades", ""),
+      ...listaBairros.map((b) => new Option(b.name, b.id)));
+    carregado = true;
+    atualizar();
+  } catch {
+    // erro nunca aparece como "zero denúncias"
+    $("situacao").textContent = "Não foi possível carregar as denúncias.";
+    $("tentarDeNovo").hidden = false;
+  }
+}
+
+function iniciarMapa() {
+  if (!window.L) {
+    $("avisoLocal").textContent = "O mapa não carregou. A lista continua disponível.";
+    return;
+  }
+  mapa = window.L.map("mapa").setView(CENTRO_DO_MAPA, 14);
+  window.L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: "&copy; OpenStreetMap",
+  }).addTo(mapa);
+  camada = window.L.layerGroup().addTo(mapa);
+}
+
+// a localização só é pedida quando a pessoa toca no botão
+function centralizar() {
+  const falha = () => { $("avisoLocal").textContent = "Não foi possível obter a sua localização."; };
+  if (!mapa || !navigator.geolocation) return falha();
+  navigator.geolocation.getCurrentPosition(({ coords }) => {
+    const ponto = [coords.latitude, coords.longitude];
+    $("avisoLocal").textContent = dentroDoTerritorio(...ponto) ? "" : "Você está fora de Itambé.";
+    voce?.remove();
+    voce = window.L.marker(ponto).addTo(mapa).bindPopup("Você está aqui");
+    mapa.setView(ponto, 17);
+  }, falha, { timeout: 10000 });
+}
+
+function mostrarLista() {
+  $("occurrencesSection").classList.add("visible");
+  $("occurrencesSection").scrollIntoView({ block: "start" });
+}
+
+for (const [etapa, rotulo] of Object.entries(ETAPAS)) {
+  const label = elemento("label");
+  const caixa = elemento("input");
+  caixa.type = "checkbox";
+  caixa.name = "etapa";
+  caixa.value = etapa;
+  label.append(caixa, elemento("span", rotulo));
+  $("filtroEtapas").append(label);
+}
+
+$("openFilters").addEventListener("click", () => filtros.showModal());
+filtros.addEventListener("click", (evento) => { if (evento.target === filtros) filtros.close(); });
+formFiltros.addEventListener("change", atualizar);
+formFiltros.addEventListener("reset", () => setTimeout(atualizar, 0));
+$("showOccurrences").addEventListener("click", mostrarLista);
+$("centerMap").addEventListener("click", centralizar);
+$("tentarDeNovo").addEventListener("click", carregar);
+
+iniciarMapa();
+carregar();

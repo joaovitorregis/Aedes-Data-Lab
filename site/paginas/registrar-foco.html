@@ -8,551 +8,295 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="../css/registrar-foco.css">
 </head>
 
 <body>
 
-<!-- CABEÇALHO -->
-    <header>
-
-        <a href="../inicio.html" class="brand">
-
-            <img src="../assets/imagens/logo.webp" alt="Logo Aedes DataLab">
-
-            <div>
-                <h2>Aedes Datalab</h2>
-                <span>Itambé - PE</span>
-            </div>
-        </a>
-
-        <button class="menu-toggle"
-            id="menuToggle"
-            aria-label="Abrir menu"
-            aria-expanded="false"
-            aria-controls="sidebar">
-            ☰
-        </button>
-
-    </header>
-
-
-    <!-- MENU RETRÁTIL -->
-    <div class="menu-overlay" id="menuOverlay"></div>
-
-    <aside class="sidebar" id="sidebar">
-
-        <div class="sidebar-heading">
-            <h2>Menu</h2>
-
-            <button class="close-menu" id="closeMenu"
-                aria-label="Fechar menu">
-                ×
-            </button>
-        </div>
-
-        <nav class="sidebar-nav">
-
-            <a href="../inicio.html" class="menu-item">
-                <span>⌂</span>
-                Início
-            </a>
-
-            <a href="registrar-foco.html" class="menu-item">
-                <span>⚑</span>
-                Registrar foco
-            </a>
-
-            <a href="mapa.html" class="menu-item">
-                <span>▧</span>
-                Mapa
-            </a>
-
-            <a href="guia-aedes.html" class="menu-item">
-                <span>▤</span>
-                Guia Aedes
-            </a>
-
-            <a href="quem-somos.html" class="menu-item active">
-                <span>♙</span>
-                Quem somos
-            </a>
-
-        </nav>
-
-        <div class="sidebar-bottom">
-
-            <div class="user-card">
-
-                <div class="user-avatar">♙</div>
-
-                <div>
-                    <strong>Nome do usuário</strong>
-                    <span>Cidadão</span>
-                </div>
-
-            </div>
-
-            <button class="logout-button" type="button">
-                Sair
-            </button>
-
-        </div>
-
-    </aside>
-
-         <main>
-
-    <a href="#" class="back" onclick="previousStep()">← Voltar</a>
-   
-    <p class="subtitle">REGISTRAR FOCO</p>
-   
-    <h1>Denúncia de focos do Aedes Aegypti</h1>
-
-    <nav class="progress">
-       <span class="step active">1</span>
-       <span class="step">2</span>
-       <span class="step">3</span>
-       <span class="step">4</span>
-    </nav>
-    <form id="denunciaForm">
-     
-        <!-- ETAPA 1: ETAPA 1: LOCALIZAÇÃO -->
-         <section class="step active" id="step1">
-            <h2>Localização do foco</h2>
-            <p>Informe o endereço ou marque no mapa o local onde você identificou um possível foco do Aedes Aegypti.</p>
-           <label>Bairro ou comunidade</label>
-           <select required>
-               <option value="">Selecione...</option>
-               <option value="centro">Centro</option>
-               <option value="caricé">Caricé</option>
-               <option value="ibiranga">Ibiranga</option>
-               <option value="quebec">Quebec</option>
-               <option value="francisco cordeiro">Francisco Cordeiro</option>
-               <option value="maracujá">Maracujá</option>
-               <option value="loteamento figueiredo">Loteamento Figueiredo</option>
-               <option value="luiz gonzaga">Luiz Gonzaga</option>
-               <option value="maracujá">Maracujá</option>
-               <option value="salgadeira">Salgadeira</option>
-               <option value="outro">Outro</option>
-           </select>
-
-           <label>Rua, avenida ou logradouro</label>
-           <input type="text" placeholder="Ex.: Rua das Flores">
-
-           <label>Número do imóvel</label>
-           <div class="number-field">
-               <input type="number" placeholder="Ex.: 123">
-               <label class="checkbox">
-                   <input type="checkbox"> Sem número
-            </label>
-            </div>
-            
-            <label>Ponto de referência</label>
-            <input type="text" placeholder="Ex.: Próximo ao hospital...">
-
-            <label>Onde está o foco?</label>
-            <select required>
-                <option value="">Selecione...</option>
-                <option value="dentro do imóvel">Casa</option>
-                <option value="quintal">Quintal ou área externa</option>
-                <option value="comercio">Comércio</option>
-                <option value="terreno baldio">Terreno baldio</option>
-                <option value="calçada ou rua">Calçada ou rua</option>
-                <option value="escola ou prédio público">Escola ou prédio público</option>
-                <option value="praça ou parque">Praça ou parque</option>
-                <option value="outro">Outro</option>
-            </select>
-
-            <h3>Marque no mapa o local do foco</h3>
-            <div class="map-container">
-                <div id="map"></div>
-            </div>
-
-            <p class="map-instructions">Clique no mapa para marcar o local do foco. Você pode arrastar o marcador para ajustar a posição.</p>
-
-            <button type="button" class="next-btn" onclick="nextStep()">Próximo</button>
-
-         </section>
-
-         <!-- ETAPA 2 IDENTIFICAÇÃO DO FOCO -->
-         <section class="step" id="step2">
-            <h2>Identificação do foco</h2>
-            <p>Descreva a situação observada e informe as características do possível criadouro para ajudar na avaliação da denúncia.</p>
-
-            <label>O que você deseja denunciar?</label>
-            <select required>
-                <option value="">Selecione...</option>
-                <option value="água parada">Água parada</option>
-                <option value="presença de possíveis larvas ou pupas de mosquito">Presença de possíveis larvas ou pupas de mosquito</option>
-                <option value="imóvel abandonado com possíveis criadouros">Imóvel abandonado com possíveis criadouros</option>
-                <option value="lixo ou entulho acumulando água">Lixo ou entulho acumulando água</option>
-                <option value="terreno baldio com acúmulo de água ou recipientes">Terreno baldio com acúmulo de água ou recipientes</option>
-                <option value="outro">Outro</option>
-                <option value="não sei identificar o tipo de ocorrência">Não sei identificar o tipo de ocorrência</option>
-            </select>
-
-            <label>Há quanto tempo você percebeu essa situação?</label>
-            <select required>
-                <option value="">Selecione...</option>
-                <option value="hoje">Hoje</option>
-                <option value="há poucos dias">Há poucos dias</option>
-                <option value="há uma semana">Há uma semana</option>
-                <option value="há mais de uma semana">Há mais de uma semana</option>
-                <option value="não sei informar">Não sei informar</option>
-            </select>
-
-            <label>Você observou água acumulada no local?</label>
-            <select required>
-                <option value="">Selecione...</option>
-                <option value="sim">Sim</option>
-                <option value="não">Não</option>
-                <option value="não sei informar">Não sei informar</option>
-            </select>
-
-            <fieldset>
-                <legend>Em que tipo de recipiente ou estrutura a água está acumulada?</legend>
-                <label class="option">
-                   <input type="checkbox" name="recipiente" value="baldes, bacias ou caixas"> Baldes, bacias ou caixas
-                </label>
-                <label class="option">
-                   <input type="checkbox" name="recipiente" value="lata ou garrafa"> Lata ou garrafa
-                </label>
-                <label class="option">
-                   <input type="checkbox" name="recipiente" value="pneu"> Pneu
-                </label>
-                <label class="option">
-                   <input type="checkbox" name="recipiente" value="vaso de planta ou pratos de vasos"> Vaso de planta ou pratos de vasos
-                </label>
-                <label class="option">
-                   <input type="checkbox" name="recipiente" value="piscina ou tanque"> Piscina ou tanque
-                </label>
-                <label class="option">
-                   <input type="checkbox" name="recipiente" value="lixo ou entulho"> Lixo ou entulho
-                </label>
-                <label class="option">
-                   <input type="checkbox" name="recipiente" value="caixas d'água ou reservatórios"> Caixas d'água ou reservatórios
-                </label>
-                <label class="option">
-                   <input type="checkbox" name="recipiente" value="calhas, ralos ou canaletas"> Calhas, ralos ou canaletas
-                </label>
-                <label class="option">
-                   <input type="checkbox" name="recipiente" value="lonas ou coberturas que acumulam água"> Lonas ou coberturas que acumulam água
-                </label>
-                <label class="option">
-                   <input type="checkbox" name="recipiente" value="poças ou áreas alagadas"> Poças ou áreas alagadas
-                </label>
-                <label class="option">
-                   <input type="checkbox" name="recipiente" value="estruturas de construção"> Estruturas de construção
-                </label>
-                <label class="option">
-                   <input type="checkbox" name="recipiente" value="outro recipiente ou estrutura"> Outro recipiente ou estrutura
-                </label>
-                <label class="option">
-                   <input type="checkbox" name="recipiente" value="não sei informar"> Não sei informar
-                </label>
-            </fieldset>
-
-            <label>Você observou a presença de larvas ou pupas de mosquito no local?</label>
-            <select required>
-                <option value="">Selecione...</option>
-                <option value="sim">Sim</option>
-                <option value="não">Não</option>
-                <option value="não sei informar">Não sei informar</option>
-            </select>
-
-            <label>Fotos do foco (até 3 fotos)</label>
-            <p class="hint">Se for seguro, fotografe o local de forma que as larvas ou pupas sejam visíveis.</p>
-            <div class="upload">
-                <strong>Área de Upload</strong>
-            <input type="file" name="fotos" accept="image/png, image/jpeg, image/webp" multiple>
-            <small>PNG, JPEG, WEBP.</small>
-            </div>
-
-            <label>Observações adicionais</label>
-            <textarea placeholder="Descreva qualquer detalhe relevante sobre o foco ou a situação observada"></textarea>
-
-            <div class="navigation-buttons">
-                <button type="button" class="back-btn" onclick="previousStep()">Voltar</button>
-             <button type="button" class="next-btn" onclick="nextStep()">Próximo</button>
-            </div>
-
-        </section>
-
-        <!-- ETAPA 3: IDENTIFICAÇÃO E CONFIRMAÇÃO -->
-
-<section class="step" id="step3">
-
-    <!-- TELA 1: DADOS PESSOAIS -->
-
-    <div id="dadosPessoais">
-
-        <h2>Seus dados para o registro</h2>
-
-        <p>
-            Informe seus dados e os dois contatos.
-            Na próxima tela você escolherá por qual deles
-            receber o código.
-        </p>
-
-        <div class="form-card">
-
-            <label for="nomeCompleto">Nome completo *</label>
-            <input
-                type="text"
-                id="nomeCompleto"
-                name="nomeCompleto"
-                placeholder="Digite seu nome completo"
-                autocomplete="name"
-                required
-            >
-
-            <label for="cpf">CPF *</label>
-            <input
-                type="text"
-                id="cpf"
-                name="cpf"
-                placeholder="000.000.000-00"
-                maxlength="14"
-                required
-            >
-
-            <label for="email">E-mail *</label>
-            <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="exemplo@exemplo.com"
-                autocomplete="email"
-                required
-            >
-
-            <label for="telefone">Telefone com DDD *</label>
-            <input
-                type="tel"
-                id="telefone"
-                name="telefone"
-                placeholder="(81) 99999-0000"
-                autocomplete="tel"
-                required
-            >
-
-            <p class="privacy-text">
-                E-mail, telefone, nome e CPF ficam privados.
-                O CPF é conferido para evitar erro de digitação;
-                isso não comprova a identidade civil.
-            </p>
-
-            <div class="navigation-buttons">
-
-                <button
-                    type="button"
-                    class="back-btn"
-                    onclick="previousStep()">
-                    Voltar
-                </button>
-
-                <button
-                    type="button"
-                    class="next-btn"
-                    onclick="goToEmailVerification()">
-                    Continuar
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- TELA 2: CONFIRMAÇÃO DO E-MAIL -->
-
-    <div id="confirmacaoEmail" hidden>
-
-        <button
-            type="button"
-            class="back-btn"
-            onclick="backToPersonalData()">
-            ← Escolher outro canal
-        </button>
-
-        <p class="subtitle">CONFIRMAÇÃO DO CONTATO</p>
-
-        <h2>Digite o código recebido</h2>
-
-        <p>
-            Confira a caixa de entrada de
-            <strong id="emailExibido"></strong>.
-        </p>
-
-        <div class="form-card">
-
-            <label for="codigoEmail">Código de 6 dígitos *</label>
-
-            <input
-                type="text"
-                id="codigoEmail"
-                maxlength="6"
-                inputmode="numeric"
-                placeholder="000000"
-            >
-
-            <p id="mensagemCodigo" aria-live="polite"></p>
-
-            <div class="navigation-buttons">
-
-                <button
-                    type="button"
-                    class="back-btn"
-                    onclick="resendCode()">
-                    Reenviar código
-                </button>
-
-                <button
-                    type="button"
-                    class="next-btn"
-                    onclick="confirmEmailCode()">
-                    Confirmar código
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-        <!-- ETAPA 4: REVISÃO E CONFIRMAÇÃO -->
-
-<section class="step" id="step4">
-
-    <h2>Revisão e confirmação</h2>
-
-    <p>
-        Revise as informações fornecidas antes de enviar a denúncia.
-    </p>
-
-    <div class="review-section" id="reviewContent">
-
-        <!-- O JavaScript preencherá esta área automaticamente -->
-
-    </div>
-
-    <label class="option consent">
-
-        <input
-            type="checkbox"
-            id="confirmarInformacoes"
-            required
-        >
-
-        Eu confirmo que as informações fornecidas são precisas
-        e autorizo o envio da denúncia.
-
-    </label>
-
-    <div class="navigation-buttons">
-
-        <button
-            type="button"
-            class="back-btn"
-            onclick="previousStep()">
-            Voltar
-        </button>
-
-        <button
-            type="submit"
-            class="submit-btn">
-            Enviar denúncia
-        </button>
-
-    </div>
-
-    <button
-        type="button"
-        class="cancel-btn"
-        onclick="cancelForm()">
-        Cancelar
-    </button>
-
-</section>
-
-    </form>
-
-    <!-- Mensagem de sucesso -->
-
-   <!-- TELA DE PROTOCOLO -->
-
-<section class="result" id="successMessage" hidden>
-
-    <a href="../inicio.html" class="back">
-        ‹ Voltar
+  <!-- CABEÇALHO -->
+  <header>
+    <a href="../inicio.html" class="brand">
+      <img src="../assets/imagens/logo.webp" alt="Logo Aedes Data Lab">
+      <div>
+        <h2>Aedes Lab</h2>
+        <span>Itambé · PE</span>
+      </div>
     </a>
 
-    <h1>Denúncia enviada</h1>
+    <button class="menu-toggle" id="menuToggle" type="button"
+      aria-label="Abrir menu" aria-expanded="false" aria-controls="sidebar">☰</button>
+  </header>
 
-    <div class="success-icon">✔</div>
+  <!-- MENU RETRÁTIL -->
+  <div class="menu-overlay" id="menuOverlay"></div>
 
-    <h2>Recebemos seu registro.</h2>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-heading">
+      <h2>Menu</h2>
+      <button class="close-menu" id="closeMenu" type="button" aria-label="Fechar menu">×</button>
+    </div>
 
-    <p>
-        Guarde o protocolo para identificar esta denúncia.
-        A equipe poderá avaliar o local informado.
-    </p>
+    <nav class="sidebar-nav">
+      <a href="../inicio.html" class="menu-item"><span>⌂</span> Início</a>
+      <a href="registrar-foco.html" class="menu-item active" aria-current="page"><span>⚑</span> Registrar foco</a>
+      <a href="mapa.html" class="menu-item"><span>▧</span> Mapa</a>
+      <a href="guia-aedes.html" class="menu-item"><span>▤</span> Guia Aedes</a>
+      <a href="quem-somos.html" class="menu-item"><span>♙</span> Quem somos</a>
+      <a href="jogo.html" class="menu-item"><span>◈</span> Jogo</a>
+    </nav>
+  </aside>
 
-    <article class="protocol">
+  <main>
+    <a href="../inicio.html" class="back" id="voltarTopo">← Voltar</a>
 
+    <p class="subtitle">REGISTRAR FOCO</p>
+    <h1>Denúncia de focos do Aedes Aegypti</h1>
+    <p class="link-corrigir"><a href="corrigir-denuncia.html">Já enviou? Corrija uma denúncia</a></p>
+
+    <div id="progresso">
+      <div class="progress" aria-hidden="true">
+        <span class="step active">1</span>
+        <span class="step">2</span>
+        <span class="step">3</span>
+        <span class="step">4</span>
+      </div>
+      <p class="etapa-texto" id="etapaTexto" aria-live="polite">Etapa 1 de 4</p>
+    </div>
+
+    <div class="aviso" id="erroListas" role="alert" hidden>
+      <p>Não foi possível carregar os bairros e as categorias.</p>
+      <button type="button" class="back-btn" id="recarregarListas">Tentar de novo</button>
+    </div>
+
+    <form id="denunciaForm" novalidate>
+
+      <!-- ETAPA 1: LOCALIZAÇÃO -->
+      <section class="step active" id="step1">
+        <h2>Localização do foco</h2>
+        <p>Informe o endereço e marque no mapa onde está o possível foco.</p>
+
+        <label for="bairro">Bairro ou localidade *</label>
+        <select id="bairro" required>
+          <option value="">Carregando...</option>
+        </select>
+
+        <label for="logradouro">Rua, avenida ou logradouro *</label>
+        <input type="text" id="logradouro" minlength="3" maxlength="180" placeholder="Ex.: Rua das Flores" required>
+
+        <label for="numero">Número do imóvel</label>
+        <div class="number-field">
+          <input type="text" id="numero" inputmode="numeric" maxlength="10" placeholder="Ex.: 123">
+          <label class="checkbox">
+            <input type="checkbox" id="semNumero"> Sem número
+          </label>
+        </div>
+
+        <label for="referencia">Ponto de referência (privado)</label>
+        <input type="text" id="referencia" maxlength="200" placeholder="Ex.: Próximo ao hospital...">
+
+        <label for="localFoco">Onde está o foco? *</label>
+        <select id="localFoco" required>
+          <option value="">Selecione...</option>
+          <option value="casa">Casa</option>
+          <option value="quintal">Quintal ou área externa</option>
+          <option value="comercio">Comércio</option>
+          <option value="terreno">Terreno baldio</option>
+          <option value="rua">Calçada ou rua</option>
+          <option value="publico">Escola ou prédio público</option>
+          <option value="praca">Praça ou parque</option>
+          <option value="outro">Outro</option>
+        </select>
+
+        <h3>Marque o foco no mapa *</h3>
+        <div class="map-container">
+          <div id="map"></div>
+        </div>
+        <p class="map-instructions">Toque no mapa para marcar o local. Arraste o marcador para ajustar.</p>
+        <button type="button" class="back-btn" id="usarLocalizacao">Usar localização do aparelho</button>
+        <p class="erro-campo" id="erroMapa" role="alert"></p>
+
+        <div class="navigation-buttons">
+          <button type="button" class="next-btn" data-acao="avancar">Continuar</button>
+        </div>
+      </section>
+
+      <!-- ETAPA 2: IDENTIFICAÇÃO DO FOCO -->
+      <section class="step" id="step2">
+        <h2>Identificação do foco</h2>
+        <p>Descreva a situação observada para ajudar a equipe.</p>
+
+        <label for="categoria">O que você deseja denunciar? *</label>
+        <select id="categoria" required>
+          <option value="">Carregando...</option>
+        </select>
+
+        <label for="tempo">Há quanto tempo você percebeu essa situação? *</label>
+        <select id="tempo" required>
+          <option value="">Selecione...</option>
+          <option>Hoje</option>
+          <option>Há alguns dias</option>
+          <option>Há uma semana</option>
+          <option>Há mais de uma semana</option>
+          <option>Não sei informar</option>
+        </select>
+
+        <label for="agua">Você observou água acumulada no local? *</label>
+        <select id="agua" required>
+          <option value="">Selecione...</option>
+          <option value="sim">Sim</option>
+          <option value="nao">Não</option>
+          <option value="nao_sei">Não sei informar</option>
+        </select>
+
+        <fieldset id="recipientes">
+          <legend>Em que tipo de recipiente ou estrutura a água está acumulada?</legend>
+        </fieldset>
+
+        <label for="larvas">Você observou larvas ou pupas na água? *</label>
+        <select id="larvas" required>
+          <option value="">Selecione...</option>
+          <option value="sim">Sim</option>
+          <option value="nao">Não</option>
+          <option value="nao_sei">Não sei</option>
+        </select>
+
+        <label for="descricao">Descreva o que você observou *</label>
+        <textarea id="descricao" maxlength="1000" required></textarea>
+        <p class="hint">Este texto será público. Não inclua nomes, placas nem dados pessoais.</p>
+
+        <label for="fotos">Fotos do foco * (1 a 3)</label>
+        <p class="hint">Se for seguro, fotografe a água parada. As fotos serão públicas: evite rostos e placas.</p>
+        <div class="upload">
+          <input type="file" id="fotos" accept="image/jpeg, image/png" multiple>
+          <small>JPG ou PNG, até 10 MB cada.</small>
+        </div>
+        <ul class="lista-fotos" id="listaFotos"></ul>
+        <p class="erro-campo" id="erroFotos" role="alert"></p>
+
+        <label for="outraEvidencia">Outra evidência que queira compartilhar</label>
+        <textarea id="outraEvidencia" maxlength="500"></textarea>
+        <p class="hint">Esta informação fica restrita à equipe.</p>
+
+        <div class="navigation-buttons">
+          <button type="button" class="back-btn" data-acao="voltar">Voltar</button>
+          <button type="button" class="next-btn" data-acao="avancar">Continuar</button>
+        </div>
+      </section>
+
+      <!-- ETAPA 3: DADOS E CÓDIGO -->
+      <section class="step" id="step3">
+
+        <div id="dadosPessoais">
+          <h2>Seus dados para o registro</h2>
+          <p>Informe seus dados e os dois contatos. Depois você escolhe onde receber o código.</p>
+
+          <div class="form-card">
+            <p class="privacy-text">Nome, e-mail e telefone não são divulgados: só os agentes que atendem a
+              denúncia os veem, e no mapa ela aparece como anônima.</p>
+
+            <label for="nome">Nome completo *</label>
+            <input type="text" id="nome" minlength="2" maxlength="120" autocomplete="name" required>
+
+            <label for="email">E-mail *</label>
+            <input type="email" id="email" maxlength="254" autocomplete="email" required>
+
+            <label for="telefone">Telefone com DDD *</label>
+            <input type="tel" id="telefone" maxlength="20" autocomplete="tel" placeholder="(81) 99999-0000" required>
+
+            <div class="navigation-buttons">
+              <button type="button" class="back-btn" data-acao="voltar">Voltar</button>
+              <button type="button" class="next-btn" data-acao="avancar">Continuar</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="escolhaCanal" hidden>
+          <h2>Onde deseja receber o código?</h2>
+          <p>Escolha um contato para confirmar esta denúncia.</p>
+          <div class="form-card canais">
+            <button type="button" class="next-btn" id="receberEmail">Receber por e-mail em <span id="emailCanal"></span></button>
+            <button type="button" class="back-btn" disabled>Telefone: SMS e WhatsApp em breve</button>
+            <p class="erro-campo" id="erroCanal" role="alert"></p>
+            <button type="button" class="back-btn" id="voltarDados">Voltar aos meus dados</button>
+          </div>
+        </div>
+
+        <div id="confirmacaoEmail" hidden>
+          <h2>Digite o código recebido</h2>
+          <p>Confira a caixa de entrada de <strong id="emailExibido"></strong>.</p>
+          <div class="form-card">
+            <label for="codigoEmail">Código de 6 dígitos *</label>
+            <input type="text" id="codigoEmail" maxlength="6" inputmode="numeric" autocomplete="one-time-code">
+            <p id="mensagemCodigo" role="status"></p>
+            <div class="navigation-buttons">
+              <button type="button" class="back-btn" id="reenviarCodigo">Reenviar código</button>
+              <button type="button" class="next-btn" id="confirmarCodigo">Confirmar código</button>
+            </div>
+            <button type="button" class="back-btn" id="trocarCanal">Escolher outro canal</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ETAPA 4: REVISÃO -->
+      <section class="step" id="step4">
+        <h2>Revisão da denúncia</h2>
+        <p>Leia tudo antes de enviar.</p>
+
+        <div class="review-section">
+          <h3>Visível no mapa público</h3>
+          <div id="revisaoPublica"></div>
+        </div>
+        <div class="review-section">
+          <h3>Apenas para a equipe</h3>
+          <div id="revisaoPrivada"></div>
+        </div>
+
+        <label class="option consent">
+          <input type="checkbox" id="confirmarInformacoes" required>
+          Confirmei as informações e revisei o conteúdo que será público.
+        </label>
+
+        <div class="navigation-buttons">
+          <button type="button" class="back-btn" data-acao="voltar">Voltar</button>
+          <button type="submit" class="submit-btn" id="enviar">Enviar denúncia</button>
+        </div>
+        <button type="button" class="cancel-btn" id="cancelar">Cancelar</button>
+      </section>
+    </form>
+
+    <!-- PROTOCOLO -->
+    <section class="result" id="successMessage" hidden>
+      <h2>Recebemos sua denúncia</h2>
+      <div class="success-icon" aria-hidden="true">✔</div>
+      <p>Guarde o protocolo para identificar esta denúncia.</p>
+      <article class="protocol">
         <h3>PROTOCOLO DA DENÚNCIA</h3>
-
-        <p id="protocolNumber">
-            Aguardando geração...
-        </p>
-
-        <p id="status">
-            Status: Em análise
-        </p>
-
-    </article>
-
-    <p class="hint">
-        Seus dados pessoais não aparecem no mapa público.
-    </p>
-
-    <button
-        type="button"
-        class="submit-btn"
-        onclick="viewIncidentOnMap()"> <a href="mapa.html">Ver ocorrência no mapa</a>
-    </button>
-
-    <button
-        type="button"
-        class="back-btn"
-        onclick="goToHome()">
-        Voltar ao início
-    </button>
-
-</section>
-
-    <!-- Mensagem de erro -->
-
-    <section class="result" id="errorMessage" hidden>
-        <h1 class="error-title">Não foi possível enviar a denúncia</h1>
-        <div class="error-icon">✖</div>
-        <h2>Ocorreu um problema ao processar sua denúncia.</h2>
-        <p>Confira a conexão com a internet e tente novamente.</p>
-
-        <button type="primary" onclick="retrySubmission()">Tentar novamente</button>
-        <button type="secondary" onclick="showStep(4)">Voltar à revisão</button>
+        <p id="protocolNumber"></p>
+        <p id="status">Etapa inicial: Recebida</p>
+      </article>
+      <p id="publicacao"></p>
+      <a class="acao acao-principal" href="mapa.html">Ver o mapa</a>
+      <a class="acao" href="corrigir-denuncia.html">Corrigir esta denúncia</a>
+      <a class="acao" href="../inicio.html">Voltar ao início</a>
     </section>
 
+    <!-- FALHA -->
+    <section class="result" id="errorMessage" hidden>
+      <h2 class="error-title">Não foi possível enviar</h2>
+      <div class="error-icon" aria-hidden="true">✖</div>
+      <p id="motivoErro" role="alert"></p>
+      <p>Nenhum protocolo foi gerado. Seus dados continuam preenchidos.</p>
+      <button type="button" class="submit-btn" id="tentarNovamente">Tentar novamente</button>
+      <button type="button" class="back-btn" id="voltarRevisao">Voltar à revisão</button>
+    </section>
   </main>
 
   <footer>
-    <p>© 2026 Aedes DataLab. Todos os direitos reservados.</p>
+    <p>© 2026 Aedes Data Lab. Todos os direitos reservados.</p>
   </footer>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script type="module" src="../js/cidadao/registrar-foco.js"></script>
 </body>
 </html>

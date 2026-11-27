@@ -5,7 +5,7 @@
 // =====================================================================
 import { lerTabela, urlFotoPublica } from "./api.js";
 
-const COLUNAS = "report_id,neighborhood_id,category_id,description,received_at,stage,cell_center_lat,cell_center_lng,photo_paths";
+const COLUNAS = "report_id,neighborhood_id,category_id,description,received_at,stage,origin,cell_center_lat,cell_center_lng,photo_paths";
 
 export async function listarDenunciasPublicas() {
   const linhas = await lerTabela(`public_reports?select=${COLUNAS}&order=received_at.desc&limit=1000`);
@@ -16,6 +16,7 @@ export async function listarDenunciasPublicas() {
     descricao: l.description,
     recebidaEm: l.received_at,
     etapa: l.stage,
+    origem: l.origin,
     // O mapa desenha o CENTRO da célula de 200 m, não o ponto exato.
     lat: l.cell_center_lat,
     lng: l.cell_center_lng,

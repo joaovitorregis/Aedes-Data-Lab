@@ -501,51 +501,49 @@ body.menu-aberto {
 
 
 .apoio-institucional {
-    background: #f5efdf;
-    padding: 12px 6px;
-    width: 100%;
-    box-sizing: border-box;
+    margin-top: 24px;
 }
 
 .apoio-institucional h3 {
     font-size: 20px;
-    color: #365c45;
-    margin: 0 0 10px;
-    font-weight: 700;
-    padding-bottom: 3px;
+    color: #304f3c;
+    margin-bottom: 12px;
 }
 
 .logos-apoio {
     display: flex;
-    gap: 6px;
-    align-items: center;
-    margin-bottom: 12px;
+    gap: 10px;
+    margin-bottom: 14px;
 }
 
 .logo-card {
-    background: #fff;
-    border: 1px solid #e0d4bd;
-    border-radius: 9px;
-    height: 64px;
     flex: 1;
+    min-width: 0;
+    height: 100px;
+    padding: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 5px;
-    box-sizing: border-box;
+    background: #fff;
+    border: 1px solid #ddcfb2;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
 }
 
 .logo-card img {
-    max-width: 100%;
-    max-height: 48px;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
 }
 
 .link-apoio {
+    display: inline-block;
+    padding: 6px 0;
     color: #365c45;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     text-decoration: underline;
+    text-underline-offset: 4px;
 }
 
 .link-apoio:hover {

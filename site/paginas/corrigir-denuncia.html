@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Corrigir denúncia | Aedes Data Lab</title>
+  <link rel="icon" href="../assets/imagens/logo.webp" type="image/webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="../css/registrar-foco.css">
+</head>
+
+<body>
+
+  <!-- CABEÇALHO -->
+  <header>
+    <a href="../inicio.html" class="brand">
+      <img src="../assets/imagens/logo.webp" alt="Logo Aedes Data Lab">
+      <div>
+        <h2>Aedes Lab</h2>
+        <span>Itambé · PE</span>
+      </div>
+    </a>
+
+    <button class="menu-toggle" id="menuToggle" type="button"
+      aria-label="Abrir menu" aria-expanded="false" aria-controls="sidebar">☰</button>
+  </header>
+
+  <!-- MENU RETRÁTIL -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-heading">
+      <h2>Menu</h2>
+      <button class="close-menu" id="closeMenu" type="button" aria-label="Fechar menu">×</button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="../inicio.html" class="menu-item"><span>⌂</span> Início</a>
+      <a href="registrar-foco.html" class="menu-item"><span>⚑</span> Registrar foco</a>
+      <a href="mapa.html" class="menu-item"><span>▧</span> Mapa</a>
+      <a href="guia-aedes.html" class="menu-item"><span>▤</span> Guia Aedes</a>
+      <a href="quem-somos.html" class="menu-item"><span>♙</span> Quem somos</a>
+      <a href="jogo.html" class="menu-item"><span>◈</span> Jogo</a>
+    </nav>
+  </aside>
+
+  <main>
+    <a href="registrar-foco.html" class="back">← Voltar</a>
+
+    <p class="subtitle">CORRIGIR DENÚNCIA</p>
+    <h1>Corrija a sua denúncia</h1>
+
+    <!-- 1. PROTOCOLO -->
+    <form class="form-card" id="formProtocolo" data-tela="protocolo" novalidate>
+      <p>A correção vale enquanto a denúncia está Recebida. Enviamos um código ao e-mail confirmado no envio.</p>
+      <label for="protocolo">Protocolo *</label>
+      <input type="text" id="protocolo" maxlength="15" placeholder="AED-2026-000000" autocapitalize="characters"
+        pattern="\s*[Aa][Ee][Dd]-\d{4}-\d{6}\s*" title="Use o formato AED-2026-000000" required>
+      <p class="erro-campo" id="erroProtocolo" role="alert"></p>
+      <button type="submit" class="next-btn">Enviar código</button>
+    </form>
+
+    <!-- 2. CÓDIGO -->
+    <form class="form-card" id="formCodigo" data-tela="codigo" novalidate hidden>
+      <p>Se o protocolo existir, o código chegou ao e-mail confirmado no envio. Ele vale por 10 minutos.</p>
+      <label for="codigo">Código de 6 dígitos *</label>
+      <input type="text" id="codigo" maxlength="6" inputmode="numeric" autocomplete="one-time-code">
+      <p class="erro-campo" id="erroCodigo" role="alert"></p>
+      <div class="navigation-buttons">
+        <button type="button" class="back-btn" id="outroProtocolo">Voltar</button>
+        <button type="submit" class="next-btn">Confirmar código</button>
+      </div>
+    </form>
+
+    <!-- DEPOIS DE RECEBIDA -->
+    <section class="result" data-tela="bloqueada" hidden>
+      <h2>Esta denúncia não pode mais ser corrigida aqui</h2>
+      <p id="motivoBloqueio"></p>
+      <p>Escreva para <a href="mailto:aedesdatalab@gmail.com">aedesdatalab@gmail.com</a> informando o protocolo.
+        A equipe decide se aplica a correção.</p>
+      <a class="acao" href="../inicio.html">Voltar ao início</a>
+    </section>
+
+    <!-- 3. DADOS -->
+    <form class="form-card" id="formCorrecao" data-tela="dados" novalidate hidden>
+      <p id="identificacao"></p>
+
+      <label for="bairro">Bairro ou localidade *</label>
+      <select id="bairro" required></select>
+
+      <label for="rua">Rua, avenida ou logradouro *</label>
+      <input type="text" id="rua" maxlength="180" required>
+
+      <label for="numero">Número</label>
+      <input type="text" id="numero" maxlength="10">
+
+      <label for="referencia">Ponto de referência (privado)</label>
+      <input type="text" id="referencia" maxlength="200">
+
+      <label for="foco">Onde está o foco?</label>
+      <select id="foco"></select>
+
+      <div id="campoFocoOutro">
+        <label for="focoOutro">Qual é o outro local?</label>
+        <input type="text" id="focoOutro" maxlength="120">
+      </div>
+
+      <h3>Ponto do foco no mapa</h3>
+      <div class="map-container">
+        <div id="map"></div>
+      </div>
+      <p class="map-instructions">Toque no mapa ou arraste o marcador para corrigir o ponto.</p>
+      <p class="erro-campo" id="erroMapa" role="alert"></p>
+
+      <label for="categoria">O que você denunciou? *</label>
+      <select id="categoria" required></select>
+
+      <label for="descricao">Descrição *</label>
+      <textarea id="descricao" maxlength="1000" required></textarea>
+      <p class="hint">Este texto é público. Não inclua nomes, placas nem dados pessoais.</p>
+
+      <label for="tempo">Há quanto tempo você percebeu?</label>
+      <select id="tempo"></select>
+
+      <label for="agua">Há água acumulada?</label>
+      <select id="agua">
+        <option value="">Não sei informar</option>
+        <option value="sim">Sim</option>
+        <option value="nao">Não</option>
+      </select>
+
+      <fieldset id="recipientes">
+        <legend>Recipiente ou estrutura com água</legend>
+      </fieldset>
+
+      <label for="larvas">Larvas ou pupas na água</label>
+      <select id="larvas"></select>
+
+      <label for="outraEvidencia">Outra evidência (restrita à equipe)</label>
+      <textarea id="outraEvidencia" maxlength="500"></textarea>
+
+      <label for="nome">Nome completo *</label>
+      <input type="text" id="nome" maxlength="120" autocomplete="name" required>
+
+      <label for="email">E-mail confirmado</label>
+      <input type="email" id="email" disabled>
+      <p class="hint">O contato confirmado só é trocado pela equipe do projeto.</p>
+
+      <label for="telefone">Telefone com DDD *</label>
+      <input type="tel" id="telefone" maxlength="20" autocomplete="tel" required>
+
+      <label for="motivo">Por que está corrigindo? *</label>
+      <textarea id="motivo" maxlength="500" required></textarea>
+
+      <p class="erro-campo" id="erroDados" role="alert"></p>
+      <div class="navigation-buttons">
+        <button type="button" class="back-btn" id="cancelar">Cancelar</button>
+        <button type="submit" class="next-btn">Revisar alterações</button>
+      </div>
+    </form>
+
+    <!-- 4. ANTES E DEPOIS -->
+    <section class="form-card" data-tela="revisao" hidden>
+      <h2>Confira as alterações</h2>
+      <div class="review-section" id="alteracoes"></div>
+      <p class="erro-campo" id="erroSalvar" role="alert"></p>
+      <div class="navigation-buttons">
+        <button type="button" class="back-btn" id="voltarDados">Voltar</button>
+        <button type="button" class="submit-btn" id="salvar">Salvar correção</button>
+      </div>
+    </section>
+
+    <section class="result" data-tela="salvo" hidden>
+      <h2>Correção salva</h2>
+      <div class="success-icon" aria-hidden="true">✔</div>
+      <p>O protocolo continua o mesmo.</p>
+      <a class="acao acao-principal" href="mapa.html">Ver o mapa</a>
+      <a class="acao" href="../inicio.html">Voltar ao início</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 Aedes Data Lab. Todos os direitos reservados.</p>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="module" src="../js/cidadao/corrigir-denuncia.js"></script>
+</body>
+</html>

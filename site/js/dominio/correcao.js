@@ -127,3 +127,37 @@ export function validarCorrecao(o, f, motivo) {
   }
   return e;
 }
+
+// ---------- correção pelo cidadão ----------
+
+// O servidor devolve os dados privados soltos; as regras acima esperam o formato do agente.
+export const comoOcorrencia = (d) => ({
+  ...d,
+  origin: "cidadao",
+  privado: {
+    name: d.name, phone: d.phone, email: d.email, address: d.address,
+    reference: d.reference, confirmed_channel: d.confirmed_channel,
+  },
+});
+
+export function alteracoesDoCidadao(denuncia, f, listas) {
+  const { changes, linhas } = alteracoes(comoOcorrencia(denuncia), f, listas);
+  // só o cidadão informa estes dois campos
+  for (const [chave, rotulo, valor] of [
+    ["noticed_since", "Há quanto tempo percebeu", f.tempo],
+    ["other_evidence", "Outra evidência", f.outraEvidencia],
+  ]) {
+    const antes = denuncia[chave] ?? "";
+    const depois = valor.trim();
+    if (depois === antes) continue;
+    changes[chave] = depois;
+    linhas.push({ campo: rotulo, antes: texto(antes), depois: texto(depois) });
+  }
+  return { changes, linhas };
+}
+
+export function validarCorrecaoDoCidadao(denuncia, f, motivo) {
+  const erros = validarCorrecao(comoOcorrencia(denuncia), f, motivo);
+  if (Object.keys(alteracoesDoCidadao(denuncia, f).changes).length) delete erros.geral;
+  return erros;
+}

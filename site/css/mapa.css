@@ -343,6 +343,7 @@ body {
 
 @media (min-width: 900px) {
     .filtros { margin: auto; border-radius: 18px; }
+}
 
 /* MAPA LEAFLET */
 
@@ -450,7 +451,7 @@ body {
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background: var(--yellow);
+    background: #ff0000;
     flex-shrink: 0;
 }
 
@@ -548,16 +549,13 @@ button:active {
 
 .summary-button {
     width: 100%;
-    min-height: 88px;
+    min-height: 44px;
     background: var(--background);
     border: none;
-    border-radius: 30px;
-    padding: 20px;
-    text-align: left;
+    border-radius: 8px;
     color: var(--dark-green);
-    font-size: 19px;
+    font-size: 14px;
     font-weight: 700;
-    line-height: 1.25;
     cursor: pointer;
 }
 
@@ -748,3 +746,21 @@ button:active {
         font-size: 23px;
     }
 }
+
+/* Dados publicados */
+
+.map-area { position: relative; }
+
+.aviso:empty { display: none; }
+.aviso { margin-bottom: 10px; color: #9B2C23; font-size: 13px; font-weight: 600; }
+
+.situacao { margin-top: 12px; font-size: 13px; font-weight: 600; }
+
+.previas { display: grid; gap: 14px; }
+
+.previa { display: grid; gap: 4px; font-size: 13px; }
+.previa img { width: 100%; height: 130px; object-fit: cover; border-radius: 8px; }
+.leaflet-popup-content .previa p { margin: 0; }
+
+.occurrence-card { padding: 12px; background: #fff; border: 1px solid var(--border); border-radius: 12px; }
+

@@ -13,7 +13,19 @@ Lista de trabalho da V1, dividida em fases pequenas. Cada tarefa cita a tela e o
 
 Retrato do momento atual, atualizado a cada entrega. Quem concluir uma tarefa que altere o estado do projeto atualiza esta seção no mesmo PR. As escolhas permanentes ficam em [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#9-decisões-técnicas-adr).
 
-**Última atualização:** 25/11/2026
+**Última atualização:** 27/11/2026
+
+**Área do cidadão (27/11/2026):** Guia Aedes, Repelentes, Quem somos e Entrada do jogo estão montados. Registrar foco, o mapa público e a correção pela pessoa que denunciou (`paginas/corrigir-denuncia.html`) passaram a usar o Supabase. Os testes das regras passam e as telas foram conferidas no computador com o servidor simulado nos envios; o mapa leu os dados publicados reais. Falta publicar e testar de ponta a ponta.
+
+Implementadas, aguardando validação no ambiente de teste: TASK-040, 041, 042, 042a, 043, 044, 045, 046, 063, 070 (só e-mail), 071, 072, 073 e 082 (correção pelo cidadão).
+
+**Falta na área do cidadão:**
+
+- Resolver a LGPD (DEP-06) antes de coletar dados reais.
+- Enviar e corrigir uma denúncia no endereço publicado, com código por e-mail real, e conferir na área dos agentes e no mapa.
+- Testar em celular, com GPS e só pelo teclado.
+- Confirmar o e-mail de contato (DEP-05) e trocar o telefone provisório em Quem somos.
+- Desenhar no Figma a correção da denúncia (TASK-014).
 
 **Área dos agentes (25/11/2026):** publicada em `aedes-data-lab-site.vercel.app/agentes` em 24/11 (PR #34). Em 25/11, com conta real, foram conferidos login, lista, mapa, detalhe, formulário de visita e prévia do relatório, e um registro em local sem denúncia já constava na lista. As correções de 25/11 (visitas sem acesso no detalhe, alvos de toque de 44px, "Voltar ao mapa" só dentro do prazo, botão "Outras ações", nomes no histórico e lista paginada no banco) estão testadas no computador e aguardam publicação.
 
@@ -33,7 +45,7 @@ Layout de computador da área dos agentes (RNF-01), pedido em 25/11: implementad
 
 ### Situação atual
 
-A documentação está alinhada ao [PRD 2.9](docs/PRD.md), e o fluxo da denúncia e a jornada do agente estão desenhados no Figma. O `main` tem a estrutura das 12 páginas em `site/`, ainda com conteúdo inicial. O back-end do Supabase (9 migrations, 6 Edge Functions) está **aplicado e provado no projeto de teste**: denúncia ponta a ponta com fotos, código por e-mail real, leitura pública sem dados privados e fluxo do agente (iniciar análise, observação, arquivar, voltar ao mapa, rotina diária). O site ainda não o usa; a ligação do front (formulário e mapa) é da equipe de front. Guia: [BACKEND.md](docs/BACKEND.md).
+A documentação está alinhada ao [PRD 2.9](docs/PRD.md), e o fluxo da denúncia e a jornada do agente estão desenhados no Figma. As páginas do cidadão e dos agentes estão em `site/`. O back-end do Supabase (9 migrations, 6 Edge Functions) está **aplicado e provado no projeto de teste**: denúncia ponta a ponta com fotos, código por e-mail real, leitura pública sem dados privados e fluxo do agente (iniciar análise, observação, arquivar, voltar ao mapa, rotina diária). O formulário, o mapa e a correção do cidadão foram ligados a ele em 27/11, ainda sem teste no endereço publicado. Guia: [BACKEND.md](docs/BACKEND.md).
 
 ### Concluído
 
@@ -52,13 +64,14 @@ A documentação está alinhada ao [PRD 2.9](docs/PRD.md), e o fluxo da denúnci
 
 | Tarefa | Onde | Observação |
 |---|---|---|
-| TASK-022 Página Início | `site/inicio.html` | Primeira versão com os blocos Denuncie, Guia Aedes, Mapa de focos e Jogo, já no CSS único e nos tokens. Falta alinhar à tela Início do Figma: botão principal Denuncie aqui, cartões com borda, ilustrações, logotipo e menu (TASK-021) |
+| TASK-022 Página Início | `site/inicio.html` | Blocos Denuncie, Guia Aedes, Mapa de focos, Jogo e Apoio institucional montados. Falta conferir a tela inteira com o Figma |
+| TASK-021 Menu compartilhado | `site/js/compartilhado/` | Ainda há mais de uma implementação do menu entre as páginas do cidadão |
 
 As branches `Laura-Galdino`, `Rhillary` e `sky` estão atrás do `main`. Antes de abrir PR, rodar `git merge origin/main` e, se houver conflito em README.md ou site/LEIA-ME.md, manter a versão do `main`.
 
 ### Próxima tarefa
 
-**TASK-020:** declarar os tokens e os componentes base em `site/css/estilos.css`. Ela destrava as demais páginas da Fase 2, porque todas dependem dos mesmos botões, cartões e cores.
+Publicar a área do cidadão e testar a denúncia de ponta a ponta, depois de resolver a DEP-06. A TASK-020 (componentes base em `site/css/estilos.css`) segue aberta.
 
 ### Problemas conhecidos
 
@@ -69,7 +82,8 @@ As branches `Laura-Galdino`, `Rhillary` e `sky` estão atrás do `main`. Antes d
 - O CSS compartilhado já declara os tokens (`:root` em `site/css/estilos.css`), mas os componentes base ainda faltam (TASK-020).
 - O Figma não tem estilos nem variáveis cadastrados (TASK-010).
 - A etiqueta Em análise tem dois estilos no Figma. As etiquetas da área do agente foram desenhadas na jornada nova, mas as cores ainda não viraram tokens do DESIGN.md (TASK-012a).
-- O formulário Registrar foco do site publicado ainda não tem código: denúncias de cidadãos não chegam à área dos agentes.
+- O site publicado só passa a enviar denúncias à área dos agentes quando as mudanças de 27/11 forem publicadas.
+- O território aceito é um retângulo provisório que alcança parte da Paraíba (DEP-01).
 - As páginas `agentes/meu-trabalho.html` e `agentes/dashboard.html` continuam como espaço reservado, fora da V1, e levam a Ocorrências no site publicado.
 
 ### Decisões pendentes

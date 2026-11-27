@@ -9,97 +9,22 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="../css/quem-somos.css">
+  <link rel="stylesheet" href="../css/menu.css">
 </head>
 <body>
 
-    <!-- CABEÇALHO -->
-    <header>
-
-        <a href="../inicio.html" class="brand">
-
-            <img src="../assets/imagens/logo.webp" alt="Logo Aedes Data Lab">
-
-            <div>
-                <h2>Aedes Lab</h2>
-                <span>Itambé · PE</span>
-            </div>
-        </a>
-
-        <button class="menu-toggle"
-            id="menuToggle"
-            aria-label="Abrir menu"
-            aria-expanded="false"
-            aria-controls="sidebar">
-            ☰
-        </button>
-
-    </header>
-
-
-    <!-- MENU RETRÁTIL -->
-    <div class="menu-overlay" id="menuOverlay"></div>
-
-    <aside class="sidebar" id="sidebar">
-
-        <div class="sidebar-heading">
-            <h2>Menu</h2>
-
-            <button class="close-menu" id="closeMenu"
-                aria-label="Fechar menu">
-                ×
-            </button>
-        </div>
-
-        <nav class="sidebar-nav">
-
-            <a href="../inicio.html" class="menu-item">
-                <span>⌂</span>
-                Início
-            </a>
-
-            <a href="registrar-foco.html" class="menu-item">
-                <span>⚑</span>
-                Registrar foco
-            </a>
-
-            <a href="mapa.html" class="menu-item">
-                <span>▧</span>
-                Mapa
-            </a>
-
-            <a href="guia-aedes.html" class="menu-item">
-                <span>▤</span>
-                Guia Aedes
-            </a>
-
-            <a href="quem-somos.html" class="menu-item active">
-                <span>♙</span>
-                Quem somos
-            </a>
-
-        </nav>
-
-        <div class="sidebar-bottom">
-
-            <div class="user-card">
-
-                <div class="user-avatar">♙</div>
-
-                <div>
-                    <strong>Nome do usuário</strong>
-                    <span>Cidadão</span>
-                </div>
-
-            </div>
-
-            <button class="logout-button" type="button">
-                Sair
-            </button>
-
-        </div>
-
-    </aside>
-
+  <header class="cabecalho-site">
+    <img src="../assets/imagens/logo.webp" alt="Logo Aedes Data Lab">
+    <div>
+      <p class="cabecalho-nome">Aedes Lab</p>
+      <p class="cabecalho-cidade">Itambé · PE</p>
+    </div>
+    <button class="menu-botao" type="button" aria-label="Abrir menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main>
@@ -113,7 +38,6 @@
             <h1>Quem somos</h1>
 
         </div>
-
 
         <!-- SOBRE O PROJETO -->
         <section class="about-section">
@@ -191,7 +115,6 @@
 
         </section>
 
-
         <!-- INSTITUIÇÕES PARCEIRAS -->
         <section class="partners-section">
 
@@ -237,7 +160,6 @@
 
     </main>
 
-
     <!-- RODAPÉ -->
     <footer class="footer">
 
@@ -259,7 +181,6 @@
 
         </section>
 
-
         <section class="footer-contribute">
 
             <h2>Como contribuir?</h2>
@@ -280,6 +201,6 @@
 
     </footer>
 
-  <script type="module" src="../js/cidadao/quem-somos.js"></script>
+  <script src="../js/compartilhado/menu.js" defer></script>
 </body>
 </html>

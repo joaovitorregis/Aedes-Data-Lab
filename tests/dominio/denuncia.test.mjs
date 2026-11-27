@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { montarDados, validarFotos } from "../../site/js/dominio/denuncia.js";
+import { montarDados, tamanhoDaFoto, validarFotos } from "../../site/js/dominio/denuncia.js";
 
 const campos = {
   submissionId: "11111111-2222-4333-8444-555555555555", lat: -7.41, lng: -35.1,
@@ -37,4 +37,10 @@ test("aceita só de uma a três fotos JPEG ou PNG, como o servidor", () => {
   assert.notEqual(validarFotos([foto("image/webp")]), "");
   assert.notEqual(validarFotos([foto("image/jpeg", 11 * 1024 * 1024)]), "");
   assert.notEqual(validarFotos(Array(4).fill(foto("image/jpeg"))), "");
+});
+
+test("foto grande é reduzida mantendo a proporção; pequena fica como está", () => {
+  assert.deepEqual(tamanhoDaFoto(4000, 3000), { largura: 1600, altura: 1200 });
+  assert.deepEqual(tamanhoDaFoto(3000, 4000), { largura: 1200, altura: 1600 });
+  assert.deepEqual(tamanhoDaFoto(800, 600), { largura: 800, altura: 600 });
 });

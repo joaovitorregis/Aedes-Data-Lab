@@ -65,7 +65,7 @@ A documentação está alinhada ao [PRD 2.9](docs/PRD.md), e o fluxo da denúnci
 | Tarefa | Onde | Observação |
 |---|---|---|
 | TASK-022 Página Início | `site/inicio.html` | Blocos Denuncie, Guia Aedes, Mapa de focos, Jogo e Apoio institucional montados. Falta conferir a tela inteira com o Figma |
-| TASK-021 Menu compartilhado | `site/js/compartilhado/` | Ainda há mais de uma implementação do menu entre as páginas do cidadão |
+| TASK-021 Menu compartilhado | `site/js/compartilhado/menu.js` e `site/css/menu.css` | Cabeçalho e menu do Início em todas as telas do cidadão. Falta validar em aparelho real |
 
 As branches `Laura-Galdino`, `Rhillary` e `sky` estão atrás do `main`. Antes de abrir PR, rodar `git merge origin/main` e, se houver conflito em README.md ou site/LEIA-ME.md, manter a versão do `main`.
 
@@ -136,7 +136,7 @@ Divergências encontradas entre as telas finais e o PRD. Até serem resolvidas, 
 - [ ] TASK-021 Menu compartilhado da área pública (tela 02; `js/compartilhado/menu.js`)
 - [ ] TASK-022 Página Início (tela 01) · primeira versão em `site/inicio.html`; falta alinhar à tela, ver Estado do projeto
 - [ ] TASK-023 HTML da denúncia: Início → Localização → Identificação do foco → Seus dados → canal e código → Revisão → resultado, com os estados de erro (telas 01 a 11 da denúncia no Figma; D35)
-- [ ] TASK-024 HTML do mapa público: mapa, lista, prévia curta e menu de filtros (telas 16 a 24, 27, 28; D47)
+- [ ] TASK-024 HTML do mapa público: mapa, prévia curta e menu de filtros (telas 16 a 24, 27, 28; D47)
 - [ ] TASK-025 HTML do Portal técnico (tela 45; `agentes/Login.html`)
 - [ ] TASK-026 HTML de Ocorrências e do detalhe da ocorrência (telas 46 e 47)
 - [ ] TASK-027 Páginas complementares: Guia Aedes, Repelentes, Quem somos e Entrada do jogo (telas 03 a 06)

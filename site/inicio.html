@@ -8,29 +8,24 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="css/menu.css">
 </head>
 <body class="pagina-inicio">
 
-<header>
+  <header class="cabecalho-site">
     <img src="assets/imagens/logo.webp" alt="Logo Aedes Data Lab">
     <div>
-        <h2>Aedes Lab</h2>
-        <p>Itambé · PE</p>
+      <p class="cabecalho-nome">Aedes Lab</p>
+      <p class="cabecalho-cidade">Itambé · PE</p>
     </div>
-   
-<button
-    class="menu-botao"
-    type="button"
-    aria-label="Abrir menu"
-    aria-expanded="false"
-    aria-controls="menu-lateral"
->
-    <span></span>
-    <span></span>
-    <span></span>
-</button>
-</header>
+    <button class="menu-botao" type="button" aria-label="Abrir menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
 
 <main>
 
@@ -52,8 +47,11 @@
 
         <article class="card">
             <h2>Mapa de focos</h2>
-            <div class="mapa">
-                <img src="assets/imagens/mapa ilustração.webp" alt="Mapa de focos de mosquito">
+            <div class="mini-mapa">
+                <div id="mapaInicio">
+                    <img src="assets/imagens/mapa ilustração.webp" alt="Ilustração do mapa de focos">
+                </div>
+                <a href="paginas/mapa.html" tabindex="-1" aria-hidden="true"></a>
             </div>
             <a href="paginas/mapa.html" class="botao">Ver mapa</a>
         </article>
@@ -89,8 +87,9 @@
     </a>
 </section>
 
-
 </main>
-<script src="js/compartilhado/menu.js" defer></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+  <script src="js/compartilhado/menu.js" defer></script>
+  <script type="module" src="js/cidadao/inicio.js"></script>
 </body>
 </html>

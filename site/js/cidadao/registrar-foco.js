@@ -3,9 +3,10 @@ import {
   confirmarCodigo, enviarCodigo, listarBairros, listarCategorias, salvarDenuncia,
 } from "../servicos/denuncia.js";
 import {
-  CENTRO_DO_MAPA, dentroDoTerritorio, emailValido, montarDados, telefoneValido, validarFotos,
+  CENTRO_DO_MAPA, LIMITES, dentroDoTerritorio, emailValido, montarDados, telefoneValido, validarFotos,
 } from "../dominio/denuncia.js";
 import { LARVAS, RECIPIENTES } from "../dominio/ocorrencia.js";
+import { prepararFoto } from "./foto.js";
 
 const $ = (id) => document.getElementById(id);
 const form = $("denunciaForm");
@@ -159,6 +160,9 @@ function usarLocalizacao() {
 // ---------- fotos ----------
 
 function desenharFotos() {
+  const cheio = fotos.length >= LIMITES.fotos;
+  $("botaoCamera").disabled = cheio;
+  $("botaoGaleria").disabled = cheio;
   $("listaFotos").replaceChildren(...fotos.map((foto, i) => {
     const item = document.createElement("li");
     const imagem = document.createElement("img");
@@ -179,12 +183,22 @@ function desenharFotos() {
   }));
 }
 
-function adicionarFotos() {
-  const novas = [...fotos, ...$("fotos").files];
-  const erro = validarFotos(novas);
-  $("erroFotos").textContent = erro;
-  if (!erro) fotos = novas;
-  $("fotos").value = "";
+async function adicionarFotos(evento) {
+  const escolhidas = [...evento.target.files];
+  evento.target.value = "";
+  if (!escolhidas.length) return;
+  if (fotos.length + escolhidas.length > LIMITES.fotos) {
+    $("erroFotos").textContent = `Envie no máximo ${LIMITES.fotos} fotos.`;
+    return;
+  }
+  $("erroFotos").textContent = "Preparando a foto...";
+  try {
+    const prontas = await Promise.all(escolhidas.map(prepararFoto));
+    fotos = [...fotos, ...prontas].slice(0, LIMITES.fotos);
+    $("erroFotos").textContent = validarFotos(fotos);
+  } catch {
+    $("erroFotos").textContent = "Não foi possível abrir essa foto. Tire outra ou escolha um JPG ou PNG.";
+  }
   desenharFotos();
 }
 
@@ -340,14 +354,6 @@ function limpar() {
   mostrarParte("dadosPessoais");
 }
 
-// ---------- menu ----------
-
-function abrirMenu(aberto) {
-  $("sidebar").classList.toggle("open", aberto);
-  $("menuOverlay").classList.toggle("active", aberto);
-  $("menuToggle").setAttribute("aria-expanded", String(aberto));
-}
-
 // ---------- botões ----------
 
 form.addEventListener("click", (evento) => {
@@ -372,6 +378,9 @@ $("voltarTopo").addEventListener("click", (evento) => {
 $("recarregarListas").addEventListener("click", carregarListas);
 $("usarLocalizacao").addEventListener("click", usarLocalizacao);
 $("semNumero").addEventListener("change", () => { $("numero").disabled = $("semNumero").checked; });
+$("botaoCamera").addEventListener("click", () => $("camera").click());
+$("botaoGaleria").addEventListener("click", () => $("fotos").click());
+$("camera").addEventListener("change", adicionarFotos);
 $("fotos").addEventListener("change", adicionarFotos);
 $("receberEmail").addEventListener("click", () => pedirCodigo($("receberEmail"), $("erroCanal")));
 $("reenviarCodigo").addEventListener("click", () => pedirCodigo($("reenviarCodigo"), $("mensagemCodigo")));
@@ -388,9 +397,6 @@ $("cancelar").addEventListener("click", () => {
   limpar();
   mostrarEtapa(0);
 });
-$("menuToggle").addEventListener("click", () => abrirMenu(true));
-$("closeMenu").addEventListener("click", () => abrirMenu(false));
-$("menuOverlay").addEventListener("click", () => abrirMenu(false));
 
 criarRecipientes();
 iniciarMapa();

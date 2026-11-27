@@ -72,32 +72,6 @@ html {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
 }
 
-.pagina-inicio header {
-  background: #fbf8ef;
-  padding: 14px 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border-bottom: 1px solid #e6e1d5;
-}
-
-.pagina-inicio header img {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-}
-
-.pagina-inicio header h2 {
-  color: #292e2a;
-  font-size: 19px;
-}
-
-.pagina-inicio header p {
-  color: #777d76;
-  margin-top: 3px;
-  font-size: 13px;
-}
-
 .pagina-inicio main {
   max-width: none;
   margin: 0;
@@ -172,6 +146,8 @@ html {
   text-align: center;
   flex: 1;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
 }
 
@@ -182,231 +158,56 @@ html {
   color: #304f3c;
 }
 
-.pagina-inicio .card img,
-.pagina-inicio .mapa {
+.pagina-inicio .card > img,
+.pagina-inicio .mini-mapa {
   width: 100%;
-  height: 92px;
+  height: 120px;
+  margin-bottom: 8px;
+}
+
+.pagina-inicio .card > img {
   object-fit: contain;
-  margin-bottom: 4px;
 }
 
-.pagina-inicio .mapa {
-  background: #aab99d;
-  border-radius: 5px;
+/* Prévia do mapa: o toque leva à tela do mapa */
+.pagina-inicio .mini-mapa {
+  position: relative;
   overflow: hidden;
+  border: 1px solid #ddcfb2;
+  border-radius: 8px;
+  background: #dce8dd;
 }
 
-.pagina-inicio .mapa img {
+.pagina-inicio #mapaInicio {
+  width: 100%;
+  height: 100%;
+}
+
+.pagina-inicio #mapaInicio > img {
+  width: 100%;
   height: 100%;
   object-fit: cover;
-  margin: 0;
+}
+
+.pagina-inicio .mini-mapa > a {
+  position: absolute;
+  inset: 0;
+  z-index: 1000;
+}
+
+.pagina-inicio .mini-mapa .leaflet-control-attribution {
+  font-size: 8px;
 }
 
 .pagina-inicio .card .botao {
   padding: 9px 5px;
-  margin-top: 5px;
+  margin-top: auto;
   font-size: 13px;
 }
 
 @media (max-width: 500px) {
   .pagina-inicio main {
     padding: 24px 17px 32px;
-  }
-
-  .pagina-inicio .card img,
-  .pagina-inicio .mapa {
-    height: 92px;
-  }
-}
-
-/* Menu lateral: aberto pelo botão de três barras (js/cidadao/inicio.js). Fica depois da página Início de propósito:
-   as regras dela zeram margens e padding, e estas precisam vencer. As demais páginas vão reaproveitar este bloco. */
-.menu-botao {
-  width: 42px;
-  height: 42px;
-  border: none;
-  background: transparent;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  z-index: 10;
-  margin-left: auto;
-}
-
-.menu-botao span {
-  width: 27px;
-  height: 3px;
-  background: #587663;
-  border-radius: 5px;
-}
-
-.menu-fundo {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.20);
-  z-index: 1000;
-}
-
-.menu-fundo[hidden] {
-  display: none;
-}
-
-.menu-lateral {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: min(340px, 85vw);
-  height: 100vh;
-  height: 100dvh;
-  box-sizing: border-box;
-  background: #f5efdf;
-  z-index: 1001;
-  padding: 30px 24px;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  transform: translateX(100%);
-  visibility: hidden;
-  transition: transform 0.3s ease, visibility 0.3s ease;
-}
-
-.menu-lateral.aberto {
-  transform: translateX(0);
-  visibility: visible;
-}
-
-.menu-topo {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-}
-
-.menu-topo h1 {
-  color: #315440;
-  font-size: 32px;
-  margin: 0;
-}
-
-.usuario-icone {
-  width: 42px;
-  height: 42px;
-  background: #315440;
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 25px;
-  flex-shrink: 0;
-}
-
-.menu-lateral nav {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.menu-link {
-  min-height: 50px;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 12px;
-  background: #a9b99b;
-  border-radius: 6px;
-  color: #315440;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.menu-link span {
-  font-size: 25px;
-  width: 28px;
-  text-align: center;
-}
-
-.menu-lateral img {
-    display: block;
-    width: auto;
-    height: auto;
-    margin: 0 auto;
-}
-
-.menu-link:hover,
-.menu-link:focus-visible {
-  background: #91a787;
-  outline: 2px solid #315440;
-  outline-offset: 2px;
-}
-
-.menu-rodape {
-  margin-top: auto;
-  padding-top: 30px;
-}
-
-.usuario-info {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 12px;
-  background: #fcfaf5;
-  border-radius: 8px;
-  color: #315440;
-  font-size: 13px;
-}
-
-.usuario-info p {
-  margin: 5px 0 0;
-  color: #49805e;
-}
-
-.botao-sair {
-  width: 100%;
-  padding: 14px;
-  margin-top: 35px;
-  border: none;
-  border-radius: 6px;
-  background: #49805e;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.botao-sair:hover,
-.botao-sair:focus-visible {
-  background: #315440;
-}
-
-body.menu-aberto {
-  overflow: hidden;
-}
-
-@media (max-width: 480px) {
-  .menu-lateral {
-    width: 85vw;
-    padding: 30px 20px;
-  }
-
-  .menu-lateral nav {
-    gap: 20px;
-  }
-
-  .menu-link {
-    font-size: 16px;
-    min-height: 50px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .menu-lateral {
-    transition: none;
   }
 }
 
@@ -498,7 +299,6 @@ body.menu-aberto {
 /* Agentes: acesso, meu trabalho, ocorrências, mapa e dashboard */
 
 /* Responsividade */
-
 
 .apoio-institucional {
     margin-top: 24px;

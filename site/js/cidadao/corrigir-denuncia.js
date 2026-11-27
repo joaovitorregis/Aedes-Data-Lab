@@ -215,13 +215,7 @@ function moverPonto({ lat, lng }) {
   marcador.setLatLng(ponto);
 }
 
-// ---------- menu e botões ----------
-
-function abrirMenu(aberto) {
-  $("sidebar").classList.toggle("open", aberto);
-  $("menuOverlay").classList.toggle("active", aberto);
-  $("menuToggle").setAttribute("aria-expanded", String(aberto));
-}
+// ---------- botões ----------
 
 $("formProtocolo").addEventListener("submit", pedirCodigo);
 $("formCodigo").addEventListener("submit", confirmar);
@@ -231,6 +225,3 @@ $("outroProtocolo").addEventListener("click", () => recomecar());
 $("cancelar").addEventListener("click", () => recomecar());
 $("voltarDados").addEventListener("click", () => mostrar("dados"));
 $("foco").addEventListener("change", () => { $("campoFocoOutro").hidden = $("foco").value !== "outro"; });
-$("menuToggle").addEventListener("click", () => abrirMenu(true));
-$("closeMenu").addEventListener("click", () => abrirMenu(false));
-$("menuOverlay").addEventListener("click", () => abrirMenu(false));

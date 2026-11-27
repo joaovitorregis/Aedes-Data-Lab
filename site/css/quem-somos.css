@@ -16,7 +16,7 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: Inter, system-ui, sans-serif;
     background-color: var(--bege);
     color: var(--verde-escuro);
 }

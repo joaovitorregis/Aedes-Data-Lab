@@ -1,14 +1,553 @@
 /* Aedes Data Lab — estilos compartilhados pelas 12 páginas. */
 
-/* Base: cores, fontes e espaçamentos */
+/* Base: cores, fontes e espaçamentos (valores em docs/DESIGN.md) */
+:root {
+  --cor-fundo: #F6F0E2;
+  --cor-superficie: #FBF9F4;
+  --cor-campo: #FFFFFF;
+  --cor-primaria: #2F4F3A;
+  --cor-primaria-escura: #20352B;
+  --cor-acento: #487959;
+  --cor-verde-claro: #A8B89A;
+  --cor-borda: #D9CBB0;
+  --cor-texto: #2A2E32;
+  --cor-texto-suave: #666D74;
+  --cor-marcador: #FF0000;
+  --cor-erro: #9B2C23;
+  --cor-destaque-amarelo: #FFEA83;
+  --raio-pequeno: 8px;
+  --raio-medio: 12px;
+  --raio-etiqueta: 16px;
+  --altura-controle: 44px;
+  --fonte: "Inter", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fonte);
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+.logo-icon {
+  object-fit: contain;
+}
 
 /* Componentes: botões e campos */
 
 /* Menu público e menu técnico */
 
+html {
+  background: #f0f0f0;
+}
+
 /* Cidadão: início, denúncia, mapa, guia, repelentes, equipe e jogo */
 /* Delimitar estilos específicos com classes como .pagina-denuncia. */
+
+/* Página Início (tela 01): layout da Bia. Escopo: <body class="pagina-inicio"> */
+.pagina-inicio,
+.pagina-inicio * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.pagina-inicio {
+  font-family: var(--fonte);
+  background: #f5f0e2;
+  color: #304f3c;
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: #fbf8ef;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+}
+
+.pagina-inicio header {
+  background: #fbf8ef;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #e6e1d5;
+}
+
+.pagina-inicio header img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.pagina-inicio header h2 {
+  color: #292e2a;
+  font-size: 19px;
+}
+
+.pagina-inicio header p {
+  color: #777d76;
+  margin-top: 3px;
+  font-size: 13px;
+}
+
+.pagina-inicio main {
+  max-width: none;
+  margin: 0;
+  padding: 25px 18px 38px;
+}
+
+.pagina-inicio h1 {
+  font-size: 28px;
+  margin-bottom: 14px;
+  color: #304f3c;
+}
+
+.pagina-inicio .intro {
+  font-size: 15px;
+  line-height: 1.4;
+  color: #518064;
+  max-width: 250px;
+}
+
+.pagina-inicio .botao {
+  display: block;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
+  background: #4c8062;
+  color: white;
+  text-align: center;
+  padding: 12px 10px;
+  margin-top: 14px;
+  border-radius: 7px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.pagina-inicio .principal {
+  background: #304f3c;
+  padding: 17px;
+  margin: 27px 0 18px;
+  font-size: 16px;
+}
+
+.pagina-inicio .guia {
+  background: #fbfaf6;
+  border: 1px solid #ddcfb2;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 16px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.pagina-inicio .guia h2 {
+  font-size: 20px;
+  margin-bottom: 8px;
+  color: #304f3c;
+}
+
+.pagina-inicio .guia p {
+  color: #518064;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.pagina-inicio .cards {
+  display: flex;
+  gap: 10px;
+}
+
+.pagina-inicio .card {
+  background: #fbfaf6;
+  border: 1px solid #ddcfb2;
+  border-radius: 7px;
+  padding: 10px;
+  text-align: center;
+  flex: 1;
+  min-width: 0;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.pagina-inicio .card h2 {
+  font-size: 16px;
+  min-height: 38px;
+  margin-bottom: 8px;
+  color: #304f3c;
+}
+
+.pagina-inicio .card img,
+.pagina-inicio .mapa {
+  width: 100%;
+  height: 92px;
+  object-fit: contain;
+  margin-bottom: 4px;
+}
+
+.pagina-inicio .mapa {
+  background: #aab99d;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.pagina-inicio .mapa img {
+  height: 100%;
+  object-fit: cover;
+  margin: 0;
+}
+
+.pagina-inicio .card .botao {
+  padding: 9px 5px;
+  margin-top: 5px;
+  font-size: 13px;
+}
+
+@media (max-width: 500px) {
+  .pagina-inicio main {
+    padding: 24px 17px 32px;
+  }
+
+  .pagina-inicio .card img,
+  .pagina-inicio .mapa {
+    height: 92px;
+  }
+}
+
+/* Menu lateral: aberto pelo botão de três barras (js/cidadao/inicio.js). Fica depois da página Início de propósito:
+   as regras dela zeram margens e padding, e estas precisam vencer. As demais páginas vão reaproveitar este bloco. */
+.menu-botao {
+  width: 42px;
+  height: 42px;
+  border: none;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  z-index: 10;
+  margin-left: auto;
+}
+
+.menu-botao span {
+  width: 27px;
+  height: 3px;
+  background: #587663;
+  border-radius: 5px;
+}
+
+.menu-fundo {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.20);
+  z-index: 1000;
+}
+
+.menu-fundo[hidden] {
+  display: none;
+}
+
+.menu-lateral {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(340px, 85vw);
+  height: 100vh;
+  height: 100dvh;
+  box-sizing: border-box;
+  background: #f5efdf;
+  z-index: 1001;
+  padding: 30px 24px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform 0.3s ease, visibility 0.3s ease;
+}
+
+.menu-lateral.aberto {
+  transform: translateX(0);
+  visibility: visible;
+}
+
+.menu-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.menu-topo h1 {
+  color: #315440;
+  font-size: 32px;
+  margin: 0;
+}
+
+.usuario-icone {
+  width: 42px;
+  height: 42px;
+  background: #315440;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  flex-shrink: 0;
+}
+
+.menu-lateral nav {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.menu-link {
+  min-height: 50px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px;
+  background: #a9b99b;
+  border-radius: 6px;
+  color: #315440;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.menu-link span {
+  font-size: 25px;
+  width: 28px;
+  text-align: center;
+}
+
+.menu-lateral img {
+    display: block;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+}
+
+.menu-link:hover,
+.menu-link:focus-visible {
+  background: #91a787;
+  outline: 2px solid #315440;
+  outline-offset: 2px;
+}
+
+.menu-rodape {
+  margin-top: auto;
+  padding-top: 30px;
+}
+
+.usuario-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  background: #fcfaf5;
+  border-radius: 8px;
+  color: #315440;
+  font-size: 13px;
+}
+
+.usuario-info p {
+  margin: 5px 0 0;
+  color: #49805e;
+}
+
+.botao-sair {
+  width: 100%;
+  padding: 14px;
+  margin-top: 35px;
+  border: none;
+  border-radius: 6px;
+  background: #49805e;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.botao-sair:hover,
+.botao-sair:focus-visible {
+  background: #315440;
+}
+
+body.menu-aberto {
+  overflow: hidden;
+}
+
+@media (max-width: 480px) {
+  .menu-lateral {
+    width: 85vw;
+    padding: 30px 20px;
+  }
+
+  .menu-lateral nav {
+    gap: 20px;
+  }
+
+  .menu-link {
+    font-size: 16px;
+    min-height: 50px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-lateral {
+    transition: none;
+  }
+}
+
+.pagina-menu {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background: #fbf8ef;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+}
+
+.pagina-menu .cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid #e6e1d5;
+}
+
+.pagina-menu .cabecalho-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.pagina-menu .marca-textos h2 {
+  color: #292e2a;
+  font-size: 19px;
+}
+
+.pagina-menu .marca-textos p {
+  margin-top: 3px;
+  color: #777d76;
+  font-size: 13px;
+}
+
+.pagina-menu main {
+  padding: 25px 20px;
+}
+
+.pagina-menu main h1 {
+  margin-bottom: 12px;
+  color: #304f3c;
+  font-size: 28px;
+}
+
+.pagina-menu main p {
+  color: #518064;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.pagina-menu .atalhos-guia {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.pagina-menu .atalhos-guia a {
+  display: block;
+  padding: 14px;
+  border: 1px solid #ddcfb2;
+  border-radius: 10px;
+  background: #fbfaf6;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  color: #304f3c;
+  text-decoration: none;
+}
+
+.pagina-menu .atalhos-guia a strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+
+.pagina-menu .atalhos-guia a span {
+  color: #518064;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.pagina-menu .atalhos-guia a:hover,
+.pagina-menu .atalhos-guia a:focus-visible {
+  outline: 2px solid #315440;
+  outline-offset: 2px;
+}
 
 /* Agentes: acesso, meu trabalho, ocorrências, mapa e dashboard */
 
 /* Responsividade */
+
+
+.apoio-institucional {
+    background: #f5efdf;
+    padding: 12px 6px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.apoio-institucional h3 {
+    font-size: 20px;
+    color: #365c45;
+    margin: 0 0 10px;
+    font-weight: 700;
+    padding-bottom: 3px;
+}
+
+.logos-apoio {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.logo-card {
+    background: #fff;
+    border: 1px solid #e0d4bd;
+    border-radius: 9px;
+    height: 64px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.logo-card img {
+    max-width: 100%;
+    max-height: 48px;
+    object-fit: contain;
+}
+
+.link-apoio {
+    color: #365c45;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.link-apoio:hover {
+    color: #16834b;
+}

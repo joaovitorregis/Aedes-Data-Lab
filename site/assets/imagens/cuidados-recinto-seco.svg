@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Guardar recipientes secos</title>
+  <desc id="desc">Ilustracao de garrafas e baldes guardados virados para baixo e cobertos.</desc>
+  <rect width="640" height="360" fill="#edf2e8"/>
+  <circle cx="530" cy="72" r="42" fill="#f4c960"/>
+  <path d="M0 280c138-34 263-22 364 8 96 28 188 23 276-8v80H0z" fill="#bccfaf"/>
+  <g>
+    <path d="M94 160h120l-12 112H106z" fill="#4a92a2"/>
+    <ellipse cx="154" cy="160" rx="60" ry="16" fill="#a5cdd3"/>
+    <path d="M126 160v-52c0-18 12-30 28-30s28 12 28 30v52z" fill="#74adb6"/>
+  </g>
+  <g transform="translate(220 18) rotate(180 96 182)">
+    <path d="M94 160h120l-12 112H106z" fill="#d08a59"/>
+    <ellipse cx="154" cy="160" rx="60" ry="16" fill="#edbc93"/>
+  </g>
+  <g>
+    <rect x="382" y="134" width="150" height="138" rx="18" fill="#5d8655"/>
+    <path d="M382 134l75-74 75 74z" fill="#769f66"/>
+    <ellipse cx="457" cy="134" rx="75" ry="18" fill="#98b487"/>
+  </g>
+  <path d="M72 300h530" stroke="#8da47e" stroke-width="10" stroke-linecap="round"/>
+  <g fill="none" stroke="#174d27" stroke-width="12" stroke-linecap="round">
+    <path d="M298 86l28 28"/><path d="M326 86l-28 28"/>
+  </g>
+  <rect x="58" y="40" width="260" height="74" rx="14" fill="#fff" opacity=".94"/>
+  <text x="82" y="71" fill="#174d27" font-family="Arial, sans-serif" font-size="23" font-weight="700">Guarde sem acumular</text>
+  <text x="82" y="98" fill="#606e61" font-family="Arial, sans-serif" font-size="17">Secos, cobertos ou virados</text>
+</svg>

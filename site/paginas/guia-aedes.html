@@ -1,26 +1,103 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Guia Aedes | Aedes Data Lab</title>
+  <link rel="icon" href="../assets/imagens/logo.webp" type="image/webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="../css/estilos.css">
+  <link rel="stylesheet" href="../css/guia.css">
 </head>
-<body>
+<body class="pagina-guia">
+
   <header>
-    <!-- Etapa HTML: construir o cabeçalho e a navegação desta área. -->
+    <img class="guia-logo" src="../assets/imagens/logo.webp" alt="Logo Aedes Data Lab">
+    <div>
+      <p class="guia-nome">Aedes Lab</p>
+      <p class="guia-cidade">Itambé · PE</p>
+    </div>
+    <button class="menu-botao" type="button" aria-label="Abrir menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </header>
 
-  <main id="conteudo">
+  <main>
+    <div class="guia-topo">
+      <a class="guia-voltar" href="../inicio.html">← Voltar</a>
+      <span class="guia-rotulo">Guia Aedes</span>
+    </div>
+
     <h1>Guia Aedes</h1>
-    <p>Página de estudo em construção.</p>
-    <!-- Desenvolver aqui a estrutura desta tela a partir do Figma. -->
+    <p class="guia-subtitulo">O que você quer saber?</p>
+
+    <figure class="guia-midia">
+      <img src="../assets/imagens/balde.jpg" alt="Balde, prato de vaso e regador em um quintal">
+    </figure>
+
+    <section>
+      <h2>Evite criadouros no dia a dia</h2>
+      <p>Saiba como cuidar dos recipientes que podem acumular água.</p>
+      <a class="guia-botao" href="cuidados.html">Ver cuidados com recipientes</a>
+    </section>
+
+    <section>
+      <h2>Explore o guia</h2>
+
+      <ul class="guia-lista">
+        <li>
+          <a href="identificar-focos.html">
+            <span>
+              <strong>Identificar possíveis focos</strong>
+              <small>Aprenda a reconhecer locais que acumulam água.</small>
+            </span>
+            <span class="guia-seta" aria-hidden="true">›</span>
+          </a>
+        </li>
+        <li>
+          <a href="sintomas.html">
+            <span>
+              <strong>Cuidados com os sintomas</strong>
+              <small>Saiba quais sinais merecem atenção e como agir.</small>
+            </span>
+            <span class="guia-seta" aria-hidden="true">›</span>
+          </a>
+        </li>
+        <li>
+          <a href="automedicacao.html">
+            <span>
+              <strong>Evitar a automedicação</strong>
+              <small>Entenda por que evitar remédios por conta própria.</small>
+            </span>
+            <span class="guia-seta" aria-hidden="true">›</span>
+          </a>
+        </li>
+        <li>
+          <a href="agente.html">
+            <span>
+              <strong>Receber o agente</strong>
+              <small>Entenda a importância da visita e como colaborar.</small>
+            </span>
+            <span class="guia-seta" aria-hidden="true">›</span>
+          </a>
+        </li>
+        <li>
+          <a href="repelentes.html">
+            <span>
+              <strong>Repelentes</strong>
+              <small>Conheça as formas de uso e os cuidados.</small>
+            </span>
+            <span class="guia-seta" aria-hidden="true">›</span>
+          </a>
+        </li>
+      </ul>
+    </section>
   </main>
 
-  <footer>
-    <!-- Construir o rodapé quando necessário. -->
-  </footer>
-
-  <script type="module" src="../js/cidadao/guia-aedes.js"></script>
+  <script src="../js/compartilhado/menu.js" defer></script>
 </body>
 </html>

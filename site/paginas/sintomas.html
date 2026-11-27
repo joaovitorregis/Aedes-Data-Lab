@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cuidado com os sintomas| Aedes Data Lab</title>
+  <link rel="icon" href="../assets/imagens/logo.webp" type="image/webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="../css/sintomas.css">
+</head>
+<body class="pagina-sintomas">
+
+  <main class="mobile-container">
+    <!-- Cabeçalho superior com o seu código do menu -->
+    <header class="top-bar">
+      <div class="brand-group">
+        <img src="../assets/imagens/logo.webp" alt="Logo Aedes Data Lab">
+        <div>
+            <h2>Aedes lab</h2>
+            <p>Itambé-PE</p>
+        </div>
+      </div>
+
+      <button
+          class="menu-botao"
+          type="button"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+          aria-controls="menu-lateral"
+      >
+          <span></span>
+          <span></span>
+          <span></span>
+      </button>
+    </header>
+
+    <div class="menu-fundo" hidden></div>
+
+    <aside
+        class="menu-lateral"
+        id="menu-lateral"
+        aria-label="Menu de navegação"
+        aria-hidden="true"
+        inert
+    >
+        <div class="menu-topo">
+            <h1>Menu</h1>
+        </div>
+
+        <nav>
+            <a href="../inicio.html" class="menu-link">
+                <span><img src="../assets/imagens/início.ico" alt=""></span> Início
+            </a>
+
+            <a href="registrar-foco.html" class="menu-link">
+                <span><img src="../assets/imagens/registrar-foco.ico" alt=""></span> Registrar foco
+            </a>
+
+            <a href="mapa.html" class="menu-link">
+                <span><img src="../assets/imagens/mapa.ico" alt=""></span> Mapa
+            </a>
+
+            <a href="guia-aedes.html" class="menu-link">
+                <span><img src="../assets/imagens/guia-aedes.ico" alt=""></span> Guia Aedes
+            </a>
+
+            <a href="quem-somos.html" class="menu-link">
+                <span><img src="../assets/imagens/quem-somos.ico" alt=""></span> Quem somos
+            </a>
+
+            <a href="jogo.html" class="menu-link">
+                <span><img src="../assets/imagens/controle.ico" alt=""></span> Jogo
+            </a>
+        </nav>
+
+        <div class="menu-rodape">
+            <div class="usuario-info">
+                <div class="usuario-icone"><img src="../assets/imagens/perfil-icon.ico" alt=""></div>
+                <div>
+                    <strong>Nome do usuário</strong>
+                    <p>Cidadão</p>
+                </div>
+            </div>
+
+            <button class="botao-sair" type="button">
+                Sair
+            </button>
+        </div>
+    </aside>
+
+    <!-- Navegação e Título -->
+    <section class="page-header">
+      <a href="guia-aedes.html" class="back-link">← Guia Aedes</a>
+      <h1>Cuidado com os sintomas</h1>
+      <p class="subtitle">Suspeita de dengue? Procure uma unidade de saúde.</p>
+    </section>
+
+    <!-- Vídeo Orientativo -->
+    <section class="video-section">
+      <iframe src="https://www.youtube-nocookie.com/embed/NWvkpEg1TN0" title="Sintomas da dengue, Drauzio Varella" allow="encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </section>
+
+    <!-- Lista de Tipos -->
+    <section class="types-section">
+      <h2>O que fazer?</h2>
+
+      <div class="type-item">
+        <img src="../assets/imagens/Consulta médica no SUS.webp" alt="" class="type-thumb">
+        <div class="type-info">
+          <h3>Observe como você está se sentindo.</h3>
+       
+        </div>
+      </div>
+
+      <div class="type-item">
+        <img src="../assets/imagens/Fachada de Unidade Básica de Saúde.webp" alt="" class="type-thumb">
+        <div class="type-info">
+          <h3>Procure ser avaliado em uma unidade básica de saúde.</h3>
+      
+        </div>
+      </div>
+
+      <div class="type-item">
+        <img src="../assets/imagens/Dia de Doença no Sofá.webp" alt="" class="type-thumb">
+        <div class="type-info">
+          <h3>Acompanhe a evolução dos sintomas.</h3>
+      
+      </div>
+    </section>
+
+    <!-- Banner de Alerta -->
+   
+
+    <!-- Dúvidas Frequentes (Acordeão) -->
+    <section class="faq-section">
+      <h2>Dúvidas frequentes</h2>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Quais sintomas observar?</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Febre, dor no corpo, dor de cabeça, dor atrás dos olhos e manchas na pele podem ser sintomas da dengue. Siga a idade, a aplicação e a reaplicação indicadas no rótulo.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Isso confirma dengue?</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Não. Outras doenças podem causar sintomas parecidos. Procure avaliação de um profissional.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Quando buscar atendimento?</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Ao suspeitar de dengue, procure uma unidade de saúde para avaliação e orientações.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Quais são os sinais de alarme?</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Dor abdominal intensa, vômitos persistentes, sangramento ou desmaio exigem atendimento imediato.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>A febre baixou. E agora?</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Continue atento. A piora pode começar quando a febre diminui. Siga o acompanhamento orientado.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Posso tomar remédio sozinho?</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Não se automedique. Alguns medicamentos podem aumentar o risco de sangramento.</p>
+          </div>
+        </div>
+
+       
+        </div>
+      </div>
+    </section>
+
+    <!-- Rodapé de links -->
+    <footer class="bottom-links">
+ 
+      <a href="automedicacao.html">Evitar a automedicação →</a>
+    </footer>
+  </main>
+
+  <script src="../js/compartilhado/menu-estatico.js"></script>
+  <script src="../js/compartilhado/perguntas.js"></script>
+ </body>
+</html>

@@ -1,26 +1,226 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Repelentes | Aedes Data Lab</title>
-  <link rel="stylesheet" href="../css/estilos.css">
+  <link rel="icon" href="../assets/imagens/logo.webp" type="image/webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="../css/repelentes.css">
 </head>
-<body>
-  <header>
-    <!-- Etapa HTML: construir o cabeçalho e a navegação desta área. -->
-  </header>
+<body class="pagina-repelentes">
 
-  <main id="conteudo">
-    <h1>Repelentes</h1>
-    <p>Página de estudo em construção.</p>
-    <!-- Desenvolver aqui a estrutura desta tela a partir do Figma. -->
+  <main class="mobile-container">
+    <!-- Cabeçalho superior com o seu código do menu -->
+    <header class="top-bar">
+      <div class="brand-group">
+       <img src="../assets/imagens/logo.webp" alt="Logo Aedes Data Lab">
+        <div>
+            <h2>Aedes lab</h2>
+            <p>Itambé-PE</p>
+        </div>
+      </div>
+
+      <button
+          class="menu-botao"
+          type="button"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+          aria-controls="menu-lateral"
+      >
+          <span></span>
+          <span></span>
+          <span></span>
+      </button>
+    </header>
+
+    <div class="menu-fundo" hidden></div>
+
+    <aside
+        class="menu-lateral"
+        id="menu-lateral"
+        aria-label="Menu de navegação"
+        aria-hidden="true"
+        inert
+    >
+        <div class="menu-topo">
+            <h1>Menu</h1>
+        </div>
+
+        <nav>
+            <a href="../inicio.html" class="menu-link">
+                <span><img src="../assets/imagens/início.ico" alt=""></span> Início
+            </a>
+
+            <a href="registrar-foco.html" class="menu-link">
+                <span><img src="../assets/imagens/registrar-foco.ico" alt=""></span> Registrar foco
+            </a>
+
+            <a href="mapa.html" class="menu-link">
+                <span><img src="../assets/imagens/mapa.ico" alt=""></span> Mapa
+            </a>
+
+            <a href="guia-aedes.html" class="menu-link">
+                <span><img src="../assets/imagens/guia-aedes.ico" alt=""></span> Guia Aedes
+            </a>
+
+            <a href="quem-somos.html" class="menu-link">
+                <span><img src="../assets/imagens/quem-somos.ico" alt=""></span> Quem somos
+            </a>
+
+            <a href="jogo.html" class="menu-link">
+                <span><img src="../assets/imagens/controle.ico" alt=""></span> Jogo
+            </a>
+        </nav>
+
+        <div class="menu-rodape">
+            <div class="usuario-info">
+                <div class="usuario-icone"><img src="../assets/imagens/perfil-icon.ico" alt=""></div>
+                <div>
+                    <strong>Nome do usuário</strong>
+                    <p>Cidadão</p>
+                </div>
+            </div>
+
+            <button class="botao-sair" type="button">
+                Sair
+            </button>
+        </div>
+    </aside>
+
+    <!-- Navegação e Título -->
+    <section class="page-header">
+      <a href="guia-aedes.html" class="back-link">← Guia Aedes</a>
+      <h1>Repelentes</h1>
+      <p class="subtitle">Conheça as formas de uso e os cuidados</p>
+    </section>
+
+    <!-- Vídeo Orientativo -->
+    <section class="video-section">
+      <iframe src="https://www.youtube-nocookie.com/embed/XVlfkJH7KPg?start=20" title="Repelentes contra picada do mosquito da dengue, Dr. Luiz Pôrto Dermatologista" allow="encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </section>
+
+    <!-- Lista de Tipos -->
+    <section class="types-section">
+      <h2>Tipos apresentados no projeto</h2>
+
+      <div class="type-item">
+        <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=300&q=80" alt="Aplicando hidratante na pele" class="type-thumb">
+        <div class="type-info">
+          <h3>Em hidratante</h3>
+          <p>Aplique uma pequena quantidade na pele limpa e seca. Espalhe com movimentos suaves.</p>
+        </div>
+      </div>
+
+      <div class="type-item">
+        <img src="https://images.unsplash.com/photo-1602928321679-560bb453f190?auto=format&fit=crop&w=300&q=80" alt="Difusor de ambiente com varetas" class="type-thumb">
+        <div class="type-info">
+          <h3>Em difusor</h3>
+          <p>Coloque o frasco em local estável e ventilado. Insira as varetas e vire-as a cada três dias.</p>
+        </div>
+      </div>
+
+      <div class="type-item">
+        <img src="https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=300&q=80" alt="Vela aromática acesa" class="type-thumb">
+        <div class="type-info">
+          <h3>Em vela</h3>
+          <p>Acenda sobre uma superfície resistente ao calor, longe de materiais inflamáveis. Apague antes de sair do ambiente.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Banner de Alerta -->
+    <div class="alert-banner">
+      Antes de usar, confira a regularização e a eficácia do produto.
+    </div>
+
+    <!-- Dúvidas Frequentes (Acordeão) -->
+    <section class="faq-section">
+      <h2>Dúvidas frequentes</h2>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Como usar o hidratante?</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Use diariamente, de preferência após o banho, com a pele limpa e seca. Espalhe uma pequena quantidade com movimentos suaves.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>O que fazer se o hidratante causar irritação?</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Suspenda o uso. Evite o contato com os olhos e a aplicação sobre pele irritada ou ferida.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Onde devo colocar o difusor?</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Escolha uma superfície firme, em local ventilado, longe do sol direto, de fontes de calor e de chamas.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Quando devo virar as varetas?</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Vire as varetas a cada três dias para intensificar o aroma. Evite derramar o líquido sobre móveis e outras superfícies.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Posso deixar a vela acesa enquanto durmo?</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Apague a vela antes de dormir ou sair do ambiente. Mantenha-a longe de cortinas, papéis e outros materiais inflamáveis.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Como apagar e guardar a vela?</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Use um abafador para apagar a chama e espere a cera esfriar antes de movimentar ou guardar a vela.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Como guardar os produtos em casa?</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Guarde em local fresco, protegido da luz e fora do alcance de crianças e animais. Mantenha o difusor longe do fogo e do calor.</p>
+          </div>
+        </div>
+    </section>
+
+    <!-- Rodapé de links -->
+    <footer class="bottom-links">
+      <a href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/d/dengue/faq/dengue/como-se-prevenir-da-dengue" target="_blank" rel="noopener">Evitar picadas →</a>
+      <span class="divider">|</span>
+      <a href="https://www.gov.br/saude/pt-br/assuntos/noticias/2025/novembro/dez-dicas-para-eliminar-focos-do-mosquito-da-dengue" target="_blank" rel="noopener">Eliminar criadouros →</a>
+    </footer>
   </main>
 
-  <footer>
-    <!-- Construir o rodapé quando necessário. -->
-  </footer>
-
-  <script type="module" src="../js/cidadao/repelentes.js"></script>
+  <script src="../js/compartilhado/menu-estatico.js"></script>
+  <script src="../js/compartilhado/perguntas.js" defer></script>
 </body>
 </html>

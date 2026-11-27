@@ -3,27 +3,103 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Registrar foco | Aedes Data Lab</title>
+  <title>Registrar Foco | Aedes Data Lab</title>
   <link rel="icon" href="../assets/imagens/logo.webp" type="image/webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="../css/estilos.css">
+  <link rel="stylesheet" href="../css/registrar-foco.css">
 </head>
-<body>
-   <div class="app">
 
-        <header class="header">
-            <div class="logo">
-                <img class="logo-icon" src="../assets/imagens/logo.webp" alt="Logo Aedes Data Lab" width="50" height="50">
-                <div>
-                    <strong>Aedes DataLab</strong>
-                    <small>Itambé-PE</small>
-                </div>
+<body>
+
+<!-- CABEÇALHO -->
+    <header>
+
+        <a href="../inicio.html" class="brand">
+
+            <img src="../assets/imagens/logo.webp" alt="Logo Aedes DataLab">
+
+            <div>
+                <h2>Aedes Datalab</h2>
+                <span>Itambé - PE</span>
             </div>
-    
-            <button class="menu">▤</button>
-         </header>
+        </a>
+
+        <button class="menu-toggle"
+            id="menuToggle"
+            aria-label="Abrir menu"
+            aria-expanded="false"
+            aria-controls="sidebar">
+            ☰
+        </button>
+
+    </header>
+
+
+    <!-- MENU RETRÁTIL -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-heading">
+            <h2>Menu</h2>
+
+            <button class="close-menu" id="closeMenu"
+                aria-label="Fechar menu">
+                ×
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="../inicio.html" class="menu-item">
+                <span>⌂</span>
+                Início
+            </a>
+
+            <a href="registrar-foco.html" class="menu-item">
+                <span>⚑</span>
+                Registrar foco
+            </a>
+
+            <a href="mapa.html" class="menu-item">
+                <span>▧</span>
+                Mapa
+            </a>
+
+            <a href="guia-aedes.html" class="menu-item">
+                <span>▤</span>
+                Guia Aedes
+            </a>
+
+            <a href="quem-somos.html" class="menu-item active">
+                <span>♙</span>
+                Quem somos
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="user-card">
+
+                <div class="user-avatar">♙</div>
+
+                <div>
+                    <strong>Nome do usuário</strong>
+                    <span>Cidadão</span>
+                </div>
+
+            </div>
+
+            <button class="logout-button" type="button">
+                Sair
+            </button>
+
+        </div>
+
+    </aside>
 
          <main>
 
@@ -203,97 +279,261 @@
 
         </section>
 
-        <!-- ETAPA 3: TIPO DE DENÚNCIA -->
+        <!-- ETAPA 3: IDENTIFICAÇÃO E CONFIRMAÇÃO -->
 
-        <section class="step" id="step3">
-            <h2>Tipo de denúncia</h2>
-            <p>Escolha se deseja registrar sua denúncia de forma anônima ou com identificação.</p>
+<section class="step" id="step3">
 
-            <label>Como você prefere registrar a denúncia?</label>
-            <select required>
-                <option value="">Selecione...</option>
-                <option value="denúncia anônima">Denúncia anônima</option>
-                <option value="denúncia com identificação">Denúncia com identificação</option>
-            </select>
+    <!-- TELA 1: DADOS PESSOAIS -->
 
-            <div id="dadosPessoais" hidden>
-                <label>Nome completo</label>
-                <input type="text" placeholder="Digite seu nome completo">
+    <div id="dadosPessoais">
 
-                <label>Telefone para contato</label>
-                <input type="tel" placeholder="(XX) XXXXX-XXXX">
+        <h2>Seus dados para o registro</h2>
 
-                <label>E-mail</label>
-                <input type="email" placeholder="Digite seu e-mail">
+        <p>
+            Informe seus dados e os dois contatos.
+            Na próxima tela você escolherá por qual deles
+            receber o código.
+        </p>
 
-                <label>Informe o seu CPF</label>
-                <input type="text" placeholder="000.000.000-00">
-                <label class="option consent">
-                    <input type="checkbox" required>
-                    Eu autorizo o uso dos meus dados pessoais para fins de contato e acompanhamento da denúncia.
-                </label>
+        <div class="form-card">
 
-            </div>
+            <label for="nomeCompleto">Nome completo *</label>
+            <input
+                type="text"
+                id="nomeCompleto"
+                name="nomeCompleto"
+                placeholder="Digite seu nome completo"
+                autocomplete="name"
+                required
+            >
+
+            <label for="cpf">CPF *</label>
+            <input
+                type="text"
+                id="cpf"
+                name="cpf"
+                placeholder="000.000.000-00"
+                maxlength="14"
+                required
+            >
+
+            <label for="email">E-mail *</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="exemplo@exemplo.com"
+                autocomplete="email"
+                required
+            >
+
+            <label for="telefone">Telefone com DDD *</label>
+            <input
+                type="tel"
+                id="telefone"
+                name="telefone"
+                placeholder="(81) 99999-0000"
+                autocomplete="tel"
+                required
+            >
+
+            <p class="privacy-text">
+                E-mail, telefone, nome e CPF ficam privados.
+                O CPF é conferido para evitar erro de digitação;
+                isso não comprova a identidade civil.
+            </p>
 
             <div class="navigation-buttons">
-                <button type="button" class="back-btn" onclick="previousStep()">Voltar</button>
-             <button type="button" class="next-btn" onclick="nextStep()">Próximo</button>
+
+                <button
+                    type="button"
+                    class="back-btn"
+                    onclick="previousStep()">
+                    Voltar
+                </button>
+
+                <button
+                    type="button"
+                    class="next-btn"
+                    onclick="goToEmailVerification()">
+                    Continuar
+                </button>
+
             </div>
 
-        </section>
+        </div>
+
+    </div>
+
+
+    <!-- TELA 2: CONFIRMAÇÃO DO E-MAIL -->
+
+    <div id="confirmacaoEmail" hidden>
+
+        <button
+            type="button"
+            class="back-btn"
+            onclick="backToPersonalData()">
+            ← Escolher outro canal
+        </button>
+
+        <p class="subtitle">CONFIRMAÇÃO DO CONTATO</p>
+
+        <h2>Digite o código recebido</h2>
+
+        <p>
+            Confira a caixa de entrada de
+            <strong id="emailExibido"></strong>.
+        </p>
+
+        <div class="form-card">
+
+            <label for="codigoEmail">Código de 6 dígitos *</label>
+
+            <input
+                type="text"
+                id="codigoEmail"
+                maxlength="6"
+                inputmode="numeric"
+                placeholder="000000"
+            >
+
+            <p id="mensagemCodigo" aria-live="polite"></p>
+
+            <div class="navigation-buttons">
+
+                <button
+                    type="button"
+                    class="back-btn"
+                    onclick="resendCode()">
+                    Reenviar código
+                </button>
+
+                <button
+                    type="button"
+                    class="next-btn"
+                    onclick="confirmEmailCode()">
+                    Confirmar código
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 
         <!-- ETAPA 4: REVISÃO E CONFIRMAÇÃO -->
 
-        <section class="step" id="step4">
-            <h2>Revisão e confirmação</h2>
-            <p>Revise as informações fornecidas antes de enviar a denúncia.</p>
+<section class="step" id="step4">
 
-            <div class="review-section">
-                <h3>Localização do foco</h3>
-                <p><strong>Bairro ou comunidade:</strong> <span id="reviewBairro"></span></p>
-                <p><strong>Rua, avenida ou logradouro:</strong> <span id="reviewLogradouro"></span></p>
-                <p><strong>Número do imóvel:</strong> <span id="reviewNumero"></span></p>
-                <p><strong>Ponto de referência:</strong> <span id="reviewReferencia"></span></p>
-                <p><strong>Onde está o foco:</strong> <span id="reviewLocalFoco"></span></p>
-                <p><strong>Coordenadas do mapa:</strong> <span id="reviewCoordenadas"></span></p>
-                <p><strong>Privacidade da denúncia:</strong> <span id="reviewPrivacidade"></span></p>
-                </strong></p>
-            </div>
+    <h2>Revisão e confirmação</h2>
 
-            <label class="option consent">
-                <input type="checkbox" required>
-                Eu confirmo que as informações fornecidas são precisas e autorizo o envio da denúncia.
-            </label>
+    <p>
+        Revise as informações fornecidas antes de enviar a denúncia.
+    </p>
 
-            <div class="navigation-buttons">
-                <button type="button" class="back-btn" onclick="previousStep()">Voltar</button>
-                <button type="submit" class="submit-btn">Enviar denúncia</button>
-            </div>
-            <button type="button" class="cancel-btn" onclick="cancelForm()">Cancelar</button>
+    <div class="review-section" id="reviewContent">
 
-        </section>
+        <!-- O JavaScript preencherá esta área automaticamente -->
+
+    </div>
+
+    <label class="option consent">
+
+        <input
+            type="checkbox"
+            id="confirmarInformacoes"
+            required
+        >
+
+        Eu confirmo que as informações fornecidas são precisas
+        e autorizo o envio da denúncia.
+
+    </label>
+
+    <div class="navigation-buttons">
+
+        <button
+            type="button"
+            class="back-btn"
+            onclick="previousStep()">
+            Voltar
+        </button>
+
+        <button
+            type="submit"
+            class="submit-btn">
+            Enviar denúncia
+        </button>
+
+    </div>
+
+    <button
+        type="button"
+        class="cancel-btn"
+        onclick="cancelForm()">
+        Cancelar
+    </button>
+
+</section>
 
     </form>
 
     <!-- Mensagem de sucesso -->
 
-    <section class="result" id="successMessage" hidden>
-        <h1>Denúncia enviada com sucesso!</h1>
-        <div class="success-icon">✔</div>
-        <h2>Recebemos seu registro.</h2>
-        <p>Guarde o protocolo para identificar esta denúncia.</p>
+   <!-- TELA DE PROTOCOLO -->
 
-        <article class="protocol">
-            <h3>Protocolo da denúncia</h3>
-            <p id="protocolNumber">123456789</p>
-            <p id="status">Em análise</p>
-        </article>
+<section class="result" id="successMessage" hidden>
 
-        <p class="hint">Seus dados pessoais não aparecem no mapa público.</p>
+    <a href="../inicio.html" class="back">
+        ‹ Voltar
+    </a>
 
-        <button type="primary" onclick="viewIncidentOnMap()">Ver ocorrência no mapa</button>
-        <button type="secondary"onclick="location.reload()">Voltar ao início</button>
-    </section>
+    <h1>Denúncia enviada</h1>
+
+    <div class="success-icon">✔</div>
+
+    <h2>Recebemos seu registro.</h2>
+
+    <p>
+        Guarde o protocolo para identificar esta denúncia.
+        A equipe poderá avaliar o local informado.
+    </p>
+
+    <article class="protocol">
+
+        <h3>PROTOCOLO DA DENÚNCIA</h3>
+
+        <p id="protocolNumber">
+            Aguardando geração...
+        </p>
+
+        <p id="status">
+            Status: Em análise
+        </p>
+
+    </article>
+
+    <p class="hint">
+        Seus dados pessoais não aparecem no mapa público.
+    </p>
+
+    <button
+        type="button"
+        class="submit-btn"
+        onclick="viewIncidentOnMap()"> <a href="mapa.html">Ver ocorrência no mapa</a>
+    </button>
+
+    <button
+        type="button"
+        class="back-btn"
+        onclick="goToHome()">
+        Voltar ao início
+    </button>
+
+</section>
 
     <!-- Mensagem de erro -->
 
